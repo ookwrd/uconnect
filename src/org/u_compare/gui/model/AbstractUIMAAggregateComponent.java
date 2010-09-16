@@ -11,9 +11,9 @@ import org.u_compare.gui.debugging.Debug;
 public abstract class AbstractUIMAAggregateComponent extends
 		AbstractUIMAComponent implements UIMAAggregateComponent {
 
-	private ArrayList<SubComponentsChangedListener> subComponentAddedRemovedListeners;
+	private ArrayList<SubComponentsChangedListener> subComponentAddedRemovedListeners = new ArrayList<SubComponentsChangedListener>();
 	
-	private ArrayList<UIMAComponent> subComponents;
+	private ArrayList<UIMAComponent> subComponents = new ArrayList<UIMAComponent>();
 	
 	/**
 	 * All extending classes should call this constructor.
@@ -21,9 +21,6 @@ public abstract class AbstractUIMAAggregateComponent extends
 	 */
 	protected AbstractUIMAAggregateComponent(){
 		super();
-		
-		subComponents = new ArrayList<UIMAComponent>();	
-		subComponentAddedRemovedListeners = new ArrayList<SubComponentsChangedListener>();
 	}
 	
 	

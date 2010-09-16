@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import org.u_compare.gui.debugging.Debug;
 import org.u_compare.gui.model.parameters.Parameter;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 /**
  * Abstract base class implementing much of the functionality common to all components.
  * 
@@ -15,42 +17,25 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 
 	private UIMAComponent superComponent;
 
-	//private to ensure use of proper set methods
-	private String name;
-	private String description;
-	private ArrayList<AnnotationType> inputTypes;
-	private ArrayList<AnnotationType> outputTypes;
-	private ArrayList<Parameter> configurationParameters;
-	private boolean unsavedChanges;
-	private boolean minimized;
-	private LockStatusEnum lockStatus;
+	//private to ensure use of proper set methods by extending classes
+	private String name = "Unnamed";
+	private String description = "Undescribed";
+	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
+	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
+	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();
+	private boolean unsavedChanges = true;
+	private boolean minimized = false;
+	private LockStatusEnum lockStatus = LockStatusEnum.UNLOCKED;
 	
-	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners;
-	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners;
-	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners;
-	private ArrayList<ParameterSettingsChangeListener> parameterSettingsChangeListeners;
-	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners;
-	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners;
+	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
+	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
+	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
+	private ArrayList<ParameterSettingsChangeListener> parameterSettingsChangeListeners = new ArrayList<ParameterSettingsChangeListener>();
+	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
+	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 	
 	public AbstractUIMAComponent(){
-		
-		name = "Unnamed";
-		description = "Undescribed";
-		
-		inputTypes = new ArrayList<AnnotationType>();
-		outputTypes = new ArrayList<AnnotationType>();
-		configurationParameters = new ArrayList<Parameter>();
-		
-		componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
-		inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
-		savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
-		parameterSettingsChangeListeners = new ArrayList<ParameterSettingsChangeListener>();
-		minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
-		lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
-		
-		unsavedChanges = true;
-		minimized = false;
-		lockStatus = LockStatusEnum.UNLOCKED;
+
 	}
 	
 	/**

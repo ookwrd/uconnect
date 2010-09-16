@@ -13,8 +13,6 @@ import org.u_compare.gui.model.UIMAComponent;
 import org.u_compare.gui.model.UIMAWorkflow;
 import org.u_compare.gui.model.parameters.Parameter;
 
-import com.sun.tools.internal.ws.processor.model.Model;
-
 /**
  * 
  * Controller responsible for handling userinput directed at a specific component/workflow.

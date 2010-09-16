@@ -12,8 +12,6 @@ import org.u_compare.gui.model.UIMAWorkflow.WorkflowStatus;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.PrivilegedAccessor;
 
-import sun.tools.tree.NewArrayExpression;
-
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**

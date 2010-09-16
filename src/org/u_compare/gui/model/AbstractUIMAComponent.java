@@ -22,11 +22,15 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 	private ArrayList<AnnotationType> outputTypes;
 	private ArrayList<Parameter> configurationParameters;
 	private boolean unsavedChanges;
+	private boolean minimized;
+	private LockStatusEnum lockStatus;
 	
 	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners;
 	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners;
 	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners;
 	private ArrayList<ParameterSettingsChangeListener> parameterSettingsChangeListeners;
+	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners;
+	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners;
 	
 	public AbstractUIMAComponent(){
 		
@@ -41,8 +45,12 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 		inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
 		savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
 		parameterSettingsChangeListeners = new ArrayList<ParameterSettingsChangeListener>();
+		minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
+		lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 		
 		unsavedChanges = true;
+		minimized = false;
+		lockStatus = LockStatusEnum.UNLOCKED;
 	}
 	
 	/**
@@ -193,7 +201,45 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 		
 		outputTypes.remove(outputType);
 		notifyInputOutputChangeListeners();
+		//TODO set changed
 		
+	}
+	
+	@Override
+	public boolean getMinimizedStatus(){
+		return minimized;
+	}
+	
+	@Override
+	public void setMinimizedStatus(boolean minimized){
+		
+		if(this.minimized != minimized){
+			this.minimized = minimized;
+			notifyMinimizedStatusChangeListeners();
+			//This is only a UI property so no need to update unsaved Changes 
+		}
+	}
+	
+	@Override
+	public boolean getLockedStatus(){
+		if(lockStatus == LockStatusEnum.DIRECTLOCK || lockStatus == LockStatusEnum.INDIRECTLOCK){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public void setLockedStatus(Boolean locked){
+		if(lockStatus != LockStatusEnum.INDIRECTLOCK){
+			LockStatusEnum lockedStatus = locked?LockStatusEnum.DIRECTLOCK:LockStatusEnum.UNLOCKED;
+			if(this.lockStatus != lockedStatus){
+				this.lockStatus = lockedStatus;
+				notifyLockedStatusChangeListeners();
+				//TODO do we need to update unsavedChanges?
+			}
+		}
 	}
 	
 	@Override
@@ -229,7 +275,7 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 	/**
 	 * 
 	 */
-	private void notifyComponentDescriptionChangeListeners(){
+	protected void notifyComponentDescriptionChangeListeners(){
 		
 		for(DescriptionChangeListener listener : componentDescriptionChangeListeners){
 			listener.ComponentDescriptionChanged(this);
@@ -251,7 +297,7 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 		inputOutputChangeListeners.add(listener);
 	}
 	
-	private void notifyInputOutputChangeListeners(){
+	protected void notifyInputOutputChangeListeners(){
 		
 		for(InputOutputChangeListener listener : inputOutputChangeListeners){
 			listener.inputOutputChanged(this);
@@ -349,5 +395,32 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 		}
 		
 		setComponentChanged();
+	}
+	
+	@Override
+	public void registerMinimizedStatusChangeListener(MinimizedStatusChangeListener listener){
+
+		minimizedStatusChangeListeners.add(listener);
+		
+	}
+	
+	protected void notifyMinimizedStatusChangeListeners() {
+		
+		for(MinimizedStatusChangeListener listener : minimizedStatusChangeListeners){
+			listener.minimizedStatusChanged(this);
+		}
+		
+	}
+	
+	@Override
+	public void registerLockedStatusChangeListener(LockedStatusChangeListener listener){
+		lockedStatusChangeListeners.add(listener);	
+	}
+	
+	protected void notifyLockedStatusChangeListeners(){
+		
+		for(LockedStatusChangeListener listener : lockedStatusChangeListeners){
+			listener.lockStatusChanged(this);
+		}
 	}
 }

@@ -195,7 +195,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 	}
 	
 	
-	private void notifySubComponentsChangedListeners(){
+	protected void notifySubComponentsChangedListeners(){
 	
 		setComponentChanged();
 		

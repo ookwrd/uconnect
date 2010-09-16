@@ -1,6 +1,8 @@
 package org.u_compare.gui.model;
 
 import java.util.ArrayList;
+import java.util.TimerTask;
+import java.util.Timer;
 
 import org.u_compare.gui.model.parameters.Parameter;
 
@@ -12,9 +14,12 @@ import org.u_compare.gui.model.parameters.Parameter;
  */
 public class UIMAWorkflow extends AbstractUIMAAggregateComponent {
 
-	public enum WorkflowStatus {LOADING,READY,INITIALIZING,RUNNING,ERROR,STOPPED};
+	//for debugging, delete when no longer needed.
+	private Timer timer = new Timer();
 	
-	private WorkflowStatus status = WorkflowStatus.LOADING;
+	public enum WorkflowStatus {LOADING,READY,INITIALIZING,RUNNING,ERROR,PAUSED};
+	
+	private WorkflowStatus status = WorkflowStatus.READY;
 	
 	private ArrayList<WorkflowStatusListener> workflowStatusListeners;
 	
@@ -52,7 +57,7 @@ public class UIMAWorkflow extends AbstractUIMAAggregateComponent {
 	 * Should be used to start workflow processing.
 	 * 
 	 */
-	private void runWorkflow() throws InvalidStatusException {
+	public void runWorkflow() throws InvalidStatusException {
 		
 		if(status != WorkflowStatus.READY){
 			throw new InvalidStatusException(status, WorkflowStatus.READY);
@@ -60,22 +65,63 @@ public class UIMAWorkflow extends AbstractUIMAAggregateComponent {
 		
 		setStatus(WorkflowStatus.INITIALIZING);
 		
-		
+		//TODO
 		
 		setStatus(WorkflowStatus.RUNNING);
 		
 		//TODO
+		
+		
+		TimerTask task = new TimerTask() {
+			
+			private int x = 30;
+			
+			@Override
+			public void run() {
+				x--;
+				notifyWorkflowStatusListeners();
+				if(x<1){
+					timer.cancel();
+					afterRunning();
+				}
+			}
+		};
+		
+		timer.schedule(task,0,1000);
+	}
+	
+	private void afterRunning(){
+
+		setStatus(WorkflowStatus.READY);
+		
+	}
+	
+	
+	/**
+	 * used to pause the workflow processing
+	 * 
+	 * @throws InvalidStatusException
+	 */
+	public void pauseWorkflow() throws InvalidStatusException{
+		
+		if(status != WorkflowStatus.RUNNING){
+			throw new InvalidStatusException(status, WorkflowStatus.RUNNING);
+		}
+		
+		//TODO make this do something
 		
 	}
 	
 	/**
 	 * should be used to stop workflow processing
 	 */
-	private void stopWorkflow() throws InvalidStatusException {
+	public void stopWorkflow() throws InvalidStatusException {
 		
-		if(status != WorkflowStatus.RUNNING){
+		if(!(status == WorkflowStatus.RUNNING || status == WorkflowStatus.PAUSED)){
 			throw new InvalidStatusException(status, WorkflowStatus.RUNNING);
 		}
+		
+		//TODO make this do something
 		
 	}
 	
@@ -127,7 +173,20 @@ public class UIMAWorkflow extends AbstractUIMAAggregateComponent {
 			listener.workflowStatusChanged(this);
 		}
 		
+		System.out.println("notify " + getStatus());
 	}
 
+	
+	public static void main(String[] args){
+		UIMAWorkflow testUimaWorkflow = new UIMAWorkflow();
+		
+		try {
+			testUimaWorkflow.runWorkflow();
+		} catch (InvalidStatusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }
 

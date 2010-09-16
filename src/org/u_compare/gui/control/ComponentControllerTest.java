@@ -68,13 +68,13 @@ public class ComponentControllerTest {
 	
 	@Test
 	public void canAddNonEditable(){
-		controller.setAllowChanges(false);
+		controller.setLocked(true);
 		assertFalse(controller.canAddSubComponent(control,0));	
 	}
 	
 	@Test
 	public void canRemoveNonEditable() throws IllegalAccessException, NoSuchFieldException{
-		control.setAllowChanges(false);
+		control.setLocked(true);
 		ComponentController child = ((ArrayList<ComponentController>)PrivilegedAccessor.getValue(control, "subControllers")).get(0);
 		assertFalse(child.canRemove());
 	}
@@ -87,13 +87,13 @@ public class ComponentControllerTest {
 	
 	@Test(expected=InvalidSubComponentException.class)
 	public void addNonEditable() throws InvalidSubComponentException{
-		controllerAggregate.setAllowChanges(false);
+		controllerAggregate.setLocked(true);
 		controllerAggregate.addSubComponent(control, 0);
 	}	
 	
 	@Test(expected=InvalidSubComponentException.class)
 	public void moveFromUneditable() throws IllegalAccessException, NoSuchFieldException, InvalidSubComponentException{
-		control.setAllowChanges(false);
+		control.setLocked(true);
 		ComponentController child = ((ArrayList<ComponentController>)PrivilegedAccessor.getValue(control, "subControllers")).get(0);
 		controllerAggregate.addSubComponent(child, 0);	
 	}

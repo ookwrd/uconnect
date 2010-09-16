@@ -42,7 +42,7 @@ public class StringConfigController implements ConfigController, ActionFocusList
 
 	private void attemptUpdate(AWTEvent e){
 		
-		if(parent.allowChanges()){
+		if(!parent.isLocked()){
 			
 			String input = view.getString();
 			

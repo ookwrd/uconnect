@@ -26,7 +26,7 @@ public class BooleanConfigController implements ActionListener, ConfigController
 
 	public void actionPerformed(ActionEvent e) {
 		
-		if(parent.allowChanges()){
+		if(!parent.isLocked()){
 			
 			boolean value = view.getValue();
 			

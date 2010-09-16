@@ -30,6 +30,8 @@ import javax.swing.border.TitledBorder;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.debugging.GUITestingHarness;
+import org.u_compare.gui.model.LockedStatusChangeListener;
+import org.u_compare.gui.model.MinimizedStatusChangeListener;
 import org.u_compare.gui.model.SubComponentsChangedListener;
 import org.u_compare.gui.model.UIMAAggregateComponent;
 import org.u_compare.gui.model.UIMAComponent;
@@ -43,7 +45,7 @@ import org.u_compare.gui.model.UIMAComponent;
  */
 @SuppressWarnings("serial")
 public class WorkflowComponent extends DraggableJPanel implements
-		SubComponentsChangedListener {
+		SubComponentsChangedListener, LockedStatusChangeListener, MinimizedStatusChangeListener {
 
 	private final static String ICON_CLOSE_PATH = "gfx/icon_close1.png";
 	private final static String ICON_CLOSE_PATH_HIGHLIGHT = "gfx/icon_close1highlight.png";
@@ -112,6 +114,9 @@ public class WorkflowComponent extends DraggableJPanel implements
 		super(controller);
 		this.controller = controller;
 
+		component.registerLockedStatusChangeListener(this);
+		component.registerMinimizedStatusChangeListener(this);
+		
 		this.setAutoscrolls(true); //TODO TEST
 		BODY_COLOR = defaultColor;
 
@@ -179,8 +184,7 @@ public class WorkflowComponent extends DraggableJPanel implements
 		// set the layout
 		this.component = component;
 
-		if (component.isAggregate()) {// TODO push registerSubComponents... into
-										// UIMAComponent interface
+		if (component.isAggregate()) {
 			((UIMAAggregateComponent) component)
 					.registerSubComponentsChangedListener(this);
 		}
@@ -253,7 +257,8 @@ public class WorkflowComponent extends DraggableJPanel implements
 			minButton.addActionListener(minListener);
 			buttonPanel.add(minButton);
 
-			lockButton = new JButton(unlockedIcon);
+			ImageIcon lockIcon = component.getLockedStatus()?lockedIcon:unlockedIcon;
+			lockButton = new JButton(lockIcon);
 			buttonSize = new Dimension(unlockedIcon.getIconWidth()
 					- BUTTON_DECREMENT, unlockedIcon.getIconHeight()
 					- BUTTON_DECREMENT);
@@ -433,12 +438,10 @@ public class WorkflowComponent extends DraggableJPanel implements
 	}
 
 	protected void toggleLock() {
-		if (this.controller.allowChanges()) {
-			this.controller.setLockStatus(false); // lock
-			this.lockButton.setIcon(lockedIcon);
+		if (this.controller.isLocked()) {
+			this.controller.setLocked(false);
 		} else {
-			this.controller.setLockStatus(true); // unlock
-			this.lockButton.setIcon(unlockedIcon);
+			this.controller.setLocked(true); 
 		}
 	}
 
@@ -580,6 +583,24 @@ public class WorkflowComponent extends DraggableJPanel implements
 		Dimension max = super.getMaximumSize();
 		ret.width = max != null ? max.width : 2000;
 		return ret;
+	}
+
+	@Override
+	public void minimizedStatusChanged(UIMAComponent component) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("MinimizedStatusListenerCalled");
+		
+	}
+
+	@Override
+	public void lockStatusChanged(UIMAComponent component) {
+		
+		if(component.getLockedStatus()){
+			this.lockButton.setIcon(lockedIcon);
+		}else{
+			this.lockButton.setIcon(unlockedIcon);
+		}
 	}
 
 }

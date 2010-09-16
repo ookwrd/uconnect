@@ -15,6 +15,9 @@ import org.u_compare.gui.model.parameters.Parameter;
  */
 public interface UIMAComponent{
 
+	
+	public enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK};
+	
 	/**
 	 * Checks if the Component is an aggregate or not.
 	 * 
@@ -154,6 +157,17 @@ public interface UIMAComponent{
 	 */
 	public boolean checkUnsavedChanges();
 	
+	
+	public boolean getMinimizedStatus();
+	
+	public void setMinimizedStatus(boolean minimized);
+	
+	
+	public boolean getLockedStatus();
+	
+	public void setLockedStatus(Boolean locked);
+	
+	
 	/**
 	 * Register listener to be notified of changes to the UnsavedChanges status of this component.
 	 * 
@@ -181,4 +195,8 @@ public interface UIMAComponent{
 	 * @param listener
 	 */
 	public void registerParameterSettingsChangeListener(ParameterSettingsChangeListener listener);
+
+	public void registerMinimizedStatusChangeListener(MinimizedStatusChangeListener listnener);
+	
+	public void registerLockedStatusChangeListener(LockedStatusChangeListener listener);
 }

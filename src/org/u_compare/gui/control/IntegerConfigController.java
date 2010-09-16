@@ -39,7 +39,7 @@ public class IntegerConfigController implements ConfigController, ActionFocusLis
 	
 	private void attemptUpdate(AWTEvent e){
 		
-		if(parent.allowChanges()){
+		if(!parent.isLocked()){
 			
 			String input = view.getString();
 			

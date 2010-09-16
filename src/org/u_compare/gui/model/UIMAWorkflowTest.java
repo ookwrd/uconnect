@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.u_compare.gui.model.UIMAComponent.LockStatusEnum;
 import org.u_compare.gui.model.UIMAWorkflow.WorkflowStatus;
+import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.PrivilegedAccessor;
+
+import sun.tools.tree.NewArrayExpression;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
  * JUnit Tests for UIMAWorkflow and associated abstract classes.
@@ -188,7 +194,7 @@ public class UIMAWorkflowTest{
 		}
 	}
 	
-	private static class TestListener1 implements DescriptionChangeListener, InputOutputChangeListener, SubComponentsChangedListener, SavedStatusChangeListener{
+	private static class TestListener1 implements DescriptionChangeListener, InputOutputChangeListener, SubComponentsChangedListener, SavedStatusChangeListener, MinimizedStatusChangeListener, LockedStatusChangeListener{
 
 		private ArrayList<String> names;
 		private ArrayList<String> descriptions;
@@ -198,6 +204,9 @@ public class UIMAWorkflowTest{
 		private ArrayList<ArrayList<AnnotationType>> outputs;
 		
 		private ArrayList<ArrayList<UIMAComponent>> subComponents;
+		
+		ArrayList<Boolean> minimizeds = new ArrayList<Boolean>();
+		ArrayList<Boolean> lockeds = new ArrayList<Boolean>();
 		
 		public TestListener1(){
 			names = new ArrayList<String>();
@@ -252,6 +261,16 @@ public class UIMAWorkflowTest{
 		
 		public ArrayList<Boolean> getSaves(){
 			return saves;
+		}
+
+		@Override
+		public void lockStatusChanged(UIMAComponent component) {
+			lockeds.add(component.getLockedStatus());
+		}
+
+		@Override
+		public void minimizedStatusChanged(UIMAComponent component) {
+			minimizeds.add(component.getMinimizedStatus());
 		}
 	}
 	
@@ -416,6 +435,51 @@ public class UIMAWorkflowTest{
 		testWorkflow.reorderSubComponent(d, 4);
 		assertTrue(listener.getSubComponents().get(2).indexOf(d) == 3);
 	}
+	
+	@Test
+	public void lockedStatusListenerTest(){
+		TestListener1 listener = new TestListener1();
+		testWorkflow.registerLockedStatusChangeListener(listener);
+		
+		assertTrue(testWorkflow.getLockedStatus()==false);
+		
+		testWorkflow.setLockedStatus(false);
+		
+		assertTrue(testWorkflow.getLockedStatus()==false);
+		assertTrue(listener.lockeds.size() == 0);
+		
+		testWorkflow.setLockedStatus(true);
+		
+		assertTrue(testWorkflow.getLockedStatus()==true);
+		assertTrue(listener.lockeds.size() == 1);
+		
+		testWorkflow.setLockedStatus(false);
+		
+		assertTrue(testWorkflow.getLockedStatus()==false);
+		assertTrue(listener.lockeds.size() == 2);
+	}
+	
+	@Test
+	public void minimizedStatusListeners(){
+		
+		TestListener1 listener = new TestListener1();
+		testWorkflow.registerMinimizedStatusChangeListener(listener);
+		
+		assertTrue(testWorkflow.getMinimizedStatus() == false);
+		
+		testWorkflow.setMinimizedStatus(false);
+
+		assertTrue(testWorkflow.getMinimizedStatus() == false);
+		assertTrue(listener.minimizeds.size()== 0);
+		
+		testWorkflow.setMinimizedStatus(true);
+		
+		assertTrue(testWorkflow.getMinimizedStatus() == true);
+		assertTrue(listener.minimizeds.size() == 1);
+		assertTrue(listener.minimizeds.get(0)==true);
+		
+	}
+	
 	
 	@Test(expected=InvalidPositionException.class)
 	public void reorderPositionConstraints1() throws InvalidPositionException{

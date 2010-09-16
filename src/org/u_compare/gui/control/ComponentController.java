@@ -7,9 +7,13 @@ import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.ParameterPanel;
 import org.u_compare.gui.WorkflowComponent;
 import org.u_compare.gui.model.InvalidPositionException;
+import org.u_compare.gui.model.InvalidStatusException;
 import org.u_compare.gui.model.UIMAAggregateComponent;
 import org.u_compare.gui.model.UIMAComponent;
+import org.u_compare.gui.model.UIMAWorkflow;
 import org.u_compare.gui.model.parameters.Parameter;
+
+import com.sun.tools.internal.ws.processor.model.Model;
 
 /**
  * 
@@ -33,7 +37,7 @@ public class ComponentController implements DragAndDropComponentController {
 	private ArrayList<DropTargetController> dropTargets = new ArrayList<DropTargetController>();
 	private ArrayList<ConfigController> parameterControllers = new ArrayList<ConfigController>();
 	
-	private boolean allowChanges = true;
+	//private boolean allowChanges = true;
 	
 	/**
 	 * Create a controller object for the specified component.
@@ -115,34 +119,14 @@ public class ComponentController implements DragAndDropComponentController {
 		
 		//TODO do i need to reset subComponents parents?
 	}
-
 	
-	public void setAllowChanges(boolean allowChanges){
-		
-		this.allowChanges = allowChanges;
-		
-		/**
-		 * Slightly inefficient as it may update subtrees where it is not needed
-		 * but safer as it gurantees to update all subcomponents. Possible problem
-		 * if the same subController appears in two places, but this should never 
-		 * happen.
-		 */
-		for(ComponentController subController : subControllers){
-			subController.setAllowChanges(allowChanges);	
-		}
+	public boolean isLocked(){
+		return component.getLockedStatus();
 	}
 	
-	public boolean allowChanges(){
-		
-		return allowChanges;
+	public void setLocked(boolean lockedStatus){
+		component.setLockedStatus(lockedStatus);
 	}
-	
-	public void setLockStatus(boolean allowChanges){
-		this.allowChanges = allowChanges;
-	}
-	
-	
-	
 	
 	/**
 	 * Checks if the specified sub component can be added at the specified position. Needed to update graphics when dragging.
@@ -153,7 +137,7 @@ public class ComponentController implements DragAndDropComponentController {
 		
 		//TODO prohibit dropping of self on descendents
 		
-		if(allowChanges && component.isAggregate()){
+		if(!isLocked() && component.isAggregate()){
 			if(!subControllers.contains(newControl)){
 				return ((UIMAAggregateComponent)component).canAddSubComponent(newControl.component, position);
 			}else{
@@ -185,7 +169,7 @@ public class ComponentController implements DragAndDropComponentController {
 	 * @return True if it can be removed, false otherwise.
 	 */
 	public boolean canRemoveSubComponent(ComponentController toRemove){
-		if(allowChanges && component.isAggregate()){
+		if(!isLocked() && component.isAggregate()){
 			return ((UIMAAggregateComponent)component).canRemoveSubComponent(toRemove.component);
 		}else{
 			return false;
@@ -454,10 +438,61 @@ public class ComponentController implements DragAndDropComponentController {
 
 	public void setTitle(String title) {
 		// TODO implement this method (and make the corresponding corrections to the component)
+		
+		//TODO what happens if title can't be changed?
 	}
 
 	public void setDescription(String descriptionText) {
 		// TODO implement this method (and make the corresponding corrections to the component)
 		
+		
+		//TODO what happens if description cant be changed?
 	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * TODO I think we need to abstract all this out to a workflow controller class
+	 * 
+	 */
+	public void workflowPlayRequest(){
+
+		assert(component.isWorkflow());
+	
+		try {
+			((UIMAWorkflow)component).runWorkflow();
+		} catch (InvalidStatusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void workflowPauseRequest(){
+		
+		assert(component.isWorkflow());
+		
+		try {
+			((UIMAWorkflow)component).runWorkflow();
+		} catch (InvalidStatusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void workflowStopRequest(){
+		
+		assert(component.isWorkflow());
+		
+		try {
+			((UIMAWorkflow)component).runWorkflow();
+		} catch (InvalidStatusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

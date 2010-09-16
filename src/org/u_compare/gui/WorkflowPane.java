@@ -1,23 +1,17 @@
 package org.u_compare.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.dnd.Autoscroll;
-import java.awt.dnd.peer.DropTargetPeer;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 
 /**
  * Contains all workflow related components.
@@ -26,7 +20,7 @@ import javax.swing.border.TitledBorder;
  * @version 2009-08-26
  */
 @SuppressWarnings("serial")
-public class WorkflowPane extends JScrollPane implements Autoscroll{
+public class WorkflowPane extends JScrollPane implements Autoscroll {
 	//TODO: Buttons! Play, stop, etc., no, should go in the split pane
 	//TODO: Fix border handling, now there are two borders to the layout.
 	private WorkflowComponent topComponent;
@@ -36,7 +30,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll{
 		ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 	private static final int VERTICAL_SCROLLBAR_POLICY =
 		ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-	private static final String BORDER_TITLE = "Workflow";
+	//private static final String BORDER_TITLE = "Workflow";
 	private static final String TOOLTIP_TEXT =
 		"Drag components from the component library here";
 	//TODO: LayoutManager
@@ -56,7 +50,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll{
 		//		WorkflowPane.BORDER_TITLE));
 		this.setToolTipText(WorkflowPane.TOOLTIP_TEXT);
 		
-		/* Inner panel is needed as the scrollPanelLayout doesnt respect
+		/* Inner panel is needed as the scrollPanelLayout doesn't respect
 		 * maximum size constraints on components, and it is not possible
 		 * to use another layout directly inside a scroll panel.
 		 */

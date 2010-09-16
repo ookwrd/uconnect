@@ -65,6 +65,7 @@ public class WorkflowConsolePane extends JScrollPane {
 				WorkflowConsolePane.VERTICAL_SCROLLBAR_POLICY);
 		this.setToolTipText(
 				WorkflowConsolePane.TOOLTIP_TEXT);
+		this.setOpaque(false);//Required for correct display in Mac OSX
 	}
 	
 	private class ConsoleMessage {

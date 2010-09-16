@@ -1,8 +1,9 @@
 package org.u_compare.gui;
 
-/* Glazed Lists                                                 (c) 2003-2006 */
-/* http://publicobject.com/glazedlists/                      publicobject.com,*/
-/*
+/**
+ * Taken from Glazed Lists (http://publicobject.com/glazedlists/) under the
+ * Mozilla Public License 1.1 (http://www.mozilla.org/MPL/MPL-1.1.txt).
+ *
  */
 
 import javax.swing.*;

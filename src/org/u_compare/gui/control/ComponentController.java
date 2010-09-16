@@ -128,6 +128,10 @@ public class ComponentController implements DragAndDropComponentController {
 		component.setLockedStatus(lockedStatus);
 	}
 	
+	public void toggleMinimized(){
+		component.setMinimizedStatus(!component.getMinimizedStatus());
+	}
+	
 	/**
 	 * Checks if the specified sub component can be added at the specified position. Needed to update graphics when dragging.
 	 * 

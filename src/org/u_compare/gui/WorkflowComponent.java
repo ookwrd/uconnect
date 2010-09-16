@@ -377,6 +377,12 @@ public class WorkflowComponent extends DraggableJPanel implements
 			}
 		}
 
+		//Check if the component is minimized
+		if(component.getMinimizedStatus()){
+			this.innerPanel.setVisible(false);
+			this.minButton.setIcon(maxIcon);
+		}
+		
 		setupSubComponents();
 
 	}
@@ -465,13 +471,8 @@ public class WorkflowComponent extends DraggableJPanel implements
 	}
 
 	protected void toggleSize() {
-		if (this.innerPanel.isVisible()) {
-			this.innerPanel.setVisible(false);
-			this.minButton.setIcon(maxIcon);
-		} else {
-			this.innerPanel.setVisible(true);
-			this.minButton.setIcon(minIcon);
-		}
+		
+		controller.toggleMinimized();
 
 	}
 
@@ -587,9 +588,14 @@ public class WorkflowComponent extends DraggableJPanel implements
 
 	@Override
 	public void minimizedStatusChanged(UIMAComponent component) {
-		// TODO Auto-generated method stub
-		
-		System.out.println("MinimizedStatusListenerCalled");
+
+		if (component.getMinimizedStatus()) {
+			this.innerPanel.setVisible(false);
+			this.minButton.setIcon(maxIcon);
+		} else {
+			this.innerPanel.setVisible(true);
+			this.minButton.setIcon(minIcon);
+		}
 		
 	}
 

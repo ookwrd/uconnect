@@ -217,15 +217,18 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 	
 	@Override
 	public void setLockedStatus(Boolean locked){
+		
 		if(lockStatus != LockStatusEnum.INDIRECTLOCK){
 			LockStatusEnum lockedStatus = locked?LockStatusEnum.DIRECTLOCK:LockStatusEnum.UNLOCKED;
 			if(this.lockStatus != lockedStatus){
+				
 				this.lockStatus = lockedStatus;
 				notifyLockedStatusChangeListeners();
-				//TODO do we need to update unsavedChanges?
+				//TODO do we need to update unsavedChanges? probably
 			}
 		}
 	}
+	
 	
 	@Override
 	public void setOutputTypes(ArrayList<AnnotationType> newOutputTypes){

@@ -37,10 +37,11 @@ import org.u_compare.gui.model.UIMAAggregateComponent;
 import org.u_compare.gui.model.UIMAComponent;
 
 /**
- * TODO:
+ * TODO: We do need to separate this monster into multiple classes.
  * 
  * @author pontus
  * @author olaf
+ * @author luke
  * @version 2009-08-26
  */
 @SuppressWarnings("serial")
@@ -376,6 +377,13 @@ public class WorkflowComponent extends DraggableJPanel implements
 				parameterPanel.add(paramPanel);
 			}
 		}
+		
+		// Set up the workflow panel as required.
+		if (component.isWorkflow()) {
+			Button b = new Button("Foo");
+			this.innerPanel.add(b);
+			b.setVisible(true);
+		}
 
 		//Check if the component is minimized
 		if(component.getMinimizedStatus()){
@@ -395,10 +403,12 @@ public class WorkflowComponent extends DraggableJPanel implements
 				JPanel aggregatePanelBorder = new JPanel();
 				aggregatePanelBorder.setLayout(new GridLayout());
 				aggregatePanelBorder.setOpaque(false);
-				aggregatePanelBorder
-						.setBorder(new TitledBorder(new EtchedBorder(),
-								component.isWorkflow() ? "Workflow:"
-										: "Subcomponents:"));
+				
+				// Workflows has no border or title
+				if (!component.isWorkflow()) {
+					aggregatePanelBorder.setBorder(
+							new TitledBorder("Subcomponents:"));
+				}
 				innerPanel.add(aggregatePanelBorder);
 
 				aggregatePanel = new JPanel();
@@ -446,7 +456,8 @@ public class WorkflowComponent extends DraggableJPanel implements
 	protected void toggleLock() {
 		if (this.controller.isLocked()) {
 			this.controller.setLocked(false);
-		} else {
+		}
+		else {
 			this.controller.setLocked(true); 
 		}
 	}
@@ -470,15 +481,14 @@ public class WorkflowComponent extends DraggableJPanel implements
 		return title;
 	}
 
-	protected void toggleSize() {
-		
+	protected void toggleSize() {		
 		controller.toggleMinimized();
-
 	}
 
 	private static void loadIcons() {
-		if (iconsLoaded)
+		if (iconsLoaded) {
 			return;
+		}
 		URL image_url;
 		image_url = WorkflowComponent.class
 				.getResource(WorkflowComponent.ICON_MIN_PATH);

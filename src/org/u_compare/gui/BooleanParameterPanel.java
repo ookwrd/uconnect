@@ -3,7 +3,7 @@ package org.u_compare.gui;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
-import org.u_compare.gui.control.BooleanConfigController;
+import org.u_compare.gui.control.BooleanParameterController;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 
 /**
@@ -14,14 +14,14 @@ import org.u_compare.gui.model.parameters.BooleanParameter;
  */
 
 @SuppressWarnings("serial")
-public class BooleanConfigPanel extends ParameterPanel {
+public class BooleanParameterPanel extends ParameterPanel {
 
 	private JCheckBox checkBox;
-	private BooleanConfigController controller;
+	private BooleanParameterController controller;
 	private boolean locked;
 	
-	public BooleanConfigPanel(
-			BooleanParameter param, BooleanConfigController controller, boolean lockedStatus) {
+	public BooleanParameterPanel(
+			BooleanParameter param, BooleanParameterController controller, boolean lockedStatus) {
 		
 			this.controller = controller;
 			this.locked = lockedStatus;

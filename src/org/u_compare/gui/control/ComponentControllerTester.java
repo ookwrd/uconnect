@@ -7,22 +7,22 @@ import java.util.ArrayList;
 import org.junit.*;
 import org.u_compare.gui.debugging.ExampleWorkflowFactory;
 import org.u_compare.gui.debugging.PrivilegedAccessor;
-import org.u_compare.gui.model.MockAggregateUIMAComponent;
-import org.u_compare.gui.model.MockUIMAComponent;
-import org.u_compare.gui.model.UIMAAggregateComponent;
-import org.u_compare.gui.model.UIMAComponent;
-import org.u_compare.gui.model.UIMAWorkflow;
+import org.u_compare.gui.model.MockAggregateComponent;
+import org.u_compare.gui.model.MockComponent;
+import org.u_compare.gui.model.AggregateComponent;
+import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.Workflow;
 
 @SuppressWarnings("unchecked")//Using PrivilegedAccessor
-public class ComponentControllerTest {
+public class ComponentControllerTester {
 
-	UIMAWorkflow model;
+	Workflow model;
 	ComponentController control;
 	
-	UIMAComponent component;
+	Component component;
 	ComponentController controller;
 	
-	UIMAAggregateComponent componentAggregate;
+	AggregateComponent componentAggregate;
 	ComponentController controllerAggregate;
 	
 	@Before
@@ -30,10 +30,10 @@ public class ComponentControllerTest {
 		model = ExampleWorkflowFactory.aggregate();
 		control = new ComponentController(model);
 		
-		component = new MockUIMAComponent();
+		component = new MockComponent();
 		controller = new ComponentController(component);
 	
-		componentAggregate = new MockAggregateUIMAComponent();
+		componentAggregate = new MockAggregateComponent();
 		controllerAggregate = new ComponentController(componentAggregate);
 	}
 

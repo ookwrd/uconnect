@@ -23,7 +23,7 @@ import javax.swing.ScrollPaneConstants;
 public class WorkflowPane extends JScrollPane implements Autoscroll {
 	//TODO: Buttons! Play, stop, etc., no, should go in the split pane
 	//TODO: Fix border handling, now there are two borders to the layout.
-	private WorkflowComponent topComponent;
+	private ComponentPanel topComponent;
 	
 	// Configuration
 	private static final int HORIZONTAL_SCROLLBAR_POLICY =
@@ -38,7 +38,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 	// For dragging, observe the mouse and keep states for it here.
 	// Then observe the events and draw accordingly.
 	
-	public WorkflowPane(WorkflowComponent topComponent) {
+	public WorkflowPane(ComponentPanel topComponent) {
 		this.topComponent = topComponent;
 
 		this.setHorizontalScrollBarPolicy(
@@ -59,7 +59,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 		innerJPanel.add(topComponent);
 		this.setViewportView(innerJPanel);
 		
-		new DnDVerticalScroller(getViewport());
+		new DnDVerticalScrollerPanel(getViewport());
 		
 		 MouseMotionListener doScrollRectToVisible = new MouseMotionAdapter() {
 		     public void mouseDragged(MouseEvent e) {
@@ -75,7 +75,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 
 	}
 	
-	protected WorkflowComponent getTopWorkflowComponent() {
+	protected ComponentPanel getTopWorkflowComponent() {
 		return this.topComponent;
 	}
 

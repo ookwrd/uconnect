@@ -77,7 +77,7 @@ public abstract class DroppableJPanel extends JPanel {
 
 				Transferable tr = event.getTransferable();
 				String s = (String) tr.getTransferData(new DataFlavor(
-						WorkflowComponent.class, "WorkflowComponent"));
+						ComponentPanel.class, "WorkflowComponent"));
 				System.out.println("String transfered : " + s);
 				if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 

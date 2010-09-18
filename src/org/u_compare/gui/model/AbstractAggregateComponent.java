@@ -2,27 +2,27 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 import org.u_compare.gui.debugging.Debug;
-import org.u_compare.gui.model.AbstractUIMAComponent.LockStatusEnum;
+import org.u_compare.gui.model.AbstractComponent.LockStatusEnum;
 
 /**
  * Abstract base class implementing functionality common to all aggregate components.
  * 
  * @author Luke McCrohon
  */
-public abstract class AbstractUIMAAggregateComponent extends
-		AbstractUIMAComponent implements UIMAAggregateComponent {
+public abstract class AbstractAggregateComponent extends
+		AbstractComponent implements AggregateComponent {
 	
 
 
 	private ArrayList<SubComponentsChangedListener> subComponentAddedRemovedListeners = new ArrayList<SubComponentsChangedListener>();
 	
-	private ArrayList<UIMAComponent> subComponents = new ArrayList<UIMAComponent>();
+	private ArrayList<Component> subComponents = new ArrayList<Component>();
 	
 	/**
 	 * All extending classes should call this constructor.
 	 * 
 	 */
-	protected AbstractUIMAAggregateComponent(){
+	protected AbstractAggregateComponent(){
 		super();
 	}
 	
@@ -39,13 +39,13 @@ public abstract class AbstractUIMAAggregateComponent extends
 	
 	
 	@Override
-	public ArrayList<UIMAComponent> getSubComponents(){
+	public ArrayList<Component> getSubComponents(){
 		
 		if(subComponents == null){
 			if(Debug.DEBUGLEVEL >= Debug.WARNING){
 				Debug.out.println("Warning: Abstract getSubComponents method called on " + getName() + " when subComponents has not been initialised.");
 			}
-			subComponents = new ArrayList<UIMAComponent>();
+			subComponents = new ArrayList<Component>();
 		}
 		return subComponents;
 	}
@@ -59,14 +59,14 @@ public abstract class AbstractUIMAAggregateComponent extends
 	 * @param component to insert
 	 */
 	@Override
-	public void addSubComponent(int position, UIMAComponent component) throws InvalidPositionException{
+	public void addSubComponent(int position, Component component) throws InvalidPositionException{
 		
 		//Check subComponents is initialised
 		if(subComponents==null){
 			if(Debug.DEBUGLEVEL >= Debug.WARNING){
 				Debug.out.println("Warning: Abstract addSubComponents method called on " + getName() + " when subComponents has not been initialised.");
 			}
-			subComponents = new ArrayList<UIMAComponent>();
+			subComponents = new ArrayList<Component>();
 		}
 		
 		//Check component is not already a subComponent
@@ -88,14 +88,14 @@ public abstract class AbstractUIMAAggregateComponent extends
 	
 
 	@Override
-	public void reorderSubComponent(UIMAComponent component, int position) throws InvalidPositionException {
+	public void reorderSubComponent(Component component, int position) throws InvalidPositionException {
 		
 		//Check subComponents is initialised
 		if(subComponents==null){
 			if(Debug.DEBUGLEVEL >= Debug.WARNING){
 				Debug.out.println("Warning: Abstract reorderSubComponent method called on " + getName() + " when subComponents has not been initialised.");
 			}
-			subComponents = new ArrayList<UIMAComponent>();
+			subComponents = new ArrayList<Component>();
 		}
 		
 		//Check subComponents contains component
@@ -136,14 +136,14 @@ public abstract class AbstractUIMAAggregateComponent extends
 	 * @param component to add
 	 */
 	@Override
-	public void addSubComponent(UIMAComponent component){
+	public void addSubComponent(Component component){
 		
 		//Check subComponents is initialised
 		if(subComponents==null){
 			if(Debug.DEBUGLEVEL >= Debug.WARNING){
 				Debug.out.println("Warning: Abstract addSubComponents method called on " + getName() + " when subComponents has not been initialised.");
 			}
-			subComponents = new ArrayList<UIMAComponent>();
+			subComponents = new ArrayList<Component>();
 		}
 		
 		//Check component is not already a subComponent
@@ -157,7 +157,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 	}
 	
 	@Override
-	public void removeSubComponent(UIMAComponent component){
+	public void removeSubComponent(Component component){
 		
 		if(!subComponents.contains(component)){
 			return;
@@ -169,19 +169,19 @@ public abstract class AbstractUIMAAggregateComponent extends
 	}
 	
 	@Override
-	public void setSubComponents(ArrayList<UIMAComponent> components){
+	public void setSubComponents(ArrayList<Component> components){
 		
 		if(subComponents.equals(components)){
 			return;
 		}
 		
-		for(UIMAComponent oldComponent : subComponents){
+		for(Component oldComponent : subComponents){
 			oldComponent.setSuperComponent(null);
 		}
 		
-		subComponents = new ArrayList<UIMAComponent>();
+		subComponents = new ArrayList<Component>();
 		subComponents.addAll(components);
-		for(UIMAComponent newComponent : subComponents){
+		for(Component newComponent : subComponents){
 			newComponent.setSuperComponent(this);
 		}
 		
@@ -200,7 +200,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 		setComponentChanged();
 		
 		for(SubComponentsChangedListener listener : subComponentAddedRemovedListeners){
-			listener.subComponentAddRemoved(this.subComponents);
+			listener.subComponentsChanged();
 		}
 		
 	}
@@ -208,28 +208,28 @@ public abstract class AbstractUIMAAggregateComponent extends
 
 	//The following methods default to always allowing modifications to the model, override this behaviour when appropriate.
 	@Override
-	public boolean canAddSubComponent(UIMAComponent component, int position){
+	public boolean canAddSubComponent(Component component, int position){
 		
 		return true;
 	}
 	
 	@Override
-	public boolean canAddSubComponent(UIMAComponent component){
+	public boolean canAddSubComponent(Component component){
 		return true;
 	}
 	
 	@Override
-	public boolean canRemoveSubComponent(UIMAComponent component){
+	public boolean canRemoveSubComponent(Component component){
 		return true;
 	}
 	
 	@Override
-	public boolean canSetSubComponents(ArrayList<UIMAComponent> components){
+	public boolean canSetSubComponents(ArrayList<Component> components){
 		return true;
 	}
 
 	@Override
-	public boolean canReorderSubComponent(UIMAComponent component, int position){
+	public boolean canReorderSubComponent(Component component, int position){
 		return true;
 	}
 	
@@ -237,7 +237,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 	public void setComponentSaved(){
 		if(checkUnsavedChanges()){
 			super.setComponentSaved();
-			for(UIMAComponent subComponent : subComponents){
+			for(Component subComponent : subComponents){
 				subComponent.setComponentSaved();
 			}
 		}
@@ -247,7 +247,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 	public void setLocked(){
 		setLocked(LockStatusEnum.DIRECTLOCK);
 		
-		for(UIMAComponent child : subComponents){
+		for(Component child : subComponents){
 			child.indirectlyLocked();
 		}
 	}
@@ -256,7 +256,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 	public void setUnlocked(){
 		setLocked(LockStatusEnum.UNLOCKED);
 		
-		for(UIMAComponent child : subComponents){
+		for(Component child : subComponents){
 			child.indirectlyUnlocked();
 		}
 	}
@@ -266,7 +266,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 		if(lockStatus!=LockStatusEnum.DIRECTLOCK){
 			setLocked(LockStatusEnum.INDIRECTLOCK);
 			
-			for(UIMAComponent child : subComponents){
+			for(Component child : subComponents){
 				child.indirectlyLocked();
 			}
 		}
@@ -277,7 +277,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 		if(lockStatus!=LockStatusEnum.DIRECTLOCK){
 			setLocked(LockStatusEnum.UNLOCKED);
 			
-			for(UIMAComponent child : subComponents){
+			for(Component child : subComponents){
 				child.indirectlyUnlocked();
 			}
 		}

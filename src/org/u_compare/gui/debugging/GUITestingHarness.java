@@ -10,7 +10,7 @@ import org.u_compare.gui.WorkflowTabbedPane;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.library.LibraryPane;
-import org.u_compare.gui.model.UIMAWorkflow;
+import org.u_compare.gui.model.Workflow;
 
 public class GUITestingHarness {
 
@@ -21,9 +21,9 @@ public class GUITestingHarness {
 		
 		//Construct an example model
 		//UIMAWorkflow workflow = ExampleWorkflowFactory.simpleWithParameters();
-		//UIMAWorkflow workflow = ExampleWorkflowFactory.aggregate();
+		Workflow workflow = ExampleWorkflowFactory.aggregate();
 		//UIMAWorkflow workflow = new UIMAWorkflow();
-		UIMAWorkflow workflow = ExampleWorkflowFactory.deepAggregate(3,2);
+		//UIMAWorkflow workflow = ExampleWorkflowFactory.deepAggregate(3,2);
 		
 		//Construct the associated controller
 		ComponentController workflowModel = new ComponentController(workflow);
@@ -48,6 +48,8 @@ public class GUITestingHarness {
 		UConnectSplitPane uConnectSplit = new UConnectSplitPane(tabbedPane,libraryPane);
 		
 		new TestWindow("GUITestingHarness", uConnectSplit);
+		
+		
 	}
 	
 }

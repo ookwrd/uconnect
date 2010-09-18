@@ -13,7 +13,7 @@ import org.u_compare.gui.model.parameters.Parameter;
  * 
  * @author Luke Mccrohon
  */
-public interface UIMAComponent{
+public interface Component{
 
 	
 	/**
@@ -30,7 +30,7 @@ public interface UIMAComponent{
 	 * 
 	 * @return	An arraylist containing this components direct subcomponents. 
 	 */
-	public ArrayList<UIMAComponent> getSubComponents();
+	public ArrayList<Component> getSubComponents();
 	
 	/**
 	 * Checks if this component represents a workflow. 
@@ -44,7 +44,7 @@ public interface UIMAComponent{
 	 * 
 	 * @return	This components superComponent if one exists, null otherwise.
 	 */
-	public UIMAComponent getSuperComponent();
+	public Component getSuperComponent();
 	
 	/**
 	 * Set the super component of this component.
@@ -53,7 +53,7 @@ public interface UIMAComponent{
 	 * 
 	 * @param superComponent	The new super component.
 	 */
-	public void setSuperComponent(UIMAComponent superComponent);
+	public void setSuperComponent(Component superComponent);
 	
 	/**
 	 * Return the name of this component.

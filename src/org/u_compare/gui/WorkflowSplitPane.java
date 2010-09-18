@@ -15,7 +15,7 @@ public class WorkflowSplitPane extends JSplitPane {
 	
 	// Configuration
 	private static final boolean ONE_TOUCH_EXPANDABLE = true;
-	private static final double SEPARATOR_START_LOCATION_FROM_BOTTOM = 0.9D;
+	private static final double SEPARATOR_START_LOCATION_FROM_BOTTOM = 0.2;
 	private static final int SPLIT_ORIENTATION = JSplitPane.VERTICAL_SPLIT;
 	
 	public WorkflowSplitPane(WorkflowPane workflowPane,

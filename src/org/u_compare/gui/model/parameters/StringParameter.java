@@ -1,7 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
-import org.u_compare.gui.StringConfigPanel;
-import org.u_compare.gui.control.StringConfigController;
+import org.u_compare.gui.StringParameterPanel;
+import org.u_compare.gui.control.StringParamaterController;
 
 public class StringParameter extends AbstractParameter{
 
@@ -24,8 +24,8 @@ public class StringParameter extends AbstractParameter{
 		}
 	}*/
 
-	public StringConfigPanel getConfigurationPane(StringConfigController controller) {
-		return new StringConfigPanel(this, controller, parameter);
+	public StringParameterPanel getConfigurationPane(StringParamaterController controller) {
+		return new StringParameterPanel(this, controller, parameter);
 	}
 
 	public void update(String input) throws InvalidInputException {

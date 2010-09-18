@@ -14,7 +14,7 @@ public class UConnectSplitPane extends JSplitPane {
 	
 	// Configuration
 	private static final boolean ONE_TOUCH_EXPANDABLE = true;
-	private static final int SEPARATOR_START_LOCATION_FROM_BOTTOM = 480;//TODO
+	private static final int SEPARATOR_START_LOCATION_FROM_LEFT = 480;
 	private static final int SPLIT_ORIENTATION = JSplitPane.HORIZONTAL_SPLIT;
 	
 	public UConnectSplitPane(WorkflowTabbedPane workflowPane, LibraryPane libraryPane){
@@ -27,7 +27,7 @@ public class UConnectSplitPane extends JSplitPane {
 		
 		this.setOneTouchExpandable(UConnectSplitPane.ONE_TOUCH_EXPANDABLE);
 		this.setDividerLocation(
-				UConnectSplitPane.SEPARATOR_START_LOCATION_FROM_BOTTOM);
+				UConnectSplitPane.SEPARATOR_START_LOCATION_FROM_LEFT);
 		this.setOrientation(UConnectSplitPane.SPLIT_ORIENTATION);
 		
 		

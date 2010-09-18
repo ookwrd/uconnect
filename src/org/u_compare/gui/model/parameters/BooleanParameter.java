@@ -1,13 +1,13 @@
 package org.u_compare.gui.model.parameters;
 
-import org.u_compare.gui.BooleanConfigPanel;
-import org.u_compare.gui.control.BooleanConfigController;
+import org.u_compare.gui.BooleanParameterPanel;
+import org.u_compare.gui.control.BooleanParameterController;
 
 public class BooleanParameter extends
 		AbstractParameter {
 
 	private boolean parameter;
-	private BooleanConfigPanel panel;
+	private BooleanParameterPanel panel;
 	
 	public BooleanParameter(String description, boolean value){
 		super(description);
@@ -25,11 +25,11 @@ public class BooleanParameter extends
 		}
 	}*/
 	
-	public BooleanConfigPanel getConfigurationPane(BooleanConfigController controller) {
+	public BooleanParameterPanel getConfigurationPane(BooleanParameterController controller) {
 		
 		//TODO what if its already constructed?
 		
-		panel = new BooleanConfigPanel(this, controller,false);//TODO make final argument sensible
+		panel = new BooleanParameterPanel(this, controller,false);//TODO make final argument sensible
 		return panel;
 	}
 

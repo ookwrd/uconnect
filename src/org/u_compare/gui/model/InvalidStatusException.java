@@ -1,6 +1,6 @@
 package org.u_compare.gui.model;
 
-import org.u_compare.gui.model.UIMAWorkflow.WorkflowStatus;
+import org.u_compare.gui.model.Workflow.WorkflowStatus;
 
 /**
  * Exception thrown when an action is performed on the workflow when it is not in a status to process that action.

@@ -2,14 +2,12 @@ package org.u_compare.gui.control;
 
 import java.util.ArrayList;
 import org.u_compare.gui.DraggableJPanel;
-import org.u_compare.gui.ParameterPanel;
-import org.u_compare.gui.WorkflowComponent;
+import org.u_compare.gui.ComponentPanel;
 import org.u_compare.gui.model.InvalidPositionException;
 import org.u_compare.gui.model.InvalidStatusException;
-import org.u_compare.gui.model.UIMAAggregateComponent;
-import org.u_compare.gui.model.UIMAComponent;
-import org.u_compare.gui.model.UIMAWorkflow;
-import org.u_compare.gui.model.parameters.Parameter;
+import org.u_compare.gui.model.AggregateComponent;
+import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.Workflow;
 
 /**
  * 
@@ -21,17 +19,17 @@ import org.u_compare.gui.model.parameters.Parameter;
 public class ComponentController implements DragAndDropComponentController {
 
 	//The model corresponding to this class
-	private UIMAComponent component;
+	private Component component;
 	
 	//The view corresponding to this class
-	private WorkflowComponent componentView;
+	private ComponentPanel componentView;
 	
 	//The parent controller of this object if it exists
 	private ComponentController parent;
 	
 	private ArrayList<ComponentController> subControllers = new ArrayList<ComponentController>();
 	private ArrayList<DropTargetController> dropTargets = new ArrayList<DropTargetController>();
-	private ArrayList<ConfigController> parameterControllers = new ArrayList<ConfigController>();
+	private ArrayList<ParameterController> parameterControllers = new ArrayList<ParameterController>();
 	
 	//private boolean allowChanges = true;
 	
@@ -41,28 +39,10 @@ public class ComponentController implements DragAndDropComponentController {
 	 * @param componentModel
 	 * @throws NullPointerException
 	 */
-	public ComponentController(UIMAComponent component) {
+	public ComponentController(Component component) {
 		
 		this.component = component;
-		
-		/*ArrayList<WorkflowComponent> subViews = new ArrayList<WorkflowComponent>();
-		for (UIMAComponent subModel : component.getSubComponents()) {
-			ComponentController subController = new ComponentController(subModel);
-			subViews.add(subController.getView());
-			subControllers.add(subController);
-			
-			subController.setParent(this);
-		}*/
-		
-		ArrayList<ParameterPanel> paramViews = new ArrayList<ParameterPanel>();
-		for (Parameter param : component.getConfigurationParameters()){
-			ConfigController paramController = ConfigControllerFactory.getController(this, param);
-			paramViews.add(paramController.getView());
-			parameterControllers.add(paramController);
-		}
-		
-		this.componentView = new WorkflowComponent(/*subViews,*/ paramViews, component, this);
-		
+		this.componentView = new ComponentPanel(component, this);
 	}
 	
 	private void setParent(ComponentController parent){
@@ -74,7 +54,7 @@ public class ComponentController implements DragAndDropComponentController {
 	 * 
 	 * @return
 	 */
-	public WorkflowComponent getView(){
+	public ComponentPanel getView(){
 	
 		return this.componentView;
 	}
@@ -85,6 +65,14 @@ public class ComponentController implements DragAndDropComponentController {
 		addDropTarget(control);
 	}
 	
+	/**
+	 * Called by componentView to set relevant controllers.
+	 * 
+	 * @param param
+	 */
+	public void addParamaterController(ParameterController param){
+		parameterControllers.add(param);
+	}
 	
 	public void insert(ComponentController component, DropTargetController following){
 		
@@ -150,9 +138,9 @@ public class ComponentController implements DragAndDropComponentController {
 		}
 		
 		if(!subControllers.contains(newControl)){
-			return ((UIMAAggregateComponent)component).canAddSubComponent(newControl.component, position);
+			return ((AggregateComponent)component).canAddSubComponent(newControl.component, position);
 		}else{
-			return ((UIMAAggregateComponent)component).canReorderSubComponent(newControl.component, position);
+			return ((AggregateComponent)component).canReorderSubComponent(newControl.component, position);
 		}
 			
 	}
@@ -186,7 +174,7 @@ public class ComponentController implements DragAndDropComponentController {
 		if(parent != null){
 			return parent.canRemoveSubComponent(this);
 		}else{
-			return true;
+			return true;//Corresponds to not being in a postion
 		}
 	}
 	
@@ -198,7 +186,7 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public boolean canRemoveSubComponent(ComponentController toRemove){
 		if(!isLocked() && component.isAggregate()){
-			return ((UIMAAggregateComponent)component).canRemoveSubComponent(toRemove.component);
+			return ((AggregateComponent)component).canRemoveSubComponent(toRemove.component);
 		}else{
 			return false;
 		}
@@ -219,11 +207,11 @@ public class ComponentController implements DragAndDropComponentController {
 			try {
 				if(!subControllers.contains(subComponent)){
 					subComponent.removeComponent();
-					((UIMAAggregateComponent)component).addSubComponent(position, subComponent.component);
+					((AggregateComponent)component).addSubComponent(position, subComponent.component);
 					subComponent.setParent(this);
 					subControllers.add(subComponent);
 				}else{
-					((UIMAAggregateComponent)component).reorderSubComponent(subComponent.component,position);
+					((AggregateComponent)component).reorderSubComponent(subComponent.component,position);
 				}
 			} catch (InvalidPositionException e) {
 				//TODO this should never happen
@@ -239,11 +227,13 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public void removeComponent(){
 		
-		//Should never be called on the top level workflow component, so parent should not be null.
+		//Should never be called on the top level workflow component
 		assert(parent != null);
 	
 		if(canRemove()){
-			parent.removeSubComponent(this);
+			if(parent != null){//If it has a parent already, remove it
+				parent.removeSubComponent(this);
+			}
 		}else{
 			//TODO some action
 		}
@@ -264,7 +254,7 @@ public class ComponentController implements DragAndDropComponentController {
 		subControllers.remove(toRemove);
 		
 		//Remove from model
-		((UIMAAggregateComponent)component).removeSubComponent(toRemove.component);
+		((AggregateComponent)component).removeSubComponent(toRemove.component);
 	}
 	
 	
@@ -348,8 +338,6 @@ public class ComponentController implements DragAndDropComponentController {
 	 * 
 	 */
 	public void setDragged(){
-		
-		System.out.println("Controller: component being dragged.");
 		
 		//TODO make this Bubble up the tree instead of using a singleton.
 		
@@ -443,16 +431,23 @@ public class ComponentController implements DragAndDropComponentController {
 	}
 
 	public void setTitle(String title) {
-		// TODO implement this method (and make the corresponding corrections to the component)
 		
 		//TODO what happens if title can't be changed?
+		assert(component.getLockedStatus()==false);
+		
+		// TODO implement this method (and make the corresponding corrections to the component)
+		
 	}
 
 	public void setDescription(String descriptionText) {
+		
+		//TODO what happens if description cant be changed?
+		assert(component.getLockedStatus()==false);
+		
+		
 		// TODO implement this method (and make the corresponding corrections to the component)
 		
 		
-		//TODO what happens if description cant be changed?
 	}
 	
 	
@@ -467,7 +462,7 @@ public class ComponentController implements DragAndDropComponentController {
 		assert(component.isWorkflow());
 	
 		try {
-			((UIMAWorkflow)component).runWorkflow();
+			((Workflow)component).runWorkflow();
 		} catch (InvalidStatusException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -480,7 +475,7 @@ public class ComponentController implements DragAndDropComponentController {
 		assert(component.isWorkflow());
 		
 		try {
-			((UIMAWorkflow)component).runWorkflow();
+			((Workflow)component).runWorkflow();
 		} catch (InvalidStatusException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -493,7 +488,7 @@ public class ComponentController implements DragAndDropComponentController {
 		assert(component.isWorkflow());
 		
 		try {
-			((UIMAWorkflow)component).runWorkflow();
+			((Workflow)component).runWorkflow();
 		} catch (InvalidStatusException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

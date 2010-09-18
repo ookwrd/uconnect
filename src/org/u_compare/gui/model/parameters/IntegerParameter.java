@@ -1,6 +1,6 @@
 package org.u_compare.gui.model.parameters;
 
-import org.u_compare.gui.StringConfigPanel;
+import org.u_compare.gui.StringParameterPanel;
 import org.u_compare.gui.control.IntegerConfigController;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
@@ -27,8 +27,8 @@ public class IntegerParameter extends AbstractParameter{
 		}
 	}*/
 	
-	public StringConfigPanel getConfigurationPane(IntegerConfigController controller) {
-		return new StringConfigPanel(this, controller, Integer.toString(value));
+	public StringParameterPanel getConfigurationPane(IntegerConfigController controller) {
+		return new StringParameterPanel(this, controller, Integer.toString(value));
 	}
 	
 	@Override

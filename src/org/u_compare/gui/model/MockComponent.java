@@ -15,7 +15,7 @@ import org.u_compare.gui.model.parameters.Parameter;
  * @author lukemccrohon
  *
  */
-public class MockUIMAComponent extends AbstractUIMAComponent implements UIMAComponent {
+public class MockComponent extends AbstractComponent implements Component {
 
 	//Special Identifier to track the location of the component.
 	private String identifier;
@@ -23,7 +23,7 @@ public class MockUIMAComponent extends AbstractUIMAComponent implements UIMAComp
 	/**
 	 * Construct new placeholder component without a specified identifier.
 	 */
-	public MockUIMAComponent(){
+	public MockComponent(){
 		super();
 		identifier = "unspecified";
 		
@@ -35,7 +35,7 @@ public class MockUIMAComponent extends AbstractUIMAComponent implements UIMAComp
 	/**
 	 * Construct new placeholder component with a list of configuration Parameters
 	 */
-	public MockUIMAComponent(ArrayList<Parameter> params){
+	public MockComponent(ArrayList<Parameter> params){
 		super();
 		identifier = "unspecified";
 		
@@ -46,7 +46,7 @@ public class MockUIMAComponent extends AbstractUIMAComponent implements UIMAComp
 	 * Construct new placeholder component and assign an identifier for testing purposes.
 	 * @param identifier
 	 */
-	public MockUIMAComponent(String identifier){
+	public MockComponent(String identifier){
 		super();
 		this.identifier = identifier;
 		setDescription(identifier);

@@ -1,8 +1,6 @@
 package org.u_compare.gui.control;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.ParameterPanel;
 import org.u_compare.gui.WorkflowComponent;
@@ -123,7 +121,11 @@ public class ComponentController implements DragAndDropComponentController {
 	}
 	
 	public void setLocked(boolean lockedStatus){
-		component.setLockedStatus(lockedStatus);
+		if(lockedStatus){
+			component.setLocked();
+		}else{
+			component.setUnlocked();
+		}
 	}
 	
 	public void toggleMinimized(){
@@ -137,18 +139,39 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public boolean canAddSubComponent(ComponentController newControl, int position){
 		
-		//TODO prohibit dropping of self on descendents
-		
-		if(!isLocked() && component.isAggregate()){
-			if(!subControllers.contains(newControl)){
-				return ((UIMAAggregateComponent)component).canAddSubComponent(newControl.component, position);
-			}else{
-				return ((UIMAAggregateComponent)component).canReorderSubComponent(newControl.component, position);
-			}
-		}else{
+		if(
+				!newControl.canRemove()			//check if newControl is able to be moved from current location
+				||	isLocked()					//check if this component is locked.
+				||	!component.isAggregate()	//make sure this component is an aggregate
+				|| 	isAnscestor(newControl)		//Prohibit dropping of anscestors
+			)
+		{
 			return false;
 		}
 		
+		if(!subControllers.contains(newControl)){
+			return ((UIMAAggregateComponent)component).canAddSubComponent(newControl.component, position);
+		}else{
+			return ((UIMAAggregateComponent)component).canReorderSubComponent(newControl.component, position);
+		}
+			
+	}
+	
+	/**
+	 * Check whether the specified components is an anscestor of this component.
+	 * 
+	 * @param comp
+	 * @return
+	 */
+	private boolean isAnscestor(ComponentController comp){
+		if(this == comp){
+			return true;
+		}
+		if(parent == null){
+			return false;
+		}else{
+			return parent.isAnscestor(comp);
+		}
 	}
 	
 	/**
@@ -156,7 +179,10 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public boolean canRemove(){
 		
-		//TODO check editable.
+		if(component.getLockedStatus()){
+			return false;
+		}
+		
 		if(parent != null){
 			return parent.canRemoveSubComponent(this);
 		}else{
@@ -188,7 +214,7 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public void addSubComponent(ComponentController subComponent, int position) throws InvalidSubComponentException{
 		
-		if(component.isAggregate() && canAddSubComponent(subComponent, position) && subComponent.canRemove()){
+		if(canAddSubComponent(subComponent, position)){
 		
 			try {
 				if(!subControllers.contains(subComponent)){
@@ -213,12 +239,9 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public void removeComponent(){
 		
-		if(parent == null){
-			//Should never be called on the top level workflow component, so parent should not be null.
-			//TODO debug info
-			return;
-		}
-		
+		//Should never be called on the top level workflow component, so parent should not be null.
+		assert(parent != null);
+	
 		if(canRemove()){
 			parent.removeSubComponent(this);
 		}else{
@@ -269,7 +292,7 @@ public class ComponentController implements DragAndDropComponentController {
 	
 		System.out.println("something dropped on component drop target " + dropTargetToPosition(position));
 		
-		if(!droppableOn(position)){//Ignore drop
+		if(!droppableOnChild(position)){//Ignore drop
 			System.out.println("Ignoring drop on invalid target");
 			return;
 		}
@@ -289,16 +312,35 @@ public class ComponentController implements DragAndDropComponentController {
 	 * Responds to the currently dragged Component being dropped directly on this component.
 	 * 
 	 */
-	public void setDropLocation(){
-		
-		//TODO
-
-		System.out.println("Controller: something dropped on component.");
-		
-		
-		
+	public void somethingDroppedOnComponent(){
 		setDragExit();
 	}
+	
+	/**
+	 * Is it possible to drop the currently dragged component at the specified position?
+	 * 
+	 * (Used for determining mouse over highlighting when dragging)
+	 * 
+	 * @param position location to drop at.
+	 * @return True if currently dragged component can be dropped there.
+	 */
+	public boolean droppableOnChild(DropTargetController position) {
+		
+		return canAddSubComponent(getCurrentlyDragged(),dropTargetToPosition(position));
+	}
+	
+	/**
+	 * Is it possible to drop the currently dragged component directly on this component?
+	 * 
+	 * (Used for determining mouse over highlighting when dragging)
+	 * 
+	 * @return True if currently dragged component can be dropped here.
+	 */
+	public boolean droppableOnComponent(){
+		//Don't currently support direct drops on components.
+		return false;
+	}
+	
 	
 	
 	/**
@@ -330,7 +372,7 @@ public class ComponentController implements DragAndDropComponentController {
 		for(DropTargetController child : dropTargets){
 			
 			//TODO these show be a different kind of highlighting
-			if(droppableOn(child)){
+			if(droppableOnChild(child)){
 				child.view.setDragOverHighlightingDroppable();
 			}else{
 				//TODO
@@ -352,45 +394,7 @@ public class ComponentController implements DragAndDropComponentController {
 
 
 
-	/**
-	 * Is it possible to drop the currently dragged component at the specified position?
-	 * 
-	 * (Used for determining mouse over highlighting when dragging)
-	 * 
-	 * @param position location to drop at.
-	 * @return True if currently dragged component can be dropped there.
-	 */
-	public boolean droppableOn(DropTargetController position) {
-		
-		System.out.println("Hovering over drop target:" + dropTargetToPosition(position));
-		
-		return canAddSubComponent(getCurrentlyDragged(),dropTargetToPosition(position));
-	}
-	
-	/**
-	 * Is it possible to drop the currently dragged component directly on this component?
-	 * 
-	 * (Used for determining mouse over highlighting when dragging)
-	 * 
-	 * @return True if currently dragged component can be dropped here.
-	 */
-	public boolean droppableOnComponent(){
 
-		System.out.println("Hovering over drop component");
-		
-		/* Check to see if it can be dropped on any of the 
-		 * descendant drop targets, return true if it can
-		 * false otherwise. 
-		 */
-		for(int i = 0; i < dropTargets.size();i++){
-			canAddSubComponent(getCurrentlyDragged(),i);
-		}
-		
-		//TODO make this compatible with the actual drop method
-		
-		return false;
-	}
-	
 	
 	/**
 	 * Converts a drop target controller to its position index.

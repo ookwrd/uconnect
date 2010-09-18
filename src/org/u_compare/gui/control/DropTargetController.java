@@ -39,7 +39,7 @@ public class DropTargetController implements DragAndDropComponentController {
 	}
 
 	@Override
-	public void setDropLocation() {
+	public void somethingDroppedOnComponent() {
 		
 		parent.somethingDroppedOnChild(this);
 		
@@ -48,7 +48,7 @@ public class DropTargetController implements DragAndDropComponentController {
 	@Override
 	public void setDragEnter() {
 
-		if(parent.droppableOn(this)){
+		if(parent.droppableOnChild(this)){
 			view.setDragOverHighlightingDroppable();
 		}else{
 			view.setDragOverHighlightingUndroppable();

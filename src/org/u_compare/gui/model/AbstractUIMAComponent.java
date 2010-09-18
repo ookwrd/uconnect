@@ -25,7 +25,15 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();
 	private boolean unsavedChanges = true;
 	private boolean minimized = false;
-	private LockStatusEnum lockStatus = LockStatusEnum.UNLOCKED;
+	protected LockStatusEnum lockStatus = LockStatusEnum.UNLOCKED;
+	
+	/**
+	 * Possible values of the components internal locked status
+	 * UNLOCKED 
+	 * DIRECTLOCK a lock was directly placed on this component
+	 * INDIRECTLOCK component is locked due to a lock being placed on a parent component
+	 */
+	public enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK};
 	
 	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
 	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
@@ -207,25 +215,57 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 	
 	@Override
 	public boolean getLockedStatus(){
+		return toBooleanLock(lockStatus);
+	}
+	
+	/**
+	 * Converts the internal lock status value to a boolean representing whether it represents a lock or not.
+	 * 
+	 * @param in
+	 * @return
+	 */
+	private boolean toBooleanLock(LockStatusEnum in){
 		if(lockStatus == LockStatusEnum.DIRECTLOCK || lockStatus == LockStatusEnum.INDIRECTLOCK){
 			return true;
 		}else{
 			return false;
 		}
-		
 	}
 	
 	@Override
-	public void setLockedStatus(Boolean locked){
-		
-		if(lockStatus != LockStatusEnum.INDIRECTLOCK){
-			LockStatusEnum lockedStatus = locked?LockStatusEnum.DIRECTLOCK:LockStatusEnum.UNLOCKED;
-			if(this.lockStatus != lockedStatus){
-				
-				this.lockStatus = lockedStatus;
-				notifyLockedStatusChangeListeners();
-				//TODO do we need to update unsavedChanges? probably
-			}
+	public void setLocked(){
+		setLocked(LockStatusEnum.DIRECTLOCK);
+	}
+	
+	@Override
+	public void setUnlocked(){
+		setLocked(LockStatusEnum.UNLOCKED);
+	}
+	
+	@Override
+	public void indirectlyLocked(){
+		if(lockStatus != LockStatusEnum.DIRECTLOCK){
+			setLocked(LockStatusEnum.INDIRECTLOCK);
+		}
+	}
+	
+	@Override
+	public void indirectlyUnlocked(){
+		if(lockStatus != LockStatusEnum.DIRECTLOCK){
+			setLocked(LockStatusEnum.UNLOCKED);
+		}
+	}
+	
+	/**
+	 * Use this method to update the lockStatus field as it ensures correct listeners are notified.
+	 * 
+	 * @param val
+	 */
+	protected void setLocked(LockStatusEnum val) {
+		if(lockStatus != val){
+			lockStatus = val;
+			notifyLockedStatusChangeListeners();
+			//TODO change listeners
 		}
 	}
 	

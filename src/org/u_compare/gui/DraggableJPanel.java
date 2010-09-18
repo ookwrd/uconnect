@@ -240,7 +240,7 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 			if (debug) this.panel.setBackground(Color.BLUE);
 			//this.panel.setVisible(false);
 			
-			this.panel.controller.setDropLocation();
+			this.panel.controller.somethingDroppedOnComponent();
 			
 	        try {
 

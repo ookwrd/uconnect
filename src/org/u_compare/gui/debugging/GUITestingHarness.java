@@ -21,8 +21,9 @@ public class GUITestingHarness {
 		
 		//Construct an example model
 		//UIMAWorkflow workflow = ExampleWorkflowFactory.simpleWithParameters();
-		UIMAWorkflow workflow = ExampleWorkflowFactory.aggregate();
+		//UIMAWorkflow workflow = ExampleWorkflowFactory.aggregate();
 		//UIMAWorkflow workflow = new UIMAWorkflow();
+		UIMAWorkflow workflow = ExampleWorkflowFactory.deepAggregate(3,2);
 		
 		//Construct the associated controller
 		ComponentController workflowModel = new ComponentController(workflow);

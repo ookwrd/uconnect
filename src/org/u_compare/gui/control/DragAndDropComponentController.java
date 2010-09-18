@@ -16,7 +16,7 @@ public interface DragAndDropComponentController {
 	/**
 	 * The current dragged component has been dropped on this component.
 	 */
-	public void setDropLocation();
+	public void somethingDroppedOnComponent();
 	
 	/**
 	 * The currently dragged component is now being dragged over this component.

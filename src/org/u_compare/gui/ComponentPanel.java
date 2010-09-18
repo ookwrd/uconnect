@@ -32,6 +32,7 @@ import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.control.ParameterControllerFactory;
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.debugging.GUITestingHarness;
+import org.u_compare.gui.model.DescriptionChangeListener;
 import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.MinimizedStatusChangeListener;
 import org.u_compare.gui.model.SubComponentsChangedListener;
@@ -53,7 +54,7 @@ import org.u_compare.gui.model.parameters.Parameter;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends DraggableJPanel implements
-		SubComponentsChangedListener, LockedStatusChangeListener, MinimizedStatusChangeListener, WorkflowStatusListener {
+		SubComponentsChangedListener, LockedStatusChangeListener, MinimizedStatusChangeListener, WorkflowStatusListener, DescriptionChangeListener {
 
 	private final static String ICON_CLOSE_PATH = "gfx/icon_close1.png";
 	private final static String ICON_CLOSE_PATH_HIGHLIGHT = "gfx/icon_close1highlight.png";
@@ -134,6 +135,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		//Register Listeners
 		component.registerLockedStatusChangeListener(this);
 		component.registerMinimizedStatusChangeListener(this);
+		component.registerComponentDescriptionChangeListener(this);
 		
 		if(component.isWorkflow()){
 			((Workflow)component).registerWorkflowStatusListener(this);
@@ -168,6 +170,9 @@ public class ComponentPanel extends DraggableJPanel implements
 			setupButtonPanel();
 			this.add(topPanel, BorderLayout.NORTH);
 
+		}else{
+			setupTitlePanel();
+			this.add(topPanel, BorderLayout.NORTH);
 		}
 
 		setupInnerPanel();
@@ -211,8 +216,10 @@ public class ComponentPanel extends DraggableJPanel implements
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					//JPanel target = (JPanel) e.getSource();
-					titleLabel.setVisible(false);
-					titleTextField.setVisible(true);
+					if(!component.getLockedStatus()){
+						titleLabel.setVisible(false);
+						titleTextField.setVisible(true);
+					}
 				}
 			}
 		});
@@ -389,8 +396,10 @@ public class ComponentPanel extends DraggableJPanel implements
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					//JPanel target = (JPanel) e.getSource();
-					description.setVisible(false);
-					editableDescription.setVisible(true);
+					if(!component.getLockedStatus()){
+						description.setVisible(false);
+						editableDescription.setVisible(true);
+					}
 				}
 			}
 		});
@@ -619,7 +628,7 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	}
 
-	public Component getUIMAComponent() {
+	public Component getComponent() {
 		return this.component;
 	}
 
@@ -698,5 +707,12 @@ public class ComponentPanel extends DraggableJPanel implements
 		statusLabel.setText(STATUS_PREFIX + workflow.getStatus());
 		
 		//TODO update Buttons
+	}
+
+	@Override
+	public void ComponentDescriptionChanged(Component component1) {
+		
+		System.out.println("Components name changed to: " +component.getName());
+		//TODO
 	}
 }

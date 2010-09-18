@@ -55,10 +55,6 @@ public class WorkflowTabbedPane extends JTabbedPane {
 	private final static String WORKFLOW_FAILED_PATH =
 		"gfx/workflow_failed.png";
 	
-	//TODO: Should be in the workflow controller? No, different statuses.
-	public enum WORKFLOW_TAB_STATUS {
-		STOPPED, RUNNING, FINISHED, PAUSED, FAILED;
-	}
 	
 	public WorkflowTabbedPane(WorkflowSplitPane splitPane) {
 		WorkflowTabbedPane.load_icons();
@@ -68,7 +64,6 @@ public class WorkflowTabbedPane extends JTabbedPane {
 		this.addWorkflow(splitPane);
 	}
 
-	//TODO: Static
 	private static synchronized void load_icons() {
 		if (WorkflowTabbedPane.icons_loaded == false) {
 			//TODO: Extract descriptions to static final fields
@@ -114,18 +109,22 @@ public class WorkflowTabbedPane extends JTabbedPane {
 	
 	//TODO: Where does it get it's title from?
 	public void addWorkflow(WorkflowSplitPane splitPane) {
+		
 		Component topComponent = splitPane.getWorkflowPane()
-				.getTopWorkflowComponent().getUIMAComponent();
+				.getTopWorkflowComponent().getComponent();
+		
+		splitPane.linkTabbedPane(this);
 		
 		//XXX: -1 if we have a "New tab"-tab
 		int inserted_index = this.getTabCount();
 		//TODO: Different mouse-over depending on if focused or not
 		// "Your current workflow" vs. "View this workflow"
-		this.addTab(topComponent.getName(), splitPane);	
+		this.addTab(topComponent.getName(), splitPane);
 		this.setToolTipTextAt(inserted_index, topComponent.getDescription());
 		this.setTabComponentAt(inserted_index,
 				new IconizedCloseableTabFlapComponent(this,
 						WorkflowTabbedPane.WORKFLOW_STOPPED));
+		
 	}
 	
 	@Override

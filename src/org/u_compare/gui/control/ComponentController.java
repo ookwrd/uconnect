@@ -432,8 +432,9 @@ public class ComponentController implements DragAndDropComponentController {
 
 	public void setTitle(String title) {
 		
-		//TODO what happens if title can't be changed?
 		assert(component.getLockedStatus()==false);
+		
+		component.setName(title);
 		
 		// TODO implement this method (and make the corresponding corrections to the component)
 		
@@ -441,9 +442,9 @@ public class ComponentController implements DragAndDropComponentController {
 
 	public void setDescription(String descriptionText) {
 		
-		//TODO what happens if description cant be changed?
 		assert(component.getLockedStatus()==false);
 		
+		component.setDescription(descriptionText);
 		
 		// TODO implement this method (and make the corresponding corrections to the component)
 		

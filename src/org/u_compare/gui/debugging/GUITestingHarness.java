@@ -1,5 +1,7 @@
 package org.u_compare.gui.debugging;
 
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 
 import org.u_compare.gui.UConnectSplitPane;
@@ -19,26 +21,31 @@ public class GUITestingHarness {
 		
 		//Workflow panel
 		
-		//Construct an example model
-		//UIMAWorkflow workflow = ExampleWorkflowFactory.simpleWithParameters();
-		Workflow workflow = ExampleWorkflowFactory.aggregate();
+
+		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
+		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
+		workflows.add(ExampleWorkflowFactory.aggregate());
 		//UIMAWorkflow workflow = new UIMAWorkflow();
-		//UIMAWorkflow workflow = ExampleWorkflowFactory.deepAggregate(3,2);
+		workflows.add(ExampleWorkflowFactory.deepAggregate(3,2));
 		
-		//Construct the associated controller
-		ComponentController workflowModel = new ComponentController(workflow);
+		WorkflowTabbedPane tabbedPane = null;
 		
-		// Construct the view
-		WorkflowPane workflowPane = new WorkflowPane(workflowModel.getView());
-		
-		ConsolePane consolePane = new ConsolePane(workflow);
-		WorkflowSplitPane splitPane = new WorkflowSplitPane(workflowPane, consolePane);
-		WorkflowTabbedPane tabbedPane = new WorkflowTabbedPane(splitPane);
-		
-		
+		for(Workflow workflow : workflows){
+			//TODO extract to a method
+			ComponentController workflowModel = new ComponentController(workflow);
+			
+			// Construct the view
+			WorkflowPane workflowPane = new WorkflowPane(workflowModel.getView());
+			
+			ConsolePane consolePane = new ConsolePane(workflow);
+			WorkflowSplitPane splitPane = new WorkflowSplitPane(workflowPane, consolePane);
+			
+			//tabbedPane.add(splitPane);
+			
+			if(tabbedPane == null){tabbedPane = new WorkflowTabbedPane(splitPane);}else{tabbedPane.addWorkflow(splitPane);}
+		}
 		
 		//Library panel
-		
 		LibraryPane libraryPane = new LibraryPane();
 		
 		

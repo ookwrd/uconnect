@@ -21,7 +21,6 @@ import javax.swing.ScrollPaneConstants;
  */
 @SuppressWarnings("serial")
 public class WorkflowPane extends JScrollPane implements Autoscroll {
-	//TODO: Buttons! Play, stop, etc., no, should go in the split pane
 	//TODO: Fix border handling, now there are two borders to the layout.
 	private ComponentPanel topComponent;
 	

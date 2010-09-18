@@ -37,6 +37,10 @@ import org.u_compare.gui.model.MinimizedStatusChangeListener;
 import org.u_compare.gui.model.SubComponentsChangedListener;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.Workflow;
+import org.u_compare.gui.model.WorkflowStatusListener;
+import org.u_compare.gui.model.AbstractComponent.LockStatusEnum;
+import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.parameters.Parameter;
 
 /**
@@ -49,7 +53,7 @@ import org.u_compare.gui.model.parameters.Parameter;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends DraggableJPanel implements
-		SubComponentsChangedListener, LockedStatusChangeListener, MinimizedStatusChangeListener {
+		SubComponentsChangedListener, LockedStatusChangeListener, MinimizedStatusChangeListener, WorkflowStatusListener {
 
 	private final static String ICON_CLOSE_PATH = "gfx/icon_close1.png";
 	private final static String ICON_CLOSE_PATH_HIGHLIGHT = "gfx/icon_close1highlight.png";
@@ -57,6 +61,8 @@ public class ComponentPanel extends DraggableJPanel implements
 	private final static String ICON_MIN_PATH = "gfx/icon_minimize1.png";
 	private final static String ICON_LOCKED_PATH = "gfx/icon_locked.png";
 	private final static String ICON_UNLOCKED_PATH = "gfx/icon_unlocked.png";
+	
+	private final static String STATUS_PREFIX = "Status: ";
 
 	private final static int PREFERRED_WIDTH = 300;
 
@@ -106,23 +112,39 @@ public class ComponentPanel extends DraggableJPanel implements
 	private ActionListener closeUnhighlight;
 	private BevelBorder highlighted;
 	private Border empty;
-	private JButton button;
 	private JPanel descriptionPanel;
+	private JPanel controlPanel;
+	private JLabel statusLabel;
 	private JTextArea description;
 	private JTextField editableDescription;
 	private String descriptionText;
-
+	private JButton runButton;
+	private JButton stopButton;
+	private ActionListener playListener;
+	private ActionListener stopListener;
+	
 	public ComponentPanel(Component component,
 			ComponentController controller) {
 		
 		super(controller);
 		this.controller = controller;
 
+		this.component = component;
+
+		//Register Listeners
 		component.registerLockedStatusChangeListener(this);
 		component.registerMinimizedStatusChangeListener(this);
 		
+		if(component.isWorkflow()){
+			((Workflow)component).registerWorkflowStatusListener(this);
+		}
+		if (component.isAggregate()) {
+			((AggregateComponent) component)
+					.registerSubComponentsChangedListener(this);
+		}
+		
+		//Set display properties
 		BODY_COLOR = defaultColor;
-
 		this.setOpaque(false);
 		
 		if (!component.isWorkflow()) {
@@ -130,74 +152,8 @@ public class ComponentPanel extends DraggableJPanel implements
 					BORDER_ROUNDING, BORDER_WIDTH, false));
 		}
 
-		// set the buttons
-		closeListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				removeComponent();
-			}
-		};
-
-		minListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				toggleSize();
-			}
-		};
-
-		lockListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				toggleLock();
-			}
-		};
-
-		titleListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				setTitle(titleTextField.getText());
-				titleTextField.setVisible(false);
-				titleLabel.setVisible(true);
-			}
-		};
-		
-		descriptionListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
-			}
-			
-		};
-
-		closeHighlight = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				closeButton.setBorderPainted(true);
-			}
-		};
-
-		closeUnhighlight = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				closeButton.setBorderPainted(false);
-			}
-		};
-
-		// set the layout
-		this.component = component;
-
-		if (component.isAggregate()) {
-			((AggregateComponent) component)
-					.registerSubComponentsChangedListener(this);
-		}
-
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layout);
-
-
-		
 
 		// set up a top panel (inside the inner panel) and layout
 		topPanel = new JPanel();
@@ -214,24 +170,27 @@ public class ComponentPanel extends DraggableJPanel implements
 
 		}
 
-
-
 		setupInnerPanel();
 		setupDescriptionPanel();
+		setupWorkflowControlPanel();
 		setupParameterPanel();
 		setupMinimizedStatus();
 		setupSubComponents();
-
-		// Set up the workflow panel as required.
-		/*if (component.isWorkflow()) {
-			Button b = new Button("Foo");
-			this.innerPanel.add(b);
-			b.setVisible(true);
-		}*/
 		
 	}
 	
 	private void setupTitlePanel(){
+		
+		titleListener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				setTitle(titleTextField.getText());
+				titleTextField.setVisible(false);
+				titleLabel.setVisible(true);
+			}
+		};
+		
+		
 		// add a title panel
 		titlePanel = new JPanel(new CardLayout());
 
@@ -262,6 +221,43 @@ public class ComponentPanel extends DraggableJPanel implements
 	}
 	
 	private void setupButtonPanel(){
+		
+		// set the buttons
+		closeListener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				removeComponent();
+			}
+		};
+
+		minListener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				toggleSize();
+			}
+		};
+
+		lockListener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				toggleLock();
+			}
+		};
+
+		closeHighlight = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				closeButton.setBorderPainted(true);
+			}
+		};
+
+		closeUnhighlight = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				closeButton.setBorderPainted(false);
+			}
+		};
+		
 		// add buttons to expand/collapse/remove the component
 		buttonPanel = new JPanel();
 		buttonPanel.setOpaque(false);
@@ -301,7 +297,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		buttonPanel.add(closeButton);
 		
 		// set button highlighting
-		button = closeButton; 
 	    highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.DARK_GRAY);
 	    
 	    empty = closeButton.getBorder();
@@ -354,6 +349,19 @@ public class ComponentPanel extends DraggableJPanel implements
 	}
 	
 	private void setupDescriptionPanel(){
+		
+		
+		descriptionListener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				setDescription(editableDescription.getText());
+				editableDescription.setVisible(false);
+				description.setVisible(true);
+			}
+			
+		};
+		
+		
 		// add a description panel under the top panel
 		CardLayout descriptionLayout = new CardLayout();
 		descriptionPanel = new JPanel(descriptionLayout);
@@ -392,6 +400,56 @@ public class ComponentPanel extends DraggableJPanel implements
 		innerPanel.add(descriptionPanel);
 	}
 	
+	private void setupWorkflowControlPanel(){
+		
+		playListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playWorkflow();
+			}
+		};
+
+		stopListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				stopWorkflow();
+			}
+		};
+		
+		
+		if(component.isWorkflow()){
+			controlPanel = new JPanel();
+			controlPanel.setOpaque(false);
+			controlPanel.setLayout(new BoxLayout(controlPanel,BoxLayout.X_AXIS));
+			statusLabel = new JLabel(STATUS_PREFIX + ((Workflow)component).getStatus());
+			controlPanel.add(statusLabel);
+			
+			runButton = new JButton("start");
+			runButton.addActionListener(playListener);
+			controlPanel.add(runButton);
+			
+			stopButton = new JButton("stop");
+			stopButton.addActionListener(stopListener);
+			controlPanel.add(stopButton);
+			
+			innerPanel.add(controlPanel);
+		}
+	}
+	
+	protected void stopWorkflow() {
+		
+		WorkflowStatus currentStatus = ((Workflow)component).getStatus();
+		if(currentStatus == WorkflowStatus.READY || currentStatus == WorkflowStatus.PAUSED){
+			controller.workflowPlayRequest();
+		}else if(currentStatus == WorkflowStatus.RUNNING || currentStatus == WorkflowStatus.INITIALIZING){
+			controller.workflowPauseRequest();
+		}
+	}
+
+	protected void playWorkflow() {
+		
+		controller.workflowStopRequest();
+		
+	}
+
 	private void setupParameterPanel(){
 		
 		ArrayList<ParameterPanel> paramPanels = new ArrayList<ParameterPanel>();
@@ -632,5 +690,13 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	public static void main(String[] argv) {
 		GUITestingHarness.main(argv);
+	}
+
+	@Override
+	public void workflowStatusChanged(Workflow workflow) {
+	
+		statusLabel.setText(STATUS_PREFIX + workflow.getStatus());
+		
+		//TODO update Buttons
 	}
 }

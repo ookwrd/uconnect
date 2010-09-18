@@ -3,7 +3,7 @@ package org.u_compare.gui.debugging;
 import javax.swing.JLabel;
 
 import org.u_compare.gui.UConnectSplitPane;
-import org.u_compare.gui.WorkflowConsolePane;
+import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
@@ -31,7 +31,7 @@ public class GUITestingHarness {
 		// Construct the view
 		WorkflowPane workflowPane = new WorkflowPane(workflowModel.getView());
 		
-		WorkflowConsolePane consolePane = new WorkflowConsolePane();
+		ConsolePane consolePane = new ConsolePane(workflow);
 		WorkflowSplitPane splitPane = new WorkflowSplitPane(workflowPane, consolePane);
 		WorkflowTabbedPane tabbedPane = new WorkflowTabbedPane(splitPane);
 		

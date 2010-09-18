@@ -10,7 +10,7 @@ import javax.swing.JSplitPane;
  */
 @SuppressWarnings("serial")
 public class WorkflowSplitPane extends JSplitPane {
-	private WorkflowConsolePane consolePane;
+	private ConsolePane consolePane;
 	private WorkflowPane workflowPane;
 	
 	// Configuration
@@ -19,7 +19,7 @@ public class WorkflowSplitPane extends JSplitPane {
 	private static final int SPLIT_ORIENTATION = JSplitPane.VERTICAL_SPLIT;
 	
 	public WorkflowSplitPane(WorkflowPane workflowPane,
-			WorkflowConsolePane consolePane) {
+			ConsolePane consolePane) {
 		this.workflowPane = workflowPane;
 		this.consolePane = consolePane;
 

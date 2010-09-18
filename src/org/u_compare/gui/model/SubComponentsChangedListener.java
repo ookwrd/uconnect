@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public interface SubComponentsChangedListener {
 
-	public void subComponentAddRemoved(ArrayList<UIMAComponent> subComponents);
+	public void subComponentsChanged();
 	
 }

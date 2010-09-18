@@ -11,6 +11,6 @@ package org.u_compare.gui.model;
  */
 public interface WorkflowStatusListener {
 
-	public void workflowStatusChanged(UIMAWorkflow workflow);
+	public void workflowStatusChanged(Workflow workflow);
 	
 }

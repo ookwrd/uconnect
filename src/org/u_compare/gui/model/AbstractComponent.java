@@ -13,9 +13,9 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
  * 
  * @author Luke McCrohon
  */
-public abstract class AbstractUIMAComponent implements UIMAComponent {
+public abstract class AbstractComponent implements Component {
 
-	private UIMAComponent superComponent;
+	private Component superComponent;
 
 	//private to ensure use of proper set methods by extending classes
 	private String name = "Unnamed";
@@ -42,7 +42,7 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
 	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 	
-	public AbstractUIMAComponent(){
+	public AbstractComponent(){
 
 	}
 	
@@ -57,9 +57,9 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 	}
 	
 	@Override
-	public ArrayList<UIMAComponent> getSubComponents(){
+	public ArrayList<Component> getSubComponents(){
 		//No subcomponents by default
-		return new ArrayList<UIMAComponent>();
+		return new ArrayList<Component>();
 	}
 
 	/**
@@ -116,12 +116,12 @@ public abstract class AbstractUIMAComponent implements UIMAComponent {
 	}
 	
 	@Override
-	public void setSuperComponent(UIMAComponent superComp){
+	public void setSuperComponent(Component superComp){
 		this.superComponent = superComp;
 	}
 	
 	@Override
-	public UIMAComponent getSuperComponent(){
+	public Component getSuperComponent(){
 		return superComponent;
 	}
 	

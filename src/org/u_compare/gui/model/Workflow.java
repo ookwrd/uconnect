@@ -12,7 +12,7 @@ import org.u_compare.gui.model.parameters.Parameter;
  * @author lukemccrohon
  *
  */
-public class UIMAWorkflow extends AbstractUIMAAggregateComponent {
+public class Workflow extends AbstractAggregateComponent {
 
 	//for debugging, delete when no longer needed.
 	private Timer timer = new Timer();
@@ -27,7 +27,7 @@ public class UIMAWorkflow extends AbstractUIMAAggregateComponent {
 	/**
 	 * Creates an empty workflow.
 	 */
-	public UIMAWorkflow(){
+	public Workflow(){
 		super();		
 		workflowStatusListeners = new ArrayList<WorkflowStatusListener>();
 		
@@ -39,7 +39,7 @@ public class UIMAWorkflow extends AbstractUIMAAggregateComponent {
 	 * 
 	 * @param components
 	 */
-	public UIMAWorkflow(ArrayList<UIMAComponent> components){
+	public Workflow(ArrayList<Component> components){
 		super();
 		
 		setSubComponents(components);
@@ -178,7 +178,7 @@ public class UIMAWorkflow extends AbstractUIMAAggregateComponent {
 
 	
 	public static void main(String[] args){
-		UIMAWorkflow testUimaWorkflow = new UIMAWorkflow();
+		Workflow testUimaWorkflow = new Workflow();
 		
 		try {
 			testUimaWorkflow.runWorkflow();

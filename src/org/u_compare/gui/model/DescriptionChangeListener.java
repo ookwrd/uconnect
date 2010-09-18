@@ -13,6 +13,6 @@ public interface DescriptionChangeListener {
 	 * @author lukemccrohon
 	 *
 	 */
-	public void ComponentDescriptionChanged(UIMAComponent component);
+	public void ComponentDescriptionChanged(Component component);
 	
 }

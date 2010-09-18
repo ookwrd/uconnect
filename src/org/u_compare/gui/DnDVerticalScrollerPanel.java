@@ -12,7 +12,7 @@ import javax.swing.Timer;
 import javax.swing.event.MouseInputAdapter;
 
 
-public class DnDVerticalScroller extends MouseInputAdapter implements MouseMotionListener, ActionListener{
+public class DnDVerticalScrollerPanel extends MouseInputAdapter implements MouseMotionListener, ActionListener{
 
 	private static final int SPEED = 2;
 	
@@ -20,7 +20,7 @@ public class DnDVerticalScroller extends MouseInputAdapter implements MouseMotio
 	
 	JViewport viewport;
 	
-	public DnDVerticalScroller(JViewport viewport){
+	public DnDVerticalScrollerPanel(JViewport viewport){
 		this.viewport = viewport;
 		
 		viewport.addMouseMotionListener(this);

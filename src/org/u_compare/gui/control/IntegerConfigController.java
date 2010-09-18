@@ -4,15 +4,15 @@ import java.awt.AWTEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import org.u_compare.gui.ParameterPanel;
-import org.u_compare.gui.StringConfigPanel;
+import org.u_compare.gui.StringParameterPanel;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.InvalidInputException;
 
-public class IntegerConfigController implements ConfigController, ActionFocusListener{
+public class IntegerConfigController implements ParameterController, ActionFocusListener{
 
 	private IntegerParameter param;
 	private ComponentController parent;
-	private StringConfigPanel view;//They look the same
+	private StringParameterPanel view;//They look the same
 	
 	public IntegerConfigController(ComponentController control,
 			IntegerParameter param) {

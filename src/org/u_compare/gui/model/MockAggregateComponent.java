@@ -14,14 +14,14 @@ import org.u_compare.gui.model.parameters.Parameter;
  * @author lukemccrohon
  *
  */
-public class MockAggregateUIMAComponent extends AbstractUIMAAggregateComponent implements UIMAComponent, UIMAAggregateComponent {
+public class MockAggregateComponent extends AbstractAggregateComponent implements Component, AggregateComponent {
 
-	public MockAggregateUIMAComponent(){
+	public MockAggregateComponent(){
 		super();
 		
 	}
 
-	public MockAggregateUIMAComponent(ArrayList<Parameter> params) {
+	public MockAggregateComponent(ArrayList<Parameter> params) {
 		super();
 	
 		setConfigurationParameters(params);

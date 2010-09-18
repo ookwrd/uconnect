@@ -11,7 +11,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import org.u_compare.gui.model.UIMAWorkflow;
+import org.u_compare.gui.model.Workflow;
 
 /**
  * Displays console output related to a given workflow.

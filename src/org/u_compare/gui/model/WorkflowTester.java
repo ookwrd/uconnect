@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.u_compare.gui.model.UIMAWorkflow.WorkflowStatus;
+import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.debugging.PrivilegedAccessor;
 
 
@@ -17,17 +17,17 @@ import org.u_compare.gui.debugging.PrivilegedAccessor;
  * @author lukemccrohon1
  *
  */
-public class UIMAWorkflowTest{
+public class WorkflowTester{
 
-	private ArrayList<UIMAComponent> inputs= new ArrayList<UIMAComponent>();
-	private UIMAWorkflow testWorkflow; 
+	private ArrayList<Component> inputs= new ArrayList<Component>();
+	private Workflow testWorkflow; 
 
 	@Before
 	public void setUp(){
-		inputs.add(new MockUIMAComponent("a"));
-		inputs.add(new MockUIMAComponent("b"));
-		inputs.add(new MockUIMAComponent("c"));
-		testWorkflow = new UIMAWorkflow(inputs);
+		inputs.add(new MockComponent("a"));
+		inputs.add(new MockComponent("b"));
+		inputs.add(new MockComponent("c"));
+		testWorkflow = new Workflow(inputs);
 	}
 
 	@After
@@ -37,9 +37,9 @@ public class UIMAWorkflowTest{
 	@Test
 	public void simpleWorkflowConstruction(){
 		assertTrue(testWorkflow.getSubComponents().size() == 3);
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(0)).getIdentifier().equals("a"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(1)).getIdentifier().equals("b"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(2)).getIdentifier().equals("c"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(0)).getIdentifier().equals("a"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(1)).getIdentifier().equals("b"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(2)).getIdentifier().equals("c"));
 	}
 
 	@Test
@@ -58,42 +58,42 @@ public class UIMAWorkflowTest{
 
 	@Test(expected=InvalidPositionException.class)
 	public void boundsCheck1() throws InvalidPositionException{
-		testWorkflow.addSubComponent(-1, new MockUIMAComponent());
+		testWorkflow.addSubComponent(-1, new MockComponent());
 	}
 
 	@Test(expected=InvalidPositionException.class)
 	public void boundsCheck2() throws InvalidPositionException{
-		testWorkflow.addSubComponent(4, new MockUIMAComponent());
+		testWorkflow.addSubComponent(4, new MockComponent());
 	}
 
 	@Test
 	public void finalInsertion() throws InvalidPositionException{
-		testWorkflow.addSubComponent(3, new MockUIMAComponent("X"));
+		testWorkflow.addSubComponent(3, new MockComponent("X"));
 		assertTrue(testWorkflow.getSubComponents().size() == 4);
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(0)).getIdentifier().equals("a"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(1)).getIdentifier().equals("b"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(2)).getIdentifier().equals("c"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(3)).getIdentifier().equals("X"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(0)).getIdentifier().equals("a"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(1)).getIdentifier().equals("b"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(2)).getIdentifier().equals("c"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(3)).getIdentifier().equals("X"));
 	}
 
 	@Test
 	public void intermediaryInsertion1() throws InvalidPositionException{
-		testWorkflow.addSubComponent(1, new MockUIMAComponent("X"));
+		testWorkflow.addSubComponent(1, new MockComponent("X"));
 		assertTrue(testWorkflow.getSubComponents().size() == 4);
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(0)).getIdentifier().equals("a"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(1)).getIdentifier().equals("X"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(2)).getIdentifier().equals("b"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(3)).getIdentifier().equals("c"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(0)).getIdentifier().equals("a"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(1)).getIdentifier().equals("X"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(2)).getIdentifier().equals("b"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(3)).getIdentifier().equals("c"));
 	}
 
 	@Test
 	public void intermediaryInsertion2() throws InvalidPositionException{
-		testWorkflow.addSubComponent(3, new MockUIMAComponent("X"));
+		testWorkflow.addSubComponent(3, new MockComponent("X"));
 		assertTrue(testWorkflow.getSubComponents().size() == 4);
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(0)).getIdentifier().equals("a"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(1)).getIdentifier().equals("b"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(2)).getIdentifier().equals("c"));
-		assertTrue(((MockUIMAComponent)testWorkflow.getSubComponents().get(3)).getIdentifier().equals("X"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(0)).getIdentifier().equals("a"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(1)).getIdentifier().equals("b"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(2)).getIdentifier().equals("c"));
+		assertTrue(((MockComponent)testWorkflow.getSubComponents().get(3)).getIdentifier().equals("X"));
 	}
 
 	private static class TestListener implements WorkflowStatusListener{
@@ -103,7 +103,7 @@ public class UIMAWorkflowTest{
 			statuses = new ArrayList<WorkflowStatus>();
 		}
 
-		public void workflowStatusChanged(UIMAWorkflow workflow) {
+		public void workflowStatusChanged(Workflow workflow) {
 			statuses.add(workflow.getStatus());
 		}
 
@@ -190,28 +190,30 @@ public class UIMAWorkflowTest{
 	
 	private static class TestListener1 implements DescriptionChangeListener, InputOutputChangeListener, SubComponentsChangedListener, SavedStatusChangeListener, MinimizedStatusChangeListener, LockedStatusChangeListener{
 
-		private ArrayList<String> names;
-		private ArrayList<String> descriptions;
-		private ArrayList<Boolean> saves;
+		private ArrayList<String> names= new ArrayList<String>();;
+		private ArrayList<String> descriptions= new ArrayList<String>();
+		private ArrayList<Boolean> saves = new ArrayList<Boolean>();
 		
-		private ArrayList<ArrayList<AnnotationType>> inputs;
-		private ArrayList<ArrayList<AnnotationType>> outputs;
+		private ArrayList<ArrayList<AnnotationType>> inputs = new ArrayList<ArrayList<AnnotationType>>();
+		private ArrayList<ArrayList<AnnotationType>> outputs = new ArrayList<ArrayList<AnnotationType>>();
 		
-		private ArrayList<ArrayList<UIMAComponent>> subComponents;
+		private ArrayList<ArrayList<Component>> subComponents = new ArrayList<ArrayList<Component>>();
 		
 		ArrayList<Boolean> minimizeds = new ArrayList<Boolean>();
 		ArrayList<Boolean> lockeds = new ArrayList<Boolean>();
 		
+		private AggregateComponent component;
+		
+		@Deprecated
 		public TestListener1(){
-			names = new ArrayList<String>();
-			descriptions = new ArrayList<String>();
-			inputs = new ArrayList<ArrayList<AnnotationType>>();
-			outputs = new ArrayList<ArrayList<AnnotationType>>();
-			subComponents = new ArrayList<ArrayList<UIMAComponent>>();
-			saves = new ArrayList<Boolean>();
 		}
 
-		public void ComponentDescriptionChanged(UIMAComponent component) {
+
+		public TestListener1(AggregateComponent component){
+			this.component = component;
+		}
+
+		public void ComponentDescriptionChanged(Component component) {
 			names.add(component.getName());
 			descriptions.add(component.getDescription());
 		}
@@ -224,7 +226,7 @@ public class UIMAWorkflowTest{
 			return descriptions;
 		}
 
-		public void inputOutputChanged(UIMAComponent component) {
+		public void inputOutputChanged(Component component) {
 			
 			inputs.add(component.getInputTypes());
 			outputs.add(component.getOutputTypes());
@@ -240,16 +242,16 @@ public class UIMAWorkflowTest{
 			return outputs;
 		}
 
-		public void subComponentAddRemoved(ArrayList<UIMAComponent> components) {
-			subComponents.add(components);
+		public void subComponentsChanged() {
+			subComponents.add(component.getSubComponents());
 		}
 		
-		public ArrayList<ArrayList<UIMAComponent>> getSubComponents(){
+		public ArrayList<ArrayList<Component>> getSubComponents(){
 			return subComponents;
 		}
 
 		@Override
-		public void savedStatusChanged(UIMAComponent component) {
+		public void savedStatusChanged(Component component) {
 			saves.add(component.checkUnsavedChanges());
 		}
 		
@@ -258,12 +260,12 @@ public class UIMAWorkflowTest{
 		}
 
 		@Override
-		public void lockStatusChanged(UIMAComponent component) {
+		public void lockStatusChanged(Component component) {
 			lockeds.add(component.getLockedStatus());
 		}
 
 		@Override
-		public void minimizedStatusChanged(UIMAComponent component) {
+		public void minimizedStatusChanged(Component component) {
 			minimizeds.add(component.getMinimizedStatus());
 		}
 	}
@@ -274,7 +276,7 @@ public class UIMAWorkflowTest{
 		testWorkflow.setName("OriginalName");
 		testWorkflow.setDescription("OriginalDescription");
 		
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		
 		testWorkflow.registerComponentDescriptionChangeListener(listener);
 		
@@ -294,7 +296,7 @@ public class UIMAWorkflowTest{
 	@Test
 	public void testInputsOutputsSimple(){
 		
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.registerInputOutputChangeListener(listener);
 		
 		ArrayList<AnnotationType> input = new ArrayList<AnnotationType>();
@@ -333,7 +335,7 @@ public class UIMAWorkflowTest{
 	@Test
 	public void testInputsOutputsDontTriggerWithoutChange(){
 		
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.registerInputOutputChangeListener(listener);
 		
 		ArrayList<AnnotationType> input = new ArrayList<AnnotationType>();
@@ -369,12 +371,12 @@ public class UIMAWorkflowTest{
 	@Test
 	public void testSubComponentChangedListener(){
 		
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.registerSubComponentsChangedListener(listener);
 		
 		assertTrue(testWorkflow.getSubComponents().size() == 3);
 		
-		UIMAComponent d = new MockUIMAComponent("d");
+		Component d = new MockComponent("d");
 		
 		testWorkflow.addSubComponent(d);
 		
@@ -392,7 +394,7 @@ public class UIMAWorkflowTest{
 		testWorkflow.setSubComponents(inputs);
 		assertTrue(listener.getSubComponents().size() == 2);
 		
-		testWorkflow.setSubComponents(new ArrayList<UIMAComponent>());
+		testWorkflow.setSubComponents(new ArrayList<Component>());
 		assertTrue(listener.getSubComponents().size() == 3);
 		assertTrue(listener.getSubComponents().get(2).size() == 0);
 	}
@@ -400,12 +402,12 @@ public class UIMAWorkflowTest{
 	@Test
 	public void testSubComponentReordered() throws InvalidPositionException{
 		
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.registerSubComponentsChangedListener(listener);
 		
 		assertTrue(testWorkflow.getSubComponents().size() == 3);
 		
-		UIMAComponent d = new MockUIMAComponent("d");
+		Component d = new MockComponent("d");
 		
 		testWorkflow.addSubComponent(d);
 		
@@ -477,20 +479,20 @@ public class UIMAWorkflowTest{
 	
 	@Test(expected=InvalidPositionException.class)
 	public void reorderPositionConstraints1() throws InvalidPositionException{
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.registerSubComponentsChangedListener(listener);
 		assertTrue(testWorkflow.getSubComponents().size() == 3);
-		UIMAComponent d = new MockUIMAComponent("d");
+		Component d = new MockComponent("d");
 		testWorkflow.addSubComponent(d);
 		testWorkflow.reorderSubComponent(d, -1);
 	}
 	
 	@Test(expected=InvalidPositionException.class)
 	public void reorderPositionConstraints2() throws InvalidPositionException{
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.registerSubComponentsChangedListener(listener);
 		assertTrue(testWorkflow.getSubComponents().size() == 3);
-		UIMAComponent d = new MockUIMAComponent("d");
+		Component d = new MockComponent("d");
 		testWorkflow.addSubComponent(d);
 		testWorkflow.reorderSubComponent(d, 5);
 	}
@@ -498,16 +500,16 @@ public class UIMAWorkflowTest{
 	@Test
 	public void superComponentsInitilized(){
 		assertTrue(testWorkflow.getSuperComponent()==null);
-		UIMAComponent child = testWorkflow.getSubComponents().get(1);
+		Component child = testWorkflow.getSubComponents().get(1);
 		assertTrue(child.getSuperComponent().equals(testWorkflow));
 	}
 	
 	@Test
 	public void superComponentsSimpleOperations() throws InvalidPositionException{
-		MockAggregateUIMAComponent agg = new MockAggregateUIMAComponent();
+		MockAggregateComponent agg = new MockAggregateComponent();
 		testWorkflow.addSubComponent(agg);
 		assertTrue(agg.getSuperComponent().equals(testWorkflow));
-		MockUIMAComponent simple = new MockUIMAComponent();
+		MockComponent simple = new MockComponent();
 		agg.addSubComponent(simple);
 		assertTrue(simple.getSuperComponent().equals(agg));
 		testWorkflow.reorderSubComponent(agg, 0);
@@ -517,7 +519,7 @@ public class UIMAWorkflowTest{
 		assertTrue(simple.getSuperComponent().equals(testWorkflow));
 		testWorkflow.removeSubComponent(agg);
 		assertTrue(agg.getSuperComponent()==null);
-		ArrayList<UIMAComponent> comps = new ArrayList<UIMAComponent>();
+		ArrayList<Component> comps = new ArrayList<Component>();
 		comps.add(agg);
 		testWorkflow.setSubComponents(comps);
 		assertTrue(simple.getSuperComponent()==null);
@@ -526,7 +528,7 @@ public class UIMAWorkflowTest{
 	
 	@Test
 	public void savedStatusListener(){
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.setComponentSaved();
 		testWorkflow.registerSavedStatusChangeListener(listener);
 
@@ -539,8 +541,8 @@ public class UIMAWorkflowTest{
 		assertTrue(listener.getSaves().size() == 2);
 		assertTrue(listener.getSaves().get(1) == false);
 		
-		MockAggregateUIMAComponent agg = new MockAggregateUIMAComponent();
-		MockUIMAComponent simple = new MockUIMAComponent();
+		MockAggregateComponent agg = new MockAggregateComponent();
+		MockComponent simple = new MockComponent();
 		agg.addSubComponent(simple);
 		testWorkflow.addSubComponent(agg);
 		simple.setComponentChanged();
@@ -555,10 +557,10 @@ public class UIMAWorkflowTest{
 	
 	@Test
 	public void savedStatusListenerBubblingTest(){
-		TestListener1 listener = new TestListener1();
+		TestListener1 listener = new TestListener1(testWorkflow);
 		
-		MockAggregateUIMAComponent agg = new MockAggregateUIMAComponent();
-		MockUIMAComponent simple = new MockUIMAComponent();
+		MockAggregateComponent agg = new MockAggregateComponent();
+		MockComponent simple = new MockComponent();
 		agg.addSubComponent(simple);
 		testWorkflow.addSubComponent(agg);
 		testWorkflow.setComponentSaved();

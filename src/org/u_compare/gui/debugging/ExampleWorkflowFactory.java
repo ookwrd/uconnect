@@ -2,11 +2,11 @@ package org.u_compare.gui.debugging;
 
 import java.util.ArrayList;
 
-import org.u_compare.gui.model.MockAggregateUIMAComponent;
-import org.u_compare.gui.model.MockUIMAComponent;
-import org.u_compare.gui.model.UIMAAggregateComponent;
-import org.u_compare.gui.model.UIMAComponent;
-import org.u_compare.gui.model.UIMAWorkflow;
+import org.u_compare.gui.model.MockAggregateComponent;
+import org.u_compare.gui.model.MockComponent;
+import org.u_compare.gui.model.AggregateComponent;
+import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
@@ -32,9 +32,9 @@ public class ExampleWorkflowFactory {
 	 * 
 	 * @return a blank workflow
 	 */
-	public static UIMAWorkflow blank(){
+	public static Workflow blank(){
 		
-		UIMAWorkflow workflow = new UIMAWorkflow();
+		Workflow workflow = new Workflow();
 		
 		workflow.setName("Blank Workflow");
 		workflow.setDescription("As you can see this workflow is blank, but think of all the wonderful possibilities");
@@ -48,16 +48,16 @@ public class ExampleWorkflowFactory {
 	 * 
 	 * @return returns a simple workflow.
 	 */
-	public static UIMAWorkflow simple(){
+	public static Workflow simple(){
 		
-		UIMAWorkflow workflow = new UIMAWorkflow();
+		Workflow workflow = new Workflow();
 		
 		workflow.setName("Simple Workflow");
 		workflow.setDescription("Some people might say I am simple, but I am happy being who I am. Look at my 3 wonderful (simple) childrem.");
 		
-		UIMAComponent component1 = new MockUIMAComponent();
-		UIMAComponent component2 = new MockUIMAComponent();
-		UIMAComponent component3 = new MockUIMAComponent();
+		Component component1 = new MockComponent();
+		Component component2 = new MockComponent();
+		Component component3 = new MockComponent();
 		
 		component1.setName("One");
 		component2.setName("Two");
@@ -79,12 +79,12 @@ public class ExampleWorkflowFactory {
 	 * 
 	 * @return returns a simple workflow.
 	 */
-	public static UIMAWorkflow simpleWithParameters(){
+	public static Workflow simpleWithParameters(){
 		
 
 
 		
-		UIMAWorkflow workflow = new UIMAWorkflow();
+		Workflow workflow = new Workflow();
 		
 		workflow.setName("Simple Workflow");
 		workflow.setDescription("Some people might say I am simple, but I am happy being who I am. Look at my 3 wonderful (simple) childrem.");
@@ -103,9 +103,9 @@ public class ExampleWorkflowFactory {
 		c3params.add(new StringParameter("A String to configure", "default value"));
 		
 		
-		UIMAComponent component1 = new MockUIMAComponent(c1params);
-		UIMAComponent component2 = new MockUIMAComponent(c2params);
-		UIMAComponent component3 = new MockUIMAComponent(c3params);
+		Component component1 = new MockComponent(c1params);
+		Component component2 = new MockComponent(c2params);
+		Component component3 = new MockComponent(c3params);
 		
 		component1.setName("One");
 		component2.setName("Two");
@@ -127,17 +127,17 @@ public class ExampleWorkflowFactory {
 	 * 
 	 * @return
 	 */
-	public static UIMAWorkflow aggregate(){
+	public static Workflow aggregate(){
 		
-		UIMAWorkflow workflow = new UIMAWorkflow();
+		Workflow workflow = new Workflow();
 		
 		ArrayList<Parameter> workflowParams = new ArrayList<Parameter>();
 		workflowParams.add(new BooleanParameter("A true boolean",true));
 		workflowParams.add(new BooleanParameter("A false boolean",false));
 		
-		UIMAComponent simplea = new MockUIMAComponent(workflowParams);
-		UIMAComponent simpleb = new MockUIMAComponent(workflowParams);
-		UIMAComponent simplec = new MockUIMAComponent(workflowParams);
+		Component simplea = new MockComponent(workflowParams);
+		Component simpleb = new MockComponent(workflowParams);
+		Component simplec = new MockComponent(workflowParams);
 		
 		simplea.setName("Simple Component a");
 		simplea.setDescription("This is a component. For some reason it is called a");
@@ -148,7 +148,7 @@ public class ExampleWorkflowFactory {
 		simplec.setName("Simple Component c");
 		simplec.setDescription("This is a component. For some reason it is called c");
 		
-		UIMAAggregateComponent aggregate = new MockAggregateUIMAComponent(workflowParams);
+		AggregateComponent aggregate = new MockAggregateComponent(workflowParams);
 		
 		aggregate.setName("The nasty nasty Aggregate Component");
 		aggregate.setDescription("Not afraid of aggregate components? Well what a silly little boy you are then.");
@@ -163,20 +163,20 @@ public class ExampleWorkflowFactory {
 		
 	}
 	
-	public static UIMAWorkflow deepAggregate(int depth, int branchingfactor){
+	public static Workflow deepAggregate(int depth, int branchingfactor){
 
-		UIMAWorkflow workflow = new UIMAWorkflow();
+		Workflow workflow = new Workflow();
 		workflow.setDescription("W");
 		
-		ArrayList<UIMAAggregateComponent> bottomLevel = new ArrayList<UIMAAggregateComponent>();
+		ArrayList<AggregateComponent> bottomLevel = new ArrayList<AggregateComponent>();
 		bottomLevel.add(workflow);
-		ArrayList<UIMAAggregateComponent> nextLevel = new ArrayList<UIMAAggregateComponent>();
+		ArrayList<AggregateComponent> nextLevel = new ArrayList<AggregateComponent>();
 		
 		for(int i = 0; i < depth; i++){
-			for(UIMAAggregateComponent current : bottomLevel){
+			for(AggregateComponent current : bottomLevel){
 				String currentDesc = current.getDescription();
 				for(int j = 0; j < branchingfactor; j++){
-					UIMAAggregateComponent toAdd = new MockAggregateUIMAComponent();
+					AggregateComponent toAdd = new MockAggregateComponent();
 					toAdd.setDescription(currentDesc + j);
 					current.addSubComponent(toAdd);
 					nextLevel.add(toAdd);
@@ -184,7 +184,7 @@ public class ExampleWorkflowFactory {
 			}
 			
 			bottomLevel = nextLevel;
-			nextLevel = new ArrayList<UIMAAggregateComponent>();
+			nextLevel = new ArrayList<AggregateComponent>();
 		}
 		
 		return workflow;

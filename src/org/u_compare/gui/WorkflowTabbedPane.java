@@ -6,7 +6,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
-import org.u_compare.gui.model.UIMAComponent;
+import org.u_compare.gui.model.Component;
 
 /**
  * Handles workflow tabs.
@@ -114,7 +114,7 @@ public class WorkflowTabbedPane extends JTabbedPane {
 	
 	//TODO: Where does it get it's title from?
 	public void addWorkflow(WorkflowSplitPane splitPane) {
-		UIMAComponent topComponent = splitPane.getWorkflowPane()
+		Component topComponent = splitPane.getWorkflowPane()
 				.getTopWorkflowComponent().getUIMAComponent();
 		
 		//XXX: -1 if we have a "New tab"-tab

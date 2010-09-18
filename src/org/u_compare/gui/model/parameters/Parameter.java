@@ -2,7 +2,7 @@ package org.u_compare.gui.model.parameters;
 
 import java.util.ArrayList;
 
-import org.u_compare.gui.model.UIMAComponent;
+import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 
 public interface Parameter {
@@ -25,6 +25,6 @@ public interface Parameter {
 	 * 
 	 * @param owner
 	 */
-	public void setOwner(UIMAComponent owner);
+	public void setOwner(Component owner);
 	
 }

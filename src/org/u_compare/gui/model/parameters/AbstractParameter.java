@@ -2,13 +2,13 @@ package org.u_compare.gui.model.parameters;
 
 import java.util.ArrayList;
 
-import org.u_compare.gui.model.UIMAComponent;
+import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 
 public abstract class AbstractParameter implements
 		Parameter {
 
-	private UIMAComponent owner;
+	private Component owner;
 	private String description;
 	private ArrayList<Constraint> constraints;
 	
@@ -19,7 +19,7 @@ public abstract class AbstractParameter implements
 	}
 	
 	@Override
-	public void setOwner(UIMAComponent owner){
+	public void setOwner(Component owner){
 		this.owner = owner;
 	}
 	

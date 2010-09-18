@@ -5,17 +5,17 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.StringParameter;
 
-public class ConfigControllerFactory {
+public class ParameterControllerFactory {
 
-	public static ConfigController getController(ComponentController control, Parameter param){
+	public static ParameterController getController(ComponentController control, Parameter param){
 		
 		if(param instanceof BooleanParameter){
 		
-			return new BooleanConfigController(control, (BooleanParameter)param);
+			return new BooleanParameterController(control, (BooleanParameter)param);
 			
 		}else if (param instanceof StringParameter){
 			
-			return new StringConfigController(control, (StringParameter)param);
+			return new StringParamaterController(control, (StringParameter)param);
 			
 		}else if (param instanceof IntegerParameter){
 			

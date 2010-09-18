@@ -9,50 +9,50 @@ import java.util.ArrayList;
  * @author Luke Mccrohon
  *
  */
-public interface UIMAAggregateComponent extends UIMAComponent {
+public interface AggregateComponent extends Component {
 
 	/**
 	 * Adds a new sub component to this aggregate at the specified position.
 	 * 
-	 * Components already at positions >= position will be shifted along to make room. If the specified component is already a direct subcomponent of this aggregate {@link #reorderSubComponent(int, UIMAComponent)} should be used instead.
+	 * Components already at positions >= position will be shifted along to make room. If the specified component is already a direct subcomponent of this aggregate {@link #reorderSubComponent(int, Component)} should be used instead.
 	 * 
 	 * @param position	Position at which to add the subcomponent.
 	 * @param component	The component to add.
 	 */
-	public void addSubComponent(int position, UIMAComponent component) throws InvalidPositionException;
+	public void addSubComponent(int position, Component component) throws InvalidPositionException;
 	
 	/**
 	 * Validates whether the specified subcomponent can be added at the specified position.
 	 * 
-	 * If the specified component is already a direct subcomponent of this aggregate {@link #canReorderSubComponent(int, UIMAComponent)} should be used instead.
+	 * If the specified component is already a direct subcomponent of this aggregate {@link #canReorderSubComponent(int, Component)} should be used instead.
 	 * 
-	 * Use {@link #addSubComponent(int, UIMAComponent)} to actually add.
+	 * Use {@link #addSubComponent(int, Component)} to actually add.
 	 * 
 	 * @param component	The component to be added.
 	 * @param position	The position to be added to.
 	 * @return			True if component can be added, false otherwise.
 	 */
-	public boolean canAddSubComponent(UIMAComponent component, int position);
+	public boolean canAddSubComponent(Component component, int position);
 	
 	/**
 	 * Adds a new sub component at an unspecified position.
 	 * 
 	 * @param component	The component to add.
 	 */
-	public void addSubComponent(UIMAComponent component);
+	public void addSubComponent(Component component);
 	
 	/**
 	 * Validates whether the specified subcomponent can be added at an unspecified position.
 	 * 
-	 * If the specified component is already a direct subcomponent of this aggregate {@link #reorderSubComponent(int, UIMAComponent)} should be used instead.
+	 * If the specified component is already a direct subcomponent of this aggregate {@link #reorderSubComponent(int, Component)} should be used instead.
 	 * 
-	 * Use {@link #addSubComponent(UIMAComponent)} to actually add.
+	 * Use {@link #addSubComponent(Component)} to actually add.
 	 * 
 	 * @param component	The component to be added.
 	 * @param position	The position to be added to.
 	 * @return			True if component can be added, false otherwise.
 	 */
-	public boolean canAddSubComponent(UIMAComponent component);
+	public boolean canAddSubComponent(Component component);
 	
 
 	/**
@@ -60,24 +60,24 @@ public interface UIMAAggregateComponent extends UIMAComponent {
 	 * 
 	 * @param component	The component to remove.
 	 */
-	public void removeSubComponent(UIMAComponent component);
+	public void removeSubComponent(Component component);
 
 	/**
 	 * Validates whether the specified subcomponent can be removed from this aggregate.
 	 * 
-	 * Use {@link #removeSubComponent(UIMAComponent)} to actually delete it.
+	 * Use {@link #removeSubComponent(Component)} to actually delete it.
 	 * 
 	 * @param component	The component to be deleted.
 	 * @return			True if this component can be deleted from subcomponents list.
 	 */
-	public boolean canRemoveSubComponent(UIMAComponent component);
+	public boolean canRemoveSubComponent(Component component);
 	
 	/**
 	 * Replace existing subcomponents with the specified set of components.
 	 * 
 	 * @param components The list of subcomponents to replace existing subcomponents with.
 	 */
-	public void setSubComponents(ArrayList<UIMAComponent> components);
+	public void setSubComponents(ArrayList<Component> components);
 	
 	/**
 	 * Validates whether the existing subcomponents can be replaced by the specified set.
@@ -87,7 +87,7 @@ public interface UIMAAggregateComponent extends UIMAComponent {
 	 * @param components	Set of Components to replace with.
 	 * @return				True if existing components can be replaced, false otherwise.
 	 */
-	public boolean canSetSubComponents(ArrayList<UIMAComponent> components);
+	public boolean canSetSubComponents(ArrayList<Component> components);
 	
 	/**
 	 * Reorders the specified component to the specified position in this aggregates subcomponents list.
@@ -96,18 +96,18 @@ public interface UIMAAggregateComponent extends UIMAComponent {
 	 * @param position	The position to be reordered to.
 	 * @throws InvalidPositionException Thrown when adding to a position outside 0<x<size.
 	 */
-	public void reorderSubComponent(UIMAComponent component, int position) throws InvalidPositionException;
+	public void reorderSubComponent(Component component, int position) throws InvalidPositionException;
 	
 	/**
 	 * Verifies whether the specified component can be relocated to the specified position in this components subcomponents list.
 	 * 
-	 * Use {@link #reorderSubComponent(UIMAComponent, int)} to actually perform reordering.
+	 * Use {@link #reorderSubComponent(Component, int)} to actually perform reordering.
 	 * 
 	 * @param component	The component to reorder.
 	 * @param position	The position to be reordered to.
 	 * @return			True if the reordering is possible, false otherwise.
 	 */
-	public boolean canReorderSubComponent(UIMAComponent component, int position);
+	public boolean canReorderSubComponent(Component component, int position);
 	
 	/**
 	 * Register a listener to be notified whenever this aggregates subcomponent list changes. 

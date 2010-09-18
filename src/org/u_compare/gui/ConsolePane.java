@@ -11,7 +11,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
+import org.u_compare.gui.model.WorkflowStatusListener;
 
 /**
  * Displays console output related to a given workflow.
@@ -20,10 +22,14 @@ import org.u_compare.gui.model.Workflow;
  * @version 2009-08-27
  */
 @SuppressWarnings("serial")
-public class WorkflowConsolePane extends JScrollPane {
+public class ConsolePane extends JScrollPane implements WorkflowStatusListener {
 	//TODO: Add setter for show timestamp, and default value
 	//TODO: Listener for the messages arraylist instead of calling it implicitly?
 	//TODO: Should follow the output downwards, add set and default. Fix bug further down.
+	
+	private final String WORKFLOW_STATUS_MSG_BASE = "Workflow status change to: ";
+	
+	private Workflow workflow;
 	
 	private JEditorPane console;
 	private ArrayList<ConsoleMessage> messages;
@@ -47,24 +53,26 @@ public class WorkflowConsolePane extends JScrollPane {
 	//The code below won't do it.
 	//this.setMinimumSize(new Dimension(0, 50));
 	
-	public WorkflowConsolePane() { //UIMAWorkflow workflow) {
-		//TODO: Should take what to listen to as an argument?
+	public ConsolePane(Workflow workflow) {
+
+		this.workflow = workflow;
+		workflow.registerWorkflowStatusListener(this);
 		
 		this.console = new JEditorPane();
-		this.console.setContentType(WorkflowConsolePane.CONSOLE_CONTENTTYPE);
-		this.console.setEditable(WorkflowConsolePane.CONSOLE_EDITABLE);
+		this.console.setContentType(ConsolePane.CONSOLE_CONTENTTYPE);
+		this.console.setEditable(ConsolePane.CONSOLE_EDITABLE);
 		
 		this.messages = new ArrayList<ConsoleMessage>();
 		
 		this.setViewportView(this.console);
 		this.setBorder(new TitledBorder(new EtchedBorder(),
-				WorkflowConsolePane.BORDER_TITLE));
+				ConsolePane.BORDER_TITLE));
 		this.setHorizontalScrollBarPolicy(
-				WorkflowConsolePane.HORIZONTAL_SCROLLBAR_POLICY);
+				ConsolePane.HORIZONTAL_SCROLLBAR_POLICY);
 		this.setVerticalScrollBarPolicy(
-				WorkflowConsolePane.VERTICAL_SCROLLBAR_POLICY);
+				ConsolePane.VERTICAL_SCROLLBAR_POLICY);
 		this.setToolTipText(
-				WorkflowConsolePane.TOOLTIP_TEXT);
+				ConsolePane.TOOLTIP_TEXT);
 		this.setOpaque(false);//Required for correct display in Mac OSX
 	}
 	
@@ -106,10 +114,10 @@ public class WorkflowConsolePane extends JScrollPane {
 		//TODO: Reuse previous text?
 		String text = "";
 		for (ConsoleMessage message: this.messages) {
-			String messageText = WorkflowConsolePane.CONSOLE_DATEFORMAT.format(
+			String messageText = ConsolePane.CONSOLE_DATEFORMAT.format(
 					message.timestamp) + "<b>:</b> " + message.text + "<br/>";
 			if (message.isError) {
-				messageText = "<font color=" + WorkflowConsolePane.CONSOLE_ERROR_COLOUR
+				messageText = "<font color=" + ConsolePane.CONSOLE_ERROR_COLOUR
 						+ ">" + messageText + "</font>";
 			}
 			text += messageText;
@@ -133,13 +141,20 @@ public class WorkflowConsolePane extends JScrollPane {
 	}
 	
 	public static void main(String[] argv) {
-//        WorkflowConsolePane consolePane = new WorkflowConsolePane();
-//
-//        for (int i = 0; i < 100; i++) {
-//        	consolePane.addConsoleMessage("Message number:" + i + "!");
-//        }
-//        consolePane.addConsoleErrorMessage("Error!");
-//        
-//        new TestWindow("WorkflowConsolePane Test", consolePane);
+        ConsolePane consolePane = new ConsolePane(new Workflow());
+
+        for (int i = 0; i < 100; i++) {
+        	consolePane.addConsoleMessage("Message number:" + i + "!");
+        }
+        consolePane.addConsoleErrorMessage("Error!");
+        
+        new TestWindow("WorkflowConsolePane Test", consolePane);
+	}
+
+	@Override
+	public void workflowStatusChanged(Workflow workflow) {
+		
+		addConsoleMessage(WORKFLOW_STATUS_MSG_BASE +workflow.getStatus());
+		
 	}
 }

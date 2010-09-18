@@ -2,6 +2,7 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 import org.u_compare.gui.debugging.Debug;
+import org.u_compare.gui.model.AbstractUIMAComponent.LockStatusEnum;
 
 /**
  * Abstract base class implementing functionality common to all aggregate components.
@@ -10,6 +11,8 @@ import org.u_compare.gui.debugging.Debug;
  */
 public abstract class AbstractUIMAAggregateComponent extends
 		AbstractUIMAComponent implements UIMAAggregateComponent {
+	
+
 
 	private ArrayList<SubComponentsChangedListener> subComponentAddedRemovedListeners = new ArrayList<SubComponentsChangedListener>();
 	
@@ -206,6 +209,7 @@ public abstract class AbstractUIMAAggregateComponent extends
 	//The following methods default to always allowing modifications to the model, override this behaviour when appropriate.
 	@Override
 	public boolean canAddSubComponent(UIMAComponent component, int position){
+		
 		return true;
 	}
 	
@@ -235,6 +239,46 @@ public abstract class AbstractUIMAAggregateComponent extends
 			super.setComponentSaved();
 			for(UIMAComponent subComponent : subComponents){
 				subComponent.setComponentSaved();
+			}
+		}
+	}
+	
+	@Override
+	public void setLocked(){
+		setLocked(LockStatusEnum.DIRECTLOCK);
+		
+		for(UIMAComponent child : subComponents){
+			child.indirectlyLocked();
+		}
+	}
+	
+	@Override
+	public void setUnlocked(){
+		setLocked(LockStatusEnum.UNLOCKED);
+		
+		for(UIMAComponent child : subComponents){
+			child.indirectlyUnlocked();
+		}
+	}
+	
+	@Override
+	public void indirectlyLocked(){
+		if(lockStatus!=LockStatusEnum.DIRECTLOCK){
+			setLocked(LockStatusEnum.INDIRECTLOCK);
+			
+			for(UIMAComponent child : subComponents){
+				child.indirectlyLocked();
+			}
+		}
+	}
+	
+	@Override
+	public void indirectlyUnlocked(){
+		if(lockStatus!=LockStatusEnum.DIRECTLOCK){
+			setLocked(LockStatusEnum.UNLOCKED);
+			
+			for(UIMAComponent child : subComponents){
+				child.indirectlyUnlocked();
 			}
 		}
 	}

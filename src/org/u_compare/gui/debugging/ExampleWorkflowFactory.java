@@ -12,6 +12,8 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.StringParameter;
 
+import com.sun.xml.internal.ws.api.pipe.NextAction;
+
 /**
  * THIS CLASS IS FOR TESTING PURPOSES ONLY
  * 
@@ -159,5 +161,32 @@ public class ExampleWorkflowFactory {
 		
 		return workflow;
 		
+	}
+	
+	public static UIMAWorkflow deepAggregate(int depth, int branchingfactor){
+
+		UIMAWorkflow workflow = new UIMAWorkflow();
+		workflow.setDescription("W");
+		
+		ArrayList<UIMAAggregateComponent> bottomLevel = new ArrayList<UIMAAggregateComponent>();
+		bottomLevel.add(workflow);
+		ArrayList<UIMAAggregateComponent> nextLevel = new ArrayList<UIMAAggregateComponent>();
+		
+		for(int i = 0; i < depth; i++){
+			for(UIMAAggregateComponent current : bottomLevel){
+				String currentDesc = current.getDescription();
+				for(int j = 0; j < branchingfactor; j++){
+					UIMAAggregateComponent toAdd = new MockAggregateUIMAComponent();
+					toAdd.setDescription(currentDesc + j);
+					current.addSubComponent(toAdd);
+					nextLevel.add(toAdd);
+				}
+			}
+			
+			bottomLevel = nextLevel;
+			nextLevel = new ArrayList<UIMAAggregateComponent>();
+		}
+		
+		return workflow;
 	}
 }

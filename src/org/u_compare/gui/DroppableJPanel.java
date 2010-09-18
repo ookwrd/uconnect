@@ -69,7 +69,7 @@ public abstract class DroppableJPanel extends JPanel {
 
 			System.out.println("Dropped on DroppableJPanel. ");
 
-			this.panel.controller.setDropLocation();
+			this.panel.controller.somethingDroppedOnComponent();
 
 			if (debug) this.panel.setBackground(Color.MAGENTA);
 

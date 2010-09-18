@@ -7,12 +7,9 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.u_compare.gui.model.UIMAComponent.LockStatusEnum;
 import org.u_compare.gui.model.UIMAWorkflow.WorkflowStatus;
-import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.PrivilegedAccessor;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
  * JUnit Tests for UIMAWorkflow and associated abstract classes.
@@ -22,12 +19,11 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
  */
 public class UIMAWorkflowTest{
 
-	private ArrayList<UIMAComponent> inputs;
+	private ArrayList<UIMAComponent> inputs= new ArrayList<UIMAComponent>();
 	private UIMAWorkflow testWorkflow; 
 
 	@Before
 	public void setUp(){
-		inputs = new ArrayList<UIMAComponent>();
 		inputs.add(new MockUIMAComponent("a"));
 		inputs.add(new MockUIMAComponent("b"));
 		inputs.add(new MockUIMAComponent("c"));
@@ -441,17 +437,17 @@ public class UIMAWorkflowTest{
 		
 		assertTrue(testWorkflow.getLockedStatus()==false);
 		
-		testWorkflow.setLockedStatus(false);
+		testWorkflow.setUnlocked();
 		
 		assertTrue(testWorkflow.getLockedStatus()==false);
 		assertTrue(listener.lockeds.size() == 0);
 		
-		testWorkflow.setLockedStatus(true);
+		testWorkflow.setLocked();
 		
 		assertTrue(testWorkflow.getLockedStatus()==true);
 		assertTrue(listener.lockeds.size() == 1);
 		
-		testWorkflow.setLockedStatus(false);
+		testWorkflow.setUnlocked();
 		
 		assertTrue(testWorkflow.getLockedStatus()==false);
 		assertTrue(listener.lockeds.size() == 2);

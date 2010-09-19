@@ -25,24 +25,12 @@ public class GUITestingHarness {
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
 		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
 		workflows.add(ExampleWorkflowFactory.aggregate());
-		//UIMAWorkflow workflow = new UIMAWorkflow();
 		workflows.add(ExampleWorkflowFactory.deepAggregate(3,2));
 		
-		WorkflowTabbedPane tabbedPane = null;
+		WorkflowTabbedPane tabbedPane = new WorkflowTabbedPane();
 		
 		for(Workflow workflow : workflows){
-			//TODO extract to a method
-			ComponentController workflowModel = new ComponentController(workflow);
-			
-			// Construct the view
-			WorkflowPane workflowPane = new WorkflowPane(workflowModel.getView());
-			
-			ConsolePane consolePane = new ConsolePane(workflow);
-			WorkflowSplitPane splitPane = new WorkflowSplitPane(workflowPane, consolePane);
-			
-			//tabbedPane.add(splitPane);
-			
-			if(tabbedPane == null){tabbedPane = new WorkflowTabbedPane(splitPane);}else{tabbedPane.addWorkflow(splitPane);}
+			tabbedPane.addWorkflow(constructWorkflow(workflow));
 		}
 		
 		//Library panel
@@ -57,6 +45,23 @@ public class GUITestingHarness {
 		new TestWindow("GUITestingHarness", uConnectSplit);
 		
 		
+	}
+	
+	public static WorkflowSplitPane constructWorkflow(Workflow workflow){
+		
+		ComponentController workflowModel = new ComponentController(workflow);
+		
+		// Construct the view
+		WorkflowPane workflowPane = new WorkflowPane(workflowModel.getView());
+		
+		ConsolePane consolePane = new ConsolePane(workflow);
+		return new WorkflowSplitPane(workflowPane, consolePane);
+		
+	}
+	
+	public static Workflow blankWorkflow(){
+		return new Workflow();
+		//TODO set its parameters as appropriate
 	}
 	
 }

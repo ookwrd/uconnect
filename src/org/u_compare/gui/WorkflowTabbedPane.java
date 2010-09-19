@@ -1,17 +1,26 @@
 package org.u_compare.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.Workflow;
 
 /**
  * Handles workflow tabs.
  * 
  * @author pontus
+ * @author luke
  * @version 2009-09-27
  */
 @SuppressWarnings("serial")
@@ -22,8 +31,10 @@ import org.u_compare.gui.model.Component;
 //TODO: Should never be empty
 //TODO: "Create new workflow" tab
 //TODO: Animated icons by calling "set icon" with a time interval?
-public class WorkflowTabbedPane extends JTabbedPane {
+public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 
+	private static final int MAX_LENGTH = 7;
+	
 	// Configuration
 	private static final String TOOLTIP_TEXT =
 		"Your current workflow(s)";
@@ -56,12 +67,44 @@ public class WorkflowTabbedPane extends JTabbedPane {
 		"gfx/workflow_failed.png";
 	
 	
-	public WorkflowTabbedPane(WorkflowSplitPane splitPane) {
+	public WorkflowTabbedPane() {
 		WorkflowTabbedPane.load_icons();
 		assert WorkflowTabbedPane.icons_loaded == true;
 		
 		this.setToolTipText(WorkflowTabbedPane.TOOLTIP_TEXT);
-		this.addWorkflow(splitPane);
+		//this.addWorkflow(splitPane);
+		initializeNewWorkflowTab();
+	}
+	
+	private void initializeNewWorkflowTab(){
+		
+		ActionListener workflowButtonListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addBlankTab();
+			}
+		};
+		
+		JButton newWorkflowButton = new JButton("New");
+		newWorkflowButton.setOpaque(false);
+		newWorkflowButton.addActionListener(workflowButtonListener);
+		
+		addTab("New Workflow", new JLabel("test"));
+		setTabComponentAt(0, newWorkflowButton);
+		
+		this.addChangeListener(this);
+	}
+	
+	private void addBlankTab(){
+		addWorkflow(GUITestingHarness.constructWorkflow(GUITestingHarness.blankWorkflow()));
+		
+	}
+	
+	public static String cleanTitle(String title){
+		if(title.length() < MAX_LENGTH){
+			return title;
+		}else{
+			return title.substring(0, MAX_LENGTH-3) + "...";
+		}
 	}
 
 	private static synchronized void load_icons() {
@@ -113,17 +156,22 @@ public class WorkflowTabbedPane extends JTabbedPane {
 		Component topComponent = splitPane.getWorkflowPane()
 				.getTopWorkflowComponent().getComponent();
 		
-		splitPane.linkTabbedPane(this);
 		
-		//XXX: -1 if we have a "New tab"-tab
-		int inserted_index = this.getTabCount();
+		int inserted_index = this.getTabCount() - 1;
 		//TODO: Different mouse-over depending on if focused or not
 		// "Your current workflow" vs. "View this workflow"
-		this.addTab(topComponent.getName(), splitPane);
+		this.insertTab(cleanTitle(topComponent.getName()), null, splitPane, null, inserted_index);//Why does the API force a fully specified tab when using insert rather than add?
 		this.setToolTipTextAt(inserted_index, topComponent.getDescription());
+		
+		IconizedCloseableTabFlapComponent tabFlapComponent = new IconizedCloseableTabFlapComponent(this,
+				WorkflowTabbedPane.WORKFLOW_STOPPED);
+		
+		splitPane.linkTabbedPane(this, tabFlapComponent);
+		
 		this.setTabComponentAt(inserted_index,
-				new IconizedCloseableTabFlapComponent(this,
-						WorkflowTabbedPane.WORKFLOW_STOPPED));
+				tabFlapComponent);
+		
+		setSelectedIndex(inserted_index);
 		
 	}
 	
@@ -139,5 +187,14 @@ public class WorkflowTabbedPane extends JTabbedPane {
 		//TODO: Ask controller
 		System.err.println("WARNING: WorkflowTabbedPane - Did not ask controller for permission to close");
 		super.remove(i);
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		
+		if(getSelectedIndex() == getTabCount()-1){//damn this gets loaded repeatedly at startup
+		//	addWorkflow(GUITestingHarness.constructWorkflow(GUITestingHarness.blankWorkflow()));
+		}
+		
 	}
 }

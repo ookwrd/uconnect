@@ -23,7 +23,7 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();
-	private boolean unsavedChanges = true;
+	private boolean unsavedChanges = false;
 	private boolean minimized = false;
 	protected LockStatusEnum lockStatus = LockStatusEnum.UNLOCKED;
 	
@@ -394,8 +394,9 @@ public abstract class AbstractComponent implements Component {
 		savedStatusChangeListeners.add(listener);
 	}
 	
-	private void notifySavedStatusChangeListeners(){
-	
+	protected void notifySavedStatusChangeListeners(){
+		System.out.println("Notifying Saved status changed listeners");
+		
 		for(SavedStatusChangeListener listener : savedStatusChangeListeners){
 			listener.savedStatusChanged(this);
 		}

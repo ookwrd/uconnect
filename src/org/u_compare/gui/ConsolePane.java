@@ -15,16 +15,17 @@ import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
 
-import com.sun.source.tree.ParenthesizedTree;
-
 /**
  * Displays console output related to a given workflow.
  * 
  * @author pontus
+ * @author luke
  * @version 2009-08-27
  */
 @SuppressWarnings("serial")
-public class ConsolePane extends JScrollPane implements WorkflowStatusListener {
+public class ConsolePane extends JScrollPane
+	implements WorkflowStatusListener {
+	
 	//TODO: Add setter for show timestamp, and default value
 	//TODO: Listener for the messages arraylist instead of calling it implicitly?
 	//TODO: Should follow the output downwards, add set and default. Fix bug further down.

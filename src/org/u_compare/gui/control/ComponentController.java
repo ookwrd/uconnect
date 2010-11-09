@@ -87,6 +87,11 @@ public class ComponentController implements DragAndDropComponentController {
 		
 		dropTargets.add(control);
 		
+		//special formatting for intermediate drop targets
+		if(dropTargets.size() > 2){
+			dropTargets.get(dropTargets.size()-2).setIntermediate();
+		}
+		
 	}
 	
 	private void addSubComponent(ComponentController subComponent){

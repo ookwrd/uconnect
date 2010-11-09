@@ -15,6 +15,8 @@ import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
 
+import com.sun.source.tree.ParenthesizedTree;
+
 /**
  * Displays console output related to a given workflow.
  * 
@@ -47,8 +49,8 @@ public class ConsolePane extends JScrollPane implements WorkflowStatusListener {
 	private static final DateFormat CONSOLE_DATEFORMAT =
 		new SimpleDateFormat("HH:mm:ss");
 	private static final String CONSOLE_ERROR_COLOUR = "#FF0000";
-	private static final String CONSOLE_DEFAULT_TEXT_COLOUR = "#FFFFFF";
-	private static final Color CONSOLE_BACKGROUND_COLOR = Color.BLACK;
+	private static final String CONSOLE_DEFAULT_TEXT_COLOUR = "#000000";
+	private static final Color CONSOLE_BACKGROUND_COLOR = Color.getColor("#FFFFFF");
 	private static final boolean CONSOLE_EDITABLE = false;
 	
 

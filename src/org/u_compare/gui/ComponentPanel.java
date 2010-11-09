@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -67,17 +68,19 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	private final static int PREFERRED_WIDTH = 300;
 
-	private static final int INNER_PADDING = 5;
-	private static final int AGGREGATE_PADDING = 5;
+	private static final int AGGREGATE_PADDING = 2;
+	private static final int DESCRIPTION_PANEL_PADDING = 5;
 
-	private static final int BORDER_ROUNDING = 7;
-	private static final int BORDER_WIDTH = 3;
+	private static final int BORDER_ROUNDING = 5;
+	private static final int BORDER_WIDTH = 2;
 	private static final Color BORDER_COLOR = Color.DARK_GRAY;
 	private static Color HEADER_COLOR = Color.WHITE;
-	private static Color BODY_COLOR = Color.LIGHT_GRAY;
+	private static Color BODY_COLOR;
 
 	private static final int BUTTON_DECREMENT = 0;
 
+	private static final boolean MINIMIZE_SUBCOMPONENTS = true;
+	
 	private static boolean iconsLoaded = false;
 	private static ImageIcon minIcon;
 	private static ImageIcon maxIcon;
@@ -162,6 +165,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		BorderLayout topLayout = new BorderLayout();
 		topPanel.setLayout(topLayout);
 		topPanel.setOpaque(false);
+		
 		if (!component.isWorkflow()) {
 			topPanel.setBorder(new RoundedBorder(null, BORDER_COLOR,
 					HEADER_COLOR, BORDER_ROUNDING, BORDER_WIDTH, true));
@@ -178,6 +182,9 @@ public class ComponentPanel extends DraggableJPanel implements
 		setupInnerPanel();
 		setupDescriptionPanel();
 		setupWorkflowControlPanel();
+		if(!component.isWorkflow()){
+			setupInputOutputPanel();
+		}
 		setupParameterPanel();
 		setupMinimizedStatus();
 		setupSubComponents();
@@ -349,8 +356,10 @@ public class ComponentPanel extends DraggableJPanel implements
 		BoxLayout innerLayout = new BoxLayout(innerPanel, BoxLayout.Y_AXIS);
 		innerPanel.setLayout(innerLayout);
 		innerPanel.setOpaque(false);
-		innerPanel.setBorder(new EmptyBorder(INNER_PADDING, INNER_PADDING,
-				INNER_PADDING, INNER_PADDING));
+		//innerPanel.setBorder(new EmptyBorder(INNER_PADDING, INNER_PADDING,
+		//		INNER_PADDING, INNER_PADDING));
+		innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
+				BORDER_WIDTH, BORDER_WIDTH));
 		
 		this.add(innerPanel);
 	}
@@ -372,6 +381,9 @@ public class ComponentPanel extends DraggableJPanel implements
 		// add a description panel under the top panel
 		CardLayout descriptionLayout = new CardLayout();
 		descriptionPanel = new JPanel(descriptionLayout);
+		
+		descriptionPanel.setOpaque(false);
+		descriptionPanel.setBorder(new EmptyBorder(new Insets(DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING)));
 		
 		descriptionText = component.getDescription();
 		
@@ -459,6 +471,30 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 	}
 
+	private void setupInputOutputPanel(){
+		
+		JPanel inputPanel = new JPanel();
+		inputPanel.setOpaque(false);
+		inputPanel.setBorder(new TitledBorder(new EtchedBorder(),
+		"Inputs:"));
+		
+		inputPanel.add(new JLabel("This is an input"));
+		
+		JPanel outputPanel = new JPanel();
+		outputPanel.setOpaque(false);
+		outputPanel.setBorder(new TitledBorder(new EtchedBorder(),
+		"Outputs:"));
+		
+		outputPanel.add(new JLabel("This is an output"));
+		
+		JPanel inputOutputPanel = new JPanel();
+		inputOutputPanel.setLayout(new BoxLayout(inputOutputPanel, BoxLayout.X_AXIS));
+		inputOutputPanel.add(inputPanel);
+		inputOutputPanel.add(outputPanel);
+		
+		innerPanel.add(inputOutputPanel);
+	}
+	
 	private void setupParameterPanel(){
 		
 		ArrayList<ParameterPanel> paramPanels = new ArrayList<ParameterPanel>();
@@ -521,16 +557,19 @@ public class ComponentPanel extends DraggableJPanel implements
 				aggregatePanelBorder.add(aggregatePanel);
 			}
 
-			DropTargetController initialControl = new DropTargetController(
+			DropTargetController initialDropTargetControl = new DropTargetController(
 					controller);
-			controller.addFirstDropTarget(initialControl);
-			DropTargetJPanel initial = new DropTargetJPanel(initialControl);
-			initialControl.setView(initial);
+			controller.addFirstDropTarget(initialDropTargetControl);
+			DropTargetJPanel initial = new DropTargetJPanel(initialDropTargetControl);
+			initialDropTargetControl.setView(initial);
 			aggregatePanel.add(initial);
 
 			for (Component subModel : component.getSubComponents()) {
 				ComponentController subController = new ComponentController(
 						subModel);
+				if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){
+					subController.setMinimized(true);
+				}
 				ComponentPanel subView = subController.getView();
 				aggregatePanel.add(subView);
 				DropTargetController control = new DropTargetController(

@@ -4,7 +4,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.u_compare.gui.control.ActionFocusListener;
-import org.u_compare.gui.control.StringParamaterController;
 import org.u_compare.gui.model.parameters.Parameter;
 
 @SuppressWarnings("serial")
@@ -14,7 +13,8 @@ public class StringParameterPanel extends ParameterPanel {
 	
 	JTextField textField;
 	
-	public StringParameterPanel(Parameter param, ActionFocusListener control, String initialValue){
+	public StringParameterPanel(Parameter param, ActionFocusListener control,
+			String initialValue){
 		
 		this.controller = control;
 		

@@ -18,10 +18,7 @@ public class GUITestingHarness {
 
 	
 	public static void main(String[] args){
-		
 		//Workflow panel
-		
-
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
 		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
 		workflows.add(ExampleWorkflowFactory.aggregate());
@@ -29,7 +26,7 @@ public class GUITestingHarness {
 		
 		WorkflowTabbedPane tabbedPane = new WorkflowTabbedPane();
 		
-		for(Workflow workflow : workflows){
+		for(Workflow workflow : workflows) {
 			tabbedPane.addWorkflow(constructWorkflow(workflow));
 		}
 		
@@ -45,7 +42,6 @@ public class GUITestingHarness {
 	}
 	
 	public static WorkflowSplitPane constructWorkflow(Workflow workflow){
-		
 		ComponentController workflowModel = new ComponentController(workflow);
 		
 		// Construct the view
@@ -53,12 +49,10 @@ public class GUITestingHarness {
 		
 		ConsolePane consolePane = new ConsolePane(workflow);
 		return new WorkflowSplitPane(workflowPane, consolePane);
-		
 	}
 	
 	public static Workflow blankWorkflow(){
 		return new Workflow();
 		//TODO set its parameters as appropriate
 	}
-	
 }

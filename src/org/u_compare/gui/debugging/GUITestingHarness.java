@@ -25,7 +25,7 @@ public class GUITestingHarness {
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
 		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
 		workflows.add(ExampleWorkflowFactory.aggregate());
-		workflows.add(ExampleWorkflowFactory.deepAggregate(3,2));
+		workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
 		
 		WorkflowTabbedPane tabbedPane = new WorkflowTabbedPane();
 		
@@ -33,18 +33,15 @@ public class GUITestingHarness {
 			tabbedPane.addWorkflow(constructWorkflow(workflow));
 		}
 		
-		//Library panel
+		// Library panel
 		LibraryPane libraryPane = new LibraryPane();
 		
+		// Combining
+		UConnectSplitPane uConnectSplit = new UConnectSplitPane(tabbedPane,
+				libraryPane);
 		
-		
-		//Combining
-		
-		UConnectSplitPane uConnectSplit = new UConnectSplitPane(tabbedPane,libraryPane);
-		
-		new TestWindow("GUITestingHarness", uConnectSplit);
-		
-		
+		TestWindow testWindow = new TestWindow("GUITestingHarness",
+				uConnectSplit);
 	}
 	
 	public static WorkflowSplitPane constructWorkflow(Workflow workflow){

@@ -9,12 +9,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
+import org.u_compare.gui.model.WorkflowStatusListener;
 
 /**
  * Handles workflow tabs.
@@ -31,7 +30,8 @@ import org.u_compare.gui.model.Workflow;
 //TODO: Should never be empty
 //TODO: "Create new workflow" tab
 //TODO: Animated icons by calling "set icon" with a time interval?
-public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
+public class WorkflowTabbedPane extends JTabbedPane
+	implements WorkflowStatusListener {
 
 	private static final int MAX_LENGTH = 7;
 	
@@ -47,24 +47,23 @@ public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 	private static boolean icons_loaded = false; 
 
 	private static Icon WORKFLOW_STOPPED; //TODO: Indicates forcefully stopped?
-	private static Icon WORKFLOW_BUILDING;
 	private static Icon WORKFLOW_RUNNING;
 	private static Icon WORKFLOW_FINISHED;
 	private static Icon WORKFLOW_PAUSED;
-	private static Icon WORKFLOW_FAILED;
+	private static Icon WORKFLOW_ERROR;
 
 	private final static String WORKFLOW_STOPPED_PATH = 
 		"gfx/workflow_stopped.png";
-	private final static String WORKFLOW_BUILDING_PATH = 
-		"gfx/workflow_building.png";
 	private final static String WORKFLOW_RUNNING_PATH =
 		"gfx/workflow_running.png";
+	// Results are ready
 	private final static String WORKFLOW_FINISHED_PATH =
 		"gfx/workflow_finished.png";
 	private final static String WORKFLOW_PAUSED_PATH =
 		"gfx/workflow_paused.png";
-	private final static String WORKFLOW_FAILED_PATH =
-		"gfx/workflow_failed.png";
+	// RENAME ERROR
+	private final static String WORKFLOW_ERROR_PATH =
+		"gfx/workflow_error.png";
 	
 	
 	public WorkflowTabbedPane() {
@@ -90,13 +89,12 @@ public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 		
 		addTab("New Workflow", new JLabel("test"));
 		setTabComponentAt(0, newWorkflowButton);
-		
-		this.addChangeListener(this);
 	}
 	
 	private void addBlankTab(){
-		addWorkflow(GUITestingHarness.constructWorkflow(GUITestingHarness.blankWorkflow()));
-		
+		addWorkflow(
+				GUITestingHarness.constructWorkflow(
+						GUITestingHarness.blankWorkflow()));
 	}
 	
 	public static String cleanTitle(String title){
@@ -137,9 +135,9 @@ public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 					"The workflow is currently paused");
 			
 			image_url = WorkflowTabbedPane.class.getResource(
-					WorkflowTabbedPane.WORKFLOW_FAILED_PATH);
+					WorkflowTabbedPane.WORKFLOW_ERROR_PATH);
 			assert image_url != null;
-			WorkflowTabbedPane.WORKFLOW_FAILED = new ImageIcon(image_url,
+			WorkflowTabbedPane.WORKFLOW_ERROR = new ImageIcon(image_url,
 					"The workflow has failed to execute");
 			
 			WorkflowTabbedPane.icons_loaded = true;
@@ -153,9 +151,11 @@ public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 	//TODO: Where does it get it's title from?
 	public void addWorkflow(WorkflowSplitPane splitPane) {
 		
+		Workflow workflow = splitPane.getWorkflowPane().getAssociatedWorkflow();
+		workflow.registerWorkflowStatusListener(this);
+		
 		Component topComponent = splitPane.getWorkflowPane()
 				.getTopWorkflowComponent().getComponent();
-		
 		
 		int inserted_index = this.getTabCount() - 1;
 		//TODO: Different mouse-over depending on if focused or not
@@ -176,12 +176,11 @@ public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 				tabFlapComponent);
 		
 		setSelectedIndex(inserted_index);
-		
 	}
 	
 	@Override
 	public void setIconAt(int index, Icon icon) {
-		((IconizedCloseableTabFlapComponent) this.getComponentAt(index))
+		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index))
 				.setStatusIcon(icon);
 	}
 	
@@ -195,11 +194,35 @@ public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 	}
 
 	@Override
-	public void stateChanged(ChangeEvent e) {
-		
-		if(getSelectedIndex() == getTabCount()-1){//damn this gets loaded repeatedly at startup
-		//	addWorkflow(GUITestingHarness.constructWorkflow(GUITestingHarness.blankWorkflow()));
+	public void workflowStatusChanged(Workflow workflow) {
+		for (int i = 0; i < this.getTabCount() - 1; i++) {
+			WorkflowSplitPane tab =
+				(WorkflowSplitPane) this.getComponentAt(i);
+			
+			if (tab.getWorkflowPane()
+					.getAssociatedWorkflow().equals(workflow)) {
+				switch (workflow.getStatus()) {
+					case RUNNING:
+					case LOADING:
+					case INITIALIZING:
+						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_RUNNING);
+						break;
+					case READY:
+						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_STOPPED);
+						break;
+					case ERROR:
+						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_ERROR);
+						break;
+					case PAUSED:
+						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_PAUSED);
+						break;
+					case FINISHED:
+						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_FINISHED);
+						break;
+					default:
+						assert false: "Unimplemented WorkflowStatus received";
+				}
+			}
 		}
-		
 	}
 }

@@ -13,12 +13,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import org.u_compare.gui.model.Workflow;
+
 /**
  * Contains all workflow related components.
  * 
  * @author pontus
+ * @author olaf
  * @version 2009-08-26
  */
+
 @SuppressWarnings("serial")
 public class WorkflowPane extends JScrollPane implements Autoscroll {
 	//TODO: Fix border handling, now there are two borders to the layout.
@@ -49,7 +53,8 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 		//		WorkflowPane.BORDER_TITLE));
 		this.setToolTipText(WorkflowPane.TOOLTIP_TEXT);
 		
-		/* Inner panel is needed as the scrollPanelLayout doesn't respect
+		/**
+		 * Inner panel is needed as the scrollPanelLayout doesn't respect
 		 * maximum size constraints on components, and it is not possible
 		 * to use another layout directly inside a scroll panel.
 		 */
@@ -90,5 +95,8 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 		System.out.println(cursorLocn.x + "," + cursorLocn.y);
 		
 	}
-
+	
+	public Workflow getAssociatedWorkflow() {
+		return this.topComponent.getWorkflow();
+	}
 }

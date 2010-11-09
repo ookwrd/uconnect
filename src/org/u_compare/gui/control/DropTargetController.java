@@ -69,6 +69,17 @@ public class DropTargetController implements DragAndDropComponentController {
 		
 	}
 
+	public void setSolitaryDropTarget() {
+		
+		view.setSolitaryDropTarget();
+		
+	}
+	
+	public void clearSolitaryDropTarget(){
+
+		view.clearSolitaryDropTarget();
+		
+	}
 
 	
 }

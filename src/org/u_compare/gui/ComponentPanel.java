@@ -559,9 +559,12 @@ public class ComponentPanel extends DraggableJPanel implements
 
 			DropTargetController initialDropTargetControl = new DropTargetController(
 					controller);
-			controller.addFirstDropTarget(initialDropTargetControl);
-			DropTargetJPanel initial = new DropTargetJPanel(initialDropTargetControl);
+			
+			DropTargetJPanel initial = new DropTargetJPanel(initialDropTargetControl,true);
 			initialDropTargetControl.setView(initial);
+			
+			controller.addFirstDropTarget(initialDropTargetControl);
+			
 			aggregatePanel.add(initial);
 
 			for (Component subModel : component.getSubComponents()) {
@@ -571,7 +574,7 @@ public class ComponentPanel extends DraggableJPanel implements
 				//Start everything except top level components as minimized
 				if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){
 					subController.setMinimized(true);
-				}
+				}//TODO remove this, it overrides maximized things when dragging and dropping
 				
 				ComponentPanel subView = subController.getView();
 				aggregatePanel.add(subView);

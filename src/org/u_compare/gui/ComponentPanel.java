@@ -567,9 +567,12 @@ public class ComponentPanel extends DraggableJPanel implements
 			for (Component subModel : component.getSubComponents()) {
 				ComponentController subController = new ComponentController(
 						subModel);
+				
+				//Start everything except top level components as minimized
 				if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){
 					subController.setMinimized(true);
 				}
+				
 				ComponentPanel subView = subController.getView();
 				aggregatePanel.add(subView);
 				DropTargetController control = new DropTargetController(

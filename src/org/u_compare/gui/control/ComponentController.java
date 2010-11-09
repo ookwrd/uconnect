@@ -31,8 +31,6 @@ public class ComponentController implements DragAndDropComponentController {
 	private ArrayList<DropTargetController> dropTargets = new ArrayList<DropTargetController>();
 	private ArrayList<ParameterController> parameterControllers = new ArrayList<ParameterController>();
 	
-	//private boolean allowChanges = true;
-	
 	/**
 	 * Create a controller object for the specified component.
 	 * 
@@ -118,6 +116,10 @@ public class ComponentController implements DragAndDropComponentController {
 	
 	public void toggleMinimized(){
 		component.setMinimizedStatus(!component.getMinimizedStatus());
+	}
+	
+	public void setMinimized(boolean minStatus){
+		component.setMinimizedStatus(minStatus);
 	}
 	
 	/**

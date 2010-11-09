@@ -33,7 +33,7 @@ public class WorkflowSplitPane extends JSplitPane implements DescriptionChangeLi
 			ConsolePane consolePane) {
 		this.workflowPane = workflowPane;
 		this.consolePane = consolePane;
-
+		
 		workflowPane.getTopWorkflowComponent().getComponent().registerComponentDescriptionChangeListener(this);
 		workflowPane.getTopWorkflowComponent().getComponent().registerSavedStatusChangeListener(this);
 		
@@ -44,6 +44,7 @@ public class WorkflowSplitPane extends JSplitPane implements DescriptionChangeLi
 		this.setDividerLocation(
 				WorkflowSplitPane.SEPARATOR_START_LOCATION_FROM_BOTTOM);
 		this.setOrientation(WorkflowSplitPane.SPLIT_ORIENTATION);
+		this.setDividerLocation(500); //XXX: Nasty, but we need the outer size
 	}
 	
 	protected WorkflowPane getWorkflowPane() {

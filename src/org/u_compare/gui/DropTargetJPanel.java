@@ -33,5 +33,16 @@ public class DropTargetJPanel extends DroppableJPanel {
         this.setOpaque(false);
         this.repaint();
     }
+    
+    /**
+     * Special display property for drop target intermediate between two components.
+     */
+    public void setIntermediate(){
+
+        this.setPreferredSize(new Dimension(TARGET_BORDER*2, TARGET_BORDER*2));
+        
+    }
+    
+    //TODO special display property for 
 
 }

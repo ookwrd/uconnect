@@ -52,14 +52,15 @@ public class WorkflowSplitPane extends JSplitPane
 	}
 
 	//Should be called if we have been added to a tabbed pane.
-	public void linkTabbedPane(JTabbedPane tabPane, IconizedCloseableTabFlapComponent tab){
+	public void linkTabbedPane(JTabbedPane tabPane,
+			IconizedCloseableTabFlapComponent tab) {
 		this.tab = tab;
 		this.tabPane = tabPane;
 	}
 	
 	@Override
 	public void ComponentDescriptionChanged(Component component) {
-		if(tab != null){
+		if(tab != null) {
 			tabPane.setTitleAt(tabPane.indexOfComponent(this),
 					WorkflowTabbedPane.cleanTitle(component.getName())
 					+ (component.checkUnsavedChanges() ? "*" : ""));

@@ -7,6 +7,7 @@ import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import org.u_compare.gui.library.LibraryPane;
 
+@SuppressWarnings("serial")
 public class UConnectSplitPane extends JSplitPane {
 
 	private WorkflowTabbedPane workflowPane;
@@ -17,7 +18,8 @@ public class UConnectSplitPane extends JSplitPane {
 	private static final int SEPARATOR_START_LOCATION_FROM_LEFT = 480;
 	private static final int SPLIT_ORIENTATION = JSplitPane.HORIZONTAL_SPLIT;
 	
-	public UConnectSplitPane(WorkflowTabbedPane workflowPane, LibraryPane libraryPane){
+	public UConnectSplitPane(WorkflowTabbedPane workflowPane,
+			LibraryPane libraryPane) {
 		
 		this.workflowPane = workflowPane;
 		this.libraryPane = libraryPane;

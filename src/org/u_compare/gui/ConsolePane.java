@@ -9,8 +9,6 @@ import java.util.Date;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultCaret;
 
 import org.u_compare.gui.debugging.TestWindow;

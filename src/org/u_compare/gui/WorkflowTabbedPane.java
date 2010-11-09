@@ -160,11 +160,15 @@ public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 		int inserted_index = this.getTabCount() - 1;
 		//TODO: Different mouse-over depending on if focused or not
 		// "Your current workflow" vs. "View this workflow"
-		this.insertTab(cleanTitle(topComponent.getName()), null, splitPane, null, inserted_index);//Why does the API force a fully specified tab when using insert rather than add?
+		this.insertTab(cleanTitle(topComponent.getName()), null, splitPane,
+				null, inserted_index);
+		// Why does the API force a fully specified tab when using insert
+		// rather than add?
 		this.setToolTipTextAt(inserted_index, topComponent.getDescription());
 		
-		IconizedCloseableTabFlapComponent tabFlapComponent = new IconizedCloseableTabFlapComponent(this,
-				WorkflowTabbedPane.WORKFLOW_STOPPED);
+		IconizedCloseableTabFlapComponent tabFlapComponent = 
+			new IconizedCloseableTabFlapComponent(this,
+					WorkflowTabbedPane.WORKFLOW_STOPPED);
 		
 		splitPane.linkTabbedPane(this, tabFlapComponent);
 		
@@ -185,7 +189,8 @@ public class WorkflowTabbedPane extends JTabbedPane implements ChangeListener{
 	// Asks the controller for permission before calling remove
 	public void remove(int i) {
 		//TODO: Ask controller
-		System.err.println("WARNING: WorkflowTabbedPane - Did not ask controller for permission to close");
+		System.err.println("WARNING: WorkflowTabbedPane - " +
+				"Did not ask controller for permission to close");
 		super.remove(i);
 	}
 

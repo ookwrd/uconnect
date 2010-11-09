@@ -1,5 +1,6 @@
 package org.u_compare.gui;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.DefaultCaret;
 
 import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
@@ -47,7 +49,11 @@ public class ConsolePane extends JScrollPane implements WorkflowStatusListener {
 	private static final DateFormat CONSOLE_DATEFORMAT =
 		new SimpleDateFormat("HH:mm:ss");
 	private static final String CONSOLE_ERROR_COLOUR = "#FF0000";
+	private static final String CONSOLE_DEFAULT_TEXT_COLOUR = "#FFFFFF";
+	private static final Color CONSOLE_BACKGROUND_COLOR = Color.BLACK;
 	private static final boolean CONSOLE_EDITABLE = false;
+	
+
 	
 	//TODO: How do we limit the size and minimization possibilites?
 	//The code below won't do it.
@@ -59,14 +65,22 @@ public class ConsolePane extends JScrollPane implements WorkflowStatusListener {
 		workflow.registerWorkflowStatusListener(this);
 		
 		this.console = new JEditorPane();
+		
+		//Required for Auto-Scroll on console update
+		DefaultCaret caret = (DefaultCaret)console.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		//TODO move caret on user scroll so it doesn't force the scroll to the bottome
+		
 		this.console.setContentType(ConsolePane.CONSOLE_CONTENTTYPE);
 		this.console.setEditable(ConsolePane.CONSOLE_EDITABLE);
+		
+		this.console.setBackground(ConsolePane.CONSOLE_BACKGROUND_COLOR);
 		
 		this.messages = new ArrayList<ConsoleMessage>();
 		
 		this.setViewportView(this.console);
-		this.setBorder(new TitledBorder(new EtchedBorder(),
-				ConsolePane.BORDER_TITLE));
+		//this.setBorder(new TitledBorder(new EtchedBorder(),
+		//		ConsolePane.BORDER_TITLE));
 		this.setHorizontalScrollBarPolicy(
 				ConsolePane.HORIZONTAL_SCROLLBAR_POLICY);
 		this.setVerticalScrollBarPolicy(
@@ -119,25 +133,29 @@ public class ConsolePane extends JScrollPane implements WorkflowStatusListener {
 			if (message.isError) {
 				messageText = "<font color=" + ConsolePane.CONSOLE_ERROR_COLOUR
 						+ ">" + messageText + "</font>";
+			} else {
+				messageText = "<font color=" + ConsolePane.CONSOLE_DEFAULT_TEXT_COLOUR
+				+ ">" + messageText + "</font>";
 			}
 			text += messageText;
 		}
-		// Decide if the user has affected the current state of the scroll
+		/*// Decide if the user has affected the current state of the scroll
 		boolean scrollToBottom = false;
 		//System.out.println(this.verticalScrollBar.getValue());
 		//System.out.println(this.verticalScrollBar.getMaximum());
+		
 		if (! this.verticalScrollBar.getValueIsAdjusting() && // We are not being dragged
 				this.verticalScrollBar.getValue() == this.verticalScrollBar.getMaximum()) {
 			scrollToBottom = true;
-		}
+		}*/
 		
 		this.console.setText(text);
 		
-		if (scrollToBottom) {
+		/*if (scrollToBottom) {
 			//TODO: Make this work!
 			//this.viewport.setViewPosition(new Point(0, 1000));
 			//this.verticalScrollBar.setValue(100);//this.verticalScrollBar.getMaximum());
-		}
+		}*/
 	}
 	
 	public static void main(String[] argv) {

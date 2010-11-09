@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 
-import org.u_compare.gui.model.parameters.Parameter;
-
 /**
  * Model class representing a UIMA Workflow. The workflow is modelled as a special UIMAAggregateComponent.
  * 
@@ -17,7 +15,8 @@ public class Workflow extends AbstractAggregateComponent {
 	//for debugging, delete when no longer needed.
 	private Timer timer = new Timer();
 	
-	public enum WorkflowStatus {LOADING,READY,INITIALIZING,RUNNING,ERROR,PAUSED};
+	public enum WorkflowStatus {LOADING, READY, INITIALIZING, RUNNING, ERROR,
+		PAUSED, FINISHED};
 	
 	private WorkflowStatus status = WorkflowStatus.READY;
 	
@@ -59,7 +58,7 @@ public class Workflow extends AbstractAggregateComponent {
 	 */
 	public void runWorkflow() throws InvalidStatusException {
 		
-		if(status != WorkflowStatus.READY){
+		if(status != WorkflowStatus.READY) {
 			throw new InvalidStatusException(status, WorkflowStatus.READY);
 		}
 		
@@ -74,20 +73,20 @@ public class Workflow extends AbstractAggregateComponent {
 		
 		TimerTask task = new TimerTask() {
 			
-			private int x = 30;
+			private int x = 5;
 			
 			@Override
 			public void run() {
 				x--;
 				notifyWorkflowStatusListeners();
-				if(x<1){
+				if(x < 1) {
 					timer.cancel();
 					afterRunning();
 				}
 			}
 		};
 		
-		timer.schedule(task,0,1000);
+		timer.schedule(task, 0, 1000);
 	}
 	
 	private void afterRunning(){

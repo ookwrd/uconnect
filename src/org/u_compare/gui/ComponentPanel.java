@@ -1,7 +1,6 @@
 package org.u_compare.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,7 +15,6 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -41,7 +39,6 @@ import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
-import org.u_compare.gui.model.AbstractComponent.LockStatusEnum;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.parameters.Parameter;
 
@@ -55,10 +52,13 @@ import org.u_compare.gui.model.parameters.Parameter;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends DraggableJPanel implements
-		SubComponentsChangedListener, LockedStatusChangeListener, MinimizedStatusChangeListener, WorkflowStatusListener, DescriptionChangeListener {
+		SubComponentsChangedListener, LockedStatusChangeListener,
+		MinimizedStatusChangeListener, WorkflowStatusListener,
+		DescriptionChangeListener {
 
 	private final static String ICON_CLOSE_PATH = "gfx/icon_close1.png";
-	private final static String ICON_CLOSE_PATH_HIGHLIGHT = "gfx/icon_close1highlight.png";
+	private final static String ICON_CLOSE_PATH_HIGHLIGHT =
+		"gfx/icon_close1highlight.png";
 	private final static String ICON_MAX_PATH = "gfx/icon_maximize1.png";
 	private final static String ICON_MIN_PATH = "gfx/icon_minimize1.png";
 	private final static String ICON_LOCKED_PATH = "gfx/icon_locked.png";
@@ -132,17 +132,18 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 		super(controller);
 		this.controller = controller;
-
+		
 		this.component = component;
-
+		
 		//Register Listeners
 		component.registerLockedStatusChangeListener(this);
 		component.registerMinimizedStatusChangeListener(this);
 		component.registerComponentDescriptionChangeListener(this);
 		
-		if(component.isWorkflow()){
+		if (component.isWorkflow()) {
 			((Workflow)component).registerWorkflowStatusListener(this);
 		}
+		// Isn't this an else if?
 		if (component.isAggregate()) {
 			((AggregateComponent) component)
 					.registerSubComponentsChangedListener(this);
@@ -174,7 +175,7 @@ public class ComponentPanel extends DraggableJPanel implements
 			setupButtonPanel();
 			this.add(topPanel, BorderLayout.NORTH);
 
-		}else{
+		} else {
 			setupTitlePanel();
 			this.add(topPanel, BorderLayout.NORTH);
 		}
@@ -187,8 +188,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		}
 		setupParameterPanel();
 		setupMinimizedStatus();
-		setupSubComponents();
-		
+		setupSubComponents();		
 	}
 	
 	private void setupTitlePanel(){
@@ -671,8 +671,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		return this.component;
 	}
 
-
-
 	public void setDragOverHighlightingDroppable() {
 		setBackground(Color.LIGHT_GRAY);
 
@@ -751,7 +749,20 @@ public class ComponentPanel extends DraggableJPanel implements
 	@Override
 	public void ComponentDescriptionChanged(Component component1) {
 		
-		System.out.println("Components name changed to: " +component.getName());
+		System.out.println("Components name changed to: "
+				+ component.getName());
 		//TODO
+	}
+	
+	public Workflow getWorkflow() {
+		if (this.component.isWorkflow() == false) {
+			//TODO: The proper exception here
+			throw new IllegalArgumentException(
+					"Can't get the workflow "
+					+ "from a non-workflow ComponentPanel");
+		}
+		else {
+			return (Workflow) this.component;
+		}
 	}
 }

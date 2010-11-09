@@ -63,6 +63,12 @@ public class DropTargetController implements DragAndDropComponentController {
 		
 	}
 
+	public void setIntermediate() {
+		
+		view.setIntermediate();
+		
+	}
+
 
 	
 }

@@ -61,16 +61,7 @@ import com.sun.tools.internal.ws.wscompile.Options.Target;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends DraggableJPanel implements
-		SubComponentsChangedListener, LockedStatusChangeListener,
-		MinimizedStatusChangeListener, DescriptionChangeListener {
-
-	private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";
-	private final static String ICON_CLOSE_PATH_HIGHLIGHT =
-		"../gfx/icon_close1highlight.png";
-	private final static String ICON_MAX_PATH = "../gfx/icon_maximize1.png";
-	private final static String ICON_MIN_PATH = "../gfx/icon_minimize1.png";
-	private final static String ICON_LOCKED_PATH = "../gfx/icon_locked.png";
-	private final static String ICON_UNLOCKED_PATH = "../gfx/icon_unlocked.png";
+		SubComponentsChangedListener, DescriptionChangeListener {
 
 	private final static int PREFERRED_WIDTH = 300;
 
@@ -82,26 +73,10 @@ public class ComponentPanel extends DraggableJPanel implements
 	private static Color HEADER_COLOR = Color.WHITE;
 	private static Color BODY_COLOR;
 
-	private static final int BUTTON_DECREMENT = 0;
-	
-	private static boolean iconsLoaded = false;
-	private static ImageIcon minIcon;
-	private static ImageIcon maxIcon;
-	private static ImageIcon lockedIcon;
-	private static ImageIcon unlockedIcon;
-	private static ImageIcon closeIcon;
-
 	private JPanel innerPanel;
 	private JPanel topPanel;
-	private JButton minButton;
-	private JButton lockButton;
 	protected String title;
-	private JPanel buttonPanel;
-	private JButton closeButton;
 
-	private ActionListener closeListener;
-	private ActionListener minListener;
-	private ActionListener lockListener;
 	private ActionListener titleListener;
 	private ActionListener descriptionListener;
 	
@@ -114,16 +89,14 @@ public class ComponentPanel extends DraggableJPanel implements
 	private JPanel titlePanel;
 	private JLabel titleLabel;
 	private JTextField titleTextField;
-	private ActionListener closeHighlight;
-	private ActionListener closeUnhighlight;
-	private BevelBorder highlighted;
-	private Border empty;
+
 	private JPanel descriptionPanel;
 	private JTextArea description;
 	private JTextField editableDescription;
 	private String descriptionText;
 	private java.awt.Component textField;
 	
+	private ButtonPanel buttonPanel;
 	private WorkflowControlPanel workflowControlPanel;
 	private InputOutputPanel inputOutputPanel;
 	private ParametersPanel parametersPanel;
@@ -164,15 +137,15 @@ public class ComponentPanel extends DraggableJPanel implements
 					HEADER_COLOR, BORDER_ROUNDING, BORDER_WIDTH, true));
 
 			setupTitlePanel();
-			setupButtonPanel();
+			setupButtonPanel(topPanel);
 			this.add(topPanel, BorderLayout.NORTH);
-
 		} else {
 			setupTitlePanel();
 			this.add(topPanel, BorderLayout.NORTH);
 		}
 
 		setupInnerPanel();
+		setupMinimizedStatus();
 		setupDescriptionPanel();
 		if(component.isWorkflow()){
 			setupWorkflowControlPanel(innerPanel);
@@ -181,7 +154,7 @@ public class ComponentPanel extends DraggableJPanel implements
 			setupInputOutputPanel(innerPanel);
 		}
 		setupParametersPanel(innerPanel);
-		setupMinimizedStatus();
+		
 		
 		if(!component.isWorkflow()){
 			
@@ -205,8 +178,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		this.component = component;
 		
 		//Register Listeners
-		component.registerLockedStatusChangeListener(this);
-		component.registerMinimizedStatusChangeListener(this);
 		component.registerComponentDescriptionChangeListener(this);
 		
 		//Set display properties
@@ -273,121 +244,15 @@ public class ComponentPanel extends DraggableJPanel implements
         titleTextField.addFocusListener(titleFocusListener);
 	}
 	
-	protected void setupButtonPanel(){
+	protected void setupButtonPanel(JPanel target){
 		
-		// set the buttons
-		closeListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				removeComponent();
-			}
-		};
-
-		minListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				toggleSize();
-			}
-		};
-
-		lockListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				toggleLock();
-			}
-		};
-
-		closeHighlight = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				closeButton.setBorderPainted(true);
-			}
-		};
-
-		closeUnhighlight = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				closeButton.setBorderPainted(false);
-			}
-		};
+		if(target == null){
+			System.out.println("yep null");
+		}
 		
-		// add buttons to expand/collapse/remove the component
-		buttonPanel = new JPanel();
-		buttonPanel.setOpaque(false);
-		FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
-		buttonPanel.setLayout(buttonLayout);
-
-		ComponentPanel.loadIcons(); // TODO figure out how to load the
-										// icons in a better way (xml ?)
-
-		Dimension buttonSize;
-		minButton = new JButton(minIcon);
-		buttonSize = new Dimension(minIcon.getIconWidth()
-				- BUTTON_DECREMENT, minIcon.getIconHeight()
-				- BUTTON_DECREMENT);
-		minButton.setPreferredSize(buttonSize);
-		minButton.setActionCommand("hide component");
-		minButton.addActionListener(minListener);
-		buttonPanel.add(minButton);
-
-		ImageIcon lockIcon = component.getLockedStatus()?lockedIcon:unlockedIcon;
-		lockButton = new JButton(lockIcon);
-		buttonSize = new Dimension(unlockedIcon.getIconWidth()
-				- BUTTON_DECREMENT, unlockedIcon.getIconHeight()
-				- BUTTON_DECREMENT);
-		lockButton.setPreferredSize(buttonSize);
-		lockButton.setActionCommand("show component");
-		lockButton.addActionListener(lockListener);
-		buttonPanel.add(lockButton);
-
-		closeButton = new JButton(closeIcon);
-		buttonSize = new Dimension(closeIcon.getIconWidth()
-				- BUTTON_DECREMENT, closeIcon.getIconHeight()
-				- BUTTON_DECREMENT);
-		closeButton.setPreferredSize(buttonSize);
-		closeButton.setActionCommand("remove component");
-		closeButton.addActionListener(closeListener);
-		buttonPanel.add(closeButton);
+		buttonPanel = new ButtonPanel(controller, component, this);
+		target.add(buttonPanel, BorderLayout.LINE_END);
 		
-		// set button highlighting
-	    highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
-	    		Color.DARK_GRAY);
-	    
-	    empty = closeButton.getBorder();
-	    closeButton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				closeButton.setBorder(highlighted);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				closeButton.setBorder(empty);
-			}
-		});
-	    
-	    empty = lockButton.getBorder();
-	    lockButton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				lockButton.setBorder(highlighted);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				lockButton.setBorder(empty);
-			}
-		});
-	    
-	    empty = minButton.getBorder();
-	    minButton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				minButton.setBorder(highlighted);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				minButton.setBorder(empty);
-			}
-		});
-	    
-		topPanel.add(buttonPanel, BorderLayout.LINE_END);
-
 	}
 	
 	protected void setupInnerPanel(){
@@ -396,8 +261,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		BoxLayout innerLayout = new BoxLayout(innerPanel, BoxLayout.Y_AXIS);
 		innerPanel.setLayout(innerLayout);
 		innerPanel.setOpaque(false);
-		//innerPanel.setBorder(new EmptyBorder(INNER_PADDING, INNER_PADDING,
-		//		INNER_PADDING, INNER_PADDING));
 		innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
 				BORDER_WIDTH, BORDER_WIDTH));
 		
@@ -527,20 +390,19 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 	}
 	
+	//TODO move into ButtonPanel via a reference to what should be made visible
 	protected void setupMinimizedStatus(){
 		//Check if the component is minimized
 		if(component.getMinimizedStatus()){
 			this.innerPanel.setVisible(false);
-			this.minButton.setIcon(maxIcon);
-		}
-	}
-
-	protected void toggleLock() {
-		if (this.controller.isLocked()) {
-			this.controller.setLocked(false);
-		}
-		else {
-			this.controller.setLocked(true); 
+			if(buttonPanel != null){
+				buttonPanel.setMinimizedStatus();
+			}
+		}else{
+			this.innerPanel.setVisible(true);
+			if(buttonPanel != null){
+				buttonPanel.setMinimizedStatus();
+			}
 		}
 	}
 
@@ -564,50 +426,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		return title;
 	}
 
-	protected void toggleSize() {		
-		controller.toggleMinimized();
-	}
-
-	private static synchronized void loadIcons() {
-		if (ComponentPanel.iconsLoaded == true) {
-			return;
-		}
-		
-		URL image_url;
-		image_url = ComponentPanel.class
-				.getResource(ComponentPanel.ICON_MIN_PATH);
-		assert image_url != null;
-		ComponentPanel.minIcon = new ImageIcon(image_url, "Minimize");
-
-		image_url = ComponentPanel.class
-				.getResource(ComponentPanel.ICON_MAX_PATH);
-		assert image_url != null;
-		ComponentPanel.maxIcon = new ImageIcon(image_url, "Maximize");
-
-		image_url = ComponentPanel.class
-				.getResource(ComponentPanel.ICON_LOCKED_PATH);
-		assert image_url != null;
-		ComponentPanel.lockedIcon = new ImageIcon(image_url, "Lock");
-
-		image_url = ComponentPanel.class
-				.getResource(ComponentPanel.ICON_UNLOCKED_PATH);
-		assert image_url != null;
-		ComponentPanel.unlockedIcon = new ImageIcon(image_url, "Unlock");
-
-		image_url = ComponentPanel.class
-				.getResource(ComponentPanel.ICON_CLOSE_PATH);
-		assert image_url != null;
-		ComponentPanel.closeIcon = new ImageIcon(image_url, "Remove");
-
-		ComponentPanel.iconsLoaded = true;
-		return;
-	}
-
-	private void removeComponent() {
-		System.out.println("Remove the component, please.");
-		this.controller.removeComponent();
-	}
-
+	
 	public void subComponentsChanged() {
 
 		controller.resetSubComponents();
@@ -659,30 +478,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		ret.width = max != null ? max.width : 2000;
 		return ret;
 	}
-
-	@Override
-	public void minimizedStatusChanged(Component component) {
-
-		if (component.getMinimizedStatus()) {
-			this.innerPanel.setVisible(false);
-			this.minButton.setIcon(maxIcon);
-		} else {
-			this.innerPanel.setVisible(true);
-			this.minButton.setIcon(minIcon);
-		}
-		
-	}
-
-	@Override
-	public void lockStatusChanged(Component component) {
-		
-		if(component.getLockedStatus()){
-			this.lockButton.setIcon(lockedIcon);
-		}else{
-			this.lockButton.setIcon(unlockedIcon);
-		}
-	}
-
 	
 	public static void main(String[] argv) {
 		GUITestingHarness.main(argv);

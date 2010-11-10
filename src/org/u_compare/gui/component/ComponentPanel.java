@@ -329,7 +329,8 @@ public class ComponentPanel extends DraggableJPanel implements
 		buttonPanel.add(closeButton);
 		
 		// set button highlighting
-	    highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.DARK_GRAY);
+	    highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
+	    		Color.DARK_GRAY);
 	    
 	    empty = closeButton.getBorder();
 	    closeButton.addMouseListener(new MouseAdapter() {
@@ -412,7 +413,9 @@ public class ComponentPanel extends DraggableJPanel implements
 		descriptionPanel = new JPanel(descriptionLayout);
 		
 		descriptionPanel.setOpaque(false);
-		descriptionPanel.setBorder(new EmptyBorder(new Insets(DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING)));
+		descriptionPanel.setBorder(new EmptyBorder(
+				new Insets(DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING,
+						DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING)));
 		
 		descriptionText = component.getDescription();
 		
@@ -453,7 +456,8 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	protected void setupWorkflowControlPanel(){
 		
-		workflowControlPanel = new WorkflowControlPanel((Workflow)component, controller);
+		workflowControlPanel = new WorkflowControlPanel((Workflow)component,
+				controller);
 		innerPanel.add(workflowControlPanel);
 		
 	}
@@ -500,10 +504,11 @@ public class ComponentPanel extends DraggableJPanel implements
 				aggregatePanelBorder.add(aggregatePanel);
 			}
 
-			DropTargetController initialDropTargetControl = new DropTargetController(
-					controller);
+			DropTargetController initialDropTargetControl =
+				new DropTargetController(controller);
 			
-			DropTargetJPanel initial = new DropTargetJPanel(initialDropTargetControl,true);
+			DropTargetJPanel initial = new DropTargetJPanel(
+					initialDropTargetControl, true);
 			initialDropTargetControl.setView(initial);
 			
 			controller.addFirstDropTarget(initialDropTargetControl);
@@ -517,7 +522,11 @@ public class ComponentPanel extends DraggableJPanel implements
 				//Start everything except top level components as minimized
 				if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){
 					subController.setMinimized(true);
-				}//TODO remove this, it overrides maximized things when dragging and dropping
+				}
+				/**
+				 * TODO remove this, it overrides maximized things when dragging
+				 * and dropping
+				 */
 				
 				ComponentPanel subView = subController.getView();
 				aggregatePanel.add(subView);
@@ -548,15 +557,16 @@ public class ComponentPanel extends DraggableJPanel implements
 		}
 	}
 
-	
-	protected void setTitle(String title) { //TODO this might be set directly by the controller
+	//TODO this might be set directly by the controller
+	protected void setTitle(String title) {
 		this.title = title;
 		titleLabel.setText(title);
 		titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}
 	
-	protected void setDescription(String descriptionText) { //TODO this might be set directly by the controller
+	//TODO this might be set directly by the controller
+	protected void setDescription(String descriptionText) {
 		this.descriptionText = descriptionText;
 		description.setText(descriptionText);
 		editableDescription.setText(descriptionText);

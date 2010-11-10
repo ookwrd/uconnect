@@ -219,18 +219,6 @@ public class ComponentPanel extends DraggableJPanel implements
 			}
 		};
 		
-		descriptionFocusListener = new FocusListener() {
-			
-			public void focusGained(FocusEvent e) {
-			}
-
-			public void focusLost(FocusEvent e) {
-				setDescription(description.getText());
-				description.setVisible(true);
-				editableDescription.setVisible(false);
-			}
-		};
-		
 		// add a title panel
 		titlePanel = new JPanel(new CardLayout());
 
@@ -404,9 +392,20 @@ public class ComponentPanel extends DraggableJPanel implements
 				editableDescription.setVisible(false);
 				description.setVisible(true);
 			}
-			
 		};
 		
+		descriptionFocusListener = new FocusListener() {
+			
+			public void focusGained(FocusEvent e) {
+			}
+
+			public void focusLost(FocusEvent e) {
+				setDescription(editableDescription.getText());
+				editableDescription.setVisible(false);
+				description.setVisible(true);
+				System.out.println("voilà");
+			}
+		};
 		
 		// add a description panel under the top panel
 		CardLayout descriptionLayout = new CardLayout();
@@ -447,6 +446,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		});
 
 		editableDescription.addActionListener(descriptionListener);
+		editableDescription.addFocusListener(descriptionFocusListener);
 
 		innerPanel.add(descriptionPanel);
 	}

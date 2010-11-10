@@ -91,8 +91,7 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	private JPanel innerPanel;
 	private JPanel topPanel;
-	private JButton minButton; // = new
-								// BasicArrowButton(BasicArrowButton.SOUTH);
+	private JButton minButton;
 	private JButton lockButton;
 	protected String title;
 	private JPanel buttonPanel;
@@ -335,7 +334,8 @@ public class ComponentPanel extends DraggableJPanel implements
 		buttonPanel.add(closeButton);
 		
 		// set button highlighting
-	    highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.DARK_GRAY);
+	    highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
+	    		Color.DARK_GRAY);
 	    
 	    empty = closeButton.getBorder();
 	    closeButton.addMouseListener(new MouseAdapter() {
@@ -418,7 +418,9 @@ public class ComponentPanel extends DraggableJPanel implements
 		descriptionPanel = new JPanel(descriptionLayout);
 		
 		descriptionPanel.setOpaque(false);
-		descriptionPanel.setBorder(new EmptyBorder(new Insets(DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING)));
+		descriptionPanel.setBorder(new EmptyBorder(
+				new Insets(DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING,
+						DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING)));
 		
 		descriptionText = component.getDescription();
 		
@@ -459,7 +461,8 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	protected void setupWorkflowControlPanel(){
 		
-		workflowControlPanel = new WorkflowControlPanel((Workflow)component, controller);
+		workflowControlPanel = new WorkflowControlPanel((Workflow)component,
+				controller);
 		innerPanel.add(workflowControlPanel);
 		
 	}
@@ -510,15 +513,16 @@ public class ComponentPanel extends DraggableJPanel implements
 		}
 	}
 
-	
-	protected void setTitle(String title) { //TODO this might be set directly by the controller
+	//TODO this might be set directly by the controller
+	protected void setTitle(String title) {
 		this.title = title;
 		titleLabel.setText(title);
 		titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}
 	
-	protected void setDescription(String descriptionText) { //TODO this might be set directly by the controller
+	//TODO this might be set directly by the controller
+	protected void setDescription(String descriptionText) {
 		this.descriptionText = descriptionText;
 		description.setText(descriptionText);
 		editableDescription.setText(descriptionText);
@@ -533,32 +537,39 @@ public class ComponentPanel extends DraggableJPanel implements
 		controller.toggleMinimized();
 	}
 
-	private static void loadIcons() {
-		if (iconsLoaded) {
+	private static synchronized void loadIcons() {
+		if (ComponentPanel.iconsLoaded == true) {
 			return;
 		}
+		
 		URL image_url;
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_MIN_PATH);
+		assert image_url != null;
 		ComponentPanel.minIcon = new ImageIcon(image_url, "Minimize");
 
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_MAX_PATH);
+		assert image_url != null;
 		ComponentPanel.maxIcon = new ImageIcon(image_url, "Maximize");
 
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_LOCKED_PATH);
+		assert image_url != null;
 		ComponentPanel.lockedIcon = new ImageIcon(image_url, "Lock");
 
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_UNLOCKED_PATH);
+		assert image_url != null;
 		ComponentPanel.unlockedIcon = new ImageIcon(image_url, "Unlock");
 
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_CLOSE_PATH);
+		assert image_url != null;
 		ComponentPanel.closeIcon = new ImageIcon(image_url, "Remove");
 
-		iconsLoaded = true;
+		ComponentPanel.iconsLoaded = true;
+		return;
 	}
 
 	private void removeComponent() {

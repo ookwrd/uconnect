@@ -26,7 +26,7 @@ import org.u_compare.gui.model.MinimizedStatusChangeListener;
 public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener, 
 	LockedStatusChangeListener {
 
-	private ComponentPanel componentPanel;
+	private JPanel minimizeTarget;
 	private ComponentController controller;
 	private Component component;
 	
@@ -43,10 +43,10 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 	private BevelBorder highlighted;
 	private Border empty;
 	
-	public ButtonPanel(ComponentController controller, Component component, ComponentPanel componentPanel){
+	public ButtonPanel(ComponentController controller, Component component, JPanel minimizeTarget){
 		super();
 		
-		this.componentPanel = componentPanel;
+		this.minimizeTarget = minimizeTarget;
 		this.controller = controller;
 		this.component = component;
 		
@@ -165,7 +165,7 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 		component.registerLockedStatusChangeListener(this);
 		component.registerMinimizedStatusChangeListener(this);
 		
-		setBackground(Color.RED);
+		setMinimizedStatus();
 		
 	}
 	
@@ -187,17 +187,20 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 	}
 	
 	protected void setMinimizedStatus(){
+		
 		if(component.getMinimizedStatus()){
 			this.minButton.setIcon(maxIcon);
+			minimizeTarget.setVisible(false);
 		}else{
 			this.minButton.setIcon(minIcon);
+			minimizeTarget.setVisible(true);
 		}
 	}
 	
 	@Override
 	public void minimizedStatusChanged(Component component) {
-		
-		componentPanel.setupMinimizedStatus();
+
+		setMinimizedStatus();
 		
 	}
 	

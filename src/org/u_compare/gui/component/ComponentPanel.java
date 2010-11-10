@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -14,42 +13,22 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
-import java.util.ArrayList;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-
 import org.u_compare.gui.DraggableJPanel;
-import org.u_compare.gui.DropTargetJPanel;
-import org.u_compare.gui.ParameterPanel;
 import org.u_compare.gui.RoundedBorder;
 import org.u_compare.gui.control.ComponentController;
-import org.u_compare.gui.control.ParameterController;
-import org.u_compare.gui.control.ParameterControllerFactory;
-import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.model.DescriptionChangeListener;
-import org.u_compare.gui.model.LockedStatusChangeListener;
-import org.u_compare.gui.model.MinimizedStatusChangeListener;
 import org.u_compare.gui.model.SubComponentsChangedListener;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
-import org.u_compare.gui.model.WorkflowStatusListener;
-import org.u_compare.gui.model.Workflow.WorkflowStatus;
-import org.u_compare.gui.model.parameters.Parameter;
-
-import com.sun.tools.internal.ws.wscompile.Options.Target;
 
 /**
  * TODO: We do need to separate this monster into multiple classes.
@@ -131,21 +110,21 @@ public class ComponentPanel extends DraggableJPanel implements
 		BorderLayout topLayout = new BorderLayout();
 		topPanel.setLayout(topLayout);
 		topPanel.setOpaque(false);
+
+		setupInnerPanel();
 		
 		if (!component.isWorkflow()) {
 			topPanel.setBorder(new RoundedBorder(null, BORDER_COLOR,
 					HEADER_COLOR, BORDER_ROUNDING, BORDER_WIDTH, true));
 
 			setupTitlePanel();
-			setupButtonPanel(topPanel);
+			setupButtonPanel(topPanel, innerPanel);
 			this.add(topPanel, BorderLayout.NORTH);
 		} else {
 			setupTitlePanel();
 			this.add(topPanel, BorderLayout.NORTH);
 		}
 
-		setupInnerPanel();
-		setupMinimizedStatus();
 		setupDescriptionPanel();
 		if(component.isWorkflow()){
 			setupWorkflowControlPanel(innerPanel);
@@ -169,6 +148,8 @@ public class ComponentPanel extends DraggableJPanel implements
 			
 			setupSubComponentsPanel(innerPanel);
 		}
+		
+		this.add(innerPanel);
 	}
 	
 	protected void initialConfiguration(Component component,
@@ -244,13 +225,9 @@ public class ComponentPanel extends DraggableJPanel implements
         titleTextField.addFocusListener(titleFocusListener);
 	}
 	
-	protected void setupButtonPanel(JPanel target){
+	protected void setupButtonPanel(JPanel target, JPanel minimizable){
 		
-		if(target == null){
-			System.out.println("yep null");
-		}
-		
-		buttonPanel = new ButtonPanel(controller, component, this);
+		buttonPanel = new ButtonPanel(controller, component, minimizable);
 		target.add(buttonPanel, BorderLayout.LINE_END);
 		
 	}
@@ -264,7 +241,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
 				BORDER_WIDTH, BORDER_WIDTH));
 		
-		this.add(innerPanel);
 	}
 	
 	protected void setupDescriptionPanel(){
@@ -338,9 +314,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		innerPanel.add(descriptionPanel);
 	}
 	
-	
-	
-	
 	protected void setupWorkflowControlPanel(JPanel target){
 		
 		workflowControlPanel = new WorkflowControlPanel((Workflow)component,
@@ -391,7 +364,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	}
 	
 	//TODO move into ButtonPanel via a reference to what should be made visible
-	protected void setupMinimizedStatus(){
+	/*protected void setupMinimizedStatus(){
 		//Check if the component is minimized
 		if(component.getMinimizedStatus()){
 			this.innerPanel.setVisible(false);
@@ -404,7 +377,7 @@ public class ComponentPanel extends DraggableJPanel implements
 				buttonPanel.setMinimizedStatus();
 			}
 		}
-	}
+	}*/
 
 	//TODO this might be set directly by the controller
 	protected void setTitle(String title) {

@@ -123,6 +123,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	private java.awt.Component textField;
 	
 	private WorkflowControlPanel workflowControlPanel;
+	private InputOutputPanel inputOutputPanel;
 	
 	protected ComponentPanel(ComponentController controller){
 		super(controller);
@@ -138,7 +139,6 @@ public class ComponentPanel extends DraggableJPanel implements
 			((AggregateComponent) component)
 					.registerSubComponentsChangedListener(this);
 		}
-		
 		
 		if (!component.isWorkflow()) {
 			this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
@@ -465,26 +465,9 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	protected void setupInputOutputPanel(){
 		
-		JPanel inputPanel = new JPanel();
-		inputPanel.setOpaque(false);
-		inputPanel.setBorder(new TitledBorder(new EtchedBorder(),
-		"Inputs:"));
-		
-		inputPanel.add(new JLabel("This is an input"));
-		
-		JPanel outputPanel = new JPanel();
-		outputPanel.setOpaque(false);
-		outputPanel.setBorder(new TitledBorder(new EtchedBorder(),
-		"Outputs:"));
-		
-		outputPanel.add(new JLabel("This is an output"));
-		
-		JPanel inputOutputPanel = new JPanel();
-		inputOutputPanel.setLayout(new BoxLayout(inputOutputPanel, BoxLayout.X_AXIS));
-		inputOutputPanel.add(inputPanel);
-		inputOutputPanel.add(outputPanel);
-		
+		inputOutputPanel = new InputOutputPanel(component, controller);
 		innerPanel.add(inputOutputPanel);
+
 	}
 	
 	protected void setupParameterPanel(){

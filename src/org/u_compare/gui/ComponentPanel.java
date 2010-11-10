@@ -118,7 +118,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	private Border empty;
 	private JPanel descriptionPanel;
 	private JTextArea description;
-	private JTextField editableDescription;
+	private JTextArea editableDescription;
 	private String descriptionText;
 	private java.awt.Component textField;
 	
@@ -387,15 +387,14 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	protected void setupDescriptionPanel(){
 		
-		
-		descriptionListener = new ActionListener() {
-
+		/*descriptionListener = new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
 				setDescription(editableDescription.getText());
 				editableDescription.setVisible(false);
 				description.setVisible(true);
 			}
-		};
+		};*/
 		
 		descriptionFocusListener = new FocusListener() {
 			
@@ -425,11 +424,11 @@ public class ComponentPanel extends DraggableJPanel implements
 		description.setWrapStyleWord(true);
 		description.setEditable(false);
 		
-		editableDescription = new JTextField(descriptionText);
-		editableDescription.setBackground(defaultColor);
-		//editableDescription.setLineWrap(true);
-		//editableDescription.setWrapStyleWord(true);
-		//editableDescription.setEditable(true);
+		editableDescription = new JTextArea(descriptionText);
+		editableDescription.setBackground(Color.WHITE);
+		editableDescription.setLineWrap(true);
+		editableDescription.setWrapStyleWord(true);
+		editableDescription.setEditable(true);
 		editableDescription.setVisible(false);
 		
 		descriptionPanel.add(description, BorderLayout.LINE_START);
@@ -448,7 +447,7 @@ public class ComponentPanel extends DraggableJPanel implements
 			}
 		});
 
-		editableDescription.addActionListener(descriptionListener);
+		//editableDescription.addActionListener(descriptionListener);
 		editableDescription.addFocusListener(descriptionFocusListener);
 
 		innerPanel.add(descriptionPanel);
@@ -598,6 +597,14 @@ public class ComponentPanel extends DraggableJPanel implements
 	}
 	
 	protected void setDescription(String descriptionText) { //TODO this might be set directly by the controller
+		descriptionText = descriptionText.trim();
+		/*//description right trim
+		String tmp = "";
+		for(int i=descriptionText.length()-1; i>=0; i++) {
+			if (descriptionText.charAt(i)==a) tmp+="descriptionText.charAt(i);
+		}
+		descriptionText = tmp;*/ 
+		
 		this.descriptionText = descriptionText;
 		description.setText(descriptionText);
 		editableDescription.setText(descriptionText);

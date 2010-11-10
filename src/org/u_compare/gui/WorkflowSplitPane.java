@@ -34,8 +34,10 @@ public class WorkflowSplitPane extends JSplitPane
 		this.workflowPane = workflowPane;
 		this.consolePane = consolePane;
 		
-		workflowPane.getTopWorkflowComponent().getComponent().registerComponentDescriptionChangeListener(this);
-		workflowPane.getTopWorkflowComponent().getComponent().registerSavedStatusChangeListener(this);
+		workflowPane.getTopWorkflowComponent().getComponent()
+				.registerComponentDescriptionChangeListener(this);
+		workflowPane.getTopWorkflowComponent().getComponent()
+				.registerSavedStatusChangeListener(this);
 		
 		this.setTopComponent(this.workflowPane);
 		this.setBottomComponent(this.consolePane);
@@ -44,7 +46,8 @@ public class WorkflowSplitPane extends JSplitPane
 		this.setDividerLocation(
 				WorkflowSplitPane.SEPARATOR_START_LOCATION_FROM_BOTTOM);
 		this.setOrientation(WorkflowSplitPane.SPLIT_ORIENTATION);
-		this.setDividerLocation(500); //XXX: Nasty, but we need the outer size
+		 //XXX: Nasty, but we need the outer size to determine a relative value
+		this.setDividerLocation(500);
 	}
 	
 	protected WorkflowPane getWorkflowPane() {
@@ -58,6 +61,7 @@ public class WorkflowSplitPane extends JSplitPane
 		this.tabPane = tabPane;
 	}
 	
+	// I am not sure if this really belongs here, not in the tabbed pane /pontus
 	@Override
 	public void ComponentDescriptionChanged(Component component) {
 		if(tab != null) {
@@ -67,6 +71,7 @@ public class WorkflowSplitPane extends JSplitPane
 		}
 	}
 
+	// I am not sure if this really belongs here, not in the tabbed pane /pontus
 	@Override
 	public void savedStatusChanged(Component component) {
 		System.out.println("Saved change listner notified");

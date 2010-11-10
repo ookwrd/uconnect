@@ -87,7 +87,7 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 		};
 		
 		// add buttons to expand/collapse/remove the component
-		setOpaque(false);//Repeated? TODO
+		setOpaque(false);
 		FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
 		setLayout(buttonLayout);
 
@@ -96,6 +96,7 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 
 		Dimension buttonSize;
 		minButton = new JButton(minIcon);
+		minButton.setFocusPainted(false); //This may be needed for a mac specific behaviour
 		buttonSize = new Dimension(minIcon.getIconWidth()
 				- BUTTON_DECREMENT, minIcon.getIconHeight()
 				- BUTTON_DECREMENT);
@@ -106,6 +107,7 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 
 		ImageIcon lockIcon = component.getLockedStatus()?lockedIcon:unlockedIcon;
 		lockButton = new JButton(lockIcon);
+		lockButton.setFocusPainted(false); //This may be needed for a mac specific behaviour
 		buttonSize = new Dimension(unlockedIcon.getIconWidth()
 				- BUTTON_DECREMENT, unlockedIcon.getIconHeight()
 				- BUTTON_DECREMENT);

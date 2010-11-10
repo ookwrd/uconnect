@@ -129,6 +129,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	private WorkflowControlPanel workflowControlPanel;
 	private InputOutputPanel inputOutputPanel;
+	private ParametersPanel parametersPanel;
 	
 	protected ComponentPanel(ComponentController controller){
 		super(controller);
@@ -180,7 +181,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		if(!component.isWorkflow()){
 			setupInputOutputPanel();
 		}
-		setupParameterPanel();
+		setupParametersPanel();
 		setupMinimizedStatus();
 		setupSubComponents();		
 	}
@@ -475,40 +476,11 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	}
 	
-	protected void setupParameterPanel(){
+	protected void setupParametersPanel(){
 		
-		ArrayList<ParameterPanel> paramPanels = new ArrayList<ParameterPanel>();
-		for (Parameter param : component.getConfigurationParameters()){
-			ParameterController paramController = ParameterControllerFactory.getController(controller, param);
-			paramPanels.add(paramController.getView());
-			controller.addParamaterController(paramController);
-		}
-		
-		// Set up the parameter panel if necessary
-		if (paramPanels.size() > 0) {
-
-			JPanel parameterPanel = new JPanel();
-			parameterPanel.setBorder(new TitledBorder(new EtchedBorder(),
-					"Configuration Parameters:"));
-			parameterPanel.setLayout(new BoxLayout(parameterPanel,
-					BoxLayout.Y_AXIS));
-			parameterPanel.setOpaque(false);
-			innerPanel.add(parameterPanel);
-
-			for (ParameterPanel paramPanel : paramPanels) {
-				paramPanel.setOpaque(false);
-				parameterPanel.add(paramPanel);
-			}
-		}
-	}
-
-	//TODO refactor to the relevant location
-	private void setupMinimizedStatus(){
-		//Check if the component is minimized
-		if(component.getMinimizedStatus()){
-			this.innerPanel.setVisible(false);
-			this.minButton.setIcon(maxIcon);
-		}
+		parametersPanel = new ParametersPanel(component, controller);
+		innerPanel.add(parametersPanel);
+	
 	}
 	
 	protected void setupSubComponents() {
@@ -565,6 +537,14 @@ public class ComponentPanel extends DraggableJPanel implements
 				aggregatePanel.add(following);
 				controller.insert(subController, control);
 			}
+		}
+	}
+	
+	private void setupMinimizedStatus(){
+		//Check if the component is minimized
+		if(component.getMinimizedStatus()){
+			this.innerPanel.setVisible(false);
+			this.minButton.setIcon(maxIcon);
 		}
 	}
 

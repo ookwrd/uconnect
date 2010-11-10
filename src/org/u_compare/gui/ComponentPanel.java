@@ -10,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -103,6 +105,9 @@ public class ComponentPanel extends DraggableJPanel implements
 	private ActionListener lockListener;
 	private ActionListener titleListener;
 	private ActionListener descriptionListener;
+	
+	private FocusListener titleFocusListener;
+	private FocusListener descriptionFocusListener;
 
 	private Component component;
 	// private BasicArrowButton button = new
@@ -126,6 +131,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	private JButton stopButton;
 	private ActionListener playListener;
 	private ActionListener stopListener;
+	private java.awt.Component textField;
 	
 	public ComponentPanel(Component component,
 			ComponentController controller) {
@@ -194,7 +200,6 @@ public class ComponentPanel extends DraggableJPanel implements
 	private void setupTitlePanel(){
 		
 		titleListener = new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				setTitle(titleTextField.getText());
 				titleTextField.setVisible(false);
@@ -202,6 +207,29 @@ public class ComponentPanel extends DraggableJPanel implements
 			}
 		};
 		
+		titleFocusListener = new FocusListener() {
+			
+			public void focusGained(FocusEvent e) {
+			}
+
+			public void focusLost(FocusEvent e) {
+				setTitle(titleTextField.getText());
+				titleTextField.setVisible(false);
+				titleLabel.setVisible(true);
+			}
+		};
+		
+		descriptionFocusListener = new FocusListener() {
+			
+			public void focusGained(FocusEvent e) {
+			}
+
+			public void focusLost(FocusEvent e) {
+				setDescription(description.getText());
+				description.setVisible(true);
+				editableDescription.setVisible(false);
+			}
+		};
 		
 		// add a title panel
 		titlePanel = new JPanel(new CardLayout());
@@ -231,7 +259,9 @@ public class ComponentPanel extends DraggableJPanel implements
 			}
 		});
 
+		// the title JTextField has listeners 
 		titleTextField.addActionListener(titleListener);
+        titleTextField.addFocusListener(titleFocusListener);
 	}
 	
 	private void setupButtonPanel(){

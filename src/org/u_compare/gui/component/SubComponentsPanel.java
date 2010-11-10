@@ -43,9 +43,9 @@ public class SubComponentsPanel extends JPanel {
 				subModel);
 		
 			//Start everything except top level components as minimized
-			if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){
-				subController.setMinimized(true);
-			}//TODO remove this, it overrides maximized things when dragging and dropping
+			//if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){
+				//subController.setMinimized(true);
+			//}//TODO remove this, it overrides maximized things when dragging and dropping
 		
 			ComponentPanel subView = subController.getView();
 			add(subView);

@@ -22,15 +22,21 @@ import org.u_compare.gui.model.WorkflowStatusListener;
  * @author luke
  * @version 2009-08-27
  */
+
 @SuppressWarnings("serial")
 public class ConsolePane extends JScrollPane
 	implements WorkflowStatusListener {
 	
-	//TODO: Add setter for show timestamp, and default value
-	//TODO: Listener for the messages arraylist instead of calling it implicitly?
-	//TODO: Should follow the output downwards, add set and default. Fix bug further down.
+	/**
+	 * TODO:
+	 * Add setter for show timestamp, and default value
+	 * Listener for the messages arraylist instead of calling it implicitly?
+	 * Should follow the output downwards, add set and default.
+	 *     Fix bug further down.
+	 */
 	
-	private final String WORKFLOW_STATUS_MSG_BASE = "Workflow status change to: ";
+	private final String WORKFLOW_STATUS_MSG_BASE =
+		"Workflow status change to: ";
 	
 	private Workflow workflow;
 	
@@ -42,7 +48,6 @@ public class ConsolePane extends JScrollPane
 		ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 	private static final int VERTICAL_SCROLLBAR_POLICY =
 		ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-	private static final String BORDER_TITLE = "Workflow console";
 	private static final String TOOLTIP_TEXT =
 		"Displays output related to this workflow";
 	
@@ -51,10 +56,9 @@ public class ConsolePane extends JScrollPane
 		new SimpleDateFormat("HH:mm:ss");
 	private static final String CONSOLE_ERROR_COLOUR = "#FF0000";
 	private static final String CONSOLE_DEFAULT_TEXT_COLOUR = "#000000";
-	private static final Color CONSOLE_BACKGROUND_COLOR = Color.getColor("#FFFFFF");
+	private static final Color CONSOLE_BACKGROUND_COLOR =
+		Color.getColor("#FFFFFF");
 	private static final boolean CONSOLE_EDITABLE = false;
-	
-
 	
 	//TODO: How do we limit the size and minimization possibilites?
 	//The code below won't do it.
@@ -67,38 +71,35 @@ public class ConsolePane extends JScrollPane
 		
 		this.console = new JEditorPane();
 		
-		//Required for Auto-Scroll on console update
+		// Required for Auto-Scroll behaviour on console update
 		DefaultCaret caret = (DefaultCaret)console.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		//TODO move caret on user scroll so it doesn't force the scroll to the bottome
+		/**
+		 * TODO: Move caret on user scroll so it doesn't force the scroll to
+		 * the bottom.
+		 */
 		
 		this.console.setContentType(ConsolePane.CONSOLE_CONTENTTYPE);
 		this.console.setEditable(ConsolePane.CONSOLE_EDITABLE);
-		
 		this.console.setBackground(ConsolePane.CONSOLE_BACKGROUND_COLOR);
 		
 		this.messages = new ArrayList<ConsoleMessage>();
 		
 		this.setViewportView(this.console);
-		//this.setBorder(new TitledBorder(new EtchedBorder(),
-		//		ConsolePane.BORDER_TITLE));
 		this.setHorizontalScrollBarPolicy(
 				ConsolePane.HORIZONTAL_SCROLLBAR_POLICY);
 		this.setVerticalScrollBarPolicy(
 				ConsolePane.VERTICAL_SCROLLBAR_POLICY);
 		this.setToolTipText(
 				ConsolePane.TOOLTIP_TEXT);
-		this.setOpaque(false);//Required for correct display in Mac OSX
+		// Required for correct display in MacOS X
+		this.setOpaque(false);
 	}
 	
 	private class ConsoleMessage {
 		public String text;
 		public Date timestamp;
 		public boolean isError;
-		
-		public ConsoleMessage(String text) {
-			this(text, false);
-		}
 		
 		public ConsoleMessage(String text, boolean isError) {
 			this.text = text;
@@ -109,7 +110,7 @@ public class ConsolePane extends JScrollPane
 
 	public void clearConsole() {
 		this.messages.clear();
-		this.updateConsoleText(); // Listener?
+		this.updateConsoleText(); // Use a listener?
 	}
 	
 	public void addConsoleErrorMessage(String message) {
@@ -122,11 +123,11 @@ public class ConsolePane extends JScrollPane
 	
 	private void addConsoleMessage(String message, boolean isError) {
 		this.messages.add(new ConsoleMessage(message, isError));
-		this.updateConsoleText(); // Listener?
+		this.updateConsoleText(); // Use a listener?
 	}
 	
 	private void updateConsoleText() {
-		//TODO: Reuse previous text?
+		//TODO: Reuse previous text? So that we don't need a full update.
 		String text = "";
 		for (ConsoleMessage message: this.messages) {
 			String messageText = ConsolePane.CONSOLE_DATEFORMAT.format(
@@ -135,33 +136,20 @@ public class ConsolePane extends JScrollPane
 				messageText = "<font color=" + ConsolePane.CONSOLE_ERROR_COLOUR
 						+ ">" + messageText + "</font>";
 			} else {
-				messageText = "<font color=" + ConsolePane.CONSOLE_DEFAULT_TEXT_COLOUR
-				+ ">" + messageText + "</font>";
+				messageText = "<font color="
+					+ ConsolePane.CONSOLE_DEFAULT_TEXT_COLOUR + ">"
+					+ messageText + "</font>";
 			}
 			text += messageText;
 		}
-		/*// Decide if the user has affected the current state of the scroll
-		boolean scrollToBottom = false;
-		//System.out.println(this.verticalScrollBar.getValue());
-		//System.out.println(this.verticalScrollBar.getMaximum());
-		
-		if (! this.verticalScrollBar.getValueIsAdjusting() && // We are not being dragged
-				this.verticalScrollBar.getValue() == this.verticalScrollBar.getMaximum()) {
-			scrollToBottom = true;
-		}*/
 		
 		this.console.setText(text);
-		
-		/*if (scrollToBottom) {
-			//TODO: Make this work!
-			//this.viewport.setViewPosition(new Point(0, 1000));
-			//this.verticalScrollBar.setValue(100);//this.verticalScrollBar.getMaximum());
-		}*/
 	}
 	
 	public static void main(String[] argv) {
         ConsolePane consolePane = new ConsolePane(new Workflow());
 
+        consolePane.addConsoleMessage("Testing the ConsolePane...");
         for (int i = 0; i < 100; i++) {
         	consolePane.addConsoleMessage("Message number:" + i + "!");
         }
@@ -172,8 +160,10 @@ public class ConsolePane extends JScrollPane
 
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
-		
-		addConsoleMessage(WORKFLOW_STATUS_MSG_BASE +workflow.getStatus());
-		
+		addConsoleMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus());
+	}
+	
+	public Workflow getAssociatedWorkflow() {
+		return this.workflow;
 	}
 }

@@ -172,14 +172,14 @@ public class ComponentPanel extends DraggableJPanel implements
 		setupInnerPanel();
 		setupDescriptionPanel();
 		if(component.isWorkflow()){
-			setupWorkflowControlPanel();
+			setupWorkflowControlPanel(innerPanel);
 		}
 		if(!component.isWorkflow()){
-			setupInputOutputPanel();
+			setupInputOutputPanel(innerPanel);
 		}
-		setupParametersPanel();
+		setupParametersPanel(innerPanel);
 		setupMinimizedStatus();
-		setupSubComponentsPanel();		
+		setupSubComponentsPanel(innerPanel);		
 	}
 	
 	protected void initialConfiguration(Component component,
@@ -459,39 +459,43 @@ public class ComponentPanel extends DraggableJPanel implements
 		innerPanel.add(descriptionPanel);
 	}
 	
-	protected void setupWorkflowControlPanel(){
+	
+	
+	
+	protected void setupWorkflowControlPanel(JPanel target){
 		
 		workflowControlPanel = new WorkflowControlPanel((Workflow)component,
 				controller);
-		innerPanel.add(workflowControlPanel);
+		target.add(workflowControlPanel);
 		
 	}
 
-	protected void setupInputOutputPanel(){
+	protected void setupInputOutputPanel(JPanel target){
 		
 		inputOutputPanel = new InputOutputPanel(component, controller);
-		innerPanel.add(inputOutputPanel);
+		target.add(inputOutputPanel);
 
 	}
 	
-	protected void setupParametersPanel(){
+	protected void setupParametersPanel(JPanel target){
 		
 		parametersPanel = new ParametersPanel(component, controller);
-		innerPanel.add(parametersPanel);
+		target.add(parametersPanel);
 	
 	}
 	
-	protected void setupSubComponentsPanel() {
+	protected void setupSubComponentsPanel(JPanel target) {
+		
 		// set up the aggregate panel if necessary
 		if (component.isAggregate()) {
 
 			if(subComponentsPanel != null){
-				innerPanel.remove(subComponentsPanel);
-				innerPanel.validate();
+				target.remove(subComponentsPanel);
+				target.validate();
 			}
 			
 			subComponentsPanel = new SubComponentsPanel(component, controller);
-			innerPanel.add(subComponentsPanel);
+			target.add(subComponentsPanel);
 			
 		}
 	}
@@ -587,7 +591,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	public void subComponentsChanged() {
 
 		resetSubComponents();
-		setupSubComponentsPanel(); //TODO shouldnt be using this... need a reset or something
+		setupSubComponentsPanel(innerPanel); //TODO shouldnt be using this... need a reset or something
 		controller.validateWorkflow();// TODO this needs to validate at a higher
 										// level
 

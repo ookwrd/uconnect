@@ -49,7 +49,7 @@ public class IconizedCloseableTabFlapComponent
 		
 		this.setOpaque(false);
 		
-		IconizedCloseableTabFlapComponent.load_icons();
+		IconizedCloseableTabFlapComponent.loadIcons();
 		assert IconizedCloseableTabFlapComponent.iconsLoaded == true:
 			"Failed to lab tab icons";
 		
@@ -111,7 +111,7 @@ public class IconizedCloseableTabFlapComponent
 		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 3));
 	}
 	
-	private static synchronized void load_icons() {
+	private static synchronized void loadIcons() {
 		if (IconizedCloseableTabFlapComponent.iconsLoaded == false) {
 			URL image_url;
 			

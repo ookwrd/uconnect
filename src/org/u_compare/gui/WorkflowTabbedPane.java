@@ -22,26 +22,22 @@ import org.u_compare.gui.model.WorkflowStatusListener;
  * @author luke
  * @version 2009-09-27
  */
+
 @SuppressWarnings("serial")
 //TODO: Enable scrolling among tabs
 //TODO: Should have mnemonics
-//TODO: Need to listen to changes to workflows, for naming the tab
-//TODO: Also needs listeners for the state of the workflow
 //TODO: Should never be empty
-//TODO: "Create new workflow" tab
-//TODO: Animated icons by calling "set icon" with a time interval?
 public class WorkflowTabbedPane extends JTabbedPane
 	implements WorkflowStatusListener {
-
-	private static final int MAX_LENGTH = 7;
 	
 	// Configuration
 	private static final String TOOLTIP_TEXT =
 		"Your current workflow(s)";
+	/* The maximum number of characters displayed for a tab name */
+	private static final int MAX_LENGTH = 7;
 	
 	//XXX: We will conflict with the "Change tab" key shortcuts, override!
 	
-	//TODO: Argue with Luke regarding the states a workflow can have.
 	// No, you in fact have different states... Odd...
 	//TODO: We do want to animate these in the end
 	private static boolean icons_loaded = false; 
@@ -61,7 +57,6 @@ public class WorkflowTabbedPane extends JTabbedPane
 		"gfx/workflow_finished.png";
 	private final static String WORKFLOW_PAUSED_PATH =
 		"gfx/workflow_paused.png";
-	// RENAME ERROR
 	private final static String WORKFLOW_ERROR_PATH =
 		"gfx/workflow_error.png";
 	
@@ -71,7 +66,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 		assert WorkflowTabbedPane.icons_loaded == true;
 		
 		this.setToolTipText(WorkflowTabbedPane.TOOLTIP_TEXT);
-		//this.addWorkflow(splitPane);
+		
 		initializeNewWorkflowTab();
 	}
 	

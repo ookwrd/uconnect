@@ -14,7 +14,16 @@ import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
 
-public class WorkflowControlPanel extends JPanel implements WorkflowStatusListener {
+/**
+ * TODO:
+ * 
+ * @author luke
+ * @version 2010-11-10
+ */
+
+@SuppressWarnings("serial")
+public class WorkflowControlPanel extends JPanel
+	implements WorkflowStatusListener {
 
 	public final static String STATUS_PREFIX = "Status: ";
 	
@@ -28,7 +37,8 @@ public class WorkflowControlPanel extends JPanel implements WorkflowStatusListen
 	private JButton runButton;
 	private JButton stopButton;
 	
-	public WorkflowControlPanel(Workflow component, ComponentController controller){
+	public WorkflowControlPanel(Workflow component,
+			ComponentController controller) {
 		super();
 		
 		this.component = component;
@@ -49,12 +59,13 @@ public class WorkflowControlPanel extends JPanel implements WorkflowStatusListen
 		setOpaque(false);
 		setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 		
-		statusLabel = new JLabel(STATUS_PREFIX + ((Workflow)component).getStatus());
-		add(statusLabel);
+		statusLabel = new JLabel(STATUS_PREFIX
+				+ ((Workflow)component).getStatus());
+		this.add(statusLabel);
 			
 		runButton = new JButton("start");
 		runButton.addActionListener(playListener);
-		add(runButton);
+		this.add(runButton);
 			
 		stopButton = new JButton("stop");
 		stopButton.addActionListener(stopListener);
@@ -66,27 +77,25 @@ public class WorkflowControlPanel extends JPanel implements WorkflowStatusListen
 	}
 	
 	private void stopWorkflow() {
-		
 		WorkflowStatus currentStatus = ((Workflow)component).getStatus();
-		if(currentStatus == WorkflowStatus.READY || currentStatus == WorkflowStatus.PAUSED){
+		if(currentStatus == WorkflowStatus.READY
+				|| currentStatus == WorkflowStatus.PAUSED) {
 			controller.workflowPlayRequest();
-		}else if(currentStatus == WorkflowStatus.RUNNING || currentStatus == WorkflowStatus.INITIALIZING){
+		}
+		else if (currentStatus == WorkflowStatus.RUNNING
+				|| currentStatus == WorkflowStatus.INITIALIZING) {
 			controller.workflowPauseRequest();
 		}
 	}
 
 	private void playWorkflow() {
-		
 		controller.workflowStopRequest();
-		
 	}
 	
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
-	
 		statusLabel.setText(STATUS_PREFIX + workflow.getStatus());
-		
-		//TODO update Buttons
+		//TODO: Update Buttons
 	}
 	
 }

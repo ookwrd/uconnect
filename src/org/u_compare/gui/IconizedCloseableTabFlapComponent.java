@@ -103,6 +103,10 @@ public class IconizedCloseableTabFlapComponent
 		close_button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		//
 		close_button.addActionListener(this);
+		close_button.setRolloverEnabled(true);
+		// Rollover is Java terminology for mouse over
+		close_button.setRolloverIcon(
+				IconizedCloseableTabFlapComponent.closeTabMouseOverIcon);
 		this.add(close_button);
 		
 		// Create some distance between the edge and the close button

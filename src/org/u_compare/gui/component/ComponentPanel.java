@@ -49,6 +49,8 @@ import org.u_compare.gui.model.WorkflowStatusListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.parameters.Parameter;
 
+import com.sun.tools.internal.ws.wscompile.Options.Target;
+
 /**
  * TODO: We do need to separate this monster into multiple classes.
  * 
@@ -126,6 +128,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	private InputOutputPanel inputOutputPanel;
 	private ParametersPanel parametersPanel;
 	private SubComponentsPanel subComponentsPanel;
+	private JPanel subComponentsContainer;
 	
 	protected ComponentPanel(ComponentController controller){
 		super(controller);
@@ -179,7 +182,20 @@ public class ComponentPanel extends DraggableJPanel implements
 		}
 		setupParametersPanel(innerPanel);
 		setupMinimizedStatus();
-		setupSubComponentsPanel(innerPanel);		
+		
+		if(!component.isWorkflow()){
+			
+			JPanel subComponentsBorder = new JPanel();
+			subComponentsBorder.setLayout(new GridLayout());
+			subComponentsBorder.setOpaque(false);
+			subComponentsBorder.setBorder(new TitledBorder("Subcomponents:"));
+			setupSubComponentsPanel(subComponentsBorder);
+			innerPanel.add(subComponentsBorder);
+			
+		}else{
+			
+			setupSubComponentsPanel(innerPanel);
+		}
 	}
 	
 	protected void initialConfiguration(Component component,
@@ -486,6 +502,10 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	protected void setupSubComponentsPanel(JPanel target) {
 		
+		//TODO make sure it is only setup in one location
+		
+		subComponentsContainer = target;
+		
 		// set up the aggregate panel if necessary
 		if (component.isAggregate()) {
 
@@ -498,6 +518,13 @@ public class ComponentPanel extends DraggableJPanel implements
 			target.add(subComponentsPanel);
 			
 		}
+	}
+	
+	private void resetSubComponents(){
+		
+		subComponentsContainer.remove(subComponentsPanel);
+		setupSubComponentsPanel(subComponentsContainer);
+		
 	}
 	
 	protected void setupMinimizedStatus(){
@@ -581,22 +608,13 @@ public class ComponentPanel extends DraggableJPanel implements
 		this.controller.removeComponent();
 	}
 
-	private void resetSubComponents() {
-
-		//aggregatePanel.removeAll();
-		controller.resetSubComponents();
-
-	}
-
 	public void subComponentsChanged() {
 
+		controller.resetSubComponents();
 		resetSubComponents();
-		setupSubComponentsPanel(innerPanel); //TODO shouldnt be using this... need a reset or something
 		controller.validateWorkflow();// TODO this needs to validate at a higher
 										// level
-
-		// Reset both the view and controller for these subcomponents
-
+		
 	}
 
 	public Component getComponent() {

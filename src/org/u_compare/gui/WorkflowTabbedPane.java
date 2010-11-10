@@ -34,7 +34,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 	private static final String TOOLTIP_TEXT =
 		"Your current workflow(s)";
 	/* The maximum number of characters displayed for a tab name */
-	private static final int MAX_LENGTH = 7;
+	private static final int MAX_LENGTH = 15;
 	
 	//XXX: We will conflict with the "Change tab" key shortcuts, override!
 	

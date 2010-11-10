@@ -41,6 +41,7 @@ import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
 
+import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.DragAndDropComponentController;
 import org.u_compare.gui.control.DragAndDropController;

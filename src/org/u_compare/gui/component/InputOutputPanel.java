@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.component;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;

@@ -17,7 +17,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
  * Component to be used as a tab flap that can display an icon and
- * is closeable using a button.
+ * is close-able using a button.
  * 
  * @author pontus
  * @version 2010-05-28
@@ -50,7 +50,8 @@ public class IconizedCloseableTabFlapComponent
 		this.setOpaque(false);
 		
 		IconizedCloseableTabFlapComponent.load_icons();
-		assert IconizedCloseableTabFlapComponent.iconsLoaded == true;
+		assert IconizedCloseableTabFlapComponent.iconsLoaded == true:
+			"Failed to lab tab icons";
 		
 		if(parentPane == null) {
 			throw new IllegalArgumentException(
@@ -84,27 +85,24 @@ public class IconizedCloseableTabFlapComponent
 				BorderFactory.createEmptyBorder(0, 0, 0, 7));
 		this.add(title);
 		
-		//Last of all, we add the close button, voila, done, bork bork
-		//TODO: Do we want any mouse-over effects? For free?
-		//TODO: We can use an icon too instead of the title
+		//Last of all, we add the close button
 		JButton close_button = new JButton(
 				IconizedCloseableTabFlapComponent.closeTabIcon);
 		// Force it to be a square
 		close_button.setPreferredSize(new Dimension(9, 9));
 		close_button.setToolTipText(
 				IconizedCloseableTabFlapComponent.CLOSE_BUTTON_TOOLTIP);
-		// Don't catch the user focus
+		// Don't catch the user focus since this would be confusing
 		close_button.setFocusable(false);
-		//close_button.setBorderPainted(false);
 		
-		// Is this the final look we want?
+		// Button looks
 		close_button.setUI(new BasicButtonUI());
-		//close_button.setBorder(BorderFactory.createEtchedBorder());
 		close_button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		//
+		
 		close_button.addActionListener(this);
+		
+		// Roll-over is Java terminology for mouse over
 		close_button.setRolloverEnabled(true);
-		// Rollover is Java terminology for mouse over
 		close_button.setRolloverIcon(
 				IconizedCloseableTabFlapComponent.closeTabMouseOverIcon);
 		this.add(close_button);
@@ -143,7 +141,6 @@ public class IconizedCloseableTabFlapComponent
 //TODO: Is never activated, investigate as to why.
 //	@Override
 //	public String getToolTipText() {
-//		//TODO: Extract these from here
 //		if(parentPane.indexOfTabComponent(this)
 //				== parentPane.getSelectedIndex()) {
 //			return "Your current workflow";
@@ -153,6 +150,7 @@ public class IconizedCloseableTabFlapComponent
 //		}
 //	}
 
+	//TODO: Where does this really stem from?
 	public void actionPerformed(ActionEvent e) {
 		int i = parentPane.indexOfTabComponent(this);
 		if (i != -1) {
@@ -160,6 +158,12 @@ public class IconizedCloseableTabFlapComponent
 		}
 	}
 	
+	/**
+	 * Set the status icon for this tab, the status icon precedes the tab
+	 * name text.
+	 * 
+	 * @param icon New icon to use as our status icon
+	 */
 	public void setStatusIcon(Icon icon) {
 		this.statusIconLabel.setIcon(icon);
 	}

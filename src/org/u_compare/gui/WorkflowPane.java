@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.model.Workflow;
 
 /**

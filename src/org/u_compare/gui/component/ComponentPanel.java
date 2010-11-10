@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -28,6 +28,11 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import org.u_compare.gui.DraggableJPanel;
+import org.u_compare.gui.DropTargetJPanel;
+import org.u_compare.gui.ParameterPanel;
+import org.u_compare.gui.RoundedBorder;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.control.ParameterControllerFactory;
@@ -57,13 +62,13 @@ public class ComponentPanel extends DraggableJPanel implements
 		SubComponentsChangedListener, LockedStatusChangeListener,
 		MinimizedStatusChangeListener, DescriptionChangeListener {
 
-	private final static String ICON_CLOSE_PATH = "gfx/icon_close1.png";
+	private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";
 	private final static String ICON_CLOSE_PATH_HIGHLIGHT =
-		"gfx/icon_close1highlight.png";
-	private final static String ICON_MAX_PATH = "gfx/icon_maximize1.png";
-	private final static String ICON_MIN_PATH = "gfx/icon_minimize1.png";
-	private final static String ICON_LOCKED_PATH = "gfx/icon_locked.png";
-	private final static String ICON_UNLOCKED_PATH = "gfx/icon_unlocked.png";
+		"../gfx/icon_close1highlight.png";
+	private final static String ICON_MAX_PATH = "../gfx/icon_maximize1.png";
+	private final static String ICON_MIN_PATH = "../gfx/icon_minimize1.png";
+	private final static String ICON_LOCKED_PATH = "../gfx/icon_locked.png";
+	private final static String ICON_UNLOCKED_PATH = "../gfx/icon_unlocked.png";
 
 	private final static int PREFERRED_WIDTH = 300;
 

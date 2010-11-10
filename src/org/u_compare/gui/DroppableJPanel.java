@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.DraggableJPanel.MyDropTargetListener;
+import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.DragAndDropComponentController;
 import org.u_compare.gui.control.DragAndDropController;

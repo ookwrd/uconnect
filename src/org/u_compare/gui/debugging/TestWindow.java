@@ -14,8 +14,13 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class TestWindow extends JFrame {
 
-	private static final Dimension PREFERRED_SIZE = new Dimension(960, 640);
-	private static final Dimension MINIMUM_SIZE = new Dimension(48, 64);
+	/* It is pretty safe to assume that HD 720 is okay in todays world */
+	private static final Dimension PREFERRED_SIZE = new Dimension(1280, 720);
+	/* 
+	 * No modern computer won't support VGA resolution, so this is a safe
+	 * minimum and saves us from absurdities.
+	 */
+	private static final Dimension MINIMUM_SIZE = new Dimension(640, 480);
 	
 	/**
 	 * @param testTitle Title of the test window

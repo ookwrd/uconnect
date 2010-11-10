@@ -1,8 +1,19 @@
 package org.u_compare.gui;
 
+/**
+ * TODO:
+ * 
+ * @author olaf
+ * @author luke
+ * @version 2010-11-10
+ */
+
 import java.awt.Color;
 import java.awt.Dimension;
+import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import org.u_compare.gui.control.DropTargetController;
@@ -12,15 +23,25 @@ public class DropTargetJPanel extends DroppableJPanel {
 
     public static final int TARGET_BORDER = 10;
     
-    private JLabel solitaryLabel = new JLabel("Drag and drop a component here.");
+    private static boolean iconsLoaded = false;
+	private static Icon intermediateDropTargetIcon;
+	private static String intermediateDropTargetIconCaption = "XXX"; //TODO:
+	
+	private final static String intermediateDropTargetIconPath =
+		"gfx/intermediate_drop_target_icon.png";
+    
+    private JLabel solitaryLabel =
+    	new JLabel("Drag and drop a component here.");
 
 	public DropTargetJPanel(DropTargetController controller) {
         super(controller);
+        DropTargetJPanel.loadIcons();
         this.setOpaque(false);
         this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
     }
 	
-	public DropTargetJPanel(DropTargetController controller, boolean setSolitary){
+	public DropTargetJPanel(DropTargetController controller,
+			boolean setSolitary) {
 		this(controller);
 		if(setSolitary){
 			setSolitaryDropTarget();
@@ -28,11 +49,9 @@ public class DropTargetJPanel extends DroppableJPanel {
 	}
 
     public void setDragOverHighlightingDroppable() {
-       
     	setBackground(Color.BLUE);
     	setOpaque(true);
         this.repaint();
-        
     }
 
     public void setDragOverHighlightingUndroppable() {
@@ -47,30 +66,38 @@ public class DropTargetJPanel extends DroppableJPanel {
     }
     
     /**
-     * Special display property for drop target intermediate between two components.
+     * Special display property for drop target intermediate between two
+     * components.
      */
-    public void setIntermediate(){
-
-        this.setPreferredSize(new Dimension(TARGET_BORDER*2, TARGET_BORDER*2));
-        
+    public void setIntermediate() {
+        this.setPreferredSize(new Dimension(TARGET_BORDER * 2,
+        		TARGET_BORDER * 2));    
     }
     
     //TODO special display property for solitary drop targets
-    
-    public void setSolitaryDropTarget(){
-    	
+    public void setSolitaryDropTarget() {
     	this.add(solitaryLabel);
-    	
     	this.setPreferredSize(null);
-
     }
     
     public void clearSolitaryDropTarget(){
-    	
     	this.remove(solitaryLabel);
-    	
-        this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
-    	
+        this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));	
     }
+    
+    private static synchronized void loadIcons() {
+    	if (DropTargetJPanel.iconsLoaded == true) {
+    		return;
+    	}
+		URL image_url;
 
+		image_url = IconizedCloseableTabFlapComponent.class
+				.getResource(DropTargetJPanel.intermediateDropTargetIconPath);
+		assert image_url != null;
+		DropTargetJPanel.intermediateDropTargetIcon = new ImageIcon(
+				image_url,
+				DropTargetJPanel.intermediateDropTargetIconCaption);
+		
+		return;
+	}
 }

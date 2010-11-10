@@ -72,7 +72,6 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	private final static int PREFERRED_WIDTH = 300;
 
-	private static final int AGGREGATE_PADDING = 2;
 	private static final int DESCRIPTION_PANEL_PADDING = 5;
 
 	private static final int BORDER_ROUNDING = 5;
@@ -82,8 +81,6 @@ public class ComponentPanel extends DraggableJPanel implements
 	private static Color BODY_COLOR;
 
 	private static final int BUTTON_DECREMENT = 0;
-
-	private static final boolean MINIMIZE_SUBCOMPONENTS = true;
 	
 	private static boolean iconsLoaded = false;
 	private static ImageIcon minIcon;
@@ -94,7 +91,6 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	private JPanel innerPanel;
 	private JPanel topPanel;
-	private JPanel aggregatePanel;
 	private JButton minButton; // = new
 								// BasicArrowButton(BasicArrowButton.SOUTH);
 	private JButton lockButton;
@@ -130,6 +126,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	private WorkflowControlPanel workflowControlPanel;
 	private InputOutputPanel inputOutputPanel;
 	private ParametersPanel parametersPanel;
+	private SubComponentsPanel subComponentsPanel;
 	
 	protected ComponentPanel(ComponentController controller){
 		super(controller);
@@ -183,7 +180,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		}
 		setupParametersPanel();
 		setupMinimizedStatus();
-		setupSubComponents();		
+		setupSubComponentsPanel();		
 	}
 	
 	protected void initialConfiguration(Component component,
@@ -466,8 +463,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		innerPanel.add(workflowControlPanel);
 		
 	}
-	
-
 
 	protected void setupInputOutputPanel(){
 		
@@ -483,64 +478,22 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	}
 	
-	protected void setupSubComponents() {
+	protected void setupSubComponentsPanel() {
 		// set up the aggregate panel if necessary
 		if (component.isAggregate()) {
 
-			if (aggregatePanel == null) {
-				JPanel aggregatePanelBorder = new JPanel();
-				aggregatePanelBorder.setLayout(new GridLayout());
-				aggregatePanelBorder.setOpaque(false);
-				
-				// Workflows has no border or title
-				if (!component.isWorkflow()) {
-					aggregatePanelBorder.setBorder(
-							new TitledBorder("Subcomponents:"));
-				}
-				innerPanel.add(aggregatePanelBorder);
-
-				aggregatePanel = new JPanel();
-				BoxLayout aggregateLayout = new BoxLayout(aggregatePanel,
-						BoxLayout.Y_AXIS);
-				aggregatePanel.setLayout(aggregateLayout);
-				aggregatePanel.setOpaque(false);
-				aggregatePanel.setBorder(new EmptyBorder(0, AGGREGATE_PADDING,
-						0, AGGREGATE_PADDING));
-				aggregatePanelBorder.add(aggregatePanel);
+			if(subComponentsPanel != null){
+				innerPanel.remove(subComponentsPanel);
+				innerPanel.validate();
 			}
-
-			DropTargetController initialDropTargetControl = new DropTargetController(
-					controller);
 			
-			DropTargetJPanel initial = new DropTargetJPanel(initialDropTargetControl,true);
-			initialDropTargetControl.setView(initial);
+			subComponentsPanel = new SubComponentsPanel(component, controller);
+			innerPanel.add(subComponentsPanel);
 			
-			controller.addFirstDropTarget(initialDropTargetControl);
-			
-			aggregatePanel.add(initial);
-
-			for (Component subModel : component.getSubComponents()) {
-				ComponentController subController = new ComponentController(
-						subModel);
-				
-				//Start everything except top level components as minimized
-				if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){
-					subController.setMinimized(true);
-				}//TODO remove this, it overrides maximized things when dragging and dropping
-				
-				ComponentPanel subView = subController.getView();
-				aggregatePanel.add(subView);
-				DropTargetController control = new DropTargetController(
-						controller);
-				DropTargetJPanel following = new DropTargetJPanel(control);
-				control.setView(following);
-				aggregatePanel.add(following);
-				controller.insert(subController, control);
-			}
 		}
 	}
 	
-	private void setupMinimizedStatus(){
+	protected void setupMinimizedStatus(){
 		//Check if the component is minimized
 		if(component.getMinimizedStatus()){
 			this.innerPanel.setVisible(false);
@@ -615,7 +568,7 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	private void resetSubComponents() {
 
-		aggregatePanel.removeAll();
+		//aggregatePanel.removeAll();
 		controller.resetSubComponents();
 
 	}
@@ -623,7 +576,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	public void subComponentsChanged() {
 
 		resetSubComponents();
-		setupSubComponents();
+		setupSubComponentsPanel(); //TODO shouldnt be using this... need a reset or something
 		controller.validateWorkflow();// TODO this needs to validate at a higher
 										// level
 

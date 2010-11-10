@@ -1,4 +1,5 @@
 syntax: glob
-*.class
-*~
-./bin
+*.class # Java remenant
+*~ # Vim remenant
+./bin # Java build directory
+*.orig # Mercurial original after a revert

@@ -51,7 +51,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 	private final static String WORKFLOW_STOPPED_PATH = 
 		"gfx/workflow_stopped.png";
 	private final static String WORKFLOW_RUNNING_PATH =
-		"gfx/workflow_running.png";
+		"gfx/workflow_running.gif";
 	// Results are ready
 	private final static String WORKFLOW_FINISHED_PATH =
 		"gfx/workflow_finished.png";

@@ -15,7 +15,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,16 +25,12 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.DropTargetJPanel;
-import org.u_compare.gui.ParameterPanel;
 import org.u_compare.gui.RoundedBorder;
 import org.u_compare.gui.control.ComponentController;
-import org.u_compare.gui.control.ParameterController;
-import org.u_compare.gui.control.ParameterControllerFactory;
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.model.DescriptionChangeListener;
@@ -45,9 +40,6 @@ import org.u_compare.gui.model.SubComponentsChangedListener;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
-import org.u_compare.gui.model.WorkflowStatusListener;
-import org.u_compare.gui.model.Workflow.WorkflowStatus;
-import org.u_compare.gui.model.parameters.Parameter;
 
 /**
  * TODO: We do need to separate this monster into multiple classes.
@@ -95,8 +87,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	private JPanel innerPanel;
 	private JPanel topPanel;
 	private JPanel aggregatePanel;
-	private JButton minButton; // = new
-								// BasicArrowButton(BasicArrowButton.SOUTH);
+	private JButton minButton;
 	private JButton lockButton;
 	protected String title;
 	private JPanel buttonPanel;
@@ -178,7 +169,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		if(component.isWorkflow()){
 			setupWorkflowControlPanel();
 		}
-		if(!component.isWorkflow()){
+		if(!component.isWorkflow()) {
 			setupInputOutputPanel();
 		}
 		setupParametersPanel();
@@ -580,32 +571,39 @@ public class ComponentPanel extends DraggableJPanel implements
 		controller.toggleMinimized();
 	}
 
-	private static void loadIcons() {
-		if (iconsLoaded) {
+	private static synchronized void loadIcons() {
+		if (ComponentPanel.iconsLoaded == true) {
 			return;
 		}
+		
 		URL image_url;
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_MIN_PATH);
+		assert image_url != null;
 		ComponentPanel.minIcon = new ImageIcon(image_url, "Minimize");
 
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_MAX_PATH);
+		assert image_url != null;
 		ComponentPanel.maxIcon = new ImageIcon(image_url, "Maximize");
 
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_LOCKED_PATH);
+		assert image_url != null;
 		ComponentPanel.lockedIcon = new ImageIcon(image_url, "Lock");
 
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_UNLOCKED_PATH);
+		assert image_url != null;
 		ComponentPanel.unlockedIcon = new ImageIcon(image_url, "Unlock");
 
 		image_url = ComponentPanel.class
 				.getResource(ComponentPanel.ICON_CLOSE_PATH);
+		assert image_url != null;
 		ComponentPanel.closeIcon = new ImageIcon(image_url, "Remove");
 
-		iconsLoaded = true;
+		ComponentPanel.iconsLoaded = true;
+		return;
 	}
 
 	private void removeComponent() {

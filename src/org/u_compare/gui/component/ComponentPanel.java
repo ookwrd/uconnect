@@ -29,8 +29,6 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 
 /**
- * TODO: We do need to separate this monster into multiple classes.
- * 
  * @author pontus
  * @author olaf
  * @author luke
@@ -38,7 +36,7 @@ import org.u_compare.gui.model.Workflow;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends DraggableJPanel implements
-		SubComponentsChangedListener, DescriptionChangeListener {
+		SubComponentsChangedListener {
 
 	private final static int PREFERRED_WIDTH = 300;
 
@@ -70,6 +68,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	private SubComponentsPanel subComponentsPanel;
 	private JPanel subComponentsContainer;
 	
+	//Required for workflowPanel to pass controller to DraggableJPanel
 	protected ComponentPanel(ComponentController controller){
 		super(controller);
 	}
@@ -123,7 +122,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		setupParametersPanel(innerPanel);
 		
 		
-		if(!component.isWorkflow()){
+		if(!component.isWorkflow() && component.isAggregate()){
 			
 			JPanel subComponentsBorder = new JPanel();
 			subComponentsBorder.setLayout(new GridLayout());
@@ -145,9 +144,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 		this.controller = controller;
 		this.component = component;
-		
-		//Register Listeners
-		component.registerComponentDescriptionChangeListener(this);
 		
 		//Set display properties
 		BODY_COLOR = defaultColor;
@@ -194,7 +190,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		titlePanel.add(titleLabel, BorderLayout.LINE_START);
 		titlePanel.add(titleTextField, BorderLayout.LINE_START);
 		titlePanel.setBackground(Color.WHITE);
-		topPanel.add(titlePanel, BorderLayout.LINE_START);
 
 		titlePanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -211,6 +206,8 @@ public class ComponentPanel extends DraggableJPanel implements
 		// the title JTextField has listeners 
 		titleTextField.addActionListener(titleListener);
         titleTextField.addFocusListener(titleFocusListener);
+
+		topPanel.add(titlePanel, BorderLayout.LINE_START);
 	}
 	
 	protected void setupButtonPanel(JPanel target, JPanel minimizable){
@@ -295,6 +292,8 @@ public class ComponentPanel extends DraggableJPanel implements
 		this.controller.setTitle(title);
 	}
 	
+	//TODO this shouldn't be here. move to SubComponentsPanel
+	@Override
 	public void subComponentsChanged() {
 
 		controller.resetSubComponents();
@@ -349,16 +348,6 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	public static void main(String[] argv) {
 		GUITestingHarness.main(argv);
-	}
-
-
-
-	@Override
-	public void ComponentDescriptionChanged(Component component1) {
-		
-		System.out.println("Components name changed to: "
-				+ component.getName());
-		//TODO
 	}
 	
 	public Workflow getWorkflow() {

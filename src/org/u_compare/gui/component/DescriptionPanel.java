@@ -18,9 +18,10 @@ import javax.swing.border.EmptyBorder;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.DescriptionChangeListener;
 
 @SuppressWarnings("serial")
-public class DescriptionPanel extends JPanel {
+public class DescriptionPanel extends JPanel implements DescriptionChangeListener{
 
 	private static final int DESCRIPTION_PANEL_PADDING = 5;
 	
@@ -107,6 +108,9 @@ public class DescriptionPanel extends JPanel {
 		editableDescription.addActionListener(descriptionListener);
 		editableDescription.addFocusListener(descriptionFocusListener);
 		
+		//Register Listeners
+		component.registerComponentDescriptionChangeListener(this);
+		
 	}
 	
 	//TODO this might be set directly by the controller
@@ -115,6 +119,14 @@ public class DescriptionPanel extends JPanel {
 		description.setText(descriptionText);
 		editableDescription.setText(descriptionText);
 		this.controller.setDescription(descriptionText);
+	}
+	
+	@Override
+	public void ComponentDescriptionChanged(Component component1) {
+		
+		System.out.println("Components name changed to: "
+				+ component.getName());
+		//TODO
 	}
 	
 }

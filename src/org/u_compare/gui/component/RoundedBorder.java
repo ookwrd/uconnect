@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.component;
 
 /**
  * Taken from Glazed Lists (http://publicobject.com/glazedlists/) under the

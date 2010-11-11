@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.DraggableJPanel;
-import org.u_compare.gui.RoundedBorder;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.model.DescriptionChangeListener;
@@ -48,19 +47,13 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	private JPanel innerPanel;
 	private JPanel topPanel;
-	protected String title;
-
-	private ActionListener titleListener;
-	private FocusListener titleFocusListener;
 
 	private Component component;
 
 	private ComponentController controller;
-	private JPanel titlePanel;
-	private JLabel titleLabel;
-	private JTextField titleTextField;
 	
-	private ButtonPanel buttonPanel;
+	private TitlePanel titlePanel;
+	private ButtonPanel buttonPanel;//TODO shouldnt be here, should be under titlePanel
 	private WorkflowControlPanel workflowControlPanel;
 	private DescriptionPanel descriptionPanel;
 	private InputOutputPanel inputOutputPanel;
@@ -104,11 +97,11 @@ public class ComponentPanel extends DraggableJPanel implements
 			topPanel.setBorder(new RoundedBorder(null, BORDER_COLOR,
 					HEADER_COLOR, BORDER_ROUNDING, BORDER_WIDTH, true));
 
-			setupTitlePanel();
+			setupTitlePanel(topPanel);
 			setupButtonPanel(topPanel, innerPanel);
 			this.add(topPanel, BorderLayout.NORTH);
 		} else {
-			setupTitlePanel();
+			setupTitlePanel(topPanel);
 			this.add(topPanel, BorderLayout.NORTH);
 		}
 
@@ -154,60 +147,10 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 	}
 	
-	protected void setupTitlePanel(){
+	protected void setupTitlePanel(JPanel target){
 		
-		titleListener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setTitle(titleTextField.getText());
-				titleTextField.setVisible(false);
-				titleLabel.setVisible(true);
-			}
-		};
-		
-		titleFocusListener = new FocusListener() {
-			
-			public void focusGained(FocusEvent e) {
-			}
-
-			public void focusLost(FocusEvent e) {
-				setTitle(titleTextField.getText());
-				titleTextField.setVisible(false);
-				titleLabel.setVisible(true);
-			}
-		};
-		
-		// add a title panel
-		titlePanel = new JPanel(new CardLayout());
-
-		title = component.getName();
-		titleLabel = new JLabel(title);
-										
-		titleTextField = new JTextField(title);
-		titleLabel.setFont(new Font("sansserif", Font.BOLD, 12));
-		titleTextField.setFont(new Font("sansserif", Font.BOLD, 12));
-		titleTextField.setVisible(false);
-
-		titlePanel.add(titleLabel, BorderLayout.LINE_START);
-		titlePanel.add(titleTextField, BorderLayout.LINE_START);
-		titlePanel.setBackground(Color.WHITE);
-
-		titlePanel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					//JPanel target = (JPanel) e.getSource();
-					if(!component.getLockedStatus()){
-						titleLabel.setVisible(false);
-						titleTextField.setVisible(true);
-					}
-				}
-			}
-		});
-
-		// the title JTextField has listeners 
-		titleTextField.addActionListener(titleListener);
-        titleTextField.addFocusListener(titleFocusListener);
-
-		topPanel.add(titlePanel, BorderLayout.LINE_START);
+		titlePanel = new TitlePanel(controller, component);
+		target.add(titlePanel, BorderLayout.LINE_START);
 	}
 	
 	protected void setupButtonPanel(JPanel target, JPanel minimizable){
@@ -282,14 +225,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		subComponentsContainer.remove(subComponentsPanel);
 		setupSubComponentsPanel(subComponentsContainer);
 		
-	}
-
-	//TODO this might be set directly by the controller
-	protected void setTitle(String title) {
-		this.title = title;
-		titleLabel.setText(title);
-		titleTextField.setText(title);
-		this.controller.setTitle(title);
 	}
 	
 	//TODO this shouldn't be here. move to SubComponentsPanel

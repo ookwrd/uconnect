@@ -94,7 +94,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 	public void autoscroll(Point cursorLocn) {
 		
 		System.out.println(cursorLocn.x + "," + cursorLocn.y);
-		
+		//TODO why is this here?
 	}
 	
 	public Workflow getAssociatedWorkflow() {

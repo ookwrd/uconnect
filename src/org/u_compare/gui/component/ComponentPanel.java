@@ -362,22 +362,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		setupSubComponentsPanel(subComponentsContainer);
 		
 	}
-	
-	//TODO move into ButtonPanel via a reference to what should be made visible
-	/*protected void setupMinimizedStatus(){
-		//Check if the component is minimized
-		if(component.getMinimizedStatus()){
-			this.innerPanel.setVisible(false);
-			if(buttonPanel != null){
-				buttonPanel.setMinimizedStatus();
-			}
-		}else{
-			this.innerPanel.setVisible(true);
-			if(buttonPanel != null){
-				buttonPanel.setMinimizedStatus();
-			}
-		}
-	}*/
 
 	//TODO this might be set directly by the controller
 	protected void setTitle(String title) {
@@ -394,11 +378,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		editableDescription.setText(descriptionText);
 		this.controller.setDescription(descriptionText);
 	}
-
-	protected String getTitle() {
-		return title;
-	}
-
 	
 	public void subComponentsChanged() {
 

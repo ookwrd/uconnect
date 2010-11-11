@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -16,7 +15,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -44,8 +42,6 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	private final static int PREFERRED_WIDTH = 300;
 
-	private static final int DESCRIPTION_PANEL_PADDING = 5;
-
 	private static final int BORDER_ROUNDING = 5;
 	private static final int BORDER_WIDTH = 2;
 	private static final Color BORDER_COLOR = Color.DARK_GRAY;
@@ -57,10 +53,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	protected String title;
 
 	private ActionListener titleListener;
-	private ActionListener descriptionListener;
-	
 	private FocusListener titleFocusListener;
-	private FocusListener descriptionFocusListener;
 
 	private Component component;
 
@@ -68,15 +61,10 @@ public class ComponentPanel extends DraggableJPanel implements
 	private JPanel titlePanel;
 	private JLabel titleLabel;
 	private JTextField titleTextField;
-
-	private JPanel descriptionPanel;
-	private JTextArea description;
-	private JTextField editableDescription;
-	private String descriptionText;
-	private java.awt.Component textField;
 	
 	private ButtonPanel buttonPanel;
 	private WorkflowControlPanel workflowControlPanel;
+	private DescriptionPanel descriptionPanel;
 	private InputOutputPanel inputOutputPanel;
 	private ParametersPanel parametersPanel;
 	private SubComponentsPanel subComponentsPanel;
@@ -125,7 +113,7 @@ public class ComponentPanel extends DraggableJPanel implements
 			this.add(topPanel, BorderLayout.NORTH);
 		}
 
-		setupDescriptionPanel();
+		setupDescriptionPanel(innerPanel);
 		if(component.isWorkflow()){
 			setupWorkflowControlPanel(innerPanel);
 		}
@@ -243,75 +231,11 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 	}
 	
-	protected void setupDescriptionPanel(){
+	protected void setupDescriptionPanel(JPanel target){
 		
+		descriptionPanel = new DescriptionPanel(controller, component);
+		target.add(descriptionPanel);
 		
-		descriptionListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
-			}
-		};
-		
-		descriptionFocusListener = new FocusListener() {
-			
-			public void focusGained(FocusEvent e) {
-			}
-
-			public void focusLost(FocusEvent e) {
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
-				System.out.println("voilà");
-			}
-		};
-		
-		// add a description panel under the top panel
-		CardLayout descriptionLayout = new CardLayout();
-		descriptionPanel = new JPanel(descriptionLayout);
-		
-		descriptionPanel.setOpaque(false);
-		descriptionPanel.setBorder(new EmptyBorder(
-				new Insets(DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING,
-						DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING)));
-		
-		descriptionText = component.getDescription();
-		
-		description = new JTextArea(descriptionText);
-		description.setBackground(defaultColor);
-		description.setLineWrap(true);
-		description.setWrapStyleWord(true);
-		description.setEditable(false);
-		
-		editableDescription = new JTextField(descriptionText);
-		editableDescription.setBackground(defaultColor);
-		//editableDescription.setLineWrap(true);
-		//editableDescription.setWrapStyleWord(true);
-		//editableDescription.setEditable(true);
-		editableDescription.setVisible(false);
-		
-		descriptionPanel.add(description, BorderLayout.LINE_START);
-		descriptionPanel.add(editableDescription, BorderLayout.LINE_START);
-		descriptionPanel.setBackground(Color.WHITE);
-		
-		description.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					//JPanel target = (JPanel) e.getSource();
-					if(!component.getLockedStatus()){
-						description.setVisible(false);
-						editableDescription.setVisible(true);
-					}
-				}
-			}
-		});
-
-		editableDescription.addActionListener(descriptionListener);
-		editableDescription.addFocusListener(descriptionFocusListener);
-
-		innerPanel.add(descriptionPanel);
 	}
 	
 	protected void setupWorkflowControlPanel(JPanel target){
@@ -369,14 +293,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		titleLabel.setText(title);
 		titleTextField.setText(title);
 		this.controller.setTitle(title);
-	}
-	
-	//TODO this might be set directly by the controller
-	protected void setDescription(String descriptionText) {
-		this.descriptionText = descriptionText;
-		description.setText(descriptionText);
-		editableDescription.setText(descriptionText);
-		this.controller.setDescription(descriptionText);
 	}
 	
 	public void subComponentsChanged() {

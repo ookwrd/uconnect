@@ -39,7 +39,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		SubComponentsChangedListener {
 
 	private final static int PREFERRED_WIDTH = 300;
-
 	private static final int BORDER_ROUNDING = 5;
 	private static final int BORDER_WIDTH = 2;
 	private static final Color BORDER_COLOR = Color.DARK_GRAY;
@@ -49,13 +48,11 @@ public class ComponentPanel extends DraggableJPanel implements
 	protected JPanel innerPanel;
 	protected JPanel topPanel;
 
-	private Component component;
-
-	private ComponentController controller;
+	protected Component component;
+	protected ComponentController controller;
 	
 	private TitlePanel titlePanel;
 	private ButtonPanel buttonPanel;//TODO shouldnt be here, should be under titlePanel
-	private WorkflowControlPanel workflowControlPanel;
 	private DescriptionPanel descriptionPanel;
 	private InputOutputPanel inputOutputPanel;
 	private ParametersPanel parametersPanel;
@@ -159,14 +156,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 		descriptionPanel = new DescriptionPanel(controller, component);
 		target.add(descriptionPanel);
-		
-	}
-	
-	protected void setupWorkflowControlPanel(JPanel target){
-		
-		workflowControlPanel = new WorkflowControlPanel((Workflow)component,
-				(WorkflowController)controller);
-		target.add(workflowControlPanel);
 		
 	}
 

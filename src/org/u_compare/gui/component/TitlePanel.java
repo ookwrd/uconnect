@@ -42,7 +42,7 @@ public class TitlePanel extends JPanel {
 
 		titleListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setTitle(titleLabel.getText());
+				setTitle(titleTextField.getText());
 				titleTextField.setVisible(false);
 				titleLabel.setVisible(true);
 			}

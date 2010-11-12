@@ -70,13 +70,18 @@ public class DropTargetJPanel extends DroppableJPanel {
      * components.
      */
     public void setIntermediate() {
-        this.setPreferredSize(new Dimension(TARGET_BORDER * 2,
-        		TARGET_BORDER * 2));    
+        this.setPreferredSize(new Dimension(TARGET_BORDER * 3,
+        		TARGET_BORDER * 3));
+        JLabel interImage = new JLabel(intermediateDropTargetIcon);
+        //interImage.setSize(intermediateDropTargetIcon.getIconHeight(),intermediateDropTargetIcon.getIconWidth());
+        
+        this.add(interImage);
     }
     
     //TODO special display property for solitary drop targets
     public void setSolitaryDropTarget() {
     	this.add(solitaryLabel);
+    	this.removeAll();
     	this.setPreferredSize(null);
     }
     

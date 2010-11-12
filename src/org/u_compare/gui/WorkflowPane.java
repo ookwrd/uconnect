@@ -14,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import org.u_compare.gui.component.ComponentPanel;
+import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
 
 /**
@@ -99,5 +101,9 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 	
 	public Workflow getAssociatedWorkflow() {
 		return this.topComponent.getWorkflow();
+	}
+	
+	public WorkflowController getAssociatedController() {
+		return this.topComponent.getWorkflowController();
 	}
 }

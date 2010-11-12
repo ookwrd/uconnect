@@ -66,6 +66,8 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 		innerJPanel.add(topComponent);
 		this.setViewportView(innerJPanel);
 		
+		getVerticalScrollBar().setUnitIncrement(8);
+		
 		new DnDVerticalScrollerPanel(getViewport());
 		
 		 MouseMotionListener doScrollRectToVisible = new MouseMotionAdapter() {

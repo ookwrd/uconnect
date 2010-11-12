@@ -78,7 +78,6 @@ public class DropTargetJPanel extends DroppableJPanel {
         this.add(interImage);
     }
     
-    //TODO special display property for solitary drop targets
     public void setSolitaryDropTarget() {
     	this.add(solitaryLabel);
     	this.removeAll();

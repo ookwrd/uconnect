@@ -19,10 +19,10 @@ import org.u_compare.gui.model.Workflow;
 public class ComponentController implements DragAndDropComponentController {
 
 	//The model corresponding to this class
-	private Component component;
+	protected Component component;
 	
 	//The view corresponding to this class
-	private ComponentPanel componentView;
+	protected ComponentPanel componentView;
 	
 	//The parent controller of this object if it exists
 	private ComponentController parent;
@@ -30,6 +30,10 @@ public class ComponentController implements DragAndDropComponentController {
 	private ArrayList<ComponentController> subControllers = new ArrayList<ComponentController>();
 	private ArrayList<DropTargetController> dropTargets = new ArrayList<DropTargetController>();
 	private ArrayList<ParameterController> parameterControllers = new ArrayList<ParameterController>();
+	
+	protected ComponentController(){
+		
+	}
 	
 	/**
 	 * Create a controller object for the specified component.
@@ -479,31 +483,6 @@ public class ComponentController implements DragAndDropComponentController {
 		}
 		
 	}
-	
-	public void workflowPauseRequest(){
-		
-		assert(component.isWorkflow());
-		
-		try {
-			((Workflow)component).runWorkflow();
-		} catch (InvalidStatusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void workflowStopRequest(){
-		
-		assert(component.isWorkflow());
-		
-		try {
-			((Workflow)component).runWorkflow();
-		} catch (InvalidStatusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+
 	
 }

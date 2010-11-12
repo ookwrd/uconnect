@@ -27,7 +27,7 @@ import org.u_compare.gui.model.Workflow;
 @SuppressWarnings("serial")
 public class WorkflowPane extends JScrollPane implements Autoscroll {
 	//TODO: Fix border handling, now there are two borders to the layout.
-	private ComponentPanel topComponent;
+	private WorkflowPanel topComponent;
 	
 	// Configuration
 	private static final int HORIZONTAL_SCROLLBAR_POLICY =
@@ -42,7 +42,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 	// For dragging, observe the mouse and keep states for it here.
 	// Then observe the events and draw accordingly.
 	
-	public WorkflowPane(ComponentPanel topComponent) {
+	public WorkflowPane(WorkflowPanel topComponent) {
 		this.topComponent = topComponent;
 
 		this.setHorizontalScrollBarPolicy(

@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
@@ -28,7 +28,7 @@ public class WorkflowControlPanel extends JPanel
 	public final static String STATUS_PREFIX = "Status: ";
 	
 	private Workflow component;
-	private ComponentController controller;
+	private WorkflowController controller;
 	
 	private ActionListener playListener;
 	private ActionListener stopListener;
@@ -38,7 +38,7 @@ public class WorkflowControlPanel extends JPanel
 	private JButton stopButton;
 	
 	public WorkflowControlPanel(Workflow component,
-			ComponentController controller) {
+			WorkflowController controller) {
 		super();
 		
 		this.component = component;

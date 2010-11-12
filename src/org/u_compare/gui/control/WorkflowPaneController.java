@@ -67,6 +67,7 @@ public class WorkflowPaneController {
 	}
 	
 	private WorkflowSplitPane constructWorkflow(Workflow workflow){
+		workflow.setComponentSaved();//TODO should this be moved to workflow constructor?
 		
 		WorkflowController workflowModel = new WorkflowController(workflow);
 		

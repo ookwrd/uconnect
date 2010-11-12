@@ -183,9 +183,6 @@ public class WorkflowTabbedPane extends JTabbedPane
 		
 		((WorkflowSplitPane) this.getComponentAt(i)).getWorkflowPane().getAssociatedController().workflowCloseRequested();
 		
-		/*System.err.println("WARNING: WorkflowTabbedPane - " +
-				"Did not ask controller for permission to close");
-		super.remove(i);*/
 	}
 
 	@Override

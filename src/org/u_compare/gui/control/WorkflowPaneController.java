@@ -3,16 +3,11 @@ package org.u_compare.gui.control;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
-
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
-import org.u_compare.gui.debugging.ExampleWorkflowFactory;
 import org.u_compare.gui.model.Workflow;
-
-import com.apple.laf.AquaTabbedPaneCopyFromBasicUI.TabbedPaneLayout;
 
 public class WorkflowPaneController {
 
@@ -82,6 +77,7 @@ public class WorkflowPaneController {
 		
 		if(SHOW_CONSOLE){
 			consolePane = new ConsolePane(workflow);
+			consolePane.addConsoleMessage("Workflow Loaded.");
 		}
 		
 		return new WorkflowSplitPane(workflowPane, consolePane);
@@ -89,7 +85,7 @@ public class WorkflowPaneController {
 	
 	private WorkflowSplitPane constructDefaultWorkflow(){
 		
-		return constructWorkflow(WorkflowPaneController.defaultWorkflow());//ExampleWorkflowFactory.blank());
+		return constructWorkflow(WorkflowPaneController.defaultWorkflow());
 		
 	}
 	

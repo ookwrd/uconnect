@@ -1,5 +1,6 @@
 package org.u_compare.gui.control;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import org.u_compare.gui.WorkflowPanel;
@@ -20,6 +21,8 @@ public class WorkflowController extends ComponentController {
 	
 	public void workflowCloseRequested(){
 		
+		System.out.println(component.checkUnsavedChanges());
+		
 		if(component.checkUnsavedChanges()){
 		
 			JOptionPane.showConfirmDialog(componentView, "Unsaved changes exist to this workflow.\n Do you wish to save before closing?");
@@ -27,6 +30,11 @@ public class WorkflowController extends ComponentController {
 			
 		}else{
 			
+			JOptionPane.showInternalMessageDialog(componentView, "Test Message");
+			
+			//JOptionPane.sho("Do you want to close this workflow?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION,null, new String[]{"Close","Cancel"});
+		     
+
 			//close tab
 			
 		}

@@ -39,6 +39,20 @@ public class WorkflowController extends ComponentController {
 	}
 	
 	
+	public void workflowPlayRequest(){
+
+		assert(component.isWorkflow());
+	
+		try {
+			((Workflow)component).runWorkflow();
+		} catch (InvalidStatusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	public void workflowPauseRequest(){
 		
 		assert(component.isWorkflow());

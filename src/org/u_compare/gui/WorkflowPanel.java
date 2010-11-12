@@ -1,6 +1,9 @@
 package org.u_compare.gui;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.control.ComponentController;
@@ -13,17 +16,27 @@ public class WorkflowPanel extends ComponentPanel {
 
 	public WorkflowPanel(Workflow component,
 			ComponentController controller){
-		/*super(controller);
+		super(controller);
 		
 		initialConfiguration(component, controller);
 		
 		component.registerSubComponentsChangedListener(this);
 		
+		topPanel = new JPanel();
+		BorderLayout topLayout = new BorderLayout();
+		topPanel.setLayout(topLayout);
+		topPanel.setOpaque(false);
+
+		setupInnerPanel();
 		
-		add(new JLabel("test"));*/
+		setupTitlePanel(topPanel);
+		this.add(topPanel, BorderLayout.NORTH);
+		setupDescriptionPanel(innerPanel);
+		setupWorkflowControlPanel(innerPanel);
 		
-		super(component, controller);
-		
+		setupSubComponentsPanel(innerPanel);
+
+		this.add(innerPanel);
 		
 	}
 	

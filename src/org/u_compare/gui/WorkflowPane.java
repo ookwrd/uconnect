@@ -105,7 +105,4 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 		return this.topComponent.getWorkflow();
 	}
 	
-	public WorkflowController getAssociatedController() {
-		return this.topComponent.getWorkflowController();
-	}
 }

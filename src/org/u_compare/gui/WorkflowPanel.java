@@ -54,12 +54,4 @@ public class WorkflowPanel extends ComponentPanel {
 		
 	}
 	
-	public WorkflowController getWorkflowController(){
-		return (WorkflowController)controller;
-	}
-	
-	public void closeWorkflow(){
-		
-	}
-	
 }

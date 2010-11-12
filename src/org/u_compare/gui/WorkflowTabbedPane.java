@@ -181,7 +181,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 	// Asks the controller for permission before calling remove
 	public void remove(int i) {
 		
-		((WorkflowSplitPane) this.getComponentAt(i)).getWorkflowPane().getAssociatedController().workflowCloseRequested();
+		controller.requestWorkflowClose(((WorkflowSplitPane) this.getComponentAt(i)).getWorkflowPane().getAssociatedWorkflow());
 		
 	}
 
@@ -216,5 +216,13 @@ public class WorkflowTabbedPane extends JTabbedPane
 				}
 			}
 		}
+	}
+	
+	public void removeWorkflow(Workflow workflow){
+		
+		//TODO
+		
+		System.out.println("Should be closing a tab now.");
+		
 	}
 }

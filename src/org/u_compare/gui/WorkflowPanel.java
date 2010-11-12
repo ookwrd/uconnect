@@ -11,6 +11,8 @@ import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 
+import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
+
 @SuppressWarnings("serial")
 public class WorkflowPanel extends ComponentPanel {
 
@@ -37,6 +39,10 @@ public class WorkflowPanel extends ComponentPanel {
 		setupSubComponentsPanel(innerPanel);
 
 		this.add(innerPanel);
+		
+	}
+	
+	public void closeWorkflow(){
 		
 	}
 	

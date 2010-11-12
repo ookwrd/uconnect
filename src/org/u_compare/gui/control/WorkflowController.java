@@ -1,5 +1,7 @@
 package org.u_compare.gui.control;
 
+import javax.swing.JOptionPane;
+
 import org.u_compare.gui.WorkflowPanel;
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.model.Component;
@@ -20,6 +22,7 @@ public class WorkflowController extends ComponentController {
 		
 		if(component.checkUnsavedChanges()){
 		
+			JOptionPane.showConfirmDialog(componentView, "Unsaved changes exist to this workflow.\n Do you wish to save before closing?");
 			//Yes no cancel
 			
 		}else{
@@ -28,6 +31,21 @@ public class WorkflowController extends ComponentController {
 			
 		}
 		
+		
+	}
+	
+	private void closeWorkflow(){
+		
+		/**
+		 * TODO
+		 * 
+		 * remove the view
+		 * remove the control?
+		 * 
+		 * what do we do with the model?
+		 */
+		
+		((WorkflowPanel)componentView).closeWorkflow();
 		
 	}
 	

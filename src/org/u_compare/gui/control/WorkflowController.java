@@ -19,44 +19,6 @@ public class WorkflowController extends ComponentController {
 		
 	}
 	
-	public void workflowCloseRequested(){
-		
-		System.out.println(component.checkUnsavedChanges());
-		
-		if(component.checkUnsavedChanges()){
-		
-			JOptionPane.showConfirmDialog(componentView, "Unsaved changes exist to this workflow.\nDo you wish to save before closing?");
-			//Yes no cancel
-			
-		}else{
-			
-			JOptionPane.showInternalMessageDialog(componentView, "Test Message");
-			
-			//JOptionPane.sho("Do you want to close this workflow?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION,null, new String[]{"Close","Cancel"});
-		     
-
-			//close tab
-			
-		}
-		
-		
-	}
-	
-	private void closeWorkflow(){
-		
-		/**
-		 * TODO
-		 * 
-		 * remove the view
-		 * remove the control?
-		 * 
-		 * what do we do with the model?
-		 */
-		
-		((WorkflowPanel)componentView).closeWorkflow();
-		
-	}
-	
 	@Override
 	public WorkflowPanel getView(){
 		

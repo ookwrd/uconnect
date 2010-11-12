@@ -46,8 +46,8 @@ public class ComponentPanel extends DraggableJPanel implements
 	private static Color HEADER_COLOR = Color.WHITE;
 	private static Color BODY_COLOR;
 
-	private JPanel innerPanel;
-	private JPanel topPanel;
+	protected JPanel innerPanel;
+	protected JPanel topPanel;
 
 	private Component component;
 
@@ -78,14 +78,10 @@ public class ComponentPanel extends DraggableJPanel implements
 					.registerSubComponentsChangedListener(this);
 		}
 		
-		if (!component.isWorkflow()) {
-			this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
-					BORDER_ROUNDING, BORDER_WIDTH, false));
-		}
+	
+		this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
+				BORDER_ROUNDING, BORDER_WIDTH, false));
 		
-		//LUKES: WorkflowPanel up to here
-
-
 		// set up a top panel (inside the inner panel) and layout
 		topPanel = new JPanel();
 		BorderLayout topLayout = new BorderLayout();
@@ -94,29 +90,19 @@ public class ComponentPanel extends DraggableJPanel implements
 
 		setupInnerPanel();
 		
-		if (!component.isWorkflow()) {
-			topPanel.setBorder(new RoundedBorder(null, BORDER_COLOR,
+		topPanel.setBorder(new RoundedBorder(null, BORDER_COLOR,
 					HEADER_COLOR, BORDER_ROUNDING, BORDER_WIDTH, true));
 
-			setupTitlePanel(topPanel);
-			setupButtonPanel(topPanel, innerPanel);
-			this.add(topPanel, BorderLayout.NORTH);
-		} else {
-			setupTitlePanel(topPanel);
-			this.add(topPanel, BorderLayout.NORTH);
-		}
+		setupTitlePanel(topPanel);
+		setupButtonPanel(topPanel, innerPanel);
+		this.add(topPanel, BorderLayout.NORTH);
 
 		setupDescriptionPanel(innerPanel);
-		if(component.isWorkflow()){
-			setupWorkflowControlPanel(innerPanel);
-		}
-		if(!component.isWorkflow()){
-			setupInputOutputPanel(innerPanel);
-		}
+		setupInputOutputPanel(innerPanel);
 		setupParametersPanel(innerPanel);
 		
 		
-		if(!component.isWorkflow() && component.isAggregate()){
+		if(component.isAggregate()){
 			
 			JPanel subComponentsBorder = new JPanel();
 			subComponentsBorder.setLayout(new GridLayout());
@@ -125,9 +111,6 @@ public class ComponentPanel extends DraggableJPanel implements
 			setupSubComponentsPanel(subComponentsBorder);
 			innerPanel.add(subComponentsBorder);
 			
-		}else{
-			
-			setupSubComponentsPanel(innerPanel);
 		}
 		
 		this.add(innerPanel);

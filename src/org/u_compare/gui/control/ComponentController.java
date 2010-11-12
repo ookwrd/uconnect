@@ -11,6 +11,8 @@ import org.u_compare.gui.model.Workflow;
 
 /**
  * 
+ *TODO this needs to be refactored inline with ComponentPanel
+ * 
  * Controller responsible for handling userinput directed at a specific component/workflow.
  * 
  * @author luke mccrohon
@@ -428,7 +430,6 @@ public class ComponentController implements DragAndDropComponentController {
 		DraggableJPanel dragged = dndControl.getDragged();
 		return (ComponentController)dragged.getController();
 	}
-	
 
 	/**
 	 * Validation needs to be handled at a level higher than the component that is being added/removed from.
@@ -446,10 +447,8 @@ public class ComponentController implements DragAndDropComponentController {
 	public void setTitle(String title) {
 		
 		assert(component.getLockedStatus()==false);
-		
+
 		component.setName(title);
-		
-		// TODO implement this method (and make the corresponding corrections to the component)
 		
 	}
 
@@ -459,30 +458,6 @@ public class ComponentController implements DragAndDropComponentController {
 		
 		component.setDescription(descriptionText);
 		
-		// TODO implement this method (and make the corresponding corrections to the component)
-		
-		
 	}
-	
-	
-	/**
-	 * 
-	 * 
-	 * TODO I think we need to abstract all this out to a workflow controller class
-	 * 
-	 */
-	public void workflowPlayRequest(){
-
-		assert(component.isWorkflow());
-	
-		try {
-			((Workflow)component).runWorkflow();
-		} catch (InvalidStatusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
 	
 }

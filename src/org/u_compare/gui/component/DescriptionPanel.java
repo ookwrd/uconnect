@@ -34,7 +34,7 @@ public class DescriptionPanel extends JPanel implements DescriptionChangeListene
 	private FocusListener descriptionFocusListener;
 	
 	private JTextArea description;
-	private JTextField editableDescription;
+	private JTextArea editableDescription;
 	private String descriptionText;
 	
 	public DescriptionPanel(ComponentController controller, Component component){
@@ -61,7 +61,6 @@ public class DescriptionPanel extends JPanel implements DescriptionChangeListene
 				setDescription(editableDescription.getText());
 				editableDescription.setVisible(false);
 				description.setVisible(true);
-				System.out.println("voilà");
 			}
 		};
 		
@@ -82,11 +81,11 @@ public class DescriptionPanel extends JPanel implements DescriptionChangeListene
 		description.setWrapStyleWord(true);
 		description.setEditable(false);
 		
-		editableDescription = new JTextField(descriptionText);
-		editableDescription.setBackground(defaultColor);
-		//editableDescription.setLineWrap(true);
-		//editableDescription.setWrapStyleWord(true);
-		//editableDescription.setEditable(true);
+		editableDescription = new JTextArea(descriptionText);
+		editableDescription.setBackground(Color.WHITE);
+		editableDescription.setLineWrap(true);
+		editableDescription.setWrapStyleWord(true);
+		editableDescription.setEditable(true);
 		editableDescription.setVisible(false);
 		
 		add(description, BorderLayout.LINE_START);
@@ -105,7 +104,7 @@ public class DescriptionPanel extends JPanel implements DescriptionChangeListene
 			}
 		});
 
-		editableDescription.addActionListener(descriptionListener);
+		//editableDescription.addActionListener(descriptionListener); // useless: not a text field anymore
 		editableDescription.addFocusListener(descriptionFocusListener);
 		
 		//Register Listeners

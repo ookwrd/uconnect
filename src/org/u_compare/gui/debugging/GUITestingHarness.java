@@ -2,7 +2,9 @@ package org.u_compare.gui.debugging;
 
 import java.util.ArrayList;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.u_compare.gui.UConnectSplitPane;
 import org.u_compare.gui.ConsolePane;
@@ -12,6 +14,7 @@ import org.u_compare.gui.WorkflowTabbedPane;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.WorkflowController;
+import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.library.LibraryPane;
 import org.u_compare.gui.model.Workflow;
 
@@ -25,11 +28,13 @@ public class GUITestingHarness {
 		workflows.add(ExampleWorkflowFactory.aggregate());
 		workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
 		
-		WorkflowTabbedPane tabbedPane = new WorkflowTabbedPane();
+		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
 		
-		for(Workflow workflow : workflows) {
+		JComponent tabbedPane = workflowPaneController.initialize(workflows);
+		
+		/*for(Workflow workflow : workflows) {
 			tabbedPane.addWorkflow(constructWorkflow(workflow));
-		}
+		}*/
 		
 		// Library panel
 		LibraryPane libraryPane = new LibraryPane();

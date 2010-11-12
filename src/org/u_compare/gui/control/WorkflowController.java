@@ -25,7 +25,7 @@ public class WorkflowController extends ComponentController {
 		
 		if(component.checkUnsavedChanges()){
 		
-			JOptionPane.showConfirmDialog(componentView, "Unsaved changes exist to this workflow.\n Do you wish to save before closing?");
+			JOptionPane.showConfirmDialog(componentView, "Unsaved changes exist to this workflow.\nDo you wish to save before closing?");
 			//Yes no cancel
 			
 		}else{

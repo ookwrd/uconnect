@@ -182,10 +182,12 @@ public class WorkflowTabbedPane extends JTabbedPane
 	@Override
 	// Asks the controller for permission before calling remove
 	public void remove(int i) {
-		//TODO: Ask controller
-		System.err.println("WARNING: WorkflowTabbedPane - " +
+		
+		((WorkflowSplitPane) this.getComponentAt(i)).getWorkflowPane().getAssociatedController().workflowCloseRequested();
+		
+		/*System.err.println("WARNING: WorkflowTabbedPane - " +
 				"Did not ask controller for permission to close");
-		super.remove(i);
+		super.remove(i);*/
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 
+import org.u_compare.gui.control.WorkflowController;
+
 /**
  * Model class representing a UIMA Workflow. The workflow is modelled as a special UIMAAggregateComponent.
  * 
@@ -187,5 +189,6 @@ public class Workflow extends AbstractAggregateComponent {
 		}
 		
 	}
+	
 }
 

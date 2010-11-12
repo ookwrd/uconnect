@@ -75,7 +75,6 @@ public class ComponentPanel extends DraggableJPanel implements
 					.registerSubComponentsChangedListener(this);
 		}
 		
-	
 		this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
 				BORDER_ROUNDING, BORDER_WIDTH, false));
 		
@@ -132,6 +131,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 		titlePanel = new TitlePanel(controller, component);
 		target.add(titlePanel, BorderLayout.LINE_START);
+		
 	}
 	
 	protected void setupButtonPanel(JPanel target, JPanel minimizable){

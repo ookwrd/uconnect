@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.AbstractDocument.Content;
+
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.RoundedBorder;
 import org.u_compare.gui.control.ComponentController;
@@ -43,9 +45,10 @@ public class ComponentPanel extends DraggableJPanel implements
 	private static final int BORDER_ROUNDING = 5;
 	private static final int BORDER_WIDTH = 2;
 	private static final Color BORDER_COLOR = Color.DARK_GRAY;
+
+	private static final int TITLE_SIZE_LIMIT = 30;
 	private static Color HEADER_COLOR = Color.WHITE;
 	private static Color BODY_COLOR;
-
 	private JPanel innerPanel;
 	private JPanel topPanel;
 	protected String title;
@@ -182,7 +185,10 @@ public class ComponentPanel extends DraggableJPanel implements
 		title = component.getName();
 		titleLabel = new JLabel(title);
 										
-		titleTextField = new JTextField(title);
+		titleTextField = new JTextField(15);
+		titleTextField.setText(title);
+		titleTextField.setDocument
+        	(new JTextFieldLimit(TITLE_SIZE_LIMIT));
 		titleLabel.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setVisible(false);
@@ -229,10 +235,8 @@ public class ComponentPanel extends DraggableJPanel implements
 	}
 	
 	protected void setupDescriptionPanel(JPanel target){
-		
 		descriptionPanel = new DescriptionPanel(controller, component);
 		target.add(descriptionPanel);
-		
 	}
 	
 	protected void setupWorkflowControlPanel(JPanel target){

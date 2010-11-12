@@ -21,6 +21,8 @@ import org.u_compare.gui.model.Component;
 @SuppressWarnings("serial")
 public class TitlePanel extends JPanel {
 
+	private static final int TITLE_SIZE_LIMIT = 30;
+	
 	private final ComponentController controller;
 	private final Component component;
 
@@ -64,7 +66,10 @@ public class TitlePanel extends JPanel {
 		title = component.getName();
 		titleLabel = new JLabel(title);
 										
-		titleTextField = new JTextField(title);
+		titleTextField = new JTextField(15);
+		titleTextField.setText(title);
+		titleTextField.setDocument
+        	(new JTextFieldLimit(TITLE_SIZE_LIMIT));
 		titleLabel.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setVisible(false);
@@ -88,7 +93,6 @@ public class TitlePanel extends JPanel {
 		// the title JTextField has listeners 
 		titleTextField.addActionListener(titleListener);
         titleTextField.addFocusListener(titleFocusListener);
-
 		
 	}
 	

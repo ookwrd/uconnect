@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.model.DescriptionChangeListener;
 import org.u_compare.gui.model.SubComponentsChangedListener;
@@ -181,7 +182,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	protected void setupWorkflowControlPanel(JPanel target){
 		
 		workflowControlPanel = new WorkflowControlPanel((Workflow)component,
-				controller);
+				(WorkflowController)controller);
 		target.add(workflowControlPanel);
 		
 	}

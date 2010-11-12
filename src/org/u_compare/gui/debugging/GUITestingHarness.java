@@ -11,6 +11,7 @@ import org.u_compare.gui.WorkflowSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.library.LibraryPane;
 import org.u_compare.gui.model.Workflow;
 
@@ -42,7 +43,7 @@ public class GUITestingHarness {
 	}
 	
 	public static WorkflowSplitPane constructWorkflow(Workflow workflow){
-		ComponentController workflowModel = new ComponentController(workflow);
+		WorkflowController workflowModel = new WorkflowController(workflow);
 		
 		// Construct the view
 		WorkflowPane workflowPane = new WorkflowPane(workflowModel.getView());

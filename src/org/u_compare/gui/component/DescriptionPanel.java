@@ -97,6 +97,7 @@ public class DescriptionPanel extends JPanel implements DescriptionChangeListene
 				if (e.getClickCount() == 2) {
 					//JPanel target = (JPanel) e.getSource();
 					if(!DescriptionPanel.this.component.getLockedStatus()){
+						//setDescription(description.getText());
 						description.setVisible(false);
 						editableDescription.setVisible(true);
 					}

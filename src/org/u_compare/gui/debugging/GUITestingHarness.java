@@ -24,8 +24,8 @@ public class GUITestingHarness {
 	public static void main(String[] args){
 		//Workflow panel
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
-		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
-		workflows.add(ExampleWorkflowFactory.aggregate());
+		//workflows.add(ExampleWorkflowFactory.simpleWithParameters());
+		//workflows.add(ExampleWorkflowFactory.aggregate());
 		workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
 		
 		WorkflowPaneController workflowPaneController = new WorkflowPaneController();

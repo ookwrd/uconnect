@@ -79,8 +79,8 @@ public class DropTargetJPanel extends DroppableJPanel {
     }
     
     public void setSolitaryDropTarget() {
-    	this.add(solitaryLabel);
     	this.removeAll();
+    	this.add(solitaryLabel);
     	this.setPreferredSize(null);
     }
     

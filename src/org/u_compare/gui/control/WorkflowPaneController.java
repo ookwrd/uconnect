@@ -9,15 +9,19 @@ import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
+import org.u_compare.gui.debugging.ExampleWorkflowFactory;
 import org.u_compare.gui.model.Workflow;
+
+import com.apple.laf.AquaTabbedPaneCopyFromBasicUI.TabbedPaneLayout;
 
 public class WorkflowPaneController {
 
 	private static final boolean SHOW_CONSOLE = true;
-	private static final boolean ALLOW_TABS = false;
+	private static final boolean ALLOW_TABS = true;
 	private static final boolean SHOW_NEW_TAB = true; //TODO
 	
 	private ArrayList<WorkflowSplitPane> workflowSplitPanes = new ArrayList<WorkflowSplitPane>();
+	private WorkflowTabbedPane tabbedPane;
 	
 	public JComponent initialize(){
 		
@@ -28,7 +32,7 @@ public class WorkflowPaneController {
 		
 		if(ALLOW_TABS){
 	
-			WorkflowTabbedPane tabbedPane = new WorkflowTabbedPane();
+			tabbedPane = new WorkflowTabbedPane(this);
 			
 			for(WorkflowSplitPane workflowSplitPane : workflowSplitPanes){
 				tabbedPane.addWorkflow(workflowSplitPane);
@@ -85,7 +89,7 @@ public class WorkflowPaneController {
 	
 	private WorkflowSplitPane constructDefaultWorkflow(){
 		
-		return constructWorkflow(WorkflowPaneController.defaultWorkflow());
+		return constructWorkflow(WorkflowPaneController.defaultWorkflow());//ExampleWorkflowFactory.blank());
 		
 	}
 	
@@ -93,10 +97,17 @@ public class WorkflowPaneController {
 
 		Workflow workflow = new Workflow();
 		
-		workflow.setName("Untitled Workflow (Click here to edit)");
+		workflow.setName("Untitled Workflow (Click to edit)");
 		workflow.setDescription("This is a new workflow. Click here to edit its description. Duis quis arcu id enim elementum gravida quis sit amet justo. Cras non enim nec velit aliquet luctus sed faucibus arcu. Phasellus dolor quam, dapibus a consequat eget, fringilla vitae ipsum. Donec tristique elementum turpis, in pellentesque nulla viverra vitae. Curabitur eget turpis non quam auctor ornare. Aliquam tempus quam vitae lectus consectetur fringilla. Vivamus posuere pharetra elit ac interdum. Aenean vestibulum mattis justo et malesuada. Ut ultrices, nisl sit amet tempor porttitor, nulla ipsum feugiat purus, porta tincidunt sem sapien nec leo. Phasellus rhoncus elit sit amet lectus adipiscing vulputate. ");
 		
 		return workflow;
 
+	}
+
+	public void requestNewWorkflow() {
+		assert(ALLOW_TABS);
+		
+		tabbedPane.addWorkflow(constructDefaultWorkflow());
+		
 	}
 }

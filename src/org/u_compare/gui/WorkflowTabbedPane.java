@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
+import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
@@ -60,10 +61,13 @@ public class WorkflowTabbedPane extends JTabbedPane
 	private final static String WORKFLOW_ERROR_PATH =
 		"gfx/workflow_error.png";
 	
+	private WorkflowPaneController controller;
 	
-	public WorkflowTabbedPane() {
+	public WorkflowTabbedPane(WorkflowPaneController controller) {
 		WorkflowTabbedPane.load_icons();
 		assert WorkflowTabbedPane.icons_loaded == true;
+		
+		this.controller = controller;
 		
 		this.setToolTipText(WorkflowTabbedPane.TOOLTIP_TEXT);
 		
@@ -74,7 +78,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 		
 		ActionListener workflowButtonListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addBlankTab();
+				controller.requestNewWorkflow();
 			}
 		};
 		
@@ -84,12 +88,6 @@ public class WorkflowTabbedPane extends JTabbedPane
 		
 		addTab("New Workflow", new JLabel("test"));
 		setTabComponentAt(0, newWorkflowButton);
-	}
-	
-	private void addBlankTab(){
-		addWorkflow(
-				GUITestingHarness.constructWorkflow(
-						GUITestingHarness.blankWorkflow()));
 	}
 	
 	public static String cleanTitle(String title){

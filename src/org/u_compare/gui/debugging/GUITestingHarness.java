@@ -24,17 +24,14 @@ public class GUITestingHarness {
 	public static void main(String[] args){
 		//Workflow panel
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
-		//workflows.add(ExampleWorkflowFactory.simpleWithParameters());
-		//workflows.add(ExampleWorkflowFactory.aggregate());
+		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
+		workflows.add(ExampleWorkflowFactory.aggregate());
 		workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
+		//workflows.add(WorkflowPaneController.defaultWorkflow());
 		
 		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
 		
 		JComponent tabbedPane = workflowPaneController.initialize(workflows);
-		
-		/*for(Workflow workflow : workflows) {
-			tabbedPane.addWorkflow(constructWorkflow(workflow));
-		}*/
 		
 		// Library panel
 		LibraryPane libraryPane = new LibraryPane();

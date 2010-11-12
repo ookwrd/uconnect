@@ -114,6 +114,13 @@ public class DescriptionPanel extends JPanel implements DescriptionChangeListene
 	
 	//TODO this might be set directly by the controller
 	protected void setDescription(String descriptionText) {
+		descriptionText = descriptionText.trim();
+		/*//description right trim
+		String tmp = "";
+		for(int i=descriptionText.length()-1; i>=0; i++) {
+			if (descriptionText.charAt(i)==a) tmp+="descriptionText.charAt(i);
+		}
+		descriptionText = tmp;*/ 
 		this.descriptionText = descriptionText;
 		description.setText(descriptionText);
 		editableDescription.setText(descriptionText);

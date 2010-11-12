@@ -22,19 +22,19 @@ import org.u_compare.gui.model.Component;
 public class TitlePanel extends JPanel {
 
 	private static final int TITLE_SIZE_LIMIT = 30;
-	
+
 	private final ComponentController controller;
 	private final Component component;
 
 	protected String title;
-	
+
 	private JLabel titleLabel;
 	private JTextField titleTextField;
 
 	private ActionListener titleListener;
 	private FocusListener titleFocusListener;
-	
-	public TitlePanel(ComponentController controller, Component component){
+
+	public TitlePanel(ComponentController controller, Component component) {
 		super();
 
 		this.controller = controller;
@@ -42,34 +42,20 @@ public class TitlePanel extends JPanel {
 
 		titleListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setTitle(titleTextField.getText());
+				setTitle(titleLabel.getText());
 				titleTextField.setVisible(false);
 				titleLabel.setVisible(true);
 			}
 		};
-		
-		titleFocusListener = new FocusListener() {
-			
-			public void focusGained(FocusEvent e) {
-			}
 
-			public void focusLost(FocusEvent e) {
-				setTitle(titleTextField.getText());
-				titleTextField.setVisible(false);
-				titleLabel.setVisible(true);
-			}
-		};
-		
 		// add a title panel
 		setLayout(new CardLayout());
 
-		title = component.getName();
 		titleLabel = new JLabel(title);
-										
+
 		titleTextField = new JTextField(15);
 		titleTextField.setText(title);
-		titleTextField.setDocument
-        	(new JTextFieldLimit(TITLE_SIZE_LIMIT));
+		titleTextField.setDocument(new JTextFieldLimit(TITLE_SIZE_LIMIT));
 		titleLabel.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setVisible(false);
@@ -78,11 +64,13 @@ public class TitlePanel extends JPanel {
 		add(titleTextField, BorderLayout.LINE_START);
 		setBackground(Color.WHITE);
 
+		this.setTitle(component.getName());
+
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					//JPanel target = (JPanel) e.getSource();
-					if(!TitlePanel.this.component.getLockedStatus()){
+					// JPanel target = (JPanel) e.getSource();
+					if (!TitlePanel.this.component.getLockedStatus()) {
 						titleLabel.setVisible(false);
 						titleTextField.setVisible(true);
 					}
@@ -90,18 +78,30 @@ public class TitlePanel extends JPanel {
 			}
 		});
 
-		// the title JTextField has listeners 
+		titleFocusListener = new FocusListener() {
+
+			public void focusGained(FocusEvent e) {
+			}
+
+			public void focusLost(FocusEvent e) {
+				setTitle(titleLabel.getText());
+				titleTextField.setVisible(false);
+				titleLabel.setVisible(true);
+			}
+		};
+
+		// the title JTextField has listeners
 		titleTextField.addActionListener(titleListener);
-        titleTextField.addFocusListener(titleFocusListener);
-		
+		titleTextField.addFocusListener(titleFocusListener);
+
 	}
-	
-	//TODO this might be set directly by the controller
+
+	// TODO this might be set directly by the controller
 	protected void setTitle(String title) {
 		this.title = title;
 		titleLabel.setText(title);
 		titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}
-	
+
 }

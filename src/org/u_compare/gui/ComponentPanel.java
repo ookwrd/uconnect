@@ -28,6 +28,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.AbstractDocument.Content;
+
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.control.ParameterControllerFactory;
@@ -79,6 +81,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	private static final int BUTTON_DECREMENT = 0;
 
 	private static final boolean MINIMIZE_SUBCOMPONENTS = true;
+	private static int TITLE_SIZE_LIMIT = 50;
 	
 	private static boolean iconsLoaded = false;
 	private static ImageIcon minIcon;
@@ -228,7 +231,10 @@ public class ComponentPanel extends DraggableJPanel implements
 		title = component.getName();
 		titleLabel = new JLabel(title);
 										
-		titleTextField = new JTextField(title);
+		titleTextField = new JTextField(15);
+		titleTextField.setText(title);
+		titleTextField.setDocument
+        	(new JTextFieldLimit(TITLE_SIZE_LIMIT));
 		titleLabel.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setVisible(false);

@@ -32,6 +32,8 @@ public class WorkflowControlPanel extends JPanel implements
 	private static final int BUTTON_DECREMENT = 0;
 	public static final String ICON_RUN_PATH = "../gfx/icon_start.png";
 	public static final String ICON_STOP_PATH = "../gfx/icon_stop.png";
+	private static final String RUN_TOOLTIPTEXT = "Run workflow";
+	private static final String STOP_TOOLTIPTEXT = "Stop workflow";
 
 	private static boolean iconsLoaded = false;
 
@@ -91,6 +93,7 @@ public class WorkflowControlPanel extends JPanel implements
 											// specific behaviou
 		System.out.println("tton");
 		runButton.addActionListener(playListener);
+		runButton.setToolTipText(RUN_TOOLTIPTEXT);
 		this.add(runButton);
 
 		//stop button
@@ -100,8 +103,8 @@ public class WorkflowControlPanel extends JPanel implements
 		//stopButton.setPreferredSize(buttonSize);
 		stopButton.setFocusPainted(false);
 		stopButton.addActionListener(stopListener);
+		stopButton.setToolTipText(STOP_TOOLTIPTEXT);
 		this.add(stopButton);
-		System.out.println("stop button ok");
 
 		component.registerWorkflowStatusListener(this);
 

@@ -43,19 +43,4 @@ public class GUITestingHarness {
 		TestWindow testWindow = new TestWindow("GUITestingHarness",
 				uConnectSplit);
 	}
-	
-	public static WorkflowSplitPane constructWorkflow(Workflow workflow){
-		WorkflowController workflowModel = new WorkflowController(workflow);
-		
-		// Construct the view
-		WorkflowPane workflowPane = new WorkflowPane(workflowModel.getView());
-		
-		ConsolePane consolePane = new ConsolePane(workflow);
-		return new WorkflowSplitPane(workflowPane, consolePane);
-	}
-	
-	public static Workflow blankWorkflow(){
-		return new Workflow();
-		//TODO set its parameters as appropriate
-	}
 }

@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.WorkflowPane;
-import org.u_compare.gui.WorkflowPanel;
 import org.u_compare.gui.WorkflowSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 import org.u_compare.gui.model.Workflow;
@@ -18,7 +17,14 @@ public class WorkflowPaneController {
 	private static final boolean ALLOW_TABS = true;
 	private static final boolean SHOW_NEW_TAB = true; //TODO
 	
+	private static final boolean allowEditing = false;
+	private static final boolean allowReordering = true; //TODO
+	
+	private static final boolean showWorkflowControlPanel = true;
+	private static final boolean showWorkflowDetails = true;
+	
 	private WorkflowTabbedPane tabbedPane;
+
 	
 	private JComponent init(ArrayList<WorkflowSplitPane> workflowSplitPanes){
 		
@@ -77,7 +83,11 @@ public class WorkflowPaneController {
 	private WorkflowSplitPane constructWorkflow(Workflow workflow){
 		workflow.setComponentSaved();//TODO should this be moved to workflow constructor?
 		
-		WorkflowController workflowController = new WorkflowController(workflow);
+		if(!allowEditing){
+			workflow.setLocked();
+		}
+		
+		WorkflowController workflowController = new WorkflowController(workflow, showWorkflowControlPanel, showWorkflowDetails, allowEditing);
 		
 		// Construct the view
 		WorkflowPane workflowPane = new WorkflowPane(workflowController.getView());

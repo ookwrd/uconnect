@@ -104,7 +104,7 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 		minButton.setActionCommand("hide component");
 		minButton.addActionListener(minListener);
 		add(minButton);
-
+		
 		ImageIcon lockIcon = component.getLockedStatus()?lockedIcon:unlockedIcon;
 		lockButton = new JButton(lockIcon);
 		lockButton.setFocusPainted(false); //This may be needed for a mac specific behaviour
@@ -114,8 +114,10 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 		lockButton.setPreferredSize(buttonSize);
 		lockButton.setActionCommand("show component");
 		lockButton.addActionListener(lockListener);
-		add(lockButton);
-
+		if(controller.allowEditing()){
+			add(lockButton);
+		}
+		
 		closeButton = new JButton(closeIcon);
 		buttonSize = new Dimension(closeIcon.getIconWidth()
 				- BUTTON_DECREMENT, closeIcon.getIconHeight()
@@ -123,7 +125,9 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 		closeButton.setPreferredSize(buttonSize);
 		closeButton.setActionCommand("remove component");
 		closeButton.addActionListener(closeListener);
-		add(closeButton);
+		if(controller.allowEditing()){
+			add(closeButton);
+		}
 		
 		// set button highlighting
 	    highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,

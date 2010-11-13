@@ -11,10 +11,12 @@ import org.u_compare.gui.model.Workflow;
 
 public class WorkflowController extends ComponentController {
 
-	public WorkflowController(Workflow component) {
+	
+	public WorkflowController(Workflow component, boolean showWorkflowControlPanel, boolean showWorkflowDetails, boolean allowEditing) {
+		super(allowEditing);
 		
 		this.component = component;
-		this.componentView = new WorkflowPanel(component, this);
+		this.componentView = new WorkflowPanel(component, this, showWorkflowControlPanel, showWorkflowDetails);
 		
 		
 	}

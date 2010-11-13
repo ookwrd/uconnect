@@ -16,7 +16,6 @@ import org.u_compare.gui.model.Component;
 public class SubComponentsPanel extends JPanel {
 
 	private static final int AGGREGATE_PADDING = 2;
-	private static final boolean MINIMIZE_SUBCOMPONENTS = true;
 	
 	//private JPanel contentsPane;
 	
@@ -40,7 +39,7 @@ public class SubComponentsPanel extends JPanel {
 
 		for (Component subModel : component.getSubComponents()) {
 			ComponentController subController = new ComponentController(
-				subModel);
+				subModel, controller.allowEditing());
 		
 			//Start everything except top level components as minimized
 			//if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){

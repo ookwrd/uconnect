@@ -119,7 +119,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 					WorkflowTabbedPane.WORKFLOW_FINISHED_PATH);
 			assert image_url != null;
 			WorkflowTabbedPane.WORKFLOW_FINISHED = new ImageIcon(image_url,
-					"The workflow has finished it's execution");
+					"The workflow has finished its execution");
 			
 			image_url = WorkflowTabbedPane.class.getResource(
 					WorkflowTabbedPane.WORKFLOW_PAUSED_PATH);

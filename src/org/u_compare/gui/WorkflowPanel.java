@@ -35,7 +35,7 @@ public class WorkflowPanel extends ComponentPanel {
 
 		setupInnerPanel();
 		
-		setupTitlePanel(topPanel);
+		setupTitlePanel(topPanel, false);
 		this.add(topPanel, BorderLayout.NORTH);
 		setupDescriptionPanel(innerPanel);
 		setupWorkflowControlPanel(innerPanel);

@@ -33,8 +33,8 @@ public class TitlePanel extends JPanel {
 
 	private ActionListener titleListener;
 	private FocusListener titleFocusListener;
-
-	public TitlePanel(ComponentController controller, Component component) {
+	
+	public TitlePanel(ComponentController controller, Component component, boolean whiteBackground) {
 		super();
 
 		this.controller = controller;
@@ -62,15 +62,17 @@ public class TitlePanel extends JPanel {
 
 		add(titleLabel, BorderLayout.LINE_START);
 		add(titleTextField, BorderLayout.LINE_START);
-		setBackground(Color.WHITE);
+		if (whiteBackground) setBackground(Color.WHITE);
 
 		this.setTitle(component.getName());
-
+		
+		//start editing
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					// JPanel target = (JPanel) e.getSource();
 					if (!TitlePanel.this.component.getLockedStatus()) {
+						setTitle(titleLabel.getText());
 						titleLabel.setVisible(false);
 						titleTextField.setVisible(true);
 					}
@@ -85,6 +87,9 @@ public class TitlePanel extends JPanel {
 
 			public void focusLost(FocusEvent e) {
 				setTitle(titleLabel.getText());
+				System.out.println("titlelabel "+titleLabel.getText());
+				System.out.println("title "+title);
+				System.out.println("titletextfield "+titleTextField.getText());
 				titleTextField.setVisible(false);
 				titleLabel.setVisible(true);
 			}

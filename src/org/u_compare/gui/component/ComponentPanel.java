@@ -89,7 +89,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		topPanel.setBorder(new RoundedBorder(null, BORDER_COLOR,
 					HEADER_COLOR, BORDER_ROUNDING, BORDER_WIDTH, true));
 
-		setupTitlePanel(topPanel);
+		setupTitlePanel(topPanel, true);
 		setupButtonPanel(topPanel, innerPanel);
 		this.add(topPanel, BorderLayout.NORTH);
 
@@ -127,9 +127,9 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 	}
 	
-	protected void setupTitlePanel(JPanel target){
+	protected void setupTitlePanel(JPanel target, boolean whiteBackground){
 		
-		titlePanel = new TitlePanel(controller, component);
+		titlePanel = new TitlePanel(controller, component, whiteBackground);
 		target.add(titlePanel, BorderLayout.LINE_START);
 		
 	}

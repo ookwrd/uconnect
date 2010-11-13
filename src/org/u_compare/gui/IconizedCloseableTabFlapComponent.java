@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.URL;
 
 import javax.swing.BorderFactory;
@@ -20,6 +22,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
  * is close-able using a button.
  * 
  * @author pontus
+ * @author olaf
  * @version 2010-05-28
  */
 @SuppressWarnings("serial")
@@ -28,6 +31,8 @@ public class IconizedCloseableTabFlapComponent
 	/* The pane that holds this tab */
 	private final JTabbedPane parentPane;
 	private JLabel statusIconLabel;
+	private MouseListener tabListener;
+	private JButton close_button;
 	
 	private static Icon closeTabIcon;
 	private static Icon closeTabMouseOverIcon;
@@ -85,8 +90,8 @@ public class IconizedCloseableTabFlapComponent
 				BorderFactory.createEmptyBorder(0, 0, 0, 7));
 		this.add(title);
 		
-		//Last of all, we add the close button
-		JButton close_button = new JButton(
+		// Last of all, we add the close button
+		close_button = new JButton(
 				IconizedCloseableTabFlapComponent.closeTabIcon);
 		// Force it to be a square
 		close_button.setPreferredSize(new Dimension(9, 9));
@@ -94,6 +99,40 @@ public class IconizedCloseableTabFlapComponent
 				IconizedCloseableTabFlapComponent.CLOSE_BUTTON_TOOLTIP);
 		// Don't catch the user focus since this would be confusing
 		close_button.setFocusable(false);
+		
+		//let the close button appear only when mouseover on the tab  
+		close_button.setVisible(false);
+		tabListener = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				setCloseButtonVisible(false);
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				setCloseButtonVisible(true);
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		this.addMouseListener(tabListener);
 		
 		// Button looks
 		close_button.setUI(new BasicButtonUI());
@@ -109,6 +148,10 @@ public class IconizedCloseableTabFlapComponent
 		
 		// Create some distance between the edge and the close button
 		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 3));
+	}
+	
+	private void setCloseButtonVisible(boolean visible) {
+		close_button.setVisible(visible);
 	}
 	
 	private static synchronized void loadIcons() {

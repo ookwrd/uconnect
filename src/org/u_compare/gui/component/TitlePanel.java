@@ -84,8 +84,8 @@ public class TitlePanel extends JPanel {
 						titleTextField.setVisible(true);
 						titleTextField.requestFocus(); // this is one of the
 														// nastiest tricks I've
-														// seen in swing. viva
-														// swing.
+														// run into with swing so far.
+														// viva swing, mazel tov.
 
 						setTitle(title);
 						titleLabel.setVisible(false);

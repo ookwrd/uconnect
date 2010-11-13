@@ -26,6 +26,7 @@ public class LibraryPane extends JScrollPane {
 		this.setBorder(new TitledBorder(new EtchedBorder(),
 				LibraryPane.BORDER_TITLE));
 		this.setToolTipText(LibraryPane.TOOLTIP_TEXT);
+		
 	}
 	
 }

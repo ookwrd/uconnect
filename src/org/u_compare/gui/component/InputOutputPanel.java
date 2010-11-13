@@ -28,15 +28,19 @@ public class InputOutputPanel extends JPanel {
 		inputPanel.setOpaque(false);
 		inputPanel.setBorder(new TitledBorder(new EtchedBorder(),
 		"Inputs:"));
+		//inputPanel.setLayout(new BoxLayout(inputPanel,
+			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		inputPanel.add(new JLabel("This is an input"));
+		inputPanel.add(new TypeListPanel(new String[]{"first","second","thirdsafasdfasdfasfdasdfasdfasdfasdfsadfasdfsafsdfsa"}));
 		
 		outputPanel = new JPanel();
 		outputPanel.setOpaque(false);
 		outputPanel.setBorder(new TitledBorder(new EtchedBorder(),
 		"Outputs:"));
+		//outputPanel.setLayout(new BoxLayout(outputPanel,
+			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		outputPanel.add(new JLabel("This is an output"));
+		outputPanel.add(new TypeListPanel(new String[]{"output1","output2","output3","output4"}));
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(inputPanel);

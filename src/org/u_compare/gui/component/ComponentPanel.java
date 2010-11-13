@@ -95,8 +95,6 @@ public class ComponentPanel extends DraggableJPanel implements
 
 		setupDescriptionPanel(innerPanel);
 		setupInputOutputPanel(innerPanel);
-		setupParametersPanel(innerPanel);
-		
 		
 		if(component.isAggregate()){
 			
@@ -108,6 +106,8 @@ public class ComponentPanel extends DraggableJPanel implements
 			innerPanel.add(subComponentsBorder);
 			
 		}
+
+		setupParametersPanel(innerPanel);
 		
 		this.add(innerPanel);
 	}

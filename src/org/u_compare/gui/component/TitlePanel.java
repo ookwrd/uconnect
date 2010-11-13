@@ -23,7 +23,7 @@ import org.u_compare.gui.model.Component;
 public class TitlePanel extends JPanel {
 
 	private static final int TITLE_SIZE_LIMIT = 120; // the text will be trimmed if too long
-	private static int titleLabelSizeLimit = 50;
+	private static int titleLabelSizeLimit = 60;
 
 	private final ComponentController controller;
 	private final Component component;
@@ -126,7 +126,7 @@ public class TitlePanel extends JPanel {
 			this.titleLabel.setText(title);
 		}
 		else {
-			this.titleLabel.setText(title.substring(0,titleLabelSizeLimit-4)+" ...");//TODO the object still takes more place
+			this.titleLabel.setText(title.substring(0,titleLabelSizeLimit-4)+"...");//TODO the object still takes more place
 		}
 		this.titleTextField.setText(title);
 		this.controller.setTitle(title);

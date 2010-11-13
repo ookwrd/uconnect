@@ -21,7 +21,13 @@ public class TypeListPanel extends JPanel {
 	private JButton addButton;
 	private JList list;
 	
-	public TypeListPanel(String[] options){
+	private org.u_compare.gui.model.Component component;
+	
+	public TypeListPanel(org.u_compare.gui.model.Component component, String[] options){
+		
+		this.component = component;
+		
+
 		
 		//Options extracted more directly from model
 		
@@ -53,7 +59,6 @@ public class TypeListPanel extends JPanel {
 					return;
 				}
 				buttons.setVisible(false);
-				list.clearSelection();//TODO make it so the buttons dont clear this??
 			}
 		};
 		
@@ -87,5 +92,10 @@ public class TypeListPanel extends JPanel {
 		//TODO deletion
 	}
 	
+	private void configureLockStatus(){
+		if(component.getLockedStatus()){
+			//list.setSel
+		}
+	}
 	
 }

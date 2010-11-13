@@ -28,13 +28,13 @@ public class ComponentControllerTester {
 	@Before
 	public void setUp(){
 		model = ExampleWorkflowFactory.aggregate();
-		control = new ComponentController(model);
+		control = new ComponentController(model, true);
 		
 		component = new MockComponent();
-		controller = new ComponentController(component);
+		controller = new ComponentController(component, true);
 	
 		componentAggregate = new MockAggregateComponent();
-		controllerAggregate = new ComponentController(componentAggregate);
+		controllerAggregate = new ComponentController(componentAggregate, true);
 	}
 
 	@After

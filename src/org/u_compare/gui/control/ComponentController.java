@@ -33,8 +33,10 @@ public class ComponentController implements DragAndDropComponentController {
 	private ArrayList<DropTargetController> dropTargets = new ArrayList<DropTargetController>();
 	private ArrayList<ParameterController> parameterControllers = new ArrayList<ParameterController>();
 	
-	protected ComponentController(){
-		
+	protected final boolean allowEditing;
+	
+	protected ComponentController(boolean allowEditing){
+		this.allowEditing = allowEditing;
 	}
 	
 	/**
@@ -43,7 +45,9 @@ public class ComponentController implements DragAndDropComponentController {
 	 * @param componentModel
 	 * @throws NullPointerException
 	 */
-	public ComponentController(Component component) {
+	public ComponentController(Component component, boolean allowEditing) {
+		
+		this.allowEditing = allowEditing;
 		
 		this.component = component;
 		this.componentView = new ComponentPanel(component, this);
@@ -460,4 +464,11 @@ public class ComponentController implements DragAndDropComponentController {
 		
 	}
 	
+	/**
+	 * Used only at construction time
+	 * @return
+	 */
+	public boolean allowEditing(){
+		return allowEditing;
+	}
 }

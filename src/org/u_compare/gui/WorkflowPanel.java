@@ -21,7 +21,7 @@ public class WorkflowPanel extends ComponentPanel {
 	private WorkflowControlPanel workflowControlPanel;
 	
 	public WorkflowPanel(Workflow component,
-			ComponentController controller){
+			ComponentController controller, boolean showWorkflowControlPanel, boolean showWorkflowDetails){
 		super(controller);
 		
 		initialConfiguration(component, controller);
@@ -35,11 +35,15 @@ public class WorkflowPanel extends ComponentPanel {
 
 		setupInnerPanel();
 		
-		setupTitlePanel(topPanel, false);
-		this.add(topPanel, BorderLayout.NORTH);
-		setupDescriptionPanel(innerPanel);
-		setupWorkflowControlPanel(innerPanel);
+		if(showWorkflowDetails){
+			setupTitlePanel(topPanel, false);
+			this.add(topPanel, BorderLayout.NORTH);
+			setupDescriptionPanel(innerPanel);
+		}
 		
+		if(showWorkflowControlPanel){
+			setupWorkflowControlPanel(innerPanel);
+		}
 		setupSubComponentsPanel(innerPanel);
 
 		this.add(innerPanel);

@@ -33,8 +33,9 @@ public class TitlePanel extends JPanel {
 
 	private ActionListener titleListener;
 	private FocusListener titleFocusListener;
-	
-	public TitlePanel(ComponentController controller, Component component, boolean whiteBackground) {
+
+	public TitlePanel(ComponentController controller, Component component,
+			boolean whiteBackground) {
 		super();
 
 		this.controller = controller;
@@ -50,15 +51,15 @@ public class TitlePanel extends JPanel {
 
 		// add a title panel
 		setLayout(new CardLayout());
-		
+
 		title = component.getName();
-		
+
 		titleLabel = new JLabel(title);
 		titleLabel.setText(title);//
 
 		titleTextField = new JTextField(title);
 		titleTextField.setText(title);
-		
+
 		titleTextField.setDocument(new JTextFieldLimit(TITLE_SIZE_LIMIT));
 		titleLabel.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setFont(new Font("sansserif", Font.BOLD, 12));
@@ -66,14 +67,24 @@ public class TitlePanel extends JPanel {
 
 		add(titleLabel, BorderLayout.LINE_START);
 		add(titleTextField, BorderLayout.LINE_START);
-		if (whiteBackground) setBackground(Color.WHITE);
+		if (whiteBackground)
+			setBackground(Color.WHITE);
 
-		//start editing
+		// start editing
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					// JPanel target = (JPanel) e.getSource();
 					if (!TitlePanel.this.component.getLockedStatus()) {
+						titleTextField.requestFocusInWindow();
+
+						titleTextField.setVisible(false);
+						titleTextField.setVisible(true);
+						titleTextField.requestFocus(); // this is one of the
+														// nastiest tricks I've
+														// seen in swing. viva
+														// swing.
+
 						setTitle(titleLabel.getText());
 						titleLabel.setVisible(false);
 						titleTextField.setVisible(true);
@@ -85,13 +96,16 @@ public class TitlePanel extends JPanel {
 		titleFocusListener = new FocusListener() {
 
 			public void focusGained(FocusEvent e) {
+				titleTextField.grabFocus();
 			}
 
 			public void focusLost(FocusEvent e) {
 				setTitle(titleLabel.getText());
-				System.out.println("FOCUS LOST \ntitlelabel "+titleLabel.getText());
-				System.out.println("title "+title);
-				System.out.println("titletextfield "+titleTextField.getText()+"<-- nothing ?");
+				System.out.println("FOCUS LOST \ntitlelabel "
+						+ titleLabel.getText());
+				System.out.println("title " + title);
+				System.out.println("titletextfield " + titleTextField.getText()
+						+ "<-- nothing ?");
 				titleTextField.setVisible(false);
 				titleLabel.setVisible(true);
 			}

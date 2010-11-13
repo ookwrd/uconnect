@@ -15,13 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.junit.internal.matchers.SubstringMatcher;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
 
 @SuppressWarnings("serial")
 public class TitlePanel extends JPanel {
 
-	private static final int TITLE_SIZE_LIMIT = 30;
+	private static final int TITLE_SIZE_LIMIT = 120; // the text will be trimmed if too long
+	private static int titleLabelSizeLimit = 50;
 
 	private final ComponentController controller;
 	private final Component component;
@@ -48,7 +50,7 @@ public class TitlePanel extends JPanel {
 				titleLabel.setVisible(true);
 			}
 		};
-
+		
 		// add a title panel
 		setLayout(new CardLayout());
 
@@ -85,7 +87,7 @@ public class TitlePanel extends JPanel {
 														// seen in swing. viva
 														// swing.
 
-						setTitle(titleLabel.getText());
+						setTitle(title);
 						titleLabel.setVisible(false);
 						titleTextField.setVisible(true);
 					}
@@ -100,12 +102,12 @@ public class TitlePanel extends JPanel {
 			}
 
 			public void focusLost(FocusEvent e) {
-				setTitle(titleLabel.getText());
-				System.out.println("FOCUS LOST \ntitlelabel "
+				setTitle(titleTextField.getText());
+				/*System.out.println("FOCUS LOST \ntitlelabel "
 						+ titleLabel.getText());
 				System.out.println("title " + title);
 				System.out.println("titletextfield " + titleTextField.getText()
-						+ "<-- nothing ?");
+						+ "<-- nothing ?");*/
 				titleTextField.setVisible(false);
 				titleLabel.setVisible(true);
 			}
@@ -120,7 +122,12 @@ public class TitlePanel extends JPanel {
 	// TODO this might be set directly by the controller
 	protected void setTitle(String title) {
 		this.title = title;
-		this.titleLabel.setText(title);
+		if(title.length()<=titleLabelSizeLimit) {
+			this.titleLabel.setText(title);
+		}
+		else {
+			this.titleLabel.setText(title.substring(0,titleLabelSizeLimit-4)+" ...");//TODO the object still takes more place
+		}
 		this.titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}

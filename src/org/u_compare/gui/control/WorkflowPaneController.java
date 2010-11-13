@@ -17,7 +17,7 @@ public class WorkflowPaneController {
 	private static final boolean ALLOW_TABS = true;
 	private static final boolean SHOW_NEW_TAB = true; //TODO
 	
-	private static final boolean allowEditing = false;
+	private static final boolean allowEditing = true;
 	private static final boolean allowReordering = true; //TODO
 	
 	private static final boolean showWorkflowControlPanel = true;

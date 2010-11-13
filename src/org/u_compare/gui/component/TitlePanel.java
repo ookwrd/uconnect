@@ -50,11 +50,15 @@ public class TitlePanel extends JPanel {
 
 		// add a title panel
 		setLayout(new CardLayout());
-
+		
+		title = component.getName();
+		
 		titleLabel = new JLabel(title);
+		titleLabel.setText(title);//
 
-		titleTextField = new JTextField(15);
+		titleTextField = new JTextField(title);
 		titleTextField.setText(title);
+		
 		titleTextField.setDocument(new JTextFieldLimit(TITLE_SIZE_LIMIT));
 		titleLabel.setFont(new Font("sansserif", Font.BOLD, 12));
 		titleTextField.setFont(new Font("sansserif", Font.BOLD, 12));
@@ -64,8 +68,6 @@ public class TitlePanel extends JPanel {
 		add(titleTextField, BorderLayout.LINE_START);
 		if (whiteBackground) setBackground(Color.WHITE);
 
-		this.setTitle(component.getName());
-		
 		//start editing
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -87,9 +89,9 @@ public class TitlePanel extends JPanel {
 
 			public void focusLost(FocusEvent e) {
 				setTitle(titleLabel.getText());
-				System.out.println("titlelabel "+titleLabel.getText());
+				System.out.println("FOCUS LOST \ntitlelabel "+titleLabel.getText());
 				System.out.println("title "+title);
-				System.out.println("titletextfield "+titleTextField.getText());
+				System.out.println("titletextfield "+titleTextField.getText()+"<-- nothing ?");
 				titleTextField.setVisible(false);
 				titleLabel.setVisible(true);
 			}
@@ -104,8 +106,8 @@ public class TitlePanel extends JPanel {
 	// TODO this might be set directly by the controller
 	protected void setTitle(String title) {
 		this.title = title;
-		titleLabel.setText(title);
-		titleTextField.setText(title);
+		this.titleLabel.setText(title);
+		this.titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}
 

@@ -1,6 +1,7 @@
 package org.u_compare.gui.component;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.FocusEvent;
@@ -16,6 +17,8 @@ import javax.swing.event.ListSelectionListener;
 public class TypeListPanel extends JPanel {
 
 	private JPanel buttons;
+	private JButton deleteButton;
+	private JButton addButton;
 	private JList list;
 	
 	public TypeListPanel(String[] options){
@@ -40,10 +43,15 @@ public class TypeListPanel extends JPanel {
 		FocusListener listFocusListener = new FocusListener() {
 			
 			public void focusGained(FocusEvent e) {
-				//buttons.setVisible(true);
+				buttons.setVisible(true);
 			}
 
 			public void focusLost(FocusEvent e) {
+				
+				Object source = e.getOppositeComponent();
+				if(source.equals(list) || source.equals(addButton) || source.equals(deleteButton)){
+					return;
+				}
 				buttons.setVisible(false);
 				list.clearSelection();//TODO make it so the buttons dont clear this??
 			}
@@ -62,8 +70,8 @@ public class TypeListPanel extends JPanel {
 		buttons = new JPanel();
 		buttons.setLayout(new FlowLayout(FlowLayout.TRAILING));
 		
-		JButton deleteButton = new JButton("Delete Type");
-		JButton addButton = new JButton("Add Type");
+		deleteButton = new JButton("Delete Type");
+		addButton = new JButton("Add Type");
 		
 		buttons.add(deleteButton);
 		buttons.add(addButton);

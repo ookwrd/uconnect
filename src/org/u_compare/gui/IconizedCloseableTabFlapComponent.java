@@ -102,7 +102,7 @@ public class IconizedCloseableTabFlapComponent
 		
 		//let the close button appear only when mouseover on the tab  
 		//close_button.setVisible(false); //TODO fix the component resizing
-		tabListener = new MouseListener() {
+		/*tabListener = new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -132,7 +132,7 @@ public class IconizedCloseableTabFlapComponent
 				
 			}
 		};
-		this.addMouseListener(tabListener);
+		this.addMouseListener(tabListener);*/
 		
 		// Button looks
 		close_button.setUI(new BasicButtonUI());

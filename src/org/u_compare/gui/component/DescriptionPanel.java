@@ -100,6 +100,11 @@ public class DescriptionPanel extends JPanel implements DescriptionChangeListene
 						//setDescription(description.getText());
 						description.setVisible(false);
 						editableDescription.setVisible(true);
+						
+						//editableDescription.requestFocusInWindow();
+						editableDescription.setVisible(false);
+						editableDescription.setVisible(true);
+						editableDescription.requestFocus();
 					}
 				}
 			}

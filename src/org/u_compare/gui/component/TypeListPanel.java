@@ -15,16 +15,24 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.u_compare.gui.model.AnnotationType;
+import org.u_compare.gui.model.InputOutputChangeListener;
 import org.u_compare.gui.model.LockedStatusChangeListener;
 
-public class TypeListPanel extends JPanel implements LockedStatusChangeListener {
+@SuppressWarnings("serial")
+public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
 
+	public static final int INPUTS_LIST = 0;
+	public static final int OUTPUTS_LIST = 1;
+	
 	private JPanel buttons;
 	private JButton deleteButton;
 	private JButton addButton;
 	private JList list;
 	
 	private org.u_compare.gui.model.Component component;
+	
+	private int listType;
 	
 	public TypeListPanel(org.u_compare.gui.model.Component component, String[] options){
 		
@@ -99,14 +107,14 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener 
 		configureLockStatus();
 
 		component.registerLockedStatusChangeListener(this);
+		component.registerInputOutputChangeListener(this);
 		
 		//TODO deletion
 	}
 	
-	@SuppressWarnings("serial")
 	private void configureLockStatus(){
 		if(component.getLockedStatus()){
-			//Sets the list items unselectable, without changing their apperance
+			//Sets the list items unselect-able, without changing their appearance
 			list.setEnabled(false);
 		    list.setCellRenderer(new DefaultListCellRenderer() {
 		        public Component getListCellRendererComponent(
@@ -126,9 +134,34 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener 
 		}
 	}
 
+	private void rebuildListContents(){
+		assert(list!=null);
+		list.removeAll();
+		
+		switch(listType){
+		case INPUTS_LIST:
+			for(AnnotationType annotation : component.getInputTypes()){
+				//TODO
+			}
+			break;
+		case OUTPUTS_LIST:
+			for(AnnotationType annotation : component.getOutputTypes()){
+				//TODO
+			}
+			break;
+		default:
+			throw new Error("TypeListPanel listType not set to a valid value: " + listType);
+		}
+	}
+	
 	@Override
 	public void lockStatusChanged(org.u_compare.gui.model.Component component) {
 		configureLockStatus();
+	}
+
+	@Override
+	public void inputOutputChanged(org.u_compare.gui.model.Component component) {
+		
 	}
 	
 }

@@ -8,13 +8,16 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class TypeListPanel extends JPanel {
+import org.u_compare.gui.model.LockedStatusChangeListener;
+
+public class TypeListPanel extends JPanel implements LockedStatusChangeListener {
 
 	private JPanel buttons;
 	private JButton deleteButton;
@@ -49,15 +52,23 @@ public class TypeListPanel extends JPanel {
 		FocusListener listFocusListener = new FocusListener() {
 			
 			public void focusGained(FocusEvent e) {
-				buttons.setVisible(true);
+				if(!TypeListPanel.this.component.getLockedStatus()){
+					buttons.setVisible(true);
+				}
 			}
 
 			public void focusLost(FocusEvent e) {
 				
 				Object source = e.getOppositeComponent();
-				if(source.equals(list) || source.equals(addButton) || source.equals(deleteButton)){
+				
+				if(source==null
+						|| source.equals(list) 
+						|| source.equals(addButton) 
+						|| source.equals(deleteButton)){
 					return;
 				}
+				
+				list.clearSelection();
 				buttons.setVisible(false);
 			}
 		};
@@ -85,17 +96,39 @@ public class TypeListPanel extends JPanel {
 		
 		this.add(buttons);
 		
+		configureLockStatus();
+
+		component.registerLockedStatusChangeListener(this);
 		
-		
-		//TODO selectable only on editable
-		//TODO deselection
 		//TODO deletion
 	}
 	
+	@SuppressWarnings("serial")
 	private void configureLockStatus(){
 		if(component.getLockedStatus()){
-			//list.setSel
+			//Sets the list items unselectable, without changing their apperance
+			list.setEnabled(false);
+		    list.setCellRenderer(new DefaultListCellRenderer() {
+		        public Component getListCellRendererComponent(
+		            JList list,
+		            Object value,
+		            int index,
+		            boolean isSelected,
+		            boolean cellHasFocus) {
+
+		            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		            this.setEnabled(true);
+		            return this;
+		        }
+		    });
+		}else{
+			list.setEnabled(true);
 		}
+	}
+
+	@Override
+	public void lockStatusChanged(org.u_compare.gui.model.Component component) {
+		configureLockStatus();
 	}
 	
 }

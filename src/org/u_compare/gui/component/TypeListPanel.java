@@ -164,7 +164,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 
 	@Override
 	public void inputOutputChanged(org.u_compare.gui.model.Component component) {
-		
+		rebuildListContents();
 	}
 	
 }

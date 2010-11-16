@@ -9,9 +9,11 @@ import java.awt.event.FocusListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -29,25 +31,20 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	private JButton deleteButton;
 	private JButton addButton;
 	private JList list;
+	private DefaultListModel listModel;
 	
 	private org.u_compare.gui.model.Component component;
 	
 	private int listType;
 	
-	public TypeListPanel(org.u_compare.gui.model.Component component, String[] options){
+	public TypeListPanel(org.u_compare.gui.model.Component component, int listType/*String[] options*/){
 		
 		this.component = component;
-		
-
-		
-		//Options extracted more directly from model
+		this.listType = listType;
 		
 		setOpaque(false);
 		setLayout(new BoxLayout(this,
 				BoxLayout.Y_AXIS));
-		
-		
-		
 
 		ListSelectionListener listSelectionListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent evt) {
@@ -81,13 +78,15 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 			}
 		};
 		
-		list = new JList(options);
+		listModel = new DefaultListModel();
+		list = new JList(listModel);
 		list.setFixedCellWidth(150);
 		list.setBackground(getBackground());
 		
 		list.addListSelectionListener(listSelectionListener);
 		list.addFocusListener(listFocusListener);
-		
+	
+		rebuildListContents();
 		this.add(list);
 		
 		
@@ -141,12 +140,16 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		switch(listType){
 		case INPUTS_LIST:
 			for(AnnotationType annotation : component.getInputTypes()){
-				//TODO
+				
+				listModel.addElement(annotation.getTypeName());
+
 			}
 			break;
 		case OUTPUTS_LIST:
 			for(AnnotationType annotation : component.getOutputTypes()){
-				//TODO
+				
+				listModel.addElement(annotation.getTypeName());
+				
 			}
 			break;
 		default:

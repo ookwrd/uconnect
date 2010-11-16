@@ -31,7 +31,7 @@ public class InputOutputPanel extends JPanel {
 		//inputPanel.setLayout(new BoxLayout(inputPanel,
 			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		inputPanel.add(new TypeListPanel(component,new String[]{"first","second","thirdsafasdfasdfasfdasdfasdfasdfasdfsadfasdfsafsdfsa"}));
+		inputPanel.add(new TypeListPanel(component, TypeListPanel.INPUTS_LIST));
 		
 		outputPanel = new JPanel();
 		outputPanel.setOpaque(false);
@@ -40,7 +40,7 @@ public class InputOutputPanel extends JPanel {
 		//outputPanel.setLayout(new BoxLayout(outputPanel,
 			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		outputPanel.add(new TypeListPanel(component, new String[]{"output1","output2","output3","output4"}));
+		outputPanel.add(new TypeListPanel(component, TypeListPanel.OUTPUTS_LIST));
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(inputPanel);

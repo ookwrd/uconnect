@@ -34,16 +34,16 @@ import org.u_compare.gui.control.DropTargetController;
  */
 public abstract class DroppableJPanel extends JPanel {
 
-	//protected DragAndDropComponentController controller;
+	// protected DragAndDropComponentController controller;
 	private boolean debug = false;
 	protected DragAndDropComponentController controller;
-	protected final Color defaultColor = getBackground(); 
+	protected final Color defaultColor = getBackground();
 
 	public DroppableJPanel(DragAndDropComponentController controller) {
 
 		this.controller = controller;
 		new MyDropTargetListener(this);
-		
+
 	}
 
 	/**
@@ -72,8 +72,13 @@ public abstract class DroppableJPanel extends JPanel {
 
 			this.panel.controller.somethingDroppedOnComponent();
 
-			if (debug) this.panel.setBackground(Color.MAGENTA);
-			else this.panel.setBackground(defaultColor); // if an inappropriate drop has been performed, remove the highlighting
+			if (debug)
+				this.panel.setBackground(Color.MAGENTA);
+			else
+				this.panel.setBackground(defaultColor); // if a non accepted
+														// drop has been
+														// performed, remove the
+														// highlighting
 
 			try {
 
@@ -93,7 +98,7 @@ public abstract class DroppableJPanel extends JPanel {
 				event.rejectDrop();
 			}
 		}
-		
+
 		/**
 		 * Drag enters the component area
 		 */
@@ -101,7 +106,7 @@ public abstract class DroppableJPanel extends JPanel {
 
 			System.out.println("DroppableJPanel: Drag enter");
 			this.panel.controller.setDragEnter();
-			//this.panel.setBackground(Color.LIGHT_GRAY);
+			// this.panel.setBackground(Color.LIGHT_GRAY);
 		}
 
 		/**
@@ -111,7 +116,7 @@ public abstract class DroppableJPanel extends JPanel {
 
 			System.out.println("DroppableJPanel: Drag exit");
 			this.panel.controller.setDragExit();
-			//this.panel.setBackground(this.panel.defaultColor);
+			// this.panel.setBackground(this.panel.defaultColor);
 		}
 
 	}

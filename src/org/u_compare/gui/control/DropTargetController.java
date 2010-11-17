@@ -49,7 +49,7 @@ public class DropTargetController implements DragAndDropComponentController {
 	public void setDragEnter() {
 
 		if(parent.droppableOnChild(this)){
-			view.setDragOverHighlightingDroppable();
+			view.highlightMouseDroppable();
 		}else{
 			view.setDragOverHighlightingUndroppable();
 		}

@@ -38,21 +38,19 @@ import org.u_compare.gui.model.Workflow;
 public class ComponentPanel extends DraggableJPanel implements
 		SubComponentsChangedListener {
 
-	private final static int PREFERRED_WIDTH = 300;
-	private static final int BORDER_ROUNDING = 5;
-	private static final int BORDER_WIDTH = 2;
-	private static final Color BORDER_COLOR = Color.DARK_GRAY;
-	private static Color HEADER_COLOR = Color.WHITE;
-	private static Color BODY_COLOR;
+	public final static int PREFERRED_WIDTH = 300;
+	public static final int BORDER_ROUNDING = 5;
+	public static final int BORDER_WIDTH = 2;
+	public static final Color BORDER_COLOR = Color.DARK_GRAY;
+	public static Color HEADER_COLOR = Color.WHITE;
+	public static Color BODY_COLOR;
 
 	protected JPanel innerPanel;
-	protected JPanel topPanel;
+	protected TopPanel topPanel;
 
 	protected Component component;
 	protected ComponentController controller;
 	
-	private TitlePanel titlePanel;
-	private ButtonPanel buttonPanel;//TODO shouldnt be here, should be under titlePanel
 	private DescriptionPanel descriptionPanel;
 	private InputOutputPanel inputOutputPanel;
 	private ParametersPanel parametersPanel;
@@ -79,20 +77,12 @@ public class ComponentPanel extends DraggableJPanel implements
 				BORDER_ROUNDING, BORDER_WIDTH, false));
 		
 		// set up a top panel (inside the inner panel) and layout
-		topPanel = new JPanel();
-		BorderLayout topLayout = new BorderLayout();
-		topPanel.setLayout(topLayout);
-		topPanel.setOpaque(false);
+		topPanel = new TopPanel(controller, component, innerPanel);
+		
+		this.add(topPanel, BorderLayout.NORTH);
 
 		setupInnerPanel();
 		
-		topPanel.setBorder(new RoundedBorder(null, BORDER_COLOR,
-					HEADER_COLOR, BORDER_ROUNDING, BORDER_WIDTH, true));
-
-		setupTitlePanel(topPanel, true);
-		setupButtonPanel(topPanel, innerPanel);
-		this.add(topPanel, BorderLayout.NORTH);
-
 		setupDescriptionPanel(innerPanel);
 		setupInputOutputPanel(innerPanel);
 		
@@ -125,25 +115,11 @@ public class ComponentPanel extends DraggableJPanel implements
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layout);
 		
+		innerPanel = new JPanel();
 	}
-	
-	protected void setupTitlePanel(JPanel target, boolean whiteBackground){
-		
-		titlePanel = new TitlePanel(controller, component, whiteBackground);
-		target.add(titlePanel, BorderLayout.LINE_START);
-		
-	}
-	
-	protected void setupButtonPanel(JPanel target, JPanel minimizable){
-		
-		buttonPanel = new ButtonPanel(controller, component, minimizable);
-		target.add(buttonPanel, BorderLayout.LINE_END);
-		
-	}
-	
+
 	protected void setupInnerPanel(){
 		// set up an inner panel and its layout
-		innerPanel = new JPanel();
 		BoxLayout innerLayout = new BoxLayout(innerPanel, BoxLayout.Y_AXIS);
 		innerPanel.setLayout(innerLayout);
 		innerPanel.setOpaque(false);

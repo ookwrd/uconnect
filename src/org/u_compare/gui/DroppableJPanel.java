@@ -80,23 +80,21 @@ public abstract class DroppableJPanel extends JPanel {
 														// performed, remove the
 														// highlighting
 
-			/*try {
-
-				Transferable tr = event.getTransferable();
-				String s = (String) tr.getTransferData(new DataFlavor(
-						ComponentPanel.class, "WorkflowComponent"));
-				System.out.println("String transfered : " + s);
-				if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-
-					event.acceptDrop(DnDConstants.ACTION_COPY);
-					event.dropComplete(true);
-					return;
-				}
-				event.rejectDrop();
-			} catch (Exception e) {
-				e.printStackTrace();
-				event.rejectDrop();
-			}*/
+			/*
+			 * //this was previously to handle drops from outside the app, on
+			 * wfcomponents
+			 * 
+			 * try {
+			 * 
+			 * Transferable tr = event.getTransferable(); String s = (String)
+			 * tr.getTransferData(new DataFlavor( ComponentPanel.class,
+			 * "WorkflowComponent")); System.out.println("String transfered : "
+			 * + s); if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+			 * 
+			 * event.acceptDrop(DnDConstants.ACTION_COPY);
+			 * event.dropComplete(true); return; } event.rejectDrop(); } catch
+			 * (Exception e) { e.printStackTrace(); event.rejectDrop(); }
+			 */
 		}
 
 		/**

@@ -33,7 +33,7 @@ import org.u_compare.gui.model.Workflow.WorkflowStatus;
 public class WorkflowControlPanel extends JPanel implements
 		WorkflowStatusListener {
 
-	public final static String STATUS_PREFIX = "Status: ";
+	public final static String STATUS_PREFIX = "Workflow Status: ";
 	private static final int BUTTON_DECREMENT = 0;
 	public static final String ICON_RUN_PATH = "../gfx/icon_start.png";
 	public static final String ICON_STOP_PATH = "../gfx/icon_stop.png";
@@ -86,13 +86,12 @@ public class WorkflowControlPanel extends JPanel implements
 		};
 
 		setOpaque(false);
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		statusLabel = new JLabel(STATUS_PREFIX
 				+ ((Workflow) component).getStatus());
 		this.add(statusLabel);
 
-		this.loadIcons();
+		WorkflowControlPanel.loadIcons();
 
 		Dimension buttonSize;
 
@@ -122,8 +121,6 @@ public class WorkflowControlPanel extends JPanel implements
 		this.add(stopButton);
 
 		component.registerWorkflowStatusListener(this);
-
-		setBorder(new EtchedBorder());
 
 		// set highlighting
 		highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,

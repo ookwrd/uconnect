@@ -1,9 +1,5 @@
 package org.u_compare.gui.model.parameters;
 
-import org.u_compare.gui.StringParameterPanel;
-import org.u_compare.gui.control.StringParamaterController;
-import org.u_compare.gui.model.Component;
-
 public class StringParameter extends AbstractParameter{
 
 	private String parameter;

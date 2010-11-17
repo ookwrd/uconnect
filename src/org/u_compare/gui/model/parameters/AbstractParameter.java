@@ -8,7 +8,7 @@ import org.u_compare.gui.model.parameters.constraints.Constraint;
 public abstract class AbstractParameter implements
 		Parameter {
 
-	private Component owner;
+	protected Component owner;
 	private String description;
 	private ArrayList<Constraint> constraints;
 	

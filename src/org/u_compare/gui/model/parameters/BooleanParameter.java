@@ -1,5 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
+import java.security.acl.Owner;
+
 import org.u_compare.gui.BooleanParameterPanel;
 import org.u_compare.gui.control.BooleanParameterController;
 import org.u_compare.gui.model.Component;
@@ -11,7 +13,7 @@ public class BooleanParameter extends
 	
 	public BooleanParameter(String description, boolean value){
 		super(description);
-		parameter = value;
+		this.parameter = value;
 	}
 	
 	public boolean getParameter(){
@@ -20,8 +22,11 @@ public class BooleanParameter extends
 
 	public void update(boolean input) throws InvalidInputException {
 		
-		System.out.println("setting:" + input);
-		
+		if(input != parameter){
+			parameter = input;
+			
+			setChanged();
+		}
 	}
 
 	public String getParameterString() {

@@ -76,11 +76,8 @@ public class ComponentPanel extends DraggableJPanel implements
 		this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
 				BORDER_ROUNDING, BORDER_WIDTH, false));
 		
-		// set up a top panel (inside the inner panel) and layout
-		topPanel = new TopPanel(controller, component, innerPanel);
-		
-		this.add(topPanel, BorderLayout.NORTH);
 
+		setupTopPanel(this, false);
 		setupInnerPanel();
 		
 		setupDescriptionPanel(innerPanel);
@@ -125,6 +122,13 @@ public class ComponentPanel extends DraggableJPanel implements
 		innerPanel.setOpaque(false);
 		innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
 				BORDER_WIDTH, BORDER_WIDTH));
+		
+	}
+	
+	protected void setupTopPanel(JPanel target, boolean isWorkflow){
+		
+		topPanel = new TopPanel(controller, component, innerPanel, isWorkflow);
+		target.add(topPanel, BorderLayout.NORTH);
 		
 	}
 	

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -23,7 +24,9 @@ import org.u_compare.gui.model.Component;
 public class TitlePanel extends JPanel {
 
 	private static final int TITLE_SIZE_LIMIT = 120; // the text will be trimmed if too long
+	private static final Font font = new Font("sansserif", Font.BOLD, 12);
 	private static int titleLabelSizeLimit = 60;
+	private TopPanel topPanel;
 
 	private final ComponentController controller;
 	private final Component component;
@@ -42,6 +45,7 @@ public class TitlePanel extends JPanel {
 
 		this.controller = controller;
 		this.component = component;
+		this.topPanel = (TopPanel) getParent();
 
 		titleListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -63,8 +67,8 @@ public class TitlePanel extends JPanel {
 		titleTextField.setText(title);
 
 		titleTextField.setDocument(new JTextFieldLimit(TITLE_SIZE_LIMIT));
-		titleLabel.setFont(new Font("sansserif", Font.BOLD, 12));
-		titleTextField.setFont(new Font("sansserif", Font.BOLD, 12));
+		titleLabel.setFont(font);
+		titleTextField.setFont(font);
 		titleTextField.setVisible(false);
 
 		add(titleLabel, BorderLayout.LINE_START);
@@ -78,14 +82,14 @@ public class TitlePanel extends JPanel {
 				if (e.getClickCount() == 2) {
 					// JPanel target = (JPanel) e.getSource();
 					if (!TitlePanel.this.component.getLockedStatus()) {
-						titleTextField.requestFocusInWindow();
-
+						
+						
 						titleTextField.setVisible(false);
 						titleTextField.setVisible(true);
-						titleTextField.requestFocus(); // this is one of the
-														// nastiest tricks I've
-														// run into with swing so far.
-														// viva swing, mazel tov.
+						titleTextField.requestFocusInWindow(); 	// this is one of the
+																// nastiest tricks I've
+																// run into with swing so far.
+																// viva swing, mazel tov.
 
 						setTitle(title);
 						titleLabel.setVisible(false);
@@ -119,15 +123,36 @@ public class TitlePanel extends JPanel {
 
 	}
 
+	private int getLength(String str) {
+		return getFontMetrics(font).stringWidth(str);
+	}
+	
 	// TODO this might be set directly by the controller
 	protected void setTitle(String title) {
 		this.title = title;
+		/*System.out.println("TITLE_PANEL LENGTH = " + topPanel.getWidth() );
+		int titlePanelLimit = topPanel.getTitleLimit();
+		//getLength(title)>
+		String shortTitle = title;
+		while(this.getWidth() > titlePanelLimit-50) {
+			shortTitle = shortTitle.substring(0,shortTitle.length()-3);
+			this.titleLabel.setText(shortTitle+"...");
+		}
+		
+		*/
+		// apres c'est poubelle
+		/*
 		if(title.length()<=titleLabelSizeLimit) {
 			this.titleLabel.setText(title);
 		}
 		else {
-			this.titleLabel.setText(title.substring(0,titleLabelSizeLimit-4)+"...");//TODO the object still takes more place
+			int titleWidth = 30;
+			this.titleLabel.setText(title.substring(0, titleWidth)+"...");//TODO the object still takes more place
 		}
+		*/
+		if (title.length()<=titleLabelSizeLimit)  			this.titleLabel.setText(title);
+
+		else this.titleLabel.setText(title.substring(0, titleLabelSizeLimit)+"...");
 		this.titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}

@@ -33,7 +33,7 @@ public class TopPanel extends JPanel{
 	 * Find the limit for the size of the title, using : 
 	 * 		topPanel.width minus buttonPanel.width
 	 */
-	protected int getTitleLimit() {
+	public int getTitleLimit() {
 		return this.getWidth()-buttonPanel.getWidth();
 	}
 	

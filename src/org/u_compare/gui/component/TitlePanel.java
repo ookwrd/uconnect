@@ -26,7 +26,7 @@ public class TitlePanel extends JPanel {
 	private static final int TITLE_SIZE_LIMIT = 120; // the text will be trimmed if too long
 	private static final Font font = new Font("sansserif", Font.BOLD, 12);
 	private static int titleLabelSizeLimit = 60;
-	private JPanel topPanel;
+	private TopPanel topPanel;
 
 	private final ComponentController controller;
 	private final Component component;
@@ -45,7 +45,7 @@ public class TitlePanel extends JPanel {
 
 		this.controller = controller;
 		this.component = component;
-		this.topPanel = (JPanel) getParent();
+		this.topPanel = (TopPanel) getParent();
 
 		titleListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -130,12 +130,18 @@ public class TitlePanel extends JPanel {
 	// TODO this might be set directly by the controller
 	protected void setTitle(String title) {
 		this.title = title;
-		//System.out.println("TITLE_PANEL LENGTH = " + topPanel.getWidth() );
-		//int titlePanelLimit = topPanel.getParent(). 
-		//while(getLength(title)>this.getWidth())
-			
-			
+		/*System.out.println("TITLE_PANEL LENGTH = " + topPanel.getWidth() );
+		int titlePanelLimit = topPanel.getTitleLimit();
+		//getLength(title)>
+		String shortTitle = title;
+		while(this.getWidth() > titlePanelLimit-50) {
+			shortTitle = shortTitle.substring(0,shortTitle.length()-3);
+			this.titleLabel.setText(shortTitle+"...");
+		}
+		
+		*/
 		// apres c'est poubelle
+		/*
 		if(title.length()<=titleLabelSizeLimit) {
 			this.titleLabel.setText(title);
 		}
@@ -143,6 +149,10 @@ public class TitlePanel extends JPanel {
 			int titleWidth = 30;
 			this.titleLabel.setText(title.substring(0, titleWidth)+"...");//TODO the object still takes more place
 		}
+		*/
+		if (title.length()<=titleLabelSizeLimit)  			this.titleLabel.setText(title);
+
+		else this.titleLabel.setText(title.substring(0, titleLabelSizeLimit)+"...");
 		this.titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}

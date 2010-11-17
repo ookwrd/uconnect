@@ -23,6 +23,7 @@ public class TopPanel extends JPanel{
 		BorderLayout topLayout = new BorderLayout();
 		setLayout(topLayout);
 		setOpaque(false);
+		
 		if(!isWorkflow){
 		setBorder(new RoundedBorder(null, ComponentPanel.BORDER_COLOR,
 				ComponentPanel.HEADER_COLOR, ComponentPanel.BORDER_ROUNDING, ComponentPanel.BORDER_WIDTH, true));
@@ -30,10 +31,13 @@ public class TopPanel extends JPanel{
 		setupButtonPanel(this, innerPanel);
 		setupTitlePanel(this, true);
 		}
-		setupTitlePanel(this, isWorkflow);
+		
+		/*
+		setupTitlePanel(this, !isWorkflow);
 		if(!isWorkflow){
 			setupButtonPanel(this, innerPanel);
 		}
+		*/
 	}
 	
 	/**

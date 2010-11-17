@@ -31,7 +31,7 @@ public class TitlePanel extends JPanel {
 	private final ComponentController controller;
 	private final Component component;
 
-	protected String title;
+	protected String title = "";
 
 	private JLabel titleLabel;
 	private JTextField titleTextField;
@@ -40,13 +40,13 @@ public class TitlePanel extends JPanel {
 	private FocusListener titleFocusListener;
 
 	public TitlePanel(ComponentController controller, Component component,
-			boolean whiteBackground) {
+			boolean whiteBackground, TopPanel topPanel) {
 		super();
 
 		this.controller = controller;
 		this.component = component;
-		this.topPanel = (TopPanel) getParent();
-
+		this.topPanel = topPanel; //there is no parent yet
+		
 		titleListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTitle(titleTextField.getText());
@@ -61,7 +61,7 @@ public class TitlePanel extends JPanel {
 		title = component.getName();
 
 		titleLabel = new JLabel(title);
-		titleLabel.setText(title);//
+		titleLabel.setText(title);
 
 		titleTextField = new JTextField(title);
 		titleTextField.setText(title);
@@ -130,31 +130,44 @@ public class TitlePanel extends JPanel {
 	// TODO this might be set directly by the controller
 	protected void setTitle(String title) {
 		this.title = title;
-		/*System.out.println("TITLE_PANEL LENGTH = " + topPanel.getWidth() );
-		int titlePanelLimit = topPanel.getTitleLimit();
-		//getLength(title)>
-		String shortTitle = title;
-		while(this.getWidth() > titlePanelLimit-50) {
-			shortTitle = shortTitle.substring(0,shortTitle.length()-3);
-			this.titleLabel.setText(shortTitle+"...");
+		System.out.println("now getting title limit");
+		int titlePanelLimit = 20; 
+		if (topPanel == null) {
+			System.err.println("TopPanel is null, this is not normal.");
+			topPanel = (TopPanel) this.getParent();
 		}
+		if (topPanel!=null) {
+			titlePanelLimit = topPanel.getTitleLimit();
+			System.out.println("got titlePanel limit : "+titlePanelLimit);
+		}
+		else 
+			System.err.println("TopPanel is still null, this is really not normal."); //TODO fix
 		
-		*/
-		// apres c'est poubelle
-		/*
-		if(title.length()<=titleLabelSizeLimit) {
-			this.titleLabel.setText(title);
+		String visualTitle = title;
+		
+		//compute maximal text size
+		int delta = 55; //TODO find the right value
+		String shortTitle = title;
+		int count = 1000;
+		while(getLength(shortTitle) > titlePanelLimit - delta && count > 0) {
+			System.out.println(shortTitle+" --- "+titlePanelLimit+", "+title);
+			shortTitle = shortTitle.substring(0,shortTitle.length()-2);
+			visualTitle = shortTitle + "...";
+			count--;
 		}
-		else {
-			int titleWidth = 30;
-			this.titleLabel.setText(title.substring(0, titleWidth)+"...");//TODO the object still takes more place
-		}
-		*/
-		if (title.length()<=titleLabelSizeLimit)  			this.titleLabel.setText(title);
-
-		else this.titleLabel.setText(title.substring(0, titleLabelSizeLimit)+"...");
+		this.titleLabel.setText(visualTitle);
+		titleTextField.setDocument(new JTextFieldLimit(TITLE_SIZE_LIMIT));
+		
+		//if (title.length()<=titleLabelSizeLimit)  			this.titleLabel.setText(title);
+		//else this.titleLabel.setText(title.substring(0, titleLabelSizeLimit)+"...");
+		
 		this.titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}
+	
+	/*public void repaint() {
+		this.setTitle(this.title);
+		super.repaint();
+	}*/
 
 }

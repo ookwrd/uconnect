@@ -53,7 +53,7 @@ public class DropTargetJPanel extends DroppableJPanel {
 		this.repaint();
 		
 		// also change the cursor
-		Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+		Cursor cursor = new Cursor(Cursor.MOVE_CURSOR);
 		setCursor(cursor);
 	}
 	

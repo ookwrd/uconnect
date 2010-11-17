@@ -15,18 +15,21 @@ public class TopPanel extends JPanel{
 	private ButtonPanel buttonPanel;
 	
 	
-	public TopPanel(ComponentController controller, Component component, JPanel innerPanel) {
+	public TopPanel(ComponentController controller, Component component, JPanel innerPanel, boolean isWorkflow) {
 		
 		this.controller = controller;
 		this.component = component;
 		BorderLayout topLayout = new BorderLayout();
 		setLayout(topLayout);
 		setOpaque(false);
+		if(!isWorkflow){
 		setBorder(new RoundedBorder(null, ComponentPanel.BORDER_COLOR,
 				ComponentPanel.HEADER_COLOR, ComponentPanel.BORDER_ROUNDING, ComponentPanel.BORDER_WIDTH, true));
-
-		setupTitlePanel(this, true);
-		setupButtonPanel(this, innerPanel);
+		}
+		setupTitlePanel(this, isWorkflow);
+		if(!isWorkflow){
+			setupButtonPanel(this, innerPanel);
+		}
 	}
 	
 	/**
@@ -38,9 +41,9 @@ public class TopPanel extends JPanel{
 	}
 	
 	
-	protected void setupTitlePanel(JPanel target, boolean whiteBackground){
+	protected void setupTitlePanel(JPanel target, boolean isWorkflow){
 		
-		titlePanel = new TitlePanel(controller, component, whiteBackground);
+		titlePanel = new TitlePanel(controller, component, !isWorkflow);
 		target.add(titlePanel, BorderLayout.LINE_START);
 		
 	}

@@ -31,7 +31,6 @@ public class Workflow extends AbstractAggregateComponent {
 	public Workflow(){
 		super();		
 		workflowStatusListeners = new ArrayList<WorkflowStatusListener>();
-		
 	}
 	
 	

@@ -8,20 +8,31 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class TypeListPanel extends JPanel {
+import org.u_compare.gui.model.AnnotationType;
+import org.u_compare.gui.model.InputOutputChangeListener;
+import org.u_compare.gui.model.LockedStatusChangeListener;
 
+@SuppressWarnings("serial")
+public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
+
+	public static final int INPUTS_LIST = 0;
+	public static final int OUTPUTS_LIST = 1;
+	
 	private JPanel buttons;
 	private JButton deleteButton;
 	private JButton addButton;
 	private JList list;
 	
 	private org.u_compare.gui.model.Component component;
+	
+	private int listType;
 	
 	public TypeListPanel(org.u_compare.gui.model.Component component, String[] options){
 		
@@ -49,15 +60,23 @@ public class TypeListPanel extends JPanel {
 		FocusListener listFocusListener = new FocusListener() {
 			
 			public void focusGained(FocusEvent e) {
-				buttons.setVisible(true);
+				if(!TypeListPanel.this.component.getLockedStatus()){
+					buttons.setVisible(true);
+				}
 			}
 
 			public void focusLost(FocusEvent e) {
 				
 				Object source = e.getOppositeComponent();
-				if(source.equals(list) || source.equals(addButton) || source.equals(deleteButton)){
+				
+				if(source==null
+						|| source.equals(list) 
+						|| source.equals(addButton) 
+						|| source.equals(deleteButton)){
 					return;
 				}
+				
+				list.clearSelection();
 				buttons.setVisible(false);
 			}
 		};
@@ -85,17 +104,64 @@ public class TypeListPanel extends JPanel {
 		
 		this.add(buttons);
 		
+		configureLockStatus();
+
+		component.registerLockedStatusChangeListener(this);
+		component.registerInputOutputChangeListener(this);
 		
-		
-		//TODO selectable only on editable
-		//TODO deselection
 		//TODO deletion
 	}
 	
 	private void configureLockStatus(){
 		if(component.getLockedStatus()){
-			//list.setSel
+			//Sets the list items unselect-able, without changing their appearance
+			list.setEnabled(false);
+		    list.setCellRenderer(new DefaultListCellRenderer() {
+		        public Component getListCellRendererComponent(
+		            JList list,
+		            Object value,
+		            int index,
+		            boolean isSelected,
+		            boolean cellHasFocus) {
+
+		            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		            this.setEnabled(true);
+		            return this;
+		        }
+		    });
+		}else{
+			list.setEnabled(true);
 		}
+	}
+
+	private void rebuildListContents(){
+		assert(list!=null);
+		list.removeAll();
+		
+		switch(listType){
+		case INPUTS_LIST:
+			for(AnnotationType annotation : component.getInputTypes()){
+				//TODO
+			}
+			break;
+		case OUTPUTS_LIST:
+			for(AnnotationType annotation : component.getOutputTypes()){
+				//TODO
+			}
+			break;
+		default:
+			throw new Error("TypeListPanel listType not set to a valid value: " + listType);
+		}
+	}
+	
+	@Override
+	public void lockStatusChanged(org.u_compare.gui.model.Component component) {
+		configureLockStatus();
+	}
+
+	@Override
+	public void inputOutputChanged(org.u_compare.gui.model.Component component) {
+		
 	}
 	
 }

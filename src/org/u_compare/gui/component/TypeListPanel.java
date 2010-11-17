@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.security.InvalidParameterException;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -17,9 +20,13 @@ import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.model.AnnotationType;
 import org.u_compare.gui.model.InputOutputChangeListener;
 import org.u_compare.gui.model.LockedStatusChangeListener;
+import org.u_compare.gui.model.parameters.InvalidInputException;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @SuppressWarnings("serial")
 public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
@@ -33,14 +40,19 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	private JList list;
 	private DefaultListModel listModel;
 	
+	private ActionListener addListener;
+	private ActionListener removeListener;
+	
 	private org.u_compare.gui.model.Component component;
+	private TypeListPanelController controller;
 	
 	private int listType;
 	
-	public TypeListPanel(org.u_compare.gui.model.Component component, int listType/*String[] options*/){
+	public TypeListPanel(org.u_compare.gui.model.Component component, int listType, TypeListPanelController controller){
 		
 		this.component = component;
 		this.listType = listType;
+		this.controller = controller;
 		
 		setOpaque(false);
 		setLayout(new BoxLayout(this,
@@ -92,9 +104,34 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		
 		buttons = new JPanel();
 		buttons.setLayout(new FlowLayout(FlowLayout.TRAILING));
+ 
+		addListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TypeListPanel.this.controller.addAnnotation();
+			}
+		};
+		
+		removeListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				/*JList and DefaultListModel provide no way for accessing contents
+				*as anything other than an Object[]. Hence having to go through the
+				*array element by element and casting each selected name individually.
+				*/
+				for(Object name : list.getSelectedValues()){
+					TypeListPanel.this.controller.removeAnnotation((String)name);
+				}
+				
+			}
+		};
 		
 		deleteButton = new JButton("Delete Type");
 		addButton = new JButton("Add Type");
+		
+		deleteButton.addActionListener(removeListener);
+		addButton.addActionListener(addListener);
 		
 		buttons.add(deleteButton);
 		buttons.add(addButton);
@@ -107,9 +144,10 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 
 		component.registerLockedStatusChangeListener(this);
 		component.registerInputOutputChangeListener(this);
-		
-		//TODO deletion
+
 	}
+	
+
 	
 	private void configureLockStatus(){
 		if(component.getLockedStatus()){
@@ -135,7 +173,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 
 	private void rebuildListContents(){
 		assert(list!=null);
-		list.removeAll();
+		listModel.clear();
 		
 		switch(listType){
 		case INPUTS_LIST:

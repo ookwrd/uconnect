@@ -4,19 +4,24 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.u_compare.gui.control.ActionFocusListener;
+import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
 
 @SuppressWarnings("serial")
-public class StringParameterPanel extends ParameterPanel {
+public class StringParameterPanel extends ParameterPanel implements LockedStatusChangeListener {
 
-	ActionFocusListener controller;
+	private ActionFocusListener controller;
 	
-	JTextField textField;
+	private JTextField textField;
+	
+	private Component component;
 	
 	public StringParameterPanel(Parameter param, ActionFocusListener control,
-			String initialValue){
+			String initialValue, Component component){
 		
 		this.controller = control;
+		this.component = component;
 		
 		this.add(new JLabel(param.getDescription()));
 		
@@ -24,7 +29,11 @@ public class StringParameterPanel extends ParameterPanel {
 		textField.addActionListener(controller);
 		textField.addFocusListener(controller);
 		
+		updateLockedStatus();
+		
 		this.add(textField);
+		
+		component.registerLockedStatusChangeListener(this);
 	}
 	
 	public String getString(){
@@ -35,10 +44,19 @@ public class StringParameterPanel extends ParameterPanel {
 		textField.setText(value);
 	}
 
-	@Override
-	public void setLockedStatus(boolean locked) {
-		// TODO Auto-generated method stub
+	private void updateLockedStatus(){
 		
+		if(component.getLockedStatus()){
+			textField.setEnabled(false);
+		}else{
+			textField.setEnabled(true);
+		}
+	}
+	
+	@Override
+	public void lockStatusChanged(Component component) {
+	
+		updateLockedStatus();
 	}
 	
 }

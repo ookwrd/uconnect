@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
 
+@SuppressWarnings("serial")
 public class TopPanel extends JPanel{
 	
 	private ComponentController controller; 

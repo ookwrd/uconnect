@@ -2,6 +2,7 @@ package org.u_compare.gui.model.parameters;
 
 import org.u_compare.gui.BooleanParameterPanel;
 import org.u_compare.gui.control.BooleanParameterController;
+import org.u_compare.gui.model.Component;
 
 public class BooleanParameter extends
 		AbstractParameter {
@@ -17,19 +18,14 @@ public class BooleanParameter extends
 	public boolean getParameter(){
 		return parameter;
 	}
+
 	
-	/*public void setParameter(boolean parameter){
-		if(parameter != this.parameter){
-			this.parameter = parameter;
-			setChanged();
-		}
-	}*/
-	
-	public BooleanParameterPanel getConfigurationPane(BooleanParameterController controller) {
+	public BooleanParameterPanel getConfigurationPanel(BooleanParameterController controller, Component component) {
 		
 		//TODO what if its already constructed?
+		//TODO should this be here?
 		
-		panel = new BooleanParameterPanel(this, controller,false);//TODO make final argument sensible
+		panel = new BooleanParameterPanel(this, controller, component);
 		return panel;
 	}
 

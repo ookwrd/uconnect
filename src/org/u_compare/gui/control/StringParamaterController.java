@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import org.u_compare.gui.ParameterPanel;
 import org.u_compare.gui.StringParameterPanel;
+import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.InvalidInputException;
 import org.u_compare.gui.model.parameters.StringParameter;
 
@@ -13,12 +14,14 @@ public class StringParamaterController implements ParameterController, ActionFoc
 	private StringParameter param;
 	private ComponentController parent;
 	private StringParameterPanel view;
+	private Component component;
 	
 	public StringParamaterController(ComponentController control,
-			StringParameter param) {
+			StringParameter param, Component component) {
 		this.parent = control;
 		this.param = param;
-		this.view = param.getConfigurationPane(this);
+		this.component= component;
+		this.view = param.getConfigurationPane(this, component);
 	}
 
 	public ParameterPanel getView() {//TODO who calls this?

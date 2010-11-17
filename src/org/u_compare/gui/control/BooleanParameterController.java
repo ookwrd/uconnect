@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.u_compare.gui.BooleanParameterPanel;
 import org.u_compare.gui.ParameterPanel;
+import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.InvalidInputException;
 
@@ -13,11 +14,14 @@ public class BooleanParameterController implements ActionListener, ParameterCont
 	private BooleanParameter param;
 	private ComponentController parent;
 	private BooleanParameterPanel view;
+	private Component component;
 	
-	public BooleanParameterController(ComponentController parent, BooleanParameter param){
+	public BooleanParameterController(ComponentController parent, BooleanParameter param, Component component){
 		this.param = param;
 		this.parent = parent;
-		this.view = param.getConfigurationPane(this);
+		this.component = component;
+		
+		this.view = param.getConfigurationPanel(this, component);
 	}
 	
 	public ParameterPanel getView(){

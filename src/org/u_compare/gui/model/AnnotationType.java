@@ -16,6 +16,20 @@ public class AnnotationType {
 		return typeName;
 	}
 	
-	//TODO equality
+	/**
+	 * Type names function as unique identifiers. If two AnnotationTypes have the same
+	 * name, then they are equal.
+	 * 
+	 */
+	@Override
+	public boolean equals(Object x){
+		
+		if(x instanceof AnnotationType){
+			if(((AnnotationType) x).getTypeName().equals(typeName)){
+				return true;
+			}
+		}
+		return false;
+	}
 	//TODO factory
 }

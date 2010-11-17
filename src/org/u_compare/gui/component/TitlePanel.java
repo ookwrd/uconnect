@@ -23,7 +23,8 @@ import org.u_compare.gui.model.Component;
 @SuppressWarnings("serial")
 public class TitlePanel extends JPanel {
 
-	private static final int TITLE_SIZE_LIMIT = 120; // the text will be trimmed if too long
+	private static final int TITLE_SIZE_LIMIT = 120; // the text will be trimmed
+														// if too long
 	private static final Font font = new Font("sansserif", Font.BOLD, 12);
 	private static int titleLabelSizeLimit = 60;
 	private TopPanel topPanel;
@@ -38,15 +39,17 @@ public class TitlePanel extends JPanel {
 
 	private ActionListener titleListener;
 	private FocusListener titleFocusListener;
+	private boolean isWorkflow;
 
 	public TitlePanel(ComponentController controller, Component component,
 			boolean isWorkflow, TopPanel topPanel) {
 		super();
 
+		this.isWorkflow = isWorkflow;
 		this.controller = controller;
 		this.component = component;
-		this.topPanel = topPanel; //there is no parent yet
-		
+		this.topPanel = topPanel; // there is no parent yet
+
 		titleListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTitle(titleTextField.getText());
@@ -54,7 +57,7 @@ public class TitlePanel extends JPanel {
 				titleLabel.setVisible(true);
 			}
 		};
-		
+
 		// add a title panel
 		setLayout(new CardLayout());
 
@@ -75,6 +78,8 @@ public class TitlePanel extends JPanel {
 		add(titleTextField, BorderLayout.LINE_START);
 		if (isWorkflow)
 			setBackground(Color.WHITE);
+		// else
+		// setBackground();
 
 		// start editing
 		addMouseListener(new MouseAdapter() {
@@ -82,14 +87,17 @@ public class TitlePanel extends JPanel {
 				if (e.getClickCount() == 2) {
 					// JPanel target = (JPanel) e.getSource();
 					if (!TitlePanel.this.component.getLockedStatus()) {
-						
-						
+
 						titleTextField.setVisible(false);
 						titleTextField.setVisible(true);
-						titleTextField.requestFocusInWindow(); 	// this is one of the
-																// nastiest tricks I've
-																// run into with swing so far.
-																// viva swing, mazel tov.
+						titleTextField.requestFocusInWindow(); // this is one of
+																// the
+																// nastiest
+																// tricks I've
+																// run into with
+																// swing so far.
+																// viva swing,
+																// mazel tov.
 
 						setTitle(title);
 						titleLabel.setVisible(false);
@@ -107,11 +115,12 @@ public class TitlePanel extends JPanel {
 
 			public void focusLost(FocusEvent e) {
 				setTitle(titleTextField.getText());
-				/*System.out.println("FOCUS LOST \ntitlelabel "
-						+ titleLabel.getText());
-				System.out.println("title " + title);
-				System.out.println("titletextfield " + titleTextField.getText()
-						+ "<-- nothing ?");*/
+				/*
+				 * System.out.println("FOCUS LOST \ntitlelabel " +
+				 * titleLabel.getText()); System.out.println("title " + title);
+				 * System.out.println("titletextfield " +
+				 * titleTextField.getText() + "<-- nothing ?");
+				 */
 				titleTextField.setVisible(false);
 				titleLabel.setVisible(true);
 			}
@@ -126,48 +135,52 @@ public class TitlePanel extends JPanel {
 	private int getLength(String str) {
 		return getFontMetrics(font).stringWidth(str);
 	}
-	
+
 	// TODO this might be set directly by the controller
 	protected void setTitle(String title) {
 		this.title = title;
-		System.out.println("now getting title limit");
-		int titlePanelLimit = 20; 
-		if (topPanel == null) {
-			System.err.println("TopPanel is null, this is not normal.");
-			topPanel = (TopPanel) this.getParent();
-		}
-		if (topPanel!=null) {
-			titlePanelLimit = topPanel.getTitleLimit();
-			System.out.println("got titlePanel limit : "+titlePanelLimit);
-		}
-		else 
-			System.err.println("TopPanel is still null, this is really not normal."); //TODO fix
-		
 		String visualTitle = title;
-		
-		//compute maximal text size
-		int delta = 55; //TODO find the right value
-		String shortTitle = title;
-		int count = 1000;
-		while(getLength(shortTitle) > titlePanelLimit - delta && count > 0) {
-			System.out.println(shortTitle+" --- "+titlePanelLimit+", "+title);
-			shortTitle = shortTitle.substring(0,shortTitle.length()-2);
-			visualTitle = shortTitle + "...";
-			count--;
+		if (isWorkflow) {
+			System.out.println("now getting title limit");
+			int titlePanelLimit = 20;
+			if (topPanel == null) {
+				System.err.println("TopPanel is null, this is not normal.");
+				topPanel = (TopPanel) this.getParent();
+			}
+			if (topPanel != null) {
+				titlePanelLimit = topPanel.getTitleLimit();
+				System.out.println("got titlePanel limit : " + titlePanelLimit);
+			} else
+				System.err
+						.println("TopPanel is still null, this is really not normal."); // TODO
+																						// fix
+			
+			// compute maximal text size
+			int delta = 60; // TODO find the right value
+			String shortTitle = title;
+			int count = 1000;
+			while (getLength(shortTitle) > titlePanelLimit - delta && count > 0) {
+				System.out.println(shortTitle + " --- " + titlePanelLimit
+						+ ", " + title);
+				shortTitle = shortTitle.substring(0, shortTitle.length() - 2);
+				visualTitle = shortTitle + "...";
+				count--;
+			}
 		}
 		this.titleLabel.setText(visualTitle);
 		titleTextField.setDocument(new JTextFieldLimit(TITLE_SIZE_LIMIT));
-		
-		//if (title.length()<=titleLabelSizeLimit)  			this.titleLabel.setText(title);
-		//else this.titleLabel.setText(title.substring(0, titleLabelSizeLimit)+"...");
-		
+
+		// if (title.length()<=titleLabelSizeLimit)
+		// this.titleLabel.setText(title);
+		// else this.titleLabel.setText(title.substring(0,
+		// titleLabelSizeLimit)+"...");
+
 		this.titleTextField.setText(title);
 		this.controller.setTitle(title);
 	}
-	
-	/*public void repaint() {
-		this.setTitle(this.title);
-		super.repaint();
-	}*/
+
+	/*
+	 * public void repaint() { this.setTitle(this.title); super.repaint(); }
+	 */
 
 }

@@ -32,12 +32,14 @@ public class TopPanel extends JPanel{
 		setupTitlePanel(this, true);
 		}
 		
+		else 
+			setupTitlePanel(this, false);
 		/*
-		setupTitlePanel(this, !isWorkflow);
 		if(!isWorkflow){
 			setupButtonPanel(this, innerPanel);
 		}
 		*/
+		
 	}
 	
 	/**
@@ -47,7 +49,8 @@ public class TopPanel extends JPanel{
 	public int getTitleLimit() {
 		
 		int topPanelWidth = this.getWidth();
-		int buttonPanelWidth = buttonPanel.getWidth();
+		int buttonPanelWidth = 0;
+		buttonPanelWidth = buttonPanel.getWidth();
 		System.out.println("limit = "+(topPanelWidth - buttonPanelWidth));
 		return topPanelWidth - buttonPanelWidth;
 	}

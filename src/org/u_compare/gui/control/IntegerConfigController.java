@@ -21,7 +21,7 @@ public class IntegerConfigController implements ParameterController, ActionFocus
 		this.parent = control;
 		this.param = param;
 		this.component = component;
-		this.view = param.getConfigurationPanel(this, component);
+		this.view = new StringParameterPanel(param, this, param.getParameterString(), component);
 	}
 
 	public ParameterPanel getView() {

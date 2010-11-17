@@ -20,8 +20,7 @@ public class BooleanParameterController implements ActionListener, ParameterCont
 		this.param = param;
 		this.parent = parent;
 		this.component = component;
-		
-		this.view = param.getConfigurationPanel(this, component);
+		this.view = new BooleanParameterPanel(param, this, component);
 	}
 	
 	public ParameterPanel getView(){

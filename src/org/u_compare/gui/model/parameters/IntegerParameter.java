@@ -21,18 +21,6 @@ public class IntegerParameter extends AbstractParameter{
 		return value;
 	}
 	
-	/*public void setParameter(int value){
-		if(this.value != value){
-			this.value = value;
-			setChanged();
-		}
-	}*/
-	
-	//TODO should this be here?
-	public StringParameterPanel getConfigurationPanel(IntegerConfigController controller, Component component) {
-		return new StringParameterPanel(this, controller, Integer.toString(value), component);
-	}
-	
 	@Override
 	public boolean valid(String value){
 		return false; //TODO make this actually work.

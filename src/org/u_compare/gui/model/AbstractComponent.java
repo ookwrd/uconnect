@@ -38,7 +38,7 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
 	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
 	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
-	private ArrayList<ParameterSettingsChangeListener> parameterSettingsChangeListeners = new ArrayList<ParameterSettingsChangeListener>();
+	private ArrayList<ParametersChangedListener> parameterSettingsChangeListeners = new ArrayList<ParametersChangedListener>();
 	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
 	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 	
@@ -353,7 +353,7 @@ public abstract class AbstractComponent implements Component {
 		
 		this.configurationParameters = params;
 		
-		notifyParameterSettingsChangeListeners();
+		notifyParametersChangedListeners();
 		//TODO add check that a change has actually taken place.
 	}
 	
@@ -403,13 +403,13 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override 
-	public void registerParameterSettingsChangeListener(ParameterSettingsChangeListener listener){
+	public void registerParametersChangedListener(ParametersChangedListener listener){
 		
 		if(parameterSettingsChangeListeners == null){
 			if(Debug.DEBUGLEVEL >= Debug.WARNING){
 				Debug.out.println("Warning: parameterSettingsChangeListener method called on " + getName() + " when parameterSettingsChangeListeners has not been initialised. Someone has probably forgotten to call super().");
 			}
-			parameterSettingsChangeListeners = new ArrayList<ParameterSettingsChangeListener>();
+			parameterSettingsChangeListeners = new ArrayList<ParametersChangedListener>();
 		}
 		parameterSettingsChangeListeners.add(listener);	
 	}
@@ -417,10 +417,10 @@ public abstract class AbstractComponent implements Component {
 	/**
 	 *TODO Make this called when parameters change!
 	 */
-	protected void notifyParameterSettingsChangeListeners(){
+	protected void notifyParametersChangedListeners(){
 		
-		for(ParameterSettingsChangeListener listener : parameterSettingsChangeListeners){
-			listener.parameterSettingsChanged(this);
+		for(ParametersChangedListener listener : parameterSettingsChangeListeners){
+			listener.parametersChanged(this);
 		}
 		
 		setComponentChanged();

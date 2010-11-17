@@ -193,11 +193,11 @@ public interface Component{
 	public void setConfigurationParameters(ArrayList<Parameter> params);
 	
 	/**
-	 * Register listener to be notified when the parameter settings of this component are altered.
+	 * Register listener to be notified when the parameter list of this component is altered.
 	 * 
 	 * @param listener
 	 */
-	public void registerParameterSettingsChangeListener(ParameterSettingsChangeListener listener);
+	public void registerParametersChangedListener(ParametersChangedListener listener);
 
 	public void registerMinimizedStatusChangeListener(MinimizedStatusChangeListener listnener);
 	

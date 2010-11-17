@@ -12,6 +12,8 @@ public abstract class AbstractParameter implements
 	private String description;
 	private ArrayList<Constraint> constraints;
 	
+	private ArrayList<ParameterSettingsChangedListener> changedListeners = new ArrayList<ParameterSettingsChangedListener>();
+	
 	public AbstractParameter(String description){
 
 		constraints = new ArrayList<Constraint>();
@@ -68,7 +70,15 @@ public abstract class AbstractParameter implements
 		throw new InvalidInputException("The parameter: "+ description + ", is not a boolean.");
 	}
 	
-	protected void setChanged(){
+	public void registerParameterSettingsChangedListener(ParameterSettingsChangedListener listener){
+		changedListeners.add(listener);
+	}
+	
+	public void notifyParameterSettingsChangedListeners(){
+		for(ParameterSettingsChangedListener listener : changedListeners){
+			listener.parameterSettingsChanged(this);
+		}
+		
 		owner.setComponentChanged();
 	}
 }

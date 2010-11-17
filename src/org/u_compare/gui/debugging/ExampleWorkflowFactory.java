@@ -2,6 +2,7 @@ package org.u_compare.gui.debugging;
 
 import java.util.ArrayList;
 
+import org.u_compare.gui.model.AnnotationType;
 import org.u_compare.gui.model.MockAggregateComponent;
 import org.u_compare.gui.model.MockComponent;
 import org.u_compare.gui.model.AggregateComponent;
@@ -67,6 +68,13 @@ public class ExampleWorkflowFactory {
 		component2.setDescription("Honestly, I don't know who I hate more.");
 		component2.setDescription("Lucky number 3! wait what? 7? Thats not even a number!");
 		
+		component1.addInputType(new AnnotationType("input1"));
+		component1.addInputType(new AnnotationType("input2"));
+		component1.addInputType(new AnnotationType("input3"));
+		
+		component1.addOutputType(new AnnotationType("output1"));
+		
+		
 		workflow.addSubComponent(component1);
 		workflow.addSubComponent(component2);
 		workflow.addSubComponent(component3);
@@ -114,6 +122,12 @@ public class ExampleWorkflowFactory {
 		component1.setDescription("Im the first and therefore the best, my siblings don't realise this simple logic.");
 		component2.setDescription("Honestly, I don't know who I hate more.");
 		component2.setDescription("Lucky number 3! wait what? 7? Thats not even a number!");
+		
+		component1.addInputType(new AnnotationType("input1"));
+		component1.addInputType(new AnnotationType("input2"));
+		component1.addInputType(new AnnotationType("input3"));
+		
+		component1.addOutputType(new AnnotationType("output1"));
 		
 		workflow.addSubComponent(component1);
 		workflow.addSubComponent(component2);

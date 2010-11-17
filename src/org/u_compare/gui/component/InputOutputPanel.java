@@ -7,6 +7,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.model.Component;
 
 @SuppressWarnings("serial")
@@ -31,7 +32,10 @@ public class InputOutputPanel extends JPanel {
 		//inputPanel.setLayout(new BoxLayout(inputPanel,
 			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		inputPanel.add(new TypeListPanel(component,new String[]{"first","second","thirdsafasdfasdfasfdasdfasdfasdfasdfsadfasdfsafsdfsa"}));
+		TypeListPanelController typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.INPUTS_LIST);
+		TypeListPanel typeListPanel = new TypeListPanel(component, TypeListPanel.INPUTS_LIST, typeListPanelController);
+		
+		inputPanel.add(typeListPanel);
 		
 		outputPanel = new JPanel();
 		outputPanel.setOpaque(false);
@@ -40,7 +44,10 @@ public class InputOutputPanel extends JPanel {
 		//outputPanel.setLayout(new BoxLayout(outputPanel,
 			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		outputPanel.add(new TypeListPanel(component, new String[]{"output1","output2","output3","output4"}));
+		typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.OUTPUTS_LIST);
+		typeListPanel = new TypeListPanel(component, TypeListPanel.OUTPUTS_LIST, typeListPanelController);
+		
+		outputPanel.add(typeListPanel);
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(inputPanel);

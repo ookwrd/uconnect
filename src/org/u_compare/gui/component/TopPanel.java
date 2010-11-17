@@ -25,8 +25,8 @@ public class TopPanel extends JPanel{
 		setBorder(new RoundedBorder(null, ComponentPanel.BORDER_COLOR,
 				ComponentPanel.HEADER_COLOR, ComponentPanel.BORDER_ROUNDING, ComponentPanel.BORDER_WIDTH, true));
 
-		setupTitlePanel(this, true);
 		setupButtonPanel(this, innerPanel);
+		setupTitlePanel(this, true);
 	}
 	
 	/**
@@ -34,13 +34,17 @@ public class TopPanel extends JPanel{
 	 * 		topPanel.width minus buttonPanel.width
 	 */
 	public int getTitleLimit() {
-		return this.getWidth()-buttonPanel.getWidth();
+		
+		int topPanelWidth = this.getWidth();
+		int buttonPanelWidth = buttonPanel.getWidth();
+		System.out.println("limit = "+(topPanelWidth - buttonPanelWidth));
+		return topPanelWidth - buttonPanelWidth;
 	}
 	
 	
 	protected void setupTitlePanel(JPanel target, boolean whiteBackground){
 		
-		titlePanel = new TitlePanel(controller, component, whiteBackground);
+		titlePanel = new TitlePanel(controller, component, whiteBackground, this);
 		target.add(titlePanel, BorderLayout.LINE_START);
 		
 	}

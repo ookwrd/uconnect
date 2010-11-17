@@ -35,7 +35,7 @@ import org.u_compare.gui.control.DropTargetController;
 public abstract class DroppableJPanel extends JPanel {
 
 	//protected DragAndDropComponentController controller;
-	private boolean debug = true;
+	private boolean debug = false;
 	protected DragAndDropComponentController controller;
 	protected final Color defaultColor = getBackground(); 
 
@@ -73,6 +73,7 @@ public abstract class DroppableJPanel extends JPanel {
 			this.panel.controller.somethingDroppedOnComponent();
 
 			if (debug) this.panel.setBackground(Color.MAGENTA);
+			else this.panel.setBackground(defaultColor); // if an inappropriate drop has been performed, remove the highlighting
 
 			try {
 

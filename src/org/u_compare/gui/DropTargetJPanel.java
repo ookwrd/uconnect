@@ -49,7 +49,7 @@ public class DropTargetJPanel extends DroppableJPanel {
 	}
 
     public void setDragOverHighlightingDroppable() {
-    	setBackground(Color.BLUE);
+    	setBackground(Color.CYAN);
     	setOpaque(true);
         this.repaint();
     }

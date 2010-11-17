@@ -61,7 +61,6 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 
 	//protected DragAndDropComponentController controller; //now IF : DragAndDropComponentController
 	//protected DragAndDropComponentController controller; // defined in parent class !
-	public final Color defaultColor = getBackground(); 
 	private JPanel dropArea;
 	private DropTarget dt;
 	private boolean debug = true;
@@ -238,7 +237,7 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 		public void drop(DropTargetDropEvent event) {
 
 			System.out.println("Dropped on draggableJPanel. ");
-			if (debug) this.panel.setBackground(Color.BLUE);
+			//if (debug) this.panel.setBackground(Color.BLUE);
 			//this.panel.setVisible(false);
 			
 			this.panel.controller.somethingDroppedOnComponent();
@@ -252,7 +251,6 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	            if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 
 	              event.acceptDrop(DnDConstants.ACTION_COPY);
-	              //this.panel.setBackground(Color.BLUE);
 	              event.dropComplete(true);
 	              return;
 	            }

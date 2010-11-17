@@ -40,7 +40,7 @@ public class TitlePanel extends JPanel {
 	private FocusListener titleFocusListener;
 
 	public TitlePanel(ComponentController controller, Component component,
-			boolean whiteBackground, TopPanel topPanel) {
+			boolean isWorkflow, TopPanel topPanel) {
 		super();
 
 		this.controller = controller;
@@ -73,7 +73,7 @@ public class TitlePanel extends JPanel {
 
 		add(titleLabel, BorderLayout.LINE_START);
 		add(titleTextField, BorderLayout.LINE_START);
-		if (whiteBackground)
+		if (isWorkflow)
 			setBackground(Color.WHITE);
 
 		// start editing

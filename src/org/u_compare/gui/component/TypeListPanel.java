@@ -133,6 +133,9 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		deleteButton.addActionListener(removeListener);
 		addButton.addActionListener(addListener);
 		
+		deleteButton.addFocusListener(listFocusListener);
+		addButton.addFocusListener(listFocusListener);
+		
 		buttons.add(deleteButton);
 		buttons.add(addButton);
 		

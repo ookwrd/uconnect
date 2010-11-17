@@ -22,6 +22,7 @@ public class TypeListPanelController {
 		
 		this.parentComponentController = parentComponentController;
 		this.component = component;
+		this.listType = listType;
 		
 	}
 	
@@ -41,13 +42,15 @@ public class TypeListPanelController {
 	
 	public void removeAnnotation(String selected){
 		
-		System.out.println("here");
+		System.out.println("Removing");
 		
 		AnnotationType type = new AnnotationType(selected);
 		
 		if(listType == TypeListPanel.INPUTS_LIST){
 			component.removeInputType(type);
 		}else if (listType == TypeListPanel.OUTPUTS_LIST){
+
+			System.out.println("here, tyring to remove outptu type");
 			component.removeOutputType(type);
 		}else{
 			//TODO this state shouldnt occur

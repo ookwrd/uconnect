@@ -8,7 +8,6 @@ public class BooleanParameter extends
 		AbstractParameter {
 
 	private boolean parameter;
-	private BooleanParameterPanel panel;
 	
 	public BooleanParameter(String description, boolean value){
 		super(description);
@@ -17,16 +16,6 @@ public class BooleanParameter extends
 	
 	public boolean getParameter(){
 		return parameter;
-	}
-
-	
-	public BooleanParameterPanel getConfigurationPanel(BooleanParameterController controller, Component component) {
-		
-		//TODO what if its already constructed?
-		//TODO should this be here?
-		
-		panel = new BooleanParameterPanel(this, controller, component);
-		return panel;
 	}
 
 	public void update(boolean input) throws InvalidInputException {

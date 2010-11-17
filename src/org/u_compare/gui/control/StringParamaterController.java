@@ -21,7 +21,7 @@ public class StringParamaterController implements ParameterController, ActionFoc
 		this.parent = control;
 		this.param = param;
 		this.component= component;
-		this.view = param.getConfigurationPane(this, component);
+		this.view = new StringParameterPanel(param, this, param.getParameter(), component);
 	}
 
 	public ParameterPanel getView() {//TODO who calls this?

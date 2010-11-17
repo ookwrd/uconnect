@@ -17,18 +17,6 @@ public class StringParameter extends AbstractParameter{
 	public String getParameter(){
 		return parameter;
 	}
-	
-	/*public void setParameter(String parameter){
-		if(!this.parameter.equals(parameter)){
-			this.parameter = parameter;
-			setChanged();
-		}
-	}*/
-
-	//TODO this shouldnt be here.
-	public StringParameterPanel getConfigurationPane(StringParamaterController controller, Component component) {
-		return new StringParameterPanel(this, controller, parameter, component);
-	}
 
 	public void update(String input) throws InvalidInputException {
 		

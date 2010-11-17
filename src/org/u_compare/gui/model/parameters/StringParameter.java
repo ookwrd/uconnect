@@ -2,6 +2,7 @@ package org.u_compare.gui.model.parameters;
 
 import org.u_compare.gui.StringParameterPanel;
 import org.u_compare.gui.control.StringParamaterController;
+import org.u_compare.gui.model.Component;
 
 public class StringParameter extends AbstractParameter{
 
@@ -24,8 +25,9 @@ public class StringParameter extends AbstractParameter{
 		}
 	}*/
 
-	public StringParameterPanel getConfigurationPane(StringParamaterController controller) {
-		return new StringParameterPanel(this, controller, parameter);
+	//TODO this shouldnt be here.
+	public StringParameterPanel getConfigurationPane(StringParamaterController controller, Component component) {
+		return new StringParameterPanel(this, controller, parameter, component);
 	}
 
 	public void update(String input) throws InvalidInputException {

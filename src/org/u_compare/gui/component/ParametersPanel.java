@@ -28,7 +28,7 @@ public class ParametersPanel extends JPanel {
 		
 		ArrayList<ParameterPanel> paramPanels = new ArrayList<ParameterPanel>();
 		for (Parameter param : component.getConfigurationParameters()){
-			ParameterController paramController = ParameterControllerFactory.getController(controller, param);
+			ParameterController paramController = ParameterControllerFactory.getController(controller, param, component);
 			paramPanels.add(paramController.getView());
 			controller.addParamaterController(paramController);
 		}

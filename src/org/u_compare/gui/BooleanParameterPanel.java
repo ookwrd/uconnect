@@ -10,6 +10,8 @@ import org.u_compare.gui.control.BooleanParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.BooleanParameter;
+import org.u_compare.gui.model.parameters.Parameter;
+import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
 
 /**
  * TODO
@@ -19,17 +21,19 @@ import org.u_compare.gui.model.parameters.BooleanParameter;
  */
 
 @SuppressWarnings("serial")
-public class BooleanParameterPanel extends ParameterPanel implements ActionListener, LockedStatusChangeListener {
+public class BooleanParameterPanel extends ParameterPanel implements ActionListener, LockedStatusChangeListener, ParameterSettingsChangedListener{
 
 	private JCheckBox checkBox;
 	private BooleanParameterController controller;
 	private Component component;
+	private BooleanParameter param;
 	
 	public BooleanParameterPanel(
 			BooleanParameter param, BooleanParameterController controller, Component component) {
 		
 			this.controller = controller;
 			this.component = component;
+			this.param = param;
 			
 			this.add(new JLabel(param.getDescription()));
 			
@@ -40,8 +44,8 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			this.add(checkBox);
 			
 			component.registerLockedStatusChangeListener(this);
+			param.registerParameterSettingsChangedListener(this);
 			
-			System.out.println(checkBox.isSelected());
 	}
 
 	public boolean getValue(){
@@ -70,4 +74,12 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 		controller.setValue(checkBox.isSelected());
 		
 	}
+
+	@Override
+	public void parameterSettingsChanged(Parameter param) {
+		
+		checkBox.setSelected(this.param.getParameter());
+		
+	}
+
 }

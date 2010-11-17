@@ -25,7 +25,7 @@ public class BooleanParameter extends
 		if(input != parameter){
 			parameter = input;
 			
-			setChanged();
+			notifyParameterSettingsChangedListeners();
 		}
 	}
 

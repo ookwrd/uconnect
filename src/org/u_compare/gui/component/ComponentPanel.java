@@ -215,7 +215,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		return this.component;
 	}
 
-	public void setDragOverHighlightingDroppable() {
+	public void setDragOverHighlightingDroppableLight() {
 		setBackground(Color.LIGHT_GRAY);
 
 	}

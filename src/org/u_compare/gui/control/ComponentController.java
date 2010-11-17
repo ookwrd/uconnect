@@ -371,7 +371,7 @@ public class ComponentController implements DragAndDropComponentController {
 		System.out.println("ComponentDragEnter");
 		
 		if(droppableOnComponent()){
-			componentView.setDragOverHighlightingDroppable();
+			componentView.setDragOverHighlightingDroppableLight();
 		}else{
 			componentView.setDragOverHighlightingUndroppable();
 		}
@@ -380,7 +380,7 @@ public class ComponentController implements DragAndDropComponentController {
 			
 			//TODO these show be a different kind of highlighting
 			if(droppableOnChild(child)){
-				child.view.setDragOverHighlightingDroppable();
+				child.view.highlightLocationsDroppable();
 			}else{
 				//TODO
 			}

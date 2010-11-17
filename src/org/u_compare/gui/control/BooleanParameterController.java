@@ -9,7 +9,7 @@ import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.InvalidInputException;
 
 
-public class BooleanParameterController implements ActionListener, ParameterController {
+public class BooleanParameterController implements ParameterController {
 
 	private BooleanParameter param;
 	private ComponentController parent;
@@ -27,7 +27,7 @@ public class BooleanParameterController implements ActionListener, ParameterCont
 		return view;
 	}
 
-	public void actionPerformed(ActionEvent e) {
+/*	public void actionPerformed(ActionEvent e) {
 		
 		if(!parent.isLocked()){
 			
@@ -44,5 +44,15 @@ public class BooleanParameterController implements ActionListener, ParameterCont
 			//TODO
 		}
 		
+	}*/
+	
+	public void setValue(boolean value){
+		assert(!component.getLockedStatus());
+	
+		try{
+			param.update(value);
+		}catch(Exception e){
+			//TODO can there be such a thing as an invalid boolean?
+		}
 	}
 }

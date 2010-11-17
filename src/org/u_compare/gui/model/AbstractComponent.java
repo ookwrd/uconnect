@@ -265,7 +265,6 @@ public abstract class AbstractComponent implements Component {
 		if(lockStatus != val){
 			lockStatus = val;
 			notifyLockedStatusChangeListeners();
-			//TODO change listeners
 		}
 	}
 	
@@ -343,6 +342,7 @@ public abstract class AbstractComponent implements Component {
 	@Override
 	public void setConfigurationParameters(ArrayList<Parameter> params){
 		
+		//Remove old parameters
 		for(Parameter param : configurationParameters){
 			param.setOwner(null);
 		}

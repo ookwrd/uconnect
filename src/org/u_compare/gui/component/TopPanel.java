@@ -26,6 +26,9 @@ public class TopPanel extends JPanel{
 		if(!isWorkflow){
 		setBorder(new RoundedBorder(null, ComponentPanel.BORDER_COLOR,
 				ComponentPanel.HEADER_COLOR, ComponentPanel.BORDER_ROUNDING, ComponentPanel.BORDER_WIDTH, true));
+
+		setupButtonPanel(this, innerPanel);
+		setupTitlePanel(this, true);
 		}
 		setupTitlePanel(this, isWorkflow);
 		if(!isWorkflow){
@@ -38,13 +41,17 @@ public class TopPanel extends JPanel{
 	 * 		topPanel.width minus buttonPanel.width
 	 */
 	public int getTitleLimit() {
-		return this.getWidth()-buttonPanel.getWidth();
+		
+		int topPanelWidth = this.getWidth();
+		int buttonPanelWidth = buttonPanel.getWidth();
+		System.out.println("limit = "+(topPanelWidth - buttonPanelWidth));
+		return topPanelWidth - buttonPanelWidth;
 	}
 	
 	
 	protected void setupTitlePanel(JPanel target, boolean isWorkflow){
 		
-		titlePanel = new TitlePanel(controller, component, !isWorkflow);
+		titlePanel = new TitlePanel(controller, component, isWorkflow, this);
 		target.add(titlePanel, BorderLayout.LINE_START);
 		
 	}

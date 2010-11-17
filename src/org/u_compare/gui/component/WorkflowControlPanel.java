@@ -37,13 +37,17 @@ public class WorkflowControlPanel extends JPanel implements
 	private static final int BUTTON_DECREMENT = 0;
 	public static final String ICON_RUN_PATH = "../gfx/icon_start.png";
 	public static final String ICON_STOP_PATH = "../gfx/icon_stop.png";
+	public static final String ICON_PAUSE_PATH = "../gfx/icon_pause.png";
 	private static final String RUN_TOOLTIPTEXT = "Run workflow";
 	private static final String STOP_TOOLTIPTEXT = "Stop workflow";
+	private static final boolean PAUSE = false;
+	private static final boolean PLAY = true;
 
 	private static boolean iconsLoaded = false;
 
 	private static ImageIcon runIcon;
 	private static ImageIcon stopIcon;
+	private static ImageIcon pauseIcon;
 
 	private Workflow component;
 	private WorkflowController controller;
@@ -55,10 +59,10 @@ public class WorkflowControlPanel extends JPanel implements
 
 	private JButton runButton;
 	private JButton stopButton;
-	
+
 	private BevelBorder highlighted;
 	private Border empty;
-	
+
 	private ActionListener stopHighlight;
 	private ActionListener stopUnhighlight;
 
@@ -91,25 +95,27 @@ public class WorkflowControlPanel extends JPanel implements
 		this.loadIcons();
 
 		Dimension buttonSize;
-		
-		//run button
+
+		// run button
 		runButton = new JButton(runIcon);
-		runButton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.DARK_GRAY));
+		runButton.setBorder(new BevelBorder(BevelBorder.RAISED,
+				Color.LIGHT_GRAY, Color.DARK_GRAY));
 		buttonSize = new Dimension(runIcon.getIconWidth() - BUTTON_DECREMENT,
 				runIcon.getIconHeight() - BUTTON_DECREMENT);
-		//stopButton.setPreferredSize(buttonSize);
+		// stopButton.setPreferredSize(buttonSize);
 		runButton.setFocusPainted(false); // This may be needed for a mac
 											// specific behaviou
 		runButton.addActionListener(playListener);
 		runButton.setToolTipText(RUN_TOOLTIPTEXT);
 		this.add(runButton);
 
-		//stop button
+		// stop button
 		stopButton = new JButton(stopIcon);
-		stopButton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.DARK_GRAY));
+		stopButton.setBorder(new BevelBorder(BevelBorder.RAISED,
+				Color.LIGHT_GRAY, Color.DARK_GRAY));
 		buttonSize = new Dimension(stopIcon.getIconWidth() - BUTTON_DECREMENT,
 				stopIcon.getIconHeight() - BUTTON_DECREMENT);
-		//stopButton.setPreferredSize(buttonSize);
+		// stopButton.setPreferredSize(buttonSize);
 		stopButton.setFocusPainted(false);
 		stopButton.addActionListener(stopListener);
 		stopButton.setToolTipText(STOP_TOOLTIPTEXT);
@@ -118,12 +124,12 @@ public class WorkflowControlPanel extends JPanel implements
 		component.registerWorkflowStatusListener(this);
 
 		setBorder(new EtchedBorder());
-		
+
 		// set highlighting
 		highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
-	    		Color.LIGHT_GRAY);
-	    empty = runButton.getBorder();
-	    runButton.addMouseListener(new MouseAdapter() {
+				Color.LIGHT_GRAY);
+		empty = runButton.getBorder();
+		runButton.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				runButton.setBorder(highlighted);
 			}
@@ -132,11 +138,11 @@ public class WorkflowControlPanel extends JPanel implements
 				runButton.setBorder(empty);
 			}
 		});
-	    
-	    highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
-	    		Color.LIGHT_GRAY);
-	    empty = stopButton.getBorder();
-	    stopButton.addMouseListener(new MouseAdapter() {
+
+		highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
+				Color.LIGHT_GRAY);
+		empty = stopButton.getBorder();
+		stopButton.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				stopButton.setBorder(highlighted);
 			}
@@ -146,7 +152,7 @@ public class WorkflowControlPanel extends JPanel implements
 			}
 		});
 	}
-	
+
 	protected static synchronized void loadIcons() {
 		if (WorkflowControlPanel.iconsLoaded == true) {
 			return;
@@ -162,6 +168,11 @@ public class WorkflowControlPanel extends JPanel implements
 				.getResource(WorkflowControlPanel.ICON_STOP_PATH);
 		assert image_url != null;
 		WorkflowControlPanel.stopIcon = new ImageIcon(image_url, "Stop");
+
+		image_url = ComponentPanel.class
+				.getResource(WorkflowControlPanel.ICON_PAUSE_PATH);
+		assert image_url != null;
+		WorkflowControlPanel.pauseIcon = new ImageIcon(image_url, "Pause");
 
 		WorkflowControlPanel.iconsLoaded = true;
 		return;
@@ -182,10 +193,30 @@ public class WorkflowControlPanel extends JPanel implements
 		controller.workflowStopRequest();
 	}
 
+	/**
+	 * Toggle the button appearance and message. "Play" if the parameter play is
+	 * true, "Pause" otherwise.
+	 * 
+	 * @param play
+	 */
+	private void togglePlayButton(boolean play) {
+		if (play) {
+			runButton.setIcon(runIcon);
+			runButton.setToolTipText("Play");
+		} else {
+			runButton.setIcon(pauseIcon);
+			runButton.setToolTipText("Pause");
+		}
+	}
+
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
 		statusLabel.setText(STATUS_PREFIX + workflow.getStatus());
 		// TODO: Update Buttons
+		if (workflow.getStatus().equals(WorkflowStatus.RUNNING))
+			togglePlayButton(PAUSE);
+		else
+			togglePlayButton(PLAY);
 	}
 
 }

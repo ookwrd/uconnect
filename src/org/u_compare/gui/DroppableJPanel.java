@@ -80,7 +80,7 @@ public abstract class DroppableJPanel extends JPanel {
 														// performed, remove the
 														// highlighting
 
-			try {
+			/*try {
 
 				Transferable tr = event.getTransferable();
 				String s = (String) tr.getTransferData(new DataFlavor(
@@ -96,7 +96,7 @@ public abstract class DroppableJPanel extends JPanel {
 			} catch (Exception e) {
 				e.printStackTrace();
 				event.rejectDrop();
-			}
+			}*/
 		}
 
 		/**

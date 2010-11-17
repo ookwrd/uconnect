@@ -3,8 +3,8 @@ package org.u_compare.gui.control;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import org.u_compare.gui.WorkflowPanel;
 import org.u_compare.gui.component.ComponentPanel;
+import org.u_compare.gui.component.WorkflowPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.InvalidStatusException;
 import org.u_compare.gui.model.Workflow;

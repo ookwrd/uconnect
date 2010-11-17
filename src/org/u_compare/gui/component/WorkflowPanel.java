@@ -1,12 +1,14 @@
-package org.u_compare.gui;
+package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
-import org.u_compare.gui.component.ComponentPanel;
-import org.u_compare.gui.component.WorkflowControlPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.AggregateComponent;
@@ -52,10 +54,20 @@ public class WorkflowPanel extends ComponentPanel {
 	
 	protected void setupWorkflowControlPanel(JPanel target){
 		
+		//Necessary due to ComponentPanels LayoutManager 
+		JPanel spacer = new JPanel();
+		
+		JPanel etchedBorder = new JPanel();
+		etchedBorder.setLayout(new BorderLayout());
+		etchedBorder.setBorder(new EtchedBorder());
+		
 		workflowControlPanel = new WorkflowControlPanel((Workflow)component,
 				(WorkflowController)controller);
-		target.add(workflowControlPanel);
+		etchedBorder.add(workflowControlPanel);
+
+		spacer.add(etchedBorder);
 		
+		target.add(spacer);
 	}
 	
 }

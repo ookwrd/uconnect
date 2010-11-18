@@ -30,20 +30,25 @@ public class WorkflowPanel extends ComponentPanel {
 		
 		component.registerSubComponentsChangedListener(this);
 		
-
+		JPanel upperPanel = new JPanel();
+		upperPanel.setBorder(new EtchedBorder());
+		upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.Y_AXIS));
 		
 		setupInnerPanel();
 		
 		if(showWorkflowDetails){
-			setupTopPanel(this, true);
-			setupDescriptionPanel(innerPanel);
+			setupTopPanel(upperPanel, true);
+			setupDescriptionPanel(upperPanel);
 		}
 		 		
 		if(showWorkflowControlPanel){
-			setupWorkflowControlPanel(innerPanel);
+			setupWorkflowControlPanel(upperPanel);
 		}
 		setupSubComponentsPanel(innerPanel);
 
+		if(showWorkflowDetails || showWorkflowControlPanel){
+			this.add(upperPanel);
+		}
 		this.add(innerPanel);
 		
 	}

@@ -16,7 +16,11 @@ public class StringParameter extends AbstractParameter{
 
 	public void update(String input) throws InvalidInputException {
 		
-		System.out.println("setting:" + input);
+		if(!input.equals(parameter)){
+			parameter = input;
+			
+			notifyParameterSettingsChangedListeners();
+		}
 	
 	}
 

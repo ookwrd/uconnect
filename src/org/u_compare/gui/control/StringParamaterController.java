@@ -9,7 +9,7 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.InvalidInputException;
 import org.u_compare.gui.model.parameters.StringParameter;
 
-public class StringParamaterController implements ParameterController, ActionFocusListener {
+public class StringParamaterController implements ParameterController {
 
 	private StringParameter param;
 	private ComponentController parent;
@@ -21,42 +21,22 @@ public class StringParamaterController implements ParameterController, ActionFoc
 		this.parent = control;
 		this.param = param;
 		this.component= component;
-		this.view = new StringParameterPanel(param, this, param.getParameter(), component);
+		this.view = new StringParameterPanel(param, this, component);
 	}
 
 	public ParameterPanel getView() {//TODO who calls this?
 		return view;
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		
-		attemptUpdate(e);
-		
-	}
 
-	public void focusGained(FocusEvent e) {
-		//IGNORE
-	}
-
-	//Moving the mouse away
-	public void focusLost(FocusEvent e) {
-		attemptUpdate(e);
-	}
-
-	private void attemptUpdate(AWTEvent e){
+	public void setValue(String parameterValue){
 		
-		if(!parent.isLocked()){
-			
-			String input = view.getString();
-			
-			try{
-				param.update(input);
-			}catch(InvalidInputException ex) {//TODO
-				System.out.println(ex.getMessage());
-			}
-			
-		}else{
-			//TODO
+		assert(!component.getLockedStatus());
+		
+		try{
+			param.update(parameterValue);
+		}catch(Exception e){
+			//TODO can there be such a thing as an invalid boolean?
 		}
 		
 	}

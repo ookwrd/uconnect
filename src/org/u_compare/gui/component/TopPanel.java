@@ -30,15 +30,9 @@ public class TopPanel extends JPanel{
 
 		setupButtonPanel(this, innerPanel);
 		setupTitlePanel(this, true);
-		}
-		
-		else 
+		} else {
 			setupTitlePanel(this, false);
-		/*
-		if(!isWorkflow){
-			setupButtonPanel(this, innerPanel);
 		}
-		*/
 		
 	}
 	

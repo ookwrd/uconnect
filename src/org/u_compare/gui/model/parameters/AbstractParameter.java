@@ -59,17 +59,17 @@ public abstract class AbstractParameter implements
 	
 	@Override
 	public void update(int value) throws ConstraintFailedException {
-		throw new InvalidParameterException("The parameter: "+ description + ", is not an int.");
+		throw new IllegalArgumentException("The parameter: "+ description + ", is not an int.");
 	}
 	
 	@Override
 	public void update(String value) throws ConstraintFailedException{
-		throw new InvalidParameterException("The parameter: "+ description + ", is not an String.");
+		throw new IllegalArgumentException("The parameter: "+ description + ", is not an String.");
 	}
 	
 	@Override
 	public void update(boolean value) throws ConstraintFailedException{
-		throw new InvalidParameterException("The parameter: "+ description + ", is not a boolean.");
+		throw new IllegalArgumentException("The parameter: "+ description + ", is not a boolean.");
 	}
 	
 	public void registerParameterSettingsChangedListener(ParameterSettingsChangedListener listener){

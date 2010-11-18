@@ -60,9 +60,9 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 
 		ListSelectionListener listSelectionListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent evt) {
-				if (evt.getValueIsAdjusting())
+				if (evt.getValueIsAdjusting()){
 					return;
-				System.out.println("Selected from " + evt.getFirstIndex() + " to " + evt.getLastIndex());
+				}
 			}
 		};
 		

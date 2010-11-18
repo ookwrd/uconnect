@@ -63,14 +63,14 @@ public class StringConstraint extends Constraint {
 			this.regex = Pattern.compile(regex);
 		}	
 		
-		public void validate(String value) throws InvalidInputException{		
+		public void validate(String value) throws ConstraintFailedException{		
 			
 			if(value.length() < minlength){
-				throw new InvalidInputException("Input is too short. Please input a string of at least " + minlength + " characters.");			
+				throw new ConstraintFailedException("Input is too short. Please input a string of at least " + minlength + " characters.");			
 			}
 			
 			if(value.length() > maxLength){
-				throw new InvalidInputException("Input is too long. Please input a string of less than " + maxLength + " characters.");			
+				throw new ConstraintFailedException("Input is too long. Please input a string of less than " + maxLength + " characters.");			
 			}
 			
 			if(whiteList != null){
@@ -83,7 +83,7 @@ public class StringConstraint extends Constraint {
 				}	
 				
 				if(!found){
-					throw new InvalidInputException("Input string does not belong to whiteListed set of acceptable values");
+					throw new ConstraintFailedException("Input string does not belong to whiteListed set of acceptable values");
 				}	
 			}
 			
@@ -92,7 +92,7 @@ public class StringConstraint extends Constraint {
 				for(String i : blackList){
 					
 					if(i.equals(value)){
-						throw new InvalidInputException("Input string belongs to blackListed set of unacceptable values");
+						throw new ConstraintFailedException("Input string belongs to blackListed set of unacceptable values");
 					}
 				}
 			}
@@ -101,7 +101,7 @@ public class StringConstraint extends Constraint {
 				Matcher matcher = regex.matcher(value);
 				
 				if(!matcher.matches()){
-					throw new InvalidInputException("Input string does not match the specified regex constraint: " + regex.pattern());
+					throw new ConstraintFailedException("Input string does not match the specified regex constraint: " + regex.pattern());
 				}
 			}
 			
@@ -109,7 +109,7 @@ public class StringConstraint extends Constraint {
 				Matcher matcher = characters.matcher(value);
 				
 				if(!matcher.matches()){
-					throw new InvalidInputException("Input string does not match the specified character set constraint: " + characters.pattern().substring(1,characters.pattern().length()-2));
+					throw new ConstraintFailedException("Input string does not match the specified character set constraint: " + characters.pattern().substring(1,characters.pattern().length()-2));
 				}
 			}
 		}

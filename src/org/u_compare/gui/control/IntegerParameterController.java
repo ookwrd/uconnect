@@ -3,6 +3,7 @@ package org.u_compare.gui.control;
 import java.awt.AWTEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
+import java.security.InvalidParameterException;
 
 import org.u_compare.gui.IntegerParameterPanel;
 import org.u_compare.gui.ParameterPanel;
@@ -10,6 +11,7 @@ import org.u_compare.gui.StringParameterPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.InvalidInputException;
+import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public class IntegerParameterController implements ParameterController {
 
@@ -35,7 +37,7 @@ public class IntegerParameterController implements ParameterController {
 
 		try{
 			param.update(parameterValue);
-		}catch(InvalidInputException ex) {//TODO
+		}catch(ConstraintFailedException ex) {//TODO
 			System.out.println(ex.getMessage());
 
 		}

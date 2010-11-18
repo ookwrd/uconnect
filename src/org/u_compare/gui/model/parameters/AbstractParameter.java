@@ -1,9 +1,11 @@
 package org.u_compare.gui.model.parameters;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
+import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public abstract class AbstractParameter implements
 		Parameter {
@@ -56,18 +58,18 @@ public abstract class AbstractParameter implements
 	}
 	
 	@Override
-	public void update(int value) throws InvalidInputException{
-		throw new InvalidInputException("The parameter: "+ description + ", is not an int.");
+	public void update(int value) throws ConstraintFailedException {
+		throw new InvalidParameterException("The parameter: "+ description + ", is not an int.");
 	}
 	
 	@Override
-	public void update(String value) throws InvalidInputException{
-		throw new InvalidInputException("The parameter: "+ description + ", is not an String.");
+	public void update(String value) throws ConstraintFailedException{
+		throw new InvalidParameterException("The parameter: "+ description + ", is not an String.");
 	}
 	
 	@Override
-	public void update(boolean value) throws InvalidInputException{
-		throw new InvalidInputException("The parameter: "+ description + ", is not a boolean.");
+	public void update(boolean value) throws ConstraintFailedException{
+		throw new InvalidParameterException("The parameter: "+ description + ", is not a boolean.");
 	}
 	
 	public void registerParameterSettingsChangedListener(ParameterSettingsChangedListener listener){

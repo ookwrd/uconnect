@@ -2,10 +2,8 @@ package org.u_compare.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-
 import org.u_compare.gui.control.BooleanParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
@@ -21,7 +19,7 @@ import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
  */
 
 @SuppressWarnings("serial")
-public class BooleanParameterPanel extends ParameterPanel implements ActionListener, LockedStatusChangeListener, ParameterSettingsChangedListener{
+public class BooleanParameterPanel extends ParameterPanel implements ActionListener, LockedStatusChangeListener, ParameterSettingsChangedListener {
 
 	private JCheckBox checkBox;
 	private BooleanParameterController controller;
@@ -56,20 +54,18 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 		}
 	}
 	
-
 	@Override
 	public void lockStatusChanged(Component component) {
 		updateLockedStatus();
+	}
+	
+	@Override
+	public void parameterSettingsChanged(Parameter param) {
+		checkBox.setSelected(this.param.getParameter());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		controller.setValue(checkBox.isSelected());
 	}
-
-	@Override
-	public void parameterSettingsChanged(Parameter param) {
-		checkBox.setSelected(this.param.getParameter());
-	}
-
 }

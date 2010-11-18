@@ -3,6 +3,8 @@ package org.u_compare.gui.control;
 import java.awt.AWTEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
+
+import org.u_compare.gui.IntegerParameterPanel;
 import org.u_compare.gui.ParameterPanel;
 import org.u_compare.gui.StringParameterPanel;
 import org.u_compare.gui.model.Component;
@@ -13,7 +15,7 @@ public class IntegerConfigController implements ParameterController, ActionFocus
 
 	private IntegerParameter param;
 	private ComponentController parent;
-	private StringParameterPanel view;//They look the same
+	private IntegerParameterPanel view;//They look the same
 	private Component component;
 	
 	public IntegerConfigController(ComponentController control,
@@ -21,7 +23,7 @@ public class IntegerConfigController implements ParameterController, ActionFocus
 		this.parent = control;
 		this.param = param;
 		this.component = component;
-		this.view = new StringParameterPanel(param, this, param.getParameterString(), component);
+		this.view = new IntegerParameterPanel(param, this, param.getParameterString(), component);
 	}
 
 	public ParameterPanel getView() {

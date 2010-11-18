@@ -48,10 +48,6 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			
 	}
 
-	public boolean getValue(){
-		return checkBox.isSelected();
-	}
-
 	private void updateLockedStatus(){
 		if(component.getLockedStatus()){
 			checkBox.setEnabled(false);
@@ -63,23 +59,17 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 
 	@Override
 	public void lockStatusChanged(Component component) {
-		
 		updateLockedStatus();
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		controller.setValue(checkBox.isSelected());
-		
 	}
 
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
-		
 		checkBox.setSelected(this.param.getParameter());
-		
 	}
 
 }

@@ -29,9 +29,9 @@ public class TopPanel extends JPanel{
 				ComponentPanel.HEADER_COLOR, ComponentPanel.BORDER_ROUNDING, ComponentPanel.BORDER_WIDTH, true));
 
 		setupButtonPanel(this, innerPanel);
-		setupTitlePanel(this, true);
+		setupTitlePanel(this, false);
 		} else {
-			setupTitlePanel(this, false);
+			setupTitlePanel(this, true);
 		}
 		
 	}

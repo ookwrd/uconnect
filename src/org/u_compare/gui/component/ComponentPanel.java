@@ -115,6 +115,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		innerPanel = new JPanel();
 	}
 
+	//TODO can this be integrated into the initialConfiguration Method?
 	protected void setupInnerPanel(){
 		// set up an inner panel and its layout
 		BoxLayout innerLayout = new BoxLayout(innerPanel, BoxLayout.Y_AXIS);

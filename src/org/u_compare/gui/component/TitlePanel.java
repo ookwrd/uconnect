@@ -26,6 +26,7 @@ public class TitlePanel extends JPanel {
 	private static final int TITLE_SIZE_LIMIT = 120; // the text will be trimmed
 														// if too long
 	private static final Font font = new Font("sansserif", Font.BOLD, 12);
+	private static final Font titleFont = new Font("sansserif", Font.BOLD, 16);
 	private static int titleLabelSizeLimit = 60;
 	private TopPanel topPanel;
 
@@ -70,14 +71,20 @@ public class TitlePanel extends JPanel {
 		titleTextField.setText(title);
 
 		titleTextField.setDocument(new JTextFieldLimit(TITLE_SIZE_LIMIT));
-		titleLabel.setFont(font);
-		titleTextField.setFont(font);
+		if(isWorkflow){
+			titleLabel.setFont(titleFont);
+			titleTextField.setFont(titleFont);
+		}else{
+			titleLabel.setFont(font);
+			titleTextField.setFont(font);
+		}
 		titleTextField.setVisible(false);
 
 		add(titleLabel, BorderLayout.LINE_START);
 		add(titleTextField, BorderLayout.LINE_START);
-		if (isWorkflow)
+		if (!isWorkflow){
 			setBackground(Color.WHITE);
+		}
 		// else
 		// setBackground();
 
@@ -140,7 +147,7 @@ public class TitlePanel extends JPanel {
 	protected void setTitle(String title) {
 		this.title = title;
 		String visualTitle = title;
-		if (isWorkflow) {
+		if (!isWorkflow) {
 			System.out.println("now getting title limit");
 			int titlePanelLimit = 20;
 			if (topPanel == null) {

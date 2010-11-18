@@ -7,8 +7,6 @@ import java.awt.event.FocusListener;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import org.u_compare.gui.control.ActionFocusListener;
 import org.u_compare.gui.control.IntegerParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;

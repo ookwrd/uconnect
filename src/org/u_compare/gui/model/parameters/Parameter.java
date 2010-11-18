@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
+import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public interface Parameter {
 
@@ -16,9 +17,9 @@ public interface Parameter {
 	public boolean valid(boolean value);
 	public boolean valid(int value);
 	
-	public void update(String value) throws InvalidInputException;
-	public void update(boolean value) throws InvalidInputException;
-	public void update(int value) throws InvalidInputException;
+	public void update(String value) throws ConstraintFailedException;
+	public void update(boolean value) throws ConstraintFailedException;
+	public void update(int value) throws ConstraintFailedException;
 	
 	/**
 	 * Must be called following construction.

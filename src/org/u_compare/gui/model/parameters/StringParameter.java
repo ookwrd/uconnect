@@ -1,5 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
+import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
+
 public class StringParameter extends AbstractParameter{
 
 	private String parameter;
@@ -14,7 +16,7 @@ public class StringParameter extends AbstractParameter{
 		return parameter;
 	}
 
-	public void update(String input) throws InvalidInputException {
+	public void update(String input) throws ConstraintFailedException {
 		
 		if(!input.equals(parameter)){
 			parameter = input;

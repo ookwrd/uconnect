@@ -1,6 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
 import org.u_compare.gui.model.parameters.constraints.Constraint;
+import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 
 public class IntegerParameter extends AbstractParameter{
@@ -25,7 +26,7 @@ public class IntegerParameter extends AbstractParameter{
 		
 	
 	@Override
-	public void update(String input) throws InvalidInputException {
+	public void update(String input) throws ConstraintFailedException {
 		
 		for(Constraint con : getConstraints()){
 			con.validate(input);

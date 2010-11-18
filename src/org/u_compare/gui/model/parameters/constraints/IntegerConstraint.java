@@ -46,22 +46,22 @@ public class IntegerConstraint extends Constraint{
 		this.blackList = blackList;
 	}
 	
-	public void validate(String in) throws InvalidInputException{		
+	public void validate(String in) throws ConstraintFailedException{		
 		
 		int value;
 		
 		try{
 			value = Integer.parseInt(in);
 		}catch(NumberFormatException ex){
-			throw new InvalidInputException("Input not an Integer.");
+			throw new ConstraintFailedException("Input not an Integer.");
 		}
 		
 		if(value < min){
-			throw new InvalidInputException("Input value to low. Please input a value of " + min + " or higher.");			
+			throw new ConstraintFailedException("Input value to low. Please input a value of " + min + " or higher.");			
 		}
 		
 		if(value > max){
-			throw new InvalidInputException("Input value to high. Please input a value of " + max + "or lower.");			
+			throw new ConstraintFailedException("Input value to high. Please input a value of " + max + "or lower.");			
 		}
 		
 		if(whiteList != null){
@@ -74,7 +74,7 @@ public class IntegerConstraint extends Constraint{
 			}	
 			
 			if(!found){
-				throw new InvalidInputException("Input value does not belong to whiteListed set of acceptable values");
+				throw new ConstraintFailedException("Input value does not belong to whiteListed set of acceptable values");
 			}	
 		}
 		
@@ -83,7 +83,7 @@ public class IntegerConstraint extends Constraint{
 			for(int i : blackList){
 				
 				if(i == value){
-					throw new InvalidInputException("Input belongs to blackListed set of unacceptable values");
+					throw new ConstraintFailedException("Input belongs to blackListed set of unacceptable values");
 				}
 			}
 		}

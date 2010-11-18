@@ -19,6 +19,8 @@ public class StringParameter extends AbstractParameter{
 		if(!input.equals(parameter)){
 			parameter = input;
 			
+			//TODO constraints
+			
 			notifyParameterSettingsChangedListeners();
 		}
 	

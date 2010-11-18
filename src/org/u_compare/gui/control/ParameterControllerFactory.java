@@ -20,7 +20,7 @@ public class ParameterControllerFactory {
 			
 		}else if (param instanceof IntegerParameter){
 			
-			return new IntegerConfigController(control, (IntegerParameter)param, component);
+			return new IntegerParameterController(control, (IntegerParameter)param, component);
 
 		}else{
 		

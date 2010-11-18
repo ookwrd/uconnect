@@ -62,19 +62,13 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
-		
-		textField.setText(param.getParameterString());
+		textField.setText(parameter.getParameterString());
 	}
 	
 	private void textFieldChanged(){
 		String value = textField.getText();
 		textField.setText(parameter.getParameter());
 		controller.setValue(value);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		textFieldChanged();
 	}
 
 	@Override
@@ -87,4 +81,10 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 		textFieldChanged();		
 	}
 	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		textFieldChanged();
+	}
+
 }

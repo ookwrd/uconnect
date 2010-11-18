@@ -24,11 +24,11 @@ public abstract class Constraint {
 	 * @throws InvalidInputException
 	 */
 	public void validate(String in) throws ConstraintFailedException{
-		throw new InvalidParameterException("Single string validation not allowed by this constraint.");
+		throw new IllegalArgumentException("Single string validation not allowed by this constraint.");
 	}
 	
 	public void validate(ArrayList<String> in) throws ConstraintFailedException{
-		throw new InvalidParameterException("String set validation not allowed by this constraint.");
+		throw new IllegalArgumentException("String set validation not allowed by this constraint.");
 	}
 	
 }

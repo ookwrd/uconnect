@@ -33,12 +33,12 @@ public abstract class AbstractComponent implements Component {
 	 * DIRECTLOCK a lock was directly placed on this component
 	 * INDIRECTLOCK component is locked due to a lock being placed on a parent component
 	 */
-	public enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK};
+	public static enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK};
 	
 	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
 	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
 	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
-	private ArrayList<ParametersChangedListener> parameterSettingsChangeListeners = new ArrayList<ParametersChangedListener>();
+	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<ParametersChangedListener>();
 	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
 	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 	
@@ -114,15 +114,15 @@ public abstract class AbstractComponent implements Component {
 		this.description = description;
 		notifyComponentDescriptionChangeListeners();
 	}
+
+	@Override
+	public Component getSuperComponent(){
+		return superComponent;
+	}
 	
 	@Override
 	public void setSuperComponent(Component superComp){
 		this.superComponent = superComp;
-	}
-	
-	@Override
-	public Component getSuperComponent(){
-		return superComponent;
 	}
 	
 	@Override
@@ -134,6 +134,7 @@ public abstract class AbstractComponent implements Component {
 	public void addInputType(AnnotationType inputType){
 		
 		if(inputTypes.contains(inputType)){
+			//TODO throw warning?
 			return;
 		}
 		
@@ -194,8 +195,19 @@ public abstract class AbstractComponent implements Component {
 		
 		outputTypes.remove(outputType);
 		notifyInputOutputChangeListeners();
-		//TODO set changed
 		
+	}
+	
+	@Override
+	public void setOutputTypes(ArrayList<AnnotationType> newOutputTypes){
+		
+		if(outputTypes.containsAll(newOutputTypes) && newOutputTypes.size() == outputTypes.size()){//Only works because its a set.
+			return;
+		}
+		
+		outputTypes = new ArrayList<AnnotationType>();
+		outputTypes.addAll(newOutputTypes);
+		notifyInputOutputChangeListeners();	
 	}
 	
 	@Override
@@ -209,7 +221,6 @@ public abstract class AbstractComponent implements Component {
 		if(this.minimized != minimized){
 			this.minimized = minimized;
 			notifyMinimizedStatusChangeListeners();
-			//This is only a UI property so no need to update unsaved Changes 
 		}
 	}
 	
@@ -270,71 +281,6 @@ public abstract class AbstractComponent implements Component {
 	
 	
 	@Override
-	public void setOutputTypes(ArrayList<AnnotationType> newOutputTypes){
-		
-		if(outputTypes.containsAll(newOutputTypes) && newOutputTypes.size() == outputTypes.size()){//Only works because its a set.
-			return;
-		}
-		
-		outputTypes = new ArrayList<AnnotationType>();
-		outputTypes.addAll(newOutputTypes);
-		notifyInputOutputChangeListeners();	
-	}
-	
-	/**
-	 * Registers a new component to be notified if the general description of the
-	 * component is changed. See listener interface for list of parameters covered.
-	 * 
-	 * @param The Component to register
-	 */
-	@Override
-	public void registerComponentDescriptionChangeListener(DescriptionChangeListener listener){
-		
-		if(componentDescriptionChangeListeners == null){//TODO asserts?
-			if(Debug.DEBUGLEVEL >= Debug.WARNING){
-				Debug.out.println("Warning: registerComponentDescriptionChangeListener method called on " + getName() + " when ComponentDescriptionChangeListener has not been initialised. Someone has probably forgotten to call super().");
-			}
-			componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
-		}
-		componentDescriptionChangeListeners.add(listener);
-	}
-	
-	/**
-	 * 
-	 */
-	protected void notifyComponentDescriptionChangeListeners(){
-		
-		for(DescriptionChangeListener listener : componentDescriptionChangeListeners){
-			listener.ComponentDescriptionChanged(this);
-		}
-		
-		setComponentChanged();
-		
-	}
-	
-	@Override
-	public void registerInputOutputChangeListener(InputOutputChangeListener listener){
-		
-		if(inputOutputChangeListeners == null){
-			if(Debug.DEBUGLEVEL >= Debug.WARNING){
-				Debug.out.println("Warning: registerInputOutputChangeListener method called on " + getName() + " when inputOutputChangeListener has not been initialised. Someone has probably forgotten to call super().");
-			}
-			inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
-		}
-		inputOutputChangeListeners.add(listener);
-	}
-	
-	protected void notifyInputOutputChangeListeners(){
-		
-		for(InputOutputChangeListener listener : inputOutputChangeListeners){
-			listener.inputOutputChanged(this);
-		}
-		
-		setComponentChanged();
-		
-	}
-	
-	@Override
 	public ArrayList<Parameter> getConfigurationParameters(){
 		return configurationParameters;
 	}
@@ -381,21 +327,56 @@ public abstract class AbstractComponent implements Component {
 		}
 	}
 	
+	/**
+	 * Registers a new component to be notified if the general description of the
+	 * component is changed. See listener interface for list of parameters covered.
+	 * 
+	 * @param The Component to register
+	 */
+	@Override
+	public void registerComponentDescriptionChangeListener(DescriptionChangeListener listener){
+		assert(listener != null);
+		componentDescriptionChangeListeners.add(listener);
+	}
+	
+	/**
+	 * 
+	 */
+	protected void notifyComponentDescriptionChangeListeners(){
+		
+		for(DescriptionChangeListener listener : componentDescriptionChangeListeners){
+			listener.ComponentDescriptionChanged(this);
+		}
+		setComponentChanged();
+		
+	}
+	
+	@Override
+	public void registerInputOutputChangeListener(InputOutputChangeListener listener){
+		
+		assert(listener!=null);
+		inputOutputChangeListeners.add(listener);
+		
+	}
+	
+	protected void notifyInputOutputChangeListeners(){
+		
+		for(InputOutputChangeListener listener : inputOutputChangeListeners){
+			listener.inputOutputChanged(this);
+		}
+		setComponentChanged();
+		
+	}
+	
 	@Override
 	public void registerSavedStatusChangeListener(SavedStatusChangeListener listener){
 		
-		if(savedStatusChangeListeners == null){
-			if(Debug.DEBUGLEVEL >= Debug.WARNING){
-				Debug.out.println("Warning: registerSavedStatusChangeListener method called on " + getName() + " when registerSavedStatusChangeListeners has not been initialised. Someone has probably forgotten to call super().");
-			}
-			savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
-		}
-	
+		assert(listener != null);
 		savedStatusChangeListeners.add(listener);
+		
 	}
 	
 	protected void notifySavedStatusChangeListeners(){
-		System.out.println("Notifying Saved status changed listeners");
 		
 		for(SavedStatusChangeListener listener : savedStatusChangeListeners){
 			listener.savedStatusChanged(this);
@@ -405,21 +386,16 @@ public abstract class AbstractComponent implements Component {
 	@Override 
 	public void registerParametersChangedListener(ParametersChangedListener listener){
 		
-		if(parameterSettingsChangeListeners == null){
-			if(Debug.DEBUGLEVEL >= Debug.WARNING){
-				Debug.out.println("Warning: parameterSettingsChangeListener method called on " + getName() + " when parameterSettingsChangeListeners has not been initialised. Someone has probably forgotten to call super().");
-			}
-			parameterSettingsChangeListeners = new ArrayList<ParametersChangedListener>();
-		}
-		parameterSettingsChangeListeners.add(listener);	
+		assert(listener != null);
+		parametersChangedListeners.add(listener);	
 	}
 	
 	/**
-	 *TODO Make this called when parameters change!
+	 * Not to be confused with ParameterSettingsChangeListener in the Parameter package.
 	 */
 	protected void notifyParametersChangedListeners(){
 		
-		for(ParametersChangedListener listener : parameterSettingsChangeListeners){
+		for(ParametersChangedListener listener : parametersChangedListeners){
 			listener.parametersChanged(this);
 		}
 		
@@ -429,6 +405,7 @@ public abstract class AbstractComponent implements Component {
 	@Override
 	public void registerMinimizedStatusChangeListener(MinimizedStatusChangeListener listener){
 
+		assert(listener != null);
 		minimizedStatusChangeListeners.add(listener);
 		
 	}
@@ -438,6 +415,8 @@ public abstract class AbstractComponent implements Component {
 		for(MinimizedStatusChangeListener listener : minimizedStatusChangeListeners){
 			listener.minimizedStatusChanged(this);
 		}
+		
+		//This is only a display property so no need to notify saved change listeners.
 		
 	}
 	
@@ -451,5 +430,8 @@ public abstract class AbstractComponent implements Component {
 		for(LockedStatusChangeListener listener : lockedStatusChangeListeners){
 			listener.lockStatusChanged(this);
 		}
+		
+		//This is only a display property so no need to notify saved change listeners.
+		
 	}
 }

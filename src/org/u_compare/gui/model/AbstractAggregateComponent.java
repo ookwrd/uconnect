@@ -11,10 +11,8 @@ import org.u_compare.gui.model.AbstractComponent.LockStatusEnum;
  */
 public abstract class AbstractAggregateComponent extends
 		AbstractComponent implements AggregateComponent {
-	
 
-
-	private ArrayList<SubComponentsChangedListener> subComponentAddedRemovedListeners = new ArrayList<SubComponentsChangedListener>();
+	private ArrayList<SubComponentsChangedListener> subComponentsChangedListeners = new ArrayList<SubComponentsChangedListener>();
 	
 	private ArrayList<Component> subComponents = new ArrayList<Component>();
 	
@@ -40,13 +38,6 @@ public abstract class AbstractAggregateComponent extends
 	
 	@Override
 	public ArrayList<Component> getSubComponents(){
-		
-		if(subComponents == null){
-			if(Debug.DEBUGLEVEL >= Debug.WARNING){
-				Debug.out.println("Warning: Abstract getSubComponents method called on " + getName() + " when subComponents has not been initialised.");
-			}
-			subComponents = new ArrayList<Component>();
-		}
 		return subComponents;
 	}
 	
@@ -60,14 +51,6 @@ public abstract class AbstractAggregateComponent extends
 	 */
 	@Override
 	public void addSubComponent(int position, Component component) throws InvalidPositionException{
-		
-		//Check subComponents is initialised
-		if(subComponents==null){
-			if(Debug.DEBUGLEVEL >= Debug.WARNING){
-				Debug.out.println("Warning: Abstract addSubComponents method called on " + getName() + " when subComponents has not been initialised.");
-			}
-			subComponents = new ArrayList<Component>();
-		}
 		
 		//Check component is not already a subComponent
 		if(subComponents.contains(component)){
@@ -89,14 +72,6 @@ public abstract class AbstractAggregateComponent extends
 
 	@Override
 	public void reorderSubComponent(Component component, int position) throws InvalidPositionException {
-		
-		//Check subComponents is initialised
-		if(subComponents==null){
-			if(Debug.DEBUGLEVEL >= Debug.WARNING){
-				Debug.out.println("Warning: Abstract reorderSubComponent method called on " + getName() + " when subComponents has not been initialised.");
-			}
-			subComponents = new ArrayList<Component>();
-		}
 		
 		//Check subComponents contains component
 		if(!subComponents.contains(component)){
@@ -137,14 +112,8 @@ public abstract class AbstractAggregateComponent extends
 	 */
 	@Override
 	public void addSubComponent(Component component){
-		
-		//Check subComponents is initialised
-		if(subComponents==null){
-			if(Debug.DEBUGLEVEL >= Debug.WARNING){
-				Debug.out.println("Warning: Abstract addSubComponents method called on " + getName() + " when subComponents has not been initialised.");
-			}
-			subComponents = new ArrayList<Component>();
-		}
+
+		assert(component != null);
 		
 		//Check component is not already a subComponent
 		if(subComponents.contains(component)){
@@ -159,6 +128,8 @@ public abstract class AbstractAggregateComponent extends
 	@Override
 	public void removeSubComponent(Component component){
 		
+		assert(component != null);
+		
 		if(!subComponents.contains(component)){
 			return;
 		}
@@ -170,6 +141,8 @@ public abstract class AbstractAggregateComponent extends
 	
 	@Override
 	public void setSubComponents(ArrayList<Component> components){
+		
+		assert(components != null);
 		
 		if(subComponents.equals(components)){
 			return;
@@ -191,17 +164,17 @@ public abstract class AbstractAggregateComponent extends
 	
 	@Override
 	public void registerSubComponentsChangedListener(SubComponentsChangedListener listener){
-		subComponentAddedRemovedListeners.add(listener);	
+		subComponentsChangedListeners.add(listener);	
 	}
 	
 	
 	protected void notifySubComponentsChangedListeners(){
 	
-		setComponentChanged();
-		
-		for(SubComponentsChangedListener listener : subComponentAddedRemovedListeners){
+		for(SubComponentsChangedListener listener : subComponentsChangedListeners){
 			listener.subComponentsChanged();
 		}
+
+		setComponentChanged();
 		
 	}
 	
@@ -209,7 +182,6 @@ public abstract class AbstractAggregateComponent extends
 	//The following methods default to always allowing modifications to the model, override this behaviour when appropriate.
 	@Override
 	public boolean canAddSubComponent(Component component, int position){
-		
 		return true;
 	}
 	

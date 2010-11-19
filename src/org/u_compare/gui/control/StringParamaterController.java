@@ -8,8 +8,9 @@ import org.u_compare.gui.StringParameterPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.InvalidInputException;
 import org.u_compare.gui.model.parameters.StringParameter;
+import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
-public class StringParamaterController implements ParameterController {
+public class StringParamaterController extends ParameterController {
 
 	private StringParameter param;
 	private ComponentController parent;
@@ -35,8 +36,8 @@ public class StringParamaterController implements ParameterController {
 		
 		try{
 			param.update(parameterValue);
-		}catch(Exception e){
-			//TODO can there be such a thing as an invalid boolean?
+		}catch(ConstraintFailedException e){
+			processConstraintFailure(e);
 		}
 		
 	}

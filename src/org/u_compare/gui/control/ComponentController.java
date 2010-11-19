@@ -219,18 +219,41 @@ public class ComponentController implements DragAndDropComponentController {
 	 * @param position
 	 * @throws InvalidSubComponentException 
 	 */
-	public void addSubComponent(ComponentController subComponent, int position) throws InvalidSubComponentException{
+	public void addSubComponent(ComponentController subComponentController, int position) throws InvalidSubComponentException{
 		
-		if(canAddSubComponent(subComponent, position)){
+		if(canAddSubComponent(subComponentController, position)){
 		
+			//TODO this method is adding too many copies of the subComponentController
+			//Doesn't seem to have any negative affects, but likely to leave 
+			//dangling memory references
+			
+			
+			System.out.println("start " + subControllers.size());
+			
 			try {
-				if(!subControllers.contains(subComponent)){
-					subComponent.removeComponent();
-					((AggregateComponent)component).addSubComponent(position, subComponent.component);
-					subComponent.setParent(this);
-					subControllers.add(subComponent);
+				if(!subControllers.contains(subComponentController)){
+					
+					System.out.println("mid1 " + subControllers.size());
+					subComponentController.removeComponent();
+
+					System.out.println("mid2 " + subControllers.size());
+					//here 
+					
+					//This seems to be doing an add, which it shouldn't...
+					((AggregateComponent)component).addSubComponent(position, subComponentController.component);
+
+					System.out.println("mid3 " + subControllers.size());
+					subComponentController.setParent(this);
+
+					System.out.println("mid4 " + subControllers.size());
+					
+					//and here
+					subControllers.add(subComponentController);
+					System.out.println("mid5 " + subControllers.size());
+					
 				}else{
-					((AggregateComponent)component).reorderSubComponent(subComponent.component,position);
+
+					((AggregateComponent)component).reorderSubComponent(subComponentController.component,position);
 				}
 			} catch (InvalidPositionException e) {
 				//TODO this should never happen
@@ -239,6 +262,7 @@ public class ComponentController implements DragAndDropComponentController {
 		}else{
 			throw new InvalidSubComponentException("Cannot add component here\nAggregate:  " + component.isAggregate() + "etc...");//TODO
 		}	
+		System.out.println("End " + subControllers.size());
 	}
 	
 	/**

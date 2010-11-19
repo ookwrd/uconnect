@@ -128,10 +128,12 @@ public class ComponentControllerTester {
 		control.addSubComponent(child, 1);
 		assertTrue(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(control, "subControllers")).contains(child));
 		
+		System.out.println(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(controllerAggregate, "subControllers")).size());
 		controllerAggregate.addSubComponent(child, 0);
 		assertFalse(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(control, "subControllers")).contains(child));
 		assertTrue(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(controllerAggregate, "subControllers")).contains(child));
 	
+		System.out.println(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(controllerAggregate, "subControllers")).size());
 		controllerAggregate.addSubComponent(child, 0);
 		assertFalse(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(control, "subControllers")).contains(child));
 		assertTrue(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(controllerAggregate, "subControllers")).contains(child));

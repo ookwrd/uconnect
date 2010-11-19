@@ -2,8 +2,6 @@ package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-
-import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

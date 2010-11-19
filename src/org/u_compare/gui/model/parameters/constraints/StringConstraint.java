@@ -19,9 +19,9 @@ public class StringConstraint extends Constraint {
 		
 		public StringConstraint(){}
 		
-		public StringConstraint(int min, int max){
-			this.minlength = min;
-			this.maxLength = max;
+		public StringConstraint(int minLength, int maxLength){
+			this.minlength = minLength;
+			this.maxLength = maxLength;
 		}
 		
 		public void setMaxLength(int max){

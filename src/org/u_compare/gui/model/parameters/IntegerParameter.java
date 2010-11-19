@@ -17,13 +17,7 @@ public class IntegerParameter extends AbstractParameter{
 	
 	public int getParameter(){
 		return value;
-	}
-	
-	@Override
-	public boolean valid(String value){
-		return false; //TODO make this actually work.
-	}
-		
+	}	
 	
 	@Override
 	public void update(String input) throws ConstraintFailedException {

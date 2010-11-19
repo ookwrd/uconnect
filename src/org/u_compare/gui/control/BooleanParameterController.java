@@ -7,9 +7,10 @@ import org.u_compare.gui.ParameterPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.InvalidInputException;
+import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 
-public class BooleanParameterController implements ParameterController {
+public class BooleanParameterController extends ParameterController {
 
 	private BooleanParameter param;
 	private ComponentController parent;
@@ -26,33 +27,14 @@ public class BooleanParameterController implements ParameterController {
 	public ParameterPanel getView(){
 		return view;
 	}
-
-/*	public void actionPerformed(ActionEvent e) {
-		
-		if(!parent.isLocked()){
-			
-			boolean value = view.getValue();
-			
-			try{
-				param.update(value);
-			
-			}catch(InvalidInputException ex) {//TODO
-				System.out.println(ex.getMessage());
-			}
-			
-		}else{
-			//TODO
-		}
-		
-	}*/
 	
 	public void setValue(boolean value){
 		assert(!component.getLockedStatus());
 	
 		try{
 			param.update(value);
-		}catch(Exception e){
-			//TODO can there be such a thing as an invalid boolean?
+		}catch(ConstraintFailedException e){
+			processConstraintFailure(e);
 		}
 	}
 }

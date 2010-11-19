@@ -13,10 +13,6 @@ public interface Parameter {
 	public void addConstraint(Constraint constraint);
 	public ArrayList<Constraint> getConstraints();
 	
-	public boolean valid(String value);
-	public boolean valid(boolean value);
-	public boolean valid(int value);
-	
 	public void update(String value) throws ConstraintFailedException;
 	public void update(boolean value) throws ConstraintFailedException;
 	public void update(int value) throws ConstraintFailedException;

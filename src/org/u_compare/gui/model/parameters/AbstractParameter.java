@@ -43,21 +43,6 @@ public abstract class AbstractParameter implements
 	}
 	
 	@Override
-	public boolean valid(String value){
-		return false;
-	}
-	
-	@Override
-	public boolean valid(boolean value){
-		return false;
-	}
-	
-	@Override
-	public boolean valid(int value){
-		return false;
-	}
-	
-	@Override
 	public void update(int value) throws ConstraintFailedException {
 		throw new IllegalArgumentException("The parameter: "+ description + ", is not an int.");
 	}
@@ -82,5 +67,11 @@ public abstract class AbstractParameter implements
 		}
 		
 		owner.setComponentChanged();
+	}
+	
+	protected void validateConstraints(String parameter) throws ConstraintFailedException {
+		for(Constraint con : constraints){
+			con.validate(parameter);	
+		}
 	}
 }

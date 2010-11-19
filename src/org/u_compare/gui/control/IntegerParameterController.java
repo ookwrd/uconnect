@@ -13,7 +13,7 @@ import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.InvalidInputException;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
-public class IntegerParameterController implements ParameterController {
+public class IntegerParameterController extends ParameterController {
 
 	private IntegerParameter param;
 	private ComponentController parent;
@@ -37,9 +37,8 @@ public class IntegerParameterController implements ParameterController {
 
 		try{
 			param.update(parameterValue);
-		}catch(ConstraintFailedException ex) {//TODO
-			System.out.println(ex.getMessage());
-
+		}catch(ConstraintFailedException ex) {
+			processConstraintFailure(ex);
 		}
 
 	}

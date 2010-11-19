@@ -12,6 +12,7 @@ import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.StringParameter;
+import org.u_compare.gui.model.parameters.constraints.StringConstraint;
 
 import com.sun.xml.internal.ws.api.pipe.NextAction;
 
@@ -89,9 +90,6 @@ public class ExampleWorkflowFactory {
 	 */
 	public static Workflow simpleWithParameters(){
 		
-
-
-		
 		Workflow workflow = new Workflow();
 		
 		workflow.setName("Simple Workflow");
@@ -110,6 +108,12 @@ public class ExampleWorkflowFactory {
 		c3params.add(new BooleanParameter("A false boolean",false));
 		c3params.add(new StringParameter("A String to configure", "default value"));
 		
+		//Add a constrained parameter
+		StringParameter constrainedParameter = new StringParameter("Four character string", "four");
+		StringConstraint cons = new StringConstraint();
+		cons.setLengthRange(4, 4);
+		constrainedParameter.addConstraint(cons);
+		c1params.add(constrainedParameter);
 		
 		Component component1 = new MockComponent(c1params);
 		Component component2 = new MockComponent(c2params);

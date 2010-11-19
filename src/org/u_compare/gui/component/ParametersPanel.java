@@ -1,5 +1,6 @@
 package org.u_compare.gui.component;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -42,31 +43,32 @@ public class ParametersPanel extends JPanel {
 
 			setBorder(new TitledBorder(new EtchedBorder(),
 					"Configuration Parameters:"));
-			setLayout(new BoxLayout(this,
-					BoxLayout.Y_AXIS));
+			setLayout(new BorderLayout());
 			setOpaque(false);
-
-			/*for (ParameterPanel paramPanel : paramPanels) {
-				paramPanel.setOpaque(false);
-				add(paramPanel);
-			}*/
 			
-			setLayout(new SpringLayout());
+			/*
+			 * Needed so that the Parameter Panel can expand horizontally even if 
+			 * none of the subcomponents can, which is not permitted by the spring
+			 * layout.
+			 */
+			JPanel innerPanel = new JPanel();
+			
+			innerPanel.setLayout(new SpringLayout());
 			for (ParameterPanel parameterPanel : paramPanels) {
 				JLabel l = parameterPanel.getDescription();
 				l.setHorizontalAlignment(JLabel.TRAILING);
-				add(l);
+				innerPanel.add(l);
 				JComponent f = parameterPanel.getField();
 				l.setLabelFor(f);
-				add(f);
+				innerPanel.add(f);
 			}
 			
-			SpringUtilities.makeCompactGrid(this,
+			SpringUtilities.makeCompactGrid(innerPanel,
                     paramPanels.size(), 2, 	//rows, cols
                     6, 6,        			//initX, initY
                     6, 0);      			 //xPad, yPad
 
-			add(new JPanel());
+			add(innerPanel);
 		
 		}
 	}

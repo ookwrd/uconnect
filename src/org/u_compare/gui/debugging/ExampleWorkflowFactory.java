@@ -12,6 +12,7 @@ import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.StringParameter;
+import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 import org.u_compare.gui.model.parameters.constraints.StringConstraint;
 
 import com.sun.xml.internal.ws.api.pipe.NextAction;
@@ -114,6 +115,12 @@ public class ExampleWorkflowFactory {
 		cons.setLengthRange(4, 4);
 		constrainedParameter.addConstraint(cons);
 		c1params.add(constrainedParameter);
+		
+		IntegerParameter constrainedParameter1 = new IntegerParameter("less than 500", 500);
+		IntegerConstraint cons1 = new IntegerConstraint();
+		cons1.setMax(500);
+		constrainedParameter1.addConstraint(cons1);
+		c1params.add(constrainedParameter1);
 		
 		Component component1 = new MockComponent(c1params);
 		Component component2 = new MockComponent(c2params);

@@ -69,7 +69,7 @@ public class IntegerConstraint extends Constraint{
 		}
 		
 		if(value > max){
-			throw new ConstraintFailedException("Input value to high. Please input a value of " + max + "or lower.");			
+			throw new ConstraintFailedException("Input value to high. Please input a value of " + max + " or lower.");			
 		}
 		
 		if(whiteList != null){
@@ -82,7 +82,7 @@ public class IntegerConstraint extends Constraint{
 			}	
 			
 			if(!found){
-				throw new ConstraintFailedException("Input value does not belong to whiteListed set of acceptable values");
+				throw new ConstraintFailedException("Input value does not belong to set of acceptable values");
 			}	
 		}
 		
@@ -91,7 +91,7 @@ public class IntegerConstraint extends Constraint{
 			for(int i : blackList){
 				
 				if(i == value){
-					throw new ConstraintFailedException("Input belongs to blackListed set of unacceptable values");
+					throw new ConstraintFailedException("Input belongs to set of unacceptable values");
 				}
 			}
 		}

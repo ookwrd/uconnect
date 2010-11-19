@@ -17,7 +17,6 @@ public abstract class AbstractParameter implements
 	private ArrayList<ParameterSettingsChangedListener> changedListeners = new ArrayList<ParameterSettingsChangedListener>();
 	
 	public AbstractParameter(String description){
-
 		constraints = new ArrayList<Constraint>();
 		this.description = description;
 	}

@@ -33,7 +33,8 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			this.component = component;
 			this.param = param;
 			
-			this.add(new JLabel(param.getDescription()));
+			description = new JLabel(param.getDescription());
+			this.add(description);
 			
 			checkBox = new JCheckBox();
 			checkBox.setSelected(param.getParameter());
@@ -44,6 +45,7 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			component.registerLockedStatusChangeListener(this);
 			param.registerParameterSettingsChangedListener(this);
 			
+			field = checkBox;
 	}
 
 	private void updateLockedStatus(){

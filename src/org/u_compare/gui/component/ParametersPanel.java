@@ -54,6 +54,7 @@ public class ParametersPanel extends JPanel {
 			setLayout(new SpringLayout());
 			for (ParameterPanel parameterPanel : paramPanels) {
 				JLabel l = parameterPanel.getDescription();
+				l.setHorizontalAlignment(JLabel.TRAILING);
 				add(l);
 				JComponent f = parameterPanel.getField();
 				l.setLabelFor(f);
@@ -63,8 +64,9 @@ public class ParametersPanel extends JPanel {
 			SpringUtilities.makeCompactGrid(this,
                     paramPanels.size(), 2, 	//rows, cols
                     6, 6,        			//initX, initY
-                    6, 6);      			 //xPad, yPad
+                    6, 0);      			 //xPad, yPad
 
+			add(new JPanel());
 		
 		}
 	}

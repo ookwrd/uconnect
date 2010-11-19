@@ -30,7 +30,8 @@ public class IntegerParameterPanel extends ParameterPanel implements  ActionList
 		this.component = component;
 		this.parameter = parameter;
 		
-		this.add(new JLabel(parameter.getDescription()));
+		description = new JLabel(parameter.getDescription());
+		this.add(description);
 		
 		textField = new JTextField(parameter.getParameterString());
 		textField.addActionListener(this);
@@ -42,6 +43,8 @@ public class IntegerParameterPanel extends ParameterPanel implements  ActionList
 		
 		component.registerLockedStatusChangeListener(this);
 		parameter.registerParameterSettingsChangedListener(this);
+		
+		field = textField;
 	}
 
 	private void updateLockedStatus(){

@@ -46,6 +46,7 @@ public class IntegerConstraint extends Constraint{
 		this.blackList = blackList;
 	}
 	
+	@Override
 	public void validate(String in) throws ConstraintFailedException{		
 		
 		int value;
@@ -54,8 +55,15 @@ public class IntegerConstraint extends Constraint{
 			value = Integer.parseInt(in);
 		}catch(NumberFormatException ex){
 			throw new ConstraintFailedException("Input not an Integer.");
+			//TODO wrap the number format exception
 		}
 		
+		validate(value);
+		
+	}
+	
+	@Override
+	public void validate(int value) throws ConstraintFailedException{		
 		if(value < min){
 			throw new ConstraintFailedException("Input value to low. Please input a value of " + min + " or higher.");			
 		}
@@ -87,7 +95,5 @@ public class IntegerConstraint extends Constraint{
 				}
 			}
 		}
-		
 	}
-	
 }

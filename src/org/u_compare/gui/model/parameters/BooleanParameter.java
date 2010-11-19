@@ -25,7 +25,7 @@ public class BooleanParameter extends
 		
 		if(input != parameter){
 			parameter = input;
-			
+			//No necessity to validate as can't constraint boolean parameters
 			notifyParameterSettingsChangedListeners();
 		}
 	}

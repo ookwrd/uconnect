@@ -21,18 +21,13 @@ public class IntegerParameter extends AbstractParameter{
 	
 	@Override
 	public void update(String input) throws ConstraintFailedException {
+
+		validateConstraints(input);
 		
-		for(Constraint con : getConstraints()){
-			con.validate(input);
-		}
-		
-		//TODO checking that this works
 		int inputInt = Integer.parseInt(input);
 	
-		if(inputInt != value){
-			
+		if(inputInt != value){	
 			value = inputInt;
-			
 			notifyParameterSettingsChangedListeners();
 		}
 		

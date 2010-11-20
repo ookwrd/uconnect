@@ -2,7 +2,6 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 import org.u_compare.gui.debugging.Debug;
-import org.u_compare.gui.model.AbstractComponent.LockStatusEnum;
 
 /**
  * Abstract base class implementing functionality common to all aggregate components.
@@ -13,12 +12,10 @@ public abstract class AbstractAggregateComponent extends
 		AbstractComponent implements AggregateComponent {
 
 	private ArrayList<SubComponentsChangedListener> subComponentsChangedListeners = new ArrayList<SubComponentsChangedListener>();
-	
 	private ArrayList<Component> subComponents = new ArrayList<Component>();
 	
 	/**
 	 * All extending classes should call this constructor.
-	 * 
 	 */
 	protected AbstractAggregateComponent(){
 		super();
@@ -44,7 +41,7 @@ public abstract class AbstractAggregateComponent extends
 	/**
 	 * Adds the passed component to the aggregate at the specified position. Position must be between 0 and 
 	 * the number of components. If a component is inserted in an intermediary position, subsequent components
-	 * will be moved right.
+	 * will be moved down.
 	 *
 	 * @param position to insert at
 	 * @param component to insert
@@ -76,7 +73,7 @@ public abstract class AbstractAggregateComponent extends
 		//Check subComponents contains component
 		if(!subComponents.contains(component)){
 			if(Debug.DEBUGLEVEL >= Debug.ERROR){
-				Debug.out.println("Warning: Abstract reorderSubComponent method called on " + getName() + " when component to be added is not in subComponents list.");
+				Debug.out.println("Warning: Abstract reorderSubComponent method called on " + getTitle() + " when component to be added is not in subComponents list.");
 			}
 			return;
 		}
@@ -159,7 +156,6 @@ public abstract class AbstractAggregateComponent extends
 		}
 		
 		notifySubComponentsChangedListeners();
-		
 	}
 	
 	@Override

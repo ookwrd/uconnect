@@ -1,10 +1,7 @@
 package org.u_compare.gui.model;
 
 import java.util.ArrayList;
-import org.u_compare.gui.debugging.Debug;
 import org.u_compare.gui.model.parameters.Parameter;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
  * Abstract base class implementing much of the functionality common to all components.
@@ -15,10 +12,10 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
  */
 public abstract class AbstractComponent implements Component {
 
-	private Component superComponent;
+	private Component parentComponent;
 
-	//private to ensure use of proper set methods by extending classes
-	private String name = "Unnamed";
+	//private (rather than protected) to ensure use of proper set methods by extending classes
+	private String title = "Unnamed";
 	private String description = "Undescribed";
 	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
@@ -35,6 +32,7 @@ public abstract class AbstractComponent implements Component {
 	 */
 	public static enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK};
 	
+	//Change listeners
 	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
 	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
 	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
@@ -47,8 +45,8 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	/**
-	 * Components directly extending this class should not be aggregate. Aggregates should 
-	 * extend UIMAAggregateComponent.
+	 * Components directly extending this class are generally not aggregate. Aggregates will
+	 * usually indirectly extend this class via UIMAAggregateComponent.
 	 */
 	@Override
 	public boolean isAggregate() {
@@ -75,21 +73,21 @@ public abstract class AbstractComponent implements Component {
 	 * Returns the Name of the component.
 	 */
 	@Override
-	public String getName(){
-		return name;
+	public String getTitle(){
+		return title;
 	}
 	
 	/**
 	 * Sets the Name of the component.
 	 */
 	@Override
-	public void setName(String name){
+	public void setTitle(String title){
 		
-		if(this.name != null && this.name.equals(name)){
+		if(this.title != null && this.title.equals(title)){
 			return;
 		}
 		
-		this.name = name;
+		this.title = title;
 		notifyComponentDescriptionChangeListeners();
 	}
 	
@@ -117,12 +115,12 @@ public abstract class AbstractComponent implements Component {
 
 	@Override
 	public Component getSuperComponent(){
-		return superComponent;
+		return parentComponent;
 	}
 	
 	@Override
 	public void setSuperComponent(Component superComp){
-		this.superComponent = superComp;
+		this.parentComponent = superComp;
 	}
 	
 	@Override
@@ -134,7 +132,6 @@ public abstract class AbstractComponent implements Component {
 	public void addInputType(AnnotationType inputType){
 		
 		if(inputTypes.contains(inputType)){
-			//TODO throw warning?
 			return;
 		}
 		
@@ -177,7 +174,6 @@ public abstract class AbstractComponent implements Component {
 	public void addOutputType(AnnotationType outputType){
 		
 		if(outputTypes.contains(outputType)){
-			//TODO Warning here, this should never happen
 			return;
 		}
 		
@@ -300,7 +296,7 @@ public abstract class AbstractComponent implements Component {
 		this.configurationParameters = params;
 		
 		notifyParametersChangedListeners();
-		//TODO add check that a change has actually taken place.
+		
 	}
 	
 	@Override
@@ -313,8 +309,8 @@ public abstract class AbstractComponent implements Component {
 		if (!unsavedChanges) {
 			unsavedChanges = true;
 			notifySavedStatusChangeListeners();	
-			if(superComponent != null){
-				superComponent.setComponentChanged();
+			if(parentComponent != null){
+				parentComponent.setComponentChanged();
 			}
 		}
 	}
@@ -339,9 +335,6 @@ public abstract class AbstractComponent implements Component {
 		componentDescriptionChangeListeners.add(listener);
 	}
 	
-	/**
-	 * 
-	 */
 	protected void notifyComponentDescriptionChangeListeners(){
 		
 		for(DescriptionChangeListener listener : componentDescriptionChangeListeners){

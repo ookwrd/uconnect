@@ -62,14 +62,14 @@ public interface Component{
 	 *  
 	 * @return 	This component's name.
 	 */
-	public String getName();
+	public String getTitle();
 	
 	/**
 	 * Sets the name of this component to the specified name.
 	 * 
 	 * @param name	 The new name.
 	 */
-	public void setName(String name);
+	public void setTitle(String name);
 	
 	/**
 	 * Return the description of this component.

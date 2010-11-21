@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
 import org.u_compare.gui.control.WorkflowPaneController;
-import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
@@ -27,7 +26,7 @@ import org.u_compare.gui.model.WorkflowStatusListener;
 @SuppressWarnings("serial")
 //TODO: Enable scrolling among tabs
 //TODO: Should have mnemonics
-//TODO: Should never be empty
+//TODO: Should never be empty, we always have at least one tab
 public class WorkflowTabbedPane extends JTabbedPane
 	implements WorkflowStatusListener {
 	
@@ -43,7 +42,8 @@ public class WorkflowTabbedPane extends JTabbedPane
 	//TODO: We do want to animate these in the end
 	private static boolean icons_loaded = false; 
 
-	private static Icon WORKFLOW_STOPPED; //TODO: Indicates forcefully stopped?
+	 //TODO: STOPPED should also indicate forcefully stopped?
+	private static Icon WORKFLOW_STOPPED;
 	private static Icon WORKFLOW_RUNNING;
 	private static Icon WORKFLOW_FINISHED;
 	private static Icon WORKFLOW_PAUSED;
@@ -71,7 +71,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 		
 		this.setToolTipText(WorkflowTabbedPane.TOOLTIP_TEXT);
 		
-		initializeNewWorkflowTab();
+		this.initializeNewWorkflowTab();
 	}
 	
 	private void initializeNewWorkflowTab(){
@@ -168,7 +168,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 		this.setTabComponentAt(inserted_index,
 				tabFlapComponent);
 		
-		setSelectedIndex(inserted_index);
+		this.setSelectedIndex(inserted_index);
 	}
 	
 	@Override
@@ -177,13 +177,31 @@ public class WorkflowTabbedPane extends JTabbedPane
 				.setStatusIcon(icon);
 	}
 	
+	
 	@Override
-	// Asks the controller for permission before calling remove
 	public void remove(int i) {
-		
-		controller.requestWorkflowClose(((WorkflowSplitPane) this.getComponentAt(i)).getWorkflowPane().getAssociatedWorkflow());
-		
+		controller.requestWorkflowClose(
+				((WorkflowSplitPane) this.getComponentAt(i))
+				.getWorkflowPane().getAssociatedWorkflow());
 	}
+	
+	// Use this instead of the internal one to conform with our selection
+	// policies.
+	private void safeRemove(int i) {
+		//TODO: Implement this by referring to the super class
+		System.err.println("WorkflowTabbedPane: safeRemove(int i) "
+				+ "called but not implemented");
+	}
+	
+	public void insertTab(String title, Icon icon,
+			java.awt.Component component, String tip, int index) {
+		//TODO: Override the default behaviour here to handle focus etc.
+		System.err.println("WorkflowTabbedPane: insertTab called, " +
+				"defaulting to super class implementation for now " +
+				"until we implement our own");
+		super.insertTab(title, icon, component, tip, index);
+	}
+	//TODO: We also need a safe add!
 
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
@@ -218,11 +236,16 @@ public class WorkflowTabbedPane extends JTabbedPane
 		}
 	}
 	
-	public void removeWorkflow(Workflow workflow){
+	public void removeWorkflow(Workflow workflow) {
+		for (int i = 0; i < this.getTabCount() - 1; i++) {
+			WorkflowSplitPane currentComponent =
+				(WorkflowSplitPane) this.getComponentAt(i); 
+			if (currentComponent.getWorkflowPane()
+					.getAssociatedWorkflow().equals(workflow)) {
+				this.safeRemove(i);
+				break;
+			}
 		
-		//TODO
-		
-		System.out.println("Should be closing a tab now.");
-		
+		}
 	}
 }

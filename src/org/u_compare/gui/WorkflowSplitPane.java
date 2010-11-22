@@ -67,7 +67,7 @@ public class WorkflowSplitPane extends JSplitPane
 		if(tab != null) {
 			tabPane.setTitleAt(tabPane.indexOfComponent(this),
 					(component.checkUnsavedChanges() ? "*" : "")
-					+ WorkflowTabbedPane.cleanTitle(component.getName()));
+					+ WorkflowTabbedPane.cleanTitle(component.getTitle()));
 		}
 	}
 
@@ -79,10 +79,10 @@ public class WorkflowSplitPane extends JSplitPane
 			if(component.checkUnsavedChanges()) {
 				tabPane.setTitleAt(tabPane.indexOfComponent(this),
 						"*" +
-						WorkflowTabbedPane.cleanTitle(component.getName()));
+						WorkflowTabbedPane.cleanTitle(component.getTitle()));
 			} else {
 				tabPane.setTitleAt(tabPane.indexOfComponent(this),
-						WorkflowTabbedPane.cleanTitle(component.getName()));
+						WorkflowTabbedPane.cleanTitle(component.getTitle()));
 			}
 		}
 	}

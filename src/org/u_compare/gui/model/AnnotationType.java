@@ -31,5 +31,6 @@ public class AnnotationType {
 		}
 		return false;
 	}
+	
 	//TODO factory
 }

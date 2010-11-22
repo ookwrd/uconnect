@@ -62,7 +62,7 @@ public class TitlePanel extends JPanel {
 		// add a title panel
 		setLayout(new CardLayout());
 
-		title = component.getName();
+		title = component.getTitle();
 
 		titleLabel = new JLabel(title);
 		titleLabel.setText(title);

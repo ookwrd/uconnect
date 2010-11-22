@@ -39,7 +39,7 @@ public class ExampleWorkflowFactory {
 		
 		Workflow workflow = new Workflow();
 		
-		workflow.setName("Blank Workflow");
+		workflow.setTitle("Blank Workflow");
 		workflow.setDescription("As you can see this workflow is blank, but think of all the wonderful possibilities");
 		
 		return workflow;
@@ -55,16 +55,16 @@ public class ExampleWorkflowFactory {
 		
 		Workflow workflow = new Workflow();
 		
-		workflow.setName("Simple Workflow");
+		workflow.setTitle("Simple Workflow");
 		workflow.setDescription("Some people might say I am simple, but I am happy being who I am. Look at my 3 wonderful (simple) childrem.");
 		
 		Component component1 = new MockComponent();
 		Component component2 = new MockComponent();
 		Component component3 = new MockComponent();
 		
-		component1.setName("One");
-		component2.setName("Two");
-		component3.setName("Three");
+		component1.setTitle("One");
+		component2.setTitle("Two");
+		component3.setTitle("Three");
 		
 		component1.setDescription("Im the first and therefore the best, my siblings don't realise this simple logic.");
 		component2.setDescription("Honestly, I don't know who I hate more.");
@@ -93,12 +93,12 @@ public class ExampleWorkflowFactory {
 		
 		Workflow workflow = new Workflow();
 		
-		workflow.setName("Simple Workflow");
+		workflow.setTitle("Simple Workflow");
 		workflow.setDescription("Some people might say I am simple, but I am happy being who I am. Look at my 3 wonderful (simple) childrem.");
 		
 		ArrayList<Parameter> c1params = new ArrayList<Parameter>();
 		c1params.add(new BooleanParameter("A true boolean",true));
-		c1params.add(new BooleanParameter("A false boolean",false));
+		c1params.add(new BooleanParameter("A false boolean with a really really long description that will get in the way",false));
 		
 		ArrayList<Parameter> c2params = new ArrayList<Parameter>();
 		c2params.add(new StringParameter("A String to configure", "default value"));
@@ -126,9 +126,9 @@ public class ExampleWorkflowFactory {
 		Component component2 = new MockComponent(c2params);
 		Component component3 = new MockComponent(c3params);
 		
-		component1.setName("One");
-		component2.setName("Two");
-		component3.setName("Three");
+		component1.setTitle("One");
+		component2.setTitle("Two");
+		component3.setTitle("Three");
 		
 		component1.setDescription("Im the first and therefore the best, my siblings don't realise this simple logic.");
 		component2.setDescription("Honestly, I don't know who I hate more.");
@@ -164,18 +164,18 @@ public class ExampleWorkflowFactory {
 		Component simpleb = new MockComponent(workflowParams);
 		Component simplec = new MockComponent(workflowParams);
 		
-		simplea.setName("Simple Component a");
+		simplea.setTitle("Simple Component a");
 		simplea.setDescription("This is a component. For some reason it is called a");
 		
-		simpleb.setName("Simple Component b");
+		simpleb.setTitle("Simple Component b");
 		simpleb.setDescription("This is a component. For some reason it is called b");
 
-		simplec.setName("Simple Component c");
+		simplec.setTitle("Simple Component c");
 		simplec.setDescription("This is a component. For some reason it is called c");
 		
 		AggregateComponent aggregate = new MockAggregateComponent(workflowParams);
 		
-		aggregate.setName("The nasty nasty Aggregate Component");
+		aggregate.setTitle("The nasty nasty Aggregate Component");
 		aggregate.setDescription("Not afraid of aggregate components? Well what a silly little boy you are then.");
 		
 		aggregate.addSubComponent(simplea);

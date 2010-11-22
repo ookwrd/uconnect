@@ -476,7 +476,7 @@ public class ComponentController implements DragAndDropComponentController {
 		
 		assert(component.getLockedStatus()==false);
 
-		component.setName(title);
+		component.setTitle(title);
 		
 	}
 

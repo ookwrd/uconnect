@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -60,7 +61,7 @@ public class TitlePanel extends JPanel {
 		};
 
 		// add a title panel
-		setLayout(new CardLayout());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		title = component.getTitle();
 
@@ -80,8 +81,14 @@ public class TitlePanel extends JPanel {
 		}
 		titleTextField.setVisible(false);
 
-		add(titleLabel, BorderLayout.LINE_START);
-		add(titleTextField, BorderLayout.LINE_START);
+		titleLabel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+		//titleLabel.setAlignmentY(CENTER_ALIGNMENT);
+		titleTextField.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+		
+		add(titleLabel);
+		add(titleTextField);
+		
+		
 		if (!isWorkflow){
 			setBackground(Color.WHITE);
 		}

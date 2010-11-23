@@ -76,7 +76,7 @@ public class DescriptionPanel extends JPanel implements
 		endEditingListener = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				//TODO remove the useless lines
+				// TODO remove the useless lines
 				System.out.println("PUSHED STOP EDITING");
 				setDescription(editableDescription.getText());
 				editableDescription.setVisible(false);
@@ -85,7 +85,7 @@ public class DescriptionPanel extends JPanel implements
 			}
 		};
 
-		// add a description panel under the top panel, and first set the layout 
+		// add a description panel under the top panel, and first set the layout
 		BorderLayout descriptionLayout = new BorderLayout();
 		setLayout(descriptionLayout);
 
@@ -113,14 +113,15 @@ public class DescriptionPanel extends JPanel implements
 		endEditingButton.setActionCommand("End description editing");
 		endEditingButton.addActionListener(endEditingListener);
 		endEditingButton.setVisible(false);
-		
+
 		add(description, BorderLayout.PAGE_START);
 		add(editableDescription, BorderLayout.LINE_START);
 		add(endEditingButton, BorderLayout.LINE_END);
-		//TODO change the layout to cardlayout if possible
-		
+		// TODO change the layout to cardlayout, creating the cards as on
+		// http://download.oracle.com/javase/tutorial/uiswing/layout/card.html
+
 		setBackground(Color.WHITE);
-		
+
 		description.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {

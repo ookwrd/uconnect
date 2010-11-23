@@ -33,6 +33,7 @@ import org.u_compare.gui.model.Workflow.WorkflowStatus;
 public class WorkflowControlPanel extends JPanel implements
 		WorkflowStatusListener {
 
+	private static final boolean debug = true;
 	public final static String STATUS_PREFIX = "Workflow Status: ";
 	private static final int BUTTON_DECREMENT = 0;
 	public static final String ICON_RUN_PATH = "../gfx/icon_start.png";
@@ -42,7 +43,7 @@ public class WorkflowControlPanel extends JPanel implements
 	private static final String STOP_TOOLTIPTEXT = "Stop workflow";
 	private static final boolean PAUSE = false;
 	private static final boolean PLAY = true;
-
+	
 	private static boolean iconsLoaded = false;
 
 	private static ImageIcon runIcon;
@@ -76,12 +77,19 @@ public class WorkflowControlPanel extends JPanel implements
 		playListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playWorkflow();
+				System.out.println("Play button hit");
 			}
 		};
 
 		stopListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				stopWorkflow();
+				if(stopButtonActive()) {
+					stopWorkflow();
+					//if (debug) System.out.println("Button stop hit, it was active");
+				}
+				else {
+					if (debug) System.out.println("Button stop currently not active");
+				}
 			}
 		};
 
@@ -141,8 +149,9 @@ public class WorkflowControlPanel extends JPanel implements
 		empty = stopButton.getBorder();
 		stopButton.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				stopButton.setBorder(highlighted);
-			}
+				if(stopButtonActive())
+					stopButton.setBorder(highlighted);
+			}			
 
 			public void mouseExited(MouseEvent e) {
 				stopButton.setBorder(empty);
@@ -150,6 +159,10 @@ public class WorkflowControlPanel extends JPanel implements
 		});
 	}
 
+	private boolean stopButtonActive() {
+		return ((Workflow) component).getStatus() != WorkflowStatus.READY;
+	}
+	
 	protected static synchronized void loadIcons() {
 		if (WorkflowControlPanel.iconsLoaded == true) {
 			return;

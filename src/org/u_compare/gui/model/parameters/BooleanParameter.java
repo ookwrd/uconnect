@@ -1,10 +1,5 @@
 package org.u_compare.gui.model.parameters;
 
-import java.security.acl.Owner;
-
-import org.u_compare.gui.BooleanParameterPanel;
-import org.u_compare.gui.control.BooleanParameterController;
-import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public class BooleanParameter extends
@@ -12,8 +7,8 @@ public class BooleanParameter extends
 
 	private boolean parameter;
 	
-	public BooleanParameter(String description, boolean value){
-		super(description);
+	public BooleanParameter(String name, String description, boolean value){
+		super(name, description);
 		this.parameter = value;
 	}
 	
@@ -25,7 +20,7 @@ public class BooleanParameter extends
 		
 		if(input != parameter){
 			parameter = input;
-			//No necessity to validate as can't constraint boolean parameters
+			//No necessity to validate against constraints as can't constrain boolean parameters
 			notifyParameterSettingsChangedListeners();
 		}
 	}

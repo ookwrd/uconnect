@@ -1,6 +1,5 @@
 package org.u_compare.gui.model.parameters;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import org.u_compare.gui.model.Component;
@@ -11,12 +10,13 @@ public abstract class AbstractParameter implements
 		Parameter {
 
 	protected Component owner;
+	private String name;
 	private String description;
 	private ArrayList<Constraint> constraints;
 	
 	private ArrayList<ParameterSettingsChangedListener> changedListeners = new ArrayList<ParameterSettingsChangedListener>();
 	
-	public AbstractParameter(String description){
+	public AbstractParameter(String name, String description){
 		constraints = new ArrayList<Constraint>();
 		this.description = description;
 	}
@@ -29,6 +29,11 @@ public abstract class AbstractParameter implements
 	@Override
 	public String getDescription() {
 		return description;
+	}
+	
+	@Override 
+	public String getName(){
+		return name;
 	}
 	
 	@Override

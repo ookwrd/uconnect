@@ -203,6 +203,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 	}
 	
+	//TODO move to parameter interace as static factory
 	protected Parameter constructParameter(ConfigurationParameter param, Object value){
 		
 		Parameter retVal;
@@ -214,19 +215,37 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 		String type = param.getType();//Why are the types Strings? I cant do a switch statement...
 		if(type.equals(ConfigurationParameter.TYPE_BOOLEAN)) {
-			retVal = null; //TODO
+			if(multivalued){
+				retVal = null; //TODO
+			}else{
+				retVal = null; //TODO
+			}
 		} else if (type.equals(ConfigurationParameter.TYPE_FLOAT)) {
-			retVal = null; //TODO
+			if(multivalued){
+				retVal = null; //TODO
+			}else{
+				retVal = null; //TODO
+			}
 		} else if (type.equals(ConfigurationParameter.TYPE_INTEGER)) {
-			retVal = null; //TODO
+			if(multivalued){
+				retVal = null; //TODO
+			}else{
+				retVal = null; //TODO
+			}
 		} else if (type.equals(ConfigurationParameter.TYPE_STRING)) {
-			retVal = null; //TODO
+			if(multivalued){
+				retVal = null; //TODO
+			}else{
+				retVal = null; //TODO
+			}
 		} else {
 			retVal = null; //TODO throw an error here. 
 		}
 		
 		return retVal;
 	}
+	
+	
 	public static void main(String[] args){
 		PrimitiveUIMAComponent comp = new PrimitiveUIMAComponent();
 	}

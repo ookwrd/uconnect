@@ -5,7 +5,7 @@ import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 
 public class IntegerParameter extends AbstractParameter{
 
-	private Integer value;
+	private Integer value; //null represents unset.
 	
 	public IntegerParameter(String name, String description, Integer value) {
 		super(name, description);
@@ -33,7 +33,11 @@ public class IntegerParameter extends AbstractParameter{
 	}
 
 	public String getParameterString() {
-		return String.valueOf(value);
+		if(value!=null){
+			return String.valueOf(value);
+		}else{
+			return "";
+		}
 	}
 
 }

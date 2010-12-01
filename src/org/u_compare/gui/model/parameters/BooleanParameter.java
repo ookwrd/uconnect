@@ -5,7 +5,7 @@ import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 public class BooleanParameter extends
 		AbstractParameter {
 
-	private Boolean parameter;
+	private Boolean parameter; //null represents unset.
 	
 	/**
 	 * 
@@ -32,7 +32,11 @@ public class BooleanParameter extends
 	}
 
 	public String getParameterString() {
-		return String.valueOf(parameter);
+		if(parameter!=null){
+			return String.valueOf(parameter);
+		}else{
+			return null;
+		}
 	}
 	
 

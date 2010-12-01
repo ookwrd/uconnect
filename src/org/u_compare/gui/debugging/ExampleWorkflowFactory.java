@@ -227,6 +227,7 @@ public class ExampleWorkflowFactory {
 			workflow.addSubComponent(real1);
 		}catch(Exception e){
 			System.out.println("Error while constructing workflow" + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return workflow;

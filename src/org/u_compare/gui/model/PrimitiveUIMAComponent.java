@@ -21,7 +21,10 @@ import org.apache.uima.tools.components.InlineXmlCasConsumer;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.omg.CORBA.PUBLIC_MEMBER;
+import org.u_compare.gui.model.parameters.BooleanParameter;
+import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
+import org.u_compare.gui.model.parameters.StringParameter;
 import org.xml.sax.SAXException;
 
 public class PrimitiveUIMAComponent extends AbstractComponent {
@@ -161,7 +164,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	}
 	
 	public PrimitiveUIMAComponent(XMLInputSource inputSource) throws InvalidXMLException{
-		
+		try{
 		Object resourceSpecifier = UIMAFramework.getXMLParser().parse(inputSource);
 		
 		if(resourceSpecifier instanceof AnalysisEngineDescription){
@@ -170,6 +173,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 			processProcessingResouceMetaData(desc.getAnalysisEngineMetaData());
 			
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		
 	}
@@ -194,16 +200,16 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		for(ConfigurationParameter param : metaData.getConfigurationParameterDeclarations().getConfigurationParameters()){
 
 			Parameter newParameter = constructParameter(param, settings.getParameterValue(param.getName()));
-			
 			parameters.add(newParameter);
+			
 		}
 		
 		//TODO make the parameter constructors work first
-		//setConfigurationParameters(parameters);
+		setConfigurationParameters(parameters);
 		
 	}
 	
-	//TODO move to parameter interace as static factory
+	//TODO move to parameter interface as static factory
 	protected Parameter constructParameter(ConfigurationParameter param, Object value){
 		
 		Parameter retVal;
@@ -218,7 +224,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = null; //TODO
+				retVal = new BooleanParameter(name, description, value!=null?(Boolean)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_FLOAT)) {
 			if(multivalued){
@@ -230,13 +236,13 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = null; //TODO
+				retVal = new IntegerParameter(name, description, value!=null?(Integer)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_STRING)) {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = null; //TODO
+				retVal = new StringParameter(name, description, value!=null?(String)value:null);
 			}
 		} else {
 			retVal = null; //TODO throw an error here. 

@@ -10,10 +10,12 @@ public abstract class AbstractParameter implements
 		Parameter {
 
 	protected Component owner;
-	private String name;
+	private String name; //TODO listeners
 	private String description;
+	private boolean mandatory;
 	private ArrayList<Constraint> constraints;
 	
+	private ArrayList<ParameterNameDescriptionChangedListener> nameDescriptionChangedListeners = new ArrayList<ParameterNameDescriptionChangedListener>();
 	private ArrayList<ParameterSettingsChangedListener> changedListeners = new ArrayList<ParameterSettingsChangedListener>();
 	
 	public AbstractParameter(String name, String description){
@@ -31,11 +33,27 @@ public abstract class AbstractParameter implements
 		return description;
 	}
 	
+	@Override
+	public void setDescription(String description){
+		if(!description.equals(this.description)){
+			this.description = description;
+			notifyParameterNameDescriptionChangedListeners();
+		}
+	}
+	
 	@Override 
 	public String getName(){
 		return name;
 	}
 	
+	@Override
+	public void setName(String name){
+		if(!name.equals(this.name)){
+			this.name = name;
+			notifyParameterNameDescriptionChangedListeners();
+		}
+	}
+		
 	@Override
 	public void addConstraint(Constraint constraint){
 		constraints.add(constraint);
@@ -65,9 +83,22 @@ public abstract class AbstractParameter implements
 		changedListeners.add(listener);
 	}
 	
-	public void notifyParameterSettingsChangedListeners(){
+	protected void notifyParameterSettingsChangedListeners(){
 		for(ParameterSettingsChangedListener listener : changedListeners){
 			listener.parameterSettingsChanged(this);
+		}
+		
+		owner.setComponentChanged();
+	}
+	
+	public void registerParameterNameDescriptionChangedListener(ParameterNameDescriptionChangedListener listener){
+		nameDescriptionChangedListeners.add(listener);
+	}
+	
+	protected void notifyParameterNameDescriptionChangedListeners(){
+		
+		for(ParameterNameDescriptionChangedListener listener : nameDescriptionChangedListeners){
+			listener.parameterNameDescriptionChanged(this);
 		}
 		
 		owner.setComponentChanged();

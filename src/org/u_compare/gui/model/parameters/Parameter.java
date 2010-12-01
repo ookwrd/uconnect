@@ -12,6 +12,8 @@ public interface Parameter {
 	public void setName(String name);
 	public String getDescription();
 	public void setDescription(String description);
+	public boolean isMandatory();
+	public void setMandatory(boolean mandatory);
 	public String getParameterString();
 	public void addConstraint(Constraint constraint);
 	public ArrayList<Constraint> getConstraints();

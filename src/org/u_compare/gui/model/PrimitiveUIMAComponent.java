@@ -224,7 +224,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = new BooleanParameter(name, description, value!=null?(Boolean)value:null);
+				retVal = new BooleanParameter(name, description, mandatory, value!=null?(Boolean)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_FLOAT)) {
 			if(multivalued){
@@ -236,13 +236,13 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = new IntegerParameter(name, description, value!=null?(Integer)value:null);
+				retVal = new IntegerParameter(name, description, mandatory, value!=null?(Integer)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_STRING)) {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = new StringParameter(name, description, value!=null?(String)value:null);
+				retVal = new StringParameter(name, description, mandatory, value!=null?(String)value:null);
 			}
 		} else {
 			retVal = null; //TODO throw an error here. 

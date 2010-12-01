@@ -7,8 +7,8 @@ public class IntegerParameter extends AbstractParameter{
 
 	private Integer value; //null represents unset.
 	
-	public IntegerParameter(String name, String description, Integer value) {
-		super(name, description);
+	public IntegerParameter(String name, String description, boolean mandatory, Integer value) {
+		super(name, description, mandatory);
 		
 		this.value = value;
 		addConstraint(new IntegerConstraint());

@@ -18,9 +18,11 @@ public abstract class AbstractParameter implements
 	private ArrayList<ParameterNameDescriptionChangedListener> nameDescriptionChangedListeners = new ArrayList<ParameterNameDescriptionChangedListener>();
 	private ArrayList<ParameterSettingsChangedListener> changedListeners = new ArrayList<ParameterSettingsChangedListener>();
 	
-	public AbstractParameter(String name, String description){
+	public AbstractParameter(String name, String description, boolean mandatory){
 		constraints = new ArrayList<Constraint>();
+		this.name = name;
 		this.description = description;
+		this.mandatory = mandatory;
 	}
 	
 	@Override
@@ -51,6 +53,18 @@ public abstract class AbstractParameter implements
 		if(!name.equals(this.name)){
 			this.name = name;
 			notifyParameterNameDescriptionChangedListeners();
+		}
+	}
+	
+	@Override
+	public boolean isMandatory(){
+		return mandatory;
+	}
+	
+	public void setMandatory(boolean mandatory){
+		if(this.mandatory != mandatory){
+			this.mandatory = mandatory;
+			//TODO listeners
 		}
 	}
 		

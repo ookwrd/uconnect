@@ -5,8 +5,8 @@ public class StringParameter extends AbstractParameter{
 
 	private String parameter; //null represents unset.
 	
-	public StringParameter(String name, String description, String parameter){
-		super(name, description);
+	public StringParameter(String name, String description, Boolean mandatory, String parameter){
+		super(name, description, mandatory);
 		
 		this.parameter = parameter;
 	}

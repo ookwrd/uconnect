@@ -88,11 +88,23 @@ public interface Component{
 	public void setDescription(String description);
 	
 	/**
-	 * Registers a new DescriptionChangeListener component to be notified if the name or description are changed.
+	 * Registers a new DescriptionChangeListener component to be notified if the title or description are changed.
 	 * 
 	 * @param listener	The listener to add.
 	 */
 	public void registerComponentDescriptionChangeListener(DescriptionChangeListener listener);
+
+	//TODO documentation
+	/*public String getVendor();
+	public void setVendor(String vendor);
+	
+	public String getCopyright();
+	public void setCopyright(String copyright);
+	
+	public String getVersion();
+	public void setVersion(String version);
+	*/
+	public void registerDistibutionInformationChangedListener(DistributionInformationChangeListener listener);
 	
 	/**
 	 * Adds an input type to this component.
@@ -154,7 +166,6 @@ public interface Component{
 	 * @return	True if unsaved changes exist, false otherwise.
 	 */
 	public boolean checkUnsavedChanges();
-	
 	
 	public boolean getMinimizedStatus();
 	

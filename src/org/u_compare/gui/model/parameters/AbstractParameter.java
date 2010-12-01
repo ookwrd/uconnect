@@ -10,7 +10,7 @@ public abstract class AbstractParameter implements
 		Parameter {
 
 	protected Component owner;
-	private String name; //TODO listeners
+	private String name;
 	private String description;
 	private boolean mandatory;
 	private ArrayList<Constraint> constraints;
@@ -65,7 +65,7 @@ public abstract class AbstractParameter implements
 	public void setMandatory(boolean mandatory){
 		if(this.mandatory != mandatory){
 			this.mandatory = mandatory;
-			//TODO listeners
+			notifyMandatoryStatusChangedListeners();
 		}
 	}
 		
@@ -95,6 +95,7 @@ public abstract class AbstractParameter implements
 	}
 	
 	public void registerParameterSettingsChangedListener(ParameterSettingsChangedListener listener){
+		assert(listener != null);
 		changedListeners.add(listener);
 	}
 	
@@ -106,6 +107,7 @@ public abstract class AbstractParameter implements
 	}
 	
 	public void registerParameterNameDescriptionChangedListener(ParameterNameDescriptionChangedListener listener){
+		assert(listener != null);
 		nameDescriptionChangedListeners.add(listener);
 	}
 	
@@ -117,6 +119,7 @@ public abstract class AbstractParameter implements
 	}
 	
 	public void registerMandatoryStatusChangedListener(MandatoryStatusChangedListener listener){
+		assert(listener != null);
 		mandatoryStatusChangedListeners.add(listener);
 	}
 	

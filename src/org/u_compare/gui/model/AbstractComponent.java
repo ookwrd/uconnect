@@ -34,6 +34,7 @@ public abstract class AbstractComponent implements Component {
 	
 	//Change listeners
 	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
+	private ArrayList<DistributionInformationChangeListener> distributionInformationChangeListeners = new ArrayList<DistributionInformationChangeListener>();
 	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
 	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
 	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<ParametersChangedListener>();
@@ -339,6 +340,23 @@ public abstract class AbstractComponent implements Component {
 		
 		for(DescriptionChangeListener listener : componentDescriptionChangeListeners){
 			listener.ComponentDescriptionChanged(this);
+		}
+		setComponentChanged();
+		
+	}
+	
+	@Override
+	public void registerDistibutionInformationChangedListener(DistributionInformationChangeListener listener){
+		
+		assert(listener != null);
+		distributionInformationChangeListeners.add(listener);
+		
+	}
+	
+	protected void notifyDistributionInformationChangedListners(){
+		
+		for(DistributionInformationChangeListener listener : distributionInformationChangeListeners){
+			listener.distributionInformationChanged(this);
 		}
 		setComponentChanged();
 		

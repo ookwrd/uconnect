@@ -17,6 +17,7 @@ public abstract class AbstractParameter implements
 	
 	private ArrayList<ParameterNameDescriptionChangedListener> nameDescriptionChangedListeners = new ArrayList<ParameterNameDescriptionChangedListener>();
 	private ArrayList<ParameterSettingsChangedListener> changedListeners = new ArrayList<ParameterSettingsChangedListener>();
+	private ArrayList<MandatoryStatusChangedListener> mandatoryStatusChangedListeners = new ArrayList<MandatoryStatusChangedListener>(); 
 	
 	public AbstractParameter(String name, String description, boolean mandatory){
 		constraints = new ArrayList<Constraint>();
@@ -101,7 +102,6 @@ public abstract class AbstractParameter implements
 		for(ParameterSettingsChangedListener listener : changedListeners){
 			listener.parameterSettingsChanged(this);
 		}
-		
 		owner.setComponentChanged();
 	}
 	
@@ -110,11 +110,20 @@ public abstract class AbstractParameter implements
 	}
 	
 	protected void notifyParameterNameDescriptionChangedListeners(){
-		
 		for(ParameterNameDescriptionChangedListener listener : nameDescriptionChangedListeners){
 			listener.parameterNameDescriptionChanged(this);
 		}
-		
+		owner.setComponentChanged();
+	}
+	
+	public void registerMandatoryStatusChangedListener(MandatoryStatusChangedListener listener){
+		mandatoryStatusChangedListeners.add(listener);
+	}
+	
+	protected void notifyMandatoryStatusChangedListeners(){
+		for(MandatoryStatusChangedListener listener : mandatoryStatusChangedListeners){
+			listener.mandatoryStatusChanged(this);
+		}
 		owner.setComponentChanged();
 	}
 	

@@ -252,6 +252,11 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	}
 	
 	
+	public static Component constructUIMAComponent(){
+		//TODO need as there are multiple kinds
+		return null;
+	}
+	
 	public static void main(String[] args){
 		PrimitiveUIMAComponent comp = new PrimitiveUIMAComponent();
 	}

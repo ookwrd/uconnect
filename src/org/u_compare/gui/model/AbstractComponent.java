@@ -17,6 +17,9 @@ public abstract class AbstractComponent implements Component {
 	//private (rather than protected) to ensure use of proper set methods by extending classes
 	private String title = "Unnamed";
 	private String description = "Undescribed";
+	private String vendor = "Unknown";
+	private String version = "Unspecified";
+	private String copyright = "Copyright information unknown";
 	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();
@@ -112,6 +115,52 @@ public abstract class AbstractComponent implements Component {
 		
 		this.description = description;
 		notifyComponentDescriptionChangeListeners();
+	}
+	
+	@Override
+	public String getVendor(){
+		return vendor;
+	}
+	
+	@Override
+	public void setVendor(String vendor){
+		if(this.vendor != null && this.vendor.equals(vendor)){
+			return;
+		}
+		
+		this.vendor = vendor;
+		notifyDistributionInformationChangedListeners();
+	}
+	
+	@Override
+	public String getCopyright(){
+		return copyright;
+	}
+	
+	@Override
+	public void setCopyright(String copyright){
+		if(this.copyright != null && this.copyright.equals(copyright)){
+			return;
+		}
+		
+		this.copyright = copyright;
+		notifyDistributionInformationChangedListeners();
+	}
+	
+	@Override
+	public String getVersion(){
+		return version;
+	}
+	
+	@Override
+	public void setVersion(String version){
+		if(this.version != null && this.version.equals(version)){
+			return;
+		}
+		
+		this.version = version;
+		notifyDistributionInformationChangedListeners();
+		
 	}
 
 	@Override
@@ -353,7 +402,7 @@ public abstract class AbstractComponent implements Component {
 		
 	}
 	
-	protected void notifyDistributionInformationChangedListners(){
+	protected void notifyDistributionInformationChangedListeners(){
 		
 		for(DistributionInformationChangeListener listener : distributionInformationChangeListeners){
 			listener.distributionInformationChanged(this);

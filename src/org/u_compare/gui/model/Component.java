@@ -95,7 +95,7 @@ public interface Component{
 	public void registerComponentDescriptionChangeListener(DescriptionChangeListener listener);
 
 	//TODO documentation
-	/*public String getVendor();
+	public String getVendor();
 	public void setVendor(String vendor);
 	
 	public String getCopyright();
@@ -103,7 +103,7 @@ public interface Component{
 	
 	public String getVersion();
 	public void setVersion(String version);
-	*/
+	
 	public void registerDistibutionInformationChangedListener(DistributionInformationChangeListener listener);
 	
 	/**

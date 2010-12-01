@@ -5,9 +5,15 @@ import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 public class BooleanParameter extends
 		AbstractParameter {
 
-	private boolean parameter;
+	private Boolean parameter;
 	
-	public BooleanParameter(String name, String description, boolean value){
+	/**
+	 * 
+	 * @param name
+	 * @param description
+	 * @param value Null value represents value unset.
+	 */
+	public BooleanParameter(String name, String description, Boolean value){
 		super(name, description);
 		this.parameter = value;
 	}

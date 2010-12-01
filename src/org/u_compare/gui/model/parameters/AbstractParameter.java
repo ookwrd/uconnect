@@ -38,7 +38,7 @@ public abstract class AbstractParameter implements
 	
 	@Override
 	public void setDescription(String description){
-		if(!description.equals(this.description)){
+		if(description != null && !description.equals(this.description)){
 			this.description = description;
 			notifyParameterNameDescriptionChangedListeners();
 		}
@@ -51,7 +51,7 @@ public abstract class AbstractParameter implements
 	
 	@Override
 	public void setName(String name){
-		if(!name.equals(this.name)){
+		if(description != null && !name.equals(this.name)){
 			this.name = name;
 			notifyParameterNameDescriptionChangedListeners();
 		}

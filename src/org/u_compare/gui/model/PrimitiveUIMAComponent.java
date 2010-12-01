@@ -2,6 +2,7 @@ package org.u_compare.gui.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -19,7 +20,8 @@ import org.apache.uima.resource.metadata.ResourceMetaData;
 import org.apache.uima.tools.components.InlineXmlCasConsumer;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
-import org.hamcrest.core.IsInstanceOf;
+import org.omg.CORBA.PUBLIC_MEMBER;
+import org.u_compare.gui.model.parameters.Parameter;
 import org.xml.sax.SAXException;
 
 public class PrimitiveUIMAComponent extends AbstractComponent {
@@ -152,6 +154,79 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 
 	}
 	
+	//TODO do I need a factory here?
+	
+	public PrimitiveUIMAComponent(String descriptorLocation) throws IOException, InvalidXMLException{
+		this(new XMLInputSource(descriptorLocation));
+	}
+	
+	public PrimitiveUIMAComponent(XMLInputSource inputSource) throws InvalidXMLException{
+		
+		Object resourceSpecifier = UIMAFramework.getXMLParser().parse(inputSource);
+		
+		if(resourceSpecifier instanceof AnalysisEngineDescription){
+			
+			AnalysisEngineDescription desc = (AnalysisEngineDescription)resourceSpecifier;			
+		
+			processProcessingResouceMetaData(desc.getAnalysisEngineMetaData());
+			
+		}
+		
+	}
+	
+	protected void processProcessingResouceMetaData(ProcessingResourceMetaData metaData){
+		processResourceMetaData(metaData);
+		
+		//TODO inputs/outputs
+	}
+	
+	protected void processResourceMetaData(ResourceMetaData metaData){
+		
+		setTitle(metaData.getName());
+		setDescription(metaData.getDescription());
+		//TODO vendor
+		//TODO version
+		//TODO copyright
+		
+		ArrayList<Parameter> parameters = new ArrayList<Parameter>(); 
+		
+		ConfigurationParameterSettings settings = metaData.getConfigurationParameterSettings();
+		for(ConfigurationParameter param : metaData.getConfigurationParameterDeclarations().getConfigurationParameters()){
+
+			Parameter newParameter = constructParameter(param, settings.getParameterValue(param.getName()));
+			
+			parameters.add(newParameter);
+		}
+		
+		//TODO make the parameter constructors work first
+		//setConfigurationParameters(parameters);
+		
+	}
+	
+	protected Parameter constructParameter(ConfigurationParameter param, Object value){
+		
+		Parameter retVal;
+		
+		String name = param.getName();
+		String description = param.getDescription();
+		boolean multivalued = param.isMultiValued();
+		boolean mandatory = param.isMandatory();
+		
+		String type = param.getType();//Why are the types Strings? I cant do a switch statement...
+		if(type.equals(ConfigurationParameter.TYPE_BOOLEAN)) {
+			retVal = null; //TODO
+		} else if (type.equals(ConfigurationParameter.TYPE_FLOAT)) {
+			retVal = null; //TODO
+		} else if (type.equals(ConfigurationParameter.TYPE_INTEGER)) {
+			retVal = null; //TODO
+		} else if (type.equals(ConfigurationParameter.TYPE_STRING)) {
+			retVal = null; //TODO
+		} else {
+			retVal = null; //TODO throw an error here. 
+		}
+		
+		return retVal;
+	}
 	public static void main(String[] args){
 		PrimitiveUIMAComponent comp = new PrimitiveUIMAComponent();
 	}

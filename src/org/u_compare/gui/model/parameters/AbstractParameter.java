@@ -2,6 +2,7 @@ package org.u_compare.gui.model.parameters;
 
 import java.util.ArrayList;
 
+import org.apache.uima.resource.metadata.ConfigurationParameter;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
@@ -134,5 +135,47 @@ public abstract class AbstractParameter implements
 		for(Constraint con : constraints){
 			con.validate(parameter);	
 		}
+	}
+	
+	//TODO documentation
+	public static Parameter constructParameter(ConfigurationParameter param, Object value){
+		
+		Parameter retVal;
+		
+		String name = param.getName();
+		String description = param.getDescription();
+		boolean multivalued = param.isMultiValued();
+		boolean mandatory = param.isMandatory();
+		
+		String type = param.getType();//Why are the types Strings? I cant do a switch statement...
+		if(type.equals(ConfigurationParameter.TYPE_BOOLEAN)) {
+			if(multivalued){
+				retVal = null; //TODO
+			}else{
+				retVal = new BooleanParameter(name, description, mandatory, value!=null?(Boolean)value:null);
+			}
+		} else if (type.equals(ConfigurationParameter.TYPE_FLOAT)) {
+			if(multivalued){
+				retVal = null; //TODO
+			}else{
+				retVal = null; //TODO
+			}
+		} else if (type.equals(ConfigurationParameter.TYPE_INTEGER)) {
+			if(multivalued){
+				retVal = null; //TODO
+			}else{
+				retVal = new IntegerParameter(name, description, mandatory, value!=null?(Integer)value:null);
+			}
+		} else if (type.equals(ConfigurationParameter.TYPE_STRING)) {
+			if(multivalued){
+				retVal = null; //TODO
+			}else{
+				retVal = new StringParameter(name, description, mandatory, value!=null?(String)value:null);
+			}
+		} else {
+			retVal = null; //TODO throw an error here. 
+		}
+		
+		return retVal;
 	}
 }

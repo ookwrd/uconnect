@@ -8,8 +8,8 @@ public class IntegerParameter extends AbstractParameter{
 
 	private int value;
 	
-	public IntegerParameter(String description, int value) {
-		super(description);
+	public IntegerParameter(String name, String description, int value) {
+		super(name, description);
 		
 		this.value = value;
 		addConstraint(new IntegerConstraint());

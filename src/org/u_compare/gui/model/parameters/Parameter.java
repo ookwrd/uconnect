@@ -8,6 +8,7 @@ import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public interface Parameter {
 
+	public String getName();
 	public String getDescription();
 	public String getParameterString();
 	public void addConstraint(Constraint constraint);

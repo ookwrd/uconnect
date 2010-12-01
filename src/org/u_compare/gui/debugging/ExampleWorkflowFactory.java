@@ -98,26 +98,26 @@ public class ExampleWorkflowFactory {
 		workflow.setDescription("Some people might say I am simple, but I am happy being who I am. Look at my 3 wonderful (simple) childrem.");
 		
 		ArrayList<Parameter> c1params = new ArrayList<Parameter>();
-		c1params.add(new BooleanParameter("bool1","A true boolean",true));
-		c1params.add(new BooleanParameter("bool2","A false boolean with a really really long description that will get in the way",false));
+		c1params.add(new BooleanParameter("bool1","A true boolean",false,true));
+		c1params.add(new BooleanParameter("bool2","A false boolean with a really really long description that will get in the way",false, false));
 		
 		ArrayList<Parameter> c2params = new ArrayList<Parameter>();
-		c2params.add(new StringParameter("String1","A String to configure", "default value"));
-		c2params.add(new IntegerParameter("Integer1","An Integer to configure", 5));
+		c2params.add(new StringParameter("String1","A String to configure", false, "default value"));
+		c2params.add(new IntegerParameter("Integer1","An Integer to configure", false, 5));
 		
 		ArrayList<Parameter> c3params = new ArrayList<Parameter>();
-		c3params.add(new BooleanParameter("bool1","A true boolean",true));
-		c3params.add(new BooleanParameter("bool2","A false boolean",false));
-		c3params.add(new StringParameter("Strin1","A String to configure", "default value"));
+		c3params.add(new BooleanParameter("bool1","A true boolean",false, true));
+		c3params.add(new BooleanParameter("bool2","A false boolean",false, false));
+		c3params.add(new StringParameter("Strin1","A String to configure", false, "default value"));
 		
 		//Add a constrained parameter
-		StringParameter constrainedParameter = new StringParameter("parama","Four character string", "four");
+		StringParameter constrainedParameter = new StringParameter("parama","Four character string", false, "four");
 		StringConstraint cons = new StringConstraint();
 		cons.setLengthRange(4, 4);
 		constrainedParameter.addConstraint(cons);
 		c1params.add(constrainedParameter);
 		
-		IntegerParameter constrainedParameter1 = new IntegerParameter("<500","less than 500", 500);
+		IntegerParameter constrainedParameter1 = new IntegerParameter("<500","less than 500", false, 500);
 		IntegerConstraint cons1 = new IntegerConstraint();
 		cons1.setMax(500);
 		constrainedParameter1.addConstraint(cons1);
@@ -158,8 +158,8 @@ public class ExampleWorkflowFactory {
 		Workflow workflow = new Workflow();
 		
 		ArrayList<Parameter> workflowParams = new ArrayList<Parameter>();
-		workflowParams.add(new BooleanParameter("trueParam","A true boolean",true));
-		workflowParams.add(new BooleanParameter("falseParam","A false boolean",false));
+		workflowParams.add(new BooleanParameter("trueParam","A true boolean", false, true));
+		workflowParams.add(new BooleanParameter("falseParam","A false boolean",false, false));
 		
 		Component simplea = new MockComponent(workflowParams);
 		Component simpleb = new MockComponent(workflowParams);

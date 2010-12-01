@@ -28,7 +28,7 @@ public class MockComponent extends AbstractComponent implements Component {
 		identifier = "unspecified";
 		
 		ArrayList<Parameter> params = new ArrayList<Parameter>();
-		params.add(new BooleanParameter("Boolean", "This is a boolean configuration Parameter", false));
+		params.add(new BooleanParameter("Boolean", "This is a boolean configuration Parameter", false, false));
 		setConfigurationParameters(params);
 	}
 	

@@ -32,8 +32,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			
 			//Analysis engine in
-			XMLInputSource xmlIn = new XMLInputSource("test_descriptors/True.xml");
-			
+			//XMLInputSource xmlIn = new XMLInputSource("test_descriptors/True.xml");
+			XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/testers/TESTERTrueNot.xml");
+
 			
 			//AnalysisEngineDescription desc = UIMAFramework.getXMLParser().parseAnalysisEngineDescription(xmlIn);
 			//casConsumerDesc = UIMAFramework.getXMLParser().parseCasConsumerDescription(xmlIn);
@@ -66,7 +67,6 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				//TODO
 				
 				//Decompose description object
-				//TODO
 				//ResourceMetaData metaData = desc.getMetaData();//Doesn't get us all the methods we need.
 				AnalysisEngineMetaData metaData = desc.getAnalysisEngineMetaData();//Also exists Processing Resource metaData, maybe the level we want
 				
@@ -79,21 +79,35 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				System.out.println("Primitive: " + desc.isPrimitive());
 				System.out.println("Implementation Name: " + desc.getImplementationName());
 				
-				//TODO descendents
+				
+				System.out.println("Subcomponents:");
+				for(String key : desc.getDelegateAnalysisEngineSpecifiers().keySet()){
+					System.out.println("Key: " + key);
+					ResourceSpecifier specifier = desc.getDelegateAnalysisEngineSpecifiers().get(key);
+					
+					if(specifier instanceof AnalysisEngineDescription){
+						
+						System.out.println("In the child");
+						
+						AnalysisEngineDescription child = (AnalysisEngineDescription)specifier;
+						System.out.println("Child Name: " + child.getAnalysisEngineMetaData().getName());
+					}
+				}
 				
 				//TODO type system
 				
 				System.out.println("\nInputs & Outputs:\n");
-				//TODO
 				for(Capability capability: metaData.getCapabilities()){//What exactly are the capability sets for? based on languages?
 					System.out.println(capability.getDescription());
 					System.out.println("Inputs:");
 					for(TypeOrFeature torf : capability.getInputs()){
 						System.out.println(torf.getName());
+						System.out.println(torf.isType());
 					}
-					System.out.println("Outputs");
+					System.out.println("Outputs:");
 					for(TypeOrFeature torf : capability.getOutputs()){
 						System.out.println(torf.getName());
+						System.out.println(torf.isType());
 					}
 				}
 				
@@ -109,7 +123,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 					}
 					System.out.println("Multivalued: " + param.isMultiValued());
 					System.out.println("Mandatory: " + param.isMandatory());
-					System.out.println("Value: " +settings.getParameterValue(param.getName())); //TODO not working
+					System.out.println("Value: " +settings.getParameterValue(param.getName()));
 					System.out.println();		
 				}
 				
@@ -129,25 +143,13 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			}
 			
 		} catch (InvalidXMLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-			// get the settings from the metadata
-			/*ConfigurationParameterSettings consumerParamSettings =
-			    casConsumerDesc.getMetaData().getConfigurationParameterSettings();
-			*/
-		
-			// Set a parameter value
-			/*consumerParamSettings.setParameterValue(
-			  InlineXmlCasConsumer.PARAM_OUTPUTDIR,
-			  outputDir.getAbsolutePath());*/
 	}
 	
 	public static void main(String[] args){

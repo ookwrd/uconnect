@@ -12,6 +12,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,7 +38,7 @@ import org.u_compare.gui.model.Workflow;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends DraggableJPanel implements
-		SubComponentsChangedListener {
+		SubComponentsChangedListener, FocusListener, MouseListener {
 
 	public final static int PREFERRED_WIDTH = 300;
 	public static final int BORDER_ROUNDING = 5;
@@ -67,6 +69,11 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 		super(controller);
 		initialConfiguration(component, controller);
+		
+		// let the component have focus
+		this.setFocusable(true);
+		addFocusListener(this);
+		addMouseListener(this);
 		
 		if (component.isAggregate()) {
 			((AggregateComponent) component)
@@ -249,5 +256,49 @@ public class ComponentPanel extends DraggableJPanel implements
 		else {
 			return (Workflow) this.component;
 		}
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		//setVisible(false);
+		//setVisible(true);
+		requestFocusInWindow();
+		System.out.println("focus detected on the component");
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

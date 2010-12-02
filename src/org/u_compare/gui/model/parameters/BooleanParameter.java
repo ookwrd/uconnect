@@ -18,7 +18,7 @@ public class BooleanParameter extends
 		this.parameter = value;
 	}
 	
-	public boolean getParameter(){
+	public Boolean getParameter(){
 		return parameter;
 	}
 

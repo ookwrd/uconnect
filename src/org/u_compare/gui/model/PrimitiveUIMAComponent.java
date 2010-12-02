@@ -2,6 +2,7 @@ package org.u_compare.gui.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 import org.apache.uima.ResourceSpecifierFactory;
@@ -31,6 +32,8 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.xml.sax.SAXException;
 
+import com.sun.source.tree.NewClassTree;
+
 public class PrimitiveUIMAComponent extends AbstractComponent {
 
 	public PrimitiveUIMAComponent(){
@@ -41,7 +44,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			
 			//Analysis engine in
-			XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/logic/True.xml");
+			//XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/logic/True.xml");
+			XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/logic/SuperSimpleFalse.xml");
 			//XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/testers/TESTERTrueNot.xml");
 
 			
@@ -161,15 +165,30 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				
 				constructProcessingResourceMetaData(newMetaData);
 				
-				System.out.println(newMetaData.getName());
-				
 				//newDescription.setMetaData(newMetaData);
 				
 				
-				System.out.println("New name: " + newMetaData.getName());
+				StringWriter writeInput = new StringWriter();
+				desc.toXML(writeInput);
+				String inputString = writeInput.toString();
 				
-				newDescription.toXML(System.out);
-
+				StringWriter writeConstructed = new StringWriter();
+				newDescription.toXML(writeConstructed);
+				String constructedString = writeConstructed.toString();
+				
+				System.out.println("Input = Output: " + constructedString.equals(writeInput));
+				
+				int i = 0;
+				while(i<constructedString.length() && constructedString.regionMatches(0, inputString, 0, i)){
+					i++;
+				}
+				
+				System.out.println("Matches the first " + i + " characters.");
+				System.out.println(constructedString.substring(0, i));
+				System.out.println();
+				System.out.println(constructedString.substring(i - 10 > 0?i -10 : 0, i + 100));
+				System.out.println();
+				System.out.println(inputString.substring(i - 10 > 0?i -10 : 0, i + 100));
 				
 			}
 			
@@ -256,6 +275,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 		//Parameters
 		ConfigurationParameterDeclarations settings = metaData.getConfigurationParameterDeclarations();
+		ConfigurationParameterSettings values = metaData.getConfigurationParameterSettings();
 		
 		for(Parameter param : getConfigurationParameters()){
 			ConfigurationParameter newParameter = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
@@ -264,23 +284,32 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			newParameter.setDescription(param.getDescription());
 			newParameter.setMandatory(param.isMandatory());
 			newParameter.setMultiValued(param.isMultivalued());
+			
+			Object value = null;
+			
 			if(param instanceof BooleanParameter){
 				newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
+				value = ((BooleanParameter)param).getParameter();
 			} else if (param instanceof StringParameter){
 				newParameter.setType(ConfigurationParameter.TYPE_STRING);
+				value = ((StringParameter)param).getParameter();
 			} else if (param instanceof IntegerParameter){
 				newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
+				value = ((IntegerParameter)param).getParameter();
 			} else if (param instanceof FloatParameter){
 				newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
+				value = ((FloatParameter)param).getParameter();
 			} else {
 				assert(false);
 			}
 			//newParameter.setSourceUrl(arg0) TODO
 			
+			if(value != null){
+				values.setParameterValue(param.getName(), value);
+			}
+			
 			settings.addConfigurationParameter(newParameter);
 		}
-		
-		//TODO parameter values
 		
 		//TODO
 		

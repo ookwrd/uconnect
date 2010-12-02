@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,12 +35,15 @@ public class DescriptionPanel extends JPanel implements
 	private final ComponentController controller;
 	private final Component component;
 	private EditableTextPanel innerPanel;
+	
+	private static Font font;
 
 	public DescriptionPanel(ComponentController controller, Component component) {
 		super();
 
 		this.controller = controller;
 		this.component = component;
+		this.font = this.getFont();
 		
 		innerPanel = new EditableTextPanel(controller, component);
 		
@@ -153,13 +157,12 @@ public class DescriptionPanel extends JPanel implements
 
 	}
 	
-	
 	// TODO this might be set directly by the controller
 	protected void setDescription(String descriptionText) {
+		
 		descriptionText = descriptionText.trim();
 		innerPanel.setDescription(descriptionText);
 		this.controller.setDescription(descriptionText);
-		
 	}
 
 	@Override

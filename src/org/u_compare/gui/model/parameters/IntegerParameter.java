@@ -40,4 +40,9 @@ public class IntegerParameter extends AbstractParameter{
 		}
 	}
 
+	@Override
+	public boolean isMultivalued() {
+		return false;
+	}
+
 }

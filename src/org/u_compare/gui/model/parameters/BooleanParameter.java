@@ -38,6 +38,11 @@ public class BooleanParameter extends
 			return null;
 		}
 	}
+
+	@Override
+	public boolean isMultivalued() {
+		return false;
+	}
 	
 
 }

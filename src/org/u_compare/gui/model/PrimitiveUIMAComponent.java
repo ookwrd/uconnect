@@ -263,7 +263,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			newParameter.setName(param.getName());
 			newParameter.setDescription(param.getDescription());
 			newParameter.setMandatory(param.isMandatory());
-			//newParameter.setMultiValued(...);//TODO
+			newParameter.setMultiValued(param.isMultivalued());
 			if(param instanceof BooleanParameter){
 				newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
 			} else if (param instanceof StringParameter){
@@ -275,6 +275,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			} else {
 				assert(false);
 			}
+			//newParameter.setSourceUrl(arg0) TODO
 			
 			settings.addConfigurationParameter(newParameter);
 		}

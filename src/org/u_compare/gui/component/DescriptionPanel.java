@@ -53,7 +53,6 @@ public class DescriptionPanel extends JPanel implements
 		
 		EditableTextPanel innerPanel = new EditableTextPanel(controller, component);
 		
-		
 		// add a description panel under the top panel, and first set the layout
 		BorderLayout descriptionLayout = new BorderLayout();
 		setLayout(descriptionLayout);

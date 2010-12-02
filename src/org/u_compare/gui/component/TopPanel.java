@@ -20,6 +20,7 @@ public class TopPanel extends JPanel{
 		
 		this.controller = controller;
 		this.component = component;
+		//this.setFocusable(false);
 		BorderLayout topLayout = new BorderLayout();
 		setLayout(topLayout);
 		setOpaque(false);

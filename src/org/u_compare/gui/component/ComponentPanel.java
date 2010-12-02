@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.control.ComponentController;
@@ -130,7 +131,14 @@ public class ComponentPanel extends DraggableJPanel implements
 		innerPanel.setOpaque(false);
 		innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
 				BORDER_WIDTH, BORDER_WIDTH));
-		
+	}
+	
+	private void setBorderColored(boolean colored) {
+		if(colored) 
+			innerPanel.setBorder(new EtchedBorder(Color.LIGHT_GRAY, Color.DARK_GRAY));
+		else
+			innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
+					BORDER_WIDTH, BORDER_WIDTH));
 	}
 	
 	protected void setupTopPanel(JPanel target, boolean isWorkflow){
@@ -260,14 +268,12 @@ public class ComponentPanel extends DraggableJPanel implements
 
 	@Override
 	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
+		setBorderColored(true);
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
+		setBorderColored(false);
 	}
 
 	@Override

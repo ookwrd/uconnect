@@ -9,6 +9,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -17,6 +18,8 @@ import javax.swing.border.EmptyBorder;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
+
+import sun.tools.tree.ThisExpression;
 
 public class EditableTextPanel extends JPanel {
 
@@ -35,6 +38,8 @@ public class EditableTextPanel extends JPanel {
 	private JButton endEditingButton;
 
 	private ActionListener endEditingListener;
+	
+	private ArrayList<ActionListener> changeListeners = new ArrayList<ActionListener>();
 
 	public EditableTextPanel(ComponentController controller, Component component) {
 
@@ -145,5 +150,16 @@ public class EditableTextPanel extends JPanel {
 		description.setText(descriptionText);
 		editableDescription.setText(descriptionText);
 	}
-
+	
+	public void registerActionListener(ActionListener listener){
+		this.changeListeners.add(listener);
+	}
+	
+	protected void notifyActionListeners(){
+		for(ActionListener listener : changeListeners){
+			listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Component Contents Changed")); 
+		}
+	}
+	
+	
 }

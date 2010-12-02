@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.uima.ResourceSpecifierFactory;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.TypeOrFeature;
@@ -146,6 +147,28 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				
 				
 				//metaData.buildFrom....
+				
+				
+				System.out.println("^^^^^^^^^^^^^^^^^^^");
+				
+				extractFromProcessingResouceMetaData(metaData);
+				
+				AnalysisEngineDescription newDescription = UIMAFramework.getResourceSpecifierFactory().createAnalysisEngineDescription();
+				
+				AnalysisEngineMetaData newMetaData = newDescription.getAnalysisEngineMetaData();
+				
+				constructProcessingResourceMetaData(newMetaData);
+				
+				System.out.println(newMetaData.getName());
+				
+				//newDescription.setMetaData(newMetaData);
+				
+				
+				System.out.println("New name: " + newMetaData.getName());
+				
+				newDescription.toXML(System.out);
+
+				
 			}
 			
 		} catch (InvalidXMLException e) {
@@ -156,6 +179,10 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			e.printStackTrace();
 		}
 
+		
+		
+
+		
 	}
 	
 	//TODO do I need a factory here?
@@ -171,8 +198,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		if(resourceSpecifier instanceof AnalysisEngineDescription){
 			
 			AnalysisEngineDescription desc = (AnalysisEngineDescription)resourceSpecifier;			
-		
-			processProcessingResouceMetaData(desc.getAnalysisEngineMetaData());
+			extractFromProcessingResouceMetaData(desc.getAnalysisEngineMetaData());
 			
 		}
 		}catch(Exception e){
@@ -181,13 +207,20 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 	}
 	
-	protected void processProcessingResouceMetaData(ProcessingResourceMetaData metaData){
-		processResourceMetaData(metaData);
+	protected void extractFromProcessingResouceMetaData(ProcessingResourceMetaData metaData){
+		extractFromResourceMetaData(metaData);
 		
 		//TODO inputs/outputs
 	}
 	
-	protected void processResourceMetaData(ResourceMetaData metaData){
+	protected void constructProcessingResourceMetaData(ProcessingResourceMetaData metaData) {
+		
+		constructResourceMetaData(metaData);
+		
+		//TODO
+	}
+	
+	protected void extractFromResourceMetaData(ResourceMetaData metaData){
 		
 		//Basic metaData
 		setTitle(metaData.getName());
@@ -205,8 +238,20 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			parameters.add(newParameter);
 			
 		}
-		//TODO make the parameter constructors work first
+		//TODO make all the parameter constructors work
 		setConfigurationParameters(parameters);
+		
+	}
+	
+	protected void constructResourceMetaData(ResourceMetaData metaData){
+		
+		metaData.setName(getTitle());
+		metaData.setDescription(getDescription());
+		metaData.setVendor(getVendor());
+		metaData.setVersion(getVersion());
+		metaData.setCopyright(getCopyright());
+		
+		//TODO
 		
 	}
 	

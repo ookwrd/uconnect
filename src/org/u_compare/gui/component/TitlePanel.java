@@ -52,7 +52,7 @@ public class TitlePanel extends JPanel {
 		this.controller = controller;
 		this.component = component;
 		this.topPanel = topPanel; // there is no parent yet
-
+		
 		titleListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTitle(titleTextField.getText());
@@ -60,6 +60,7 @@ public class TitlePanel extends JPanel {
 				titleLabel.setVisible(true);
 			}
 		};
+		//this.setFocusable(false);
 
 		// add a title panel
 		BoxLayout bl = new BoxLayout(this, BoxLayout.X_AXIS);

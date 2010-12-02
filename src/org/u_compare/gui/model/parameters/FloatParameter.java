@@ -19,5 +19,10 @@ public class FloatParameter extends AbstractParameter {
 		return false;
 	}
 
+	public Float getParameter() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

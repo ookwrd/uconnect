@@ -14,7 +14,7 @@ public class IntegerParameter extends AbstractParameter{
 		addConstraint(new IntegerConstraint());
 	}
 	
-	public int getParameter(){
+	public Integer getParameter(){
 		return value;
 	}	
 	

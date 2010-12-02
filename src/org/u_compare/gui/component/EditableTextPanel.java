@@ -173,5 +173,9 @@ public class EditableTextPanel extends JPanel {
 		}
 	}
 	
+	public String getDescription() {
+		return this.descriptionText;
+	}
+	
 	
 }

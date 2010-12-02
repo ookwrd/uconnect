@@ -15,6 +15,7 @@ import org.apache.uima.collection.metadata.NameValuePair;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.ConfigurationParameter;
+import org.apache.uima.resource.metadata.ConfigurationParameterDeclarations;
 import org.apache.uima.resource.metadata.ConfigurationParameterSettings;
 import org.apache.uima.resource.metadata.ProcessingResourceMetaData;
 import org.apache.uima.resource.metadata.ResourceMetaData;
@@ -24,6 +25,7 @@ import org.apache.uima.util.XMLInputSource;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.u_compare.gui.model.parameters.AbstractParameter;
 import org.u_compare.gui.model.parameters.BooleanParameter;
+import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.StringParameter;
@@ -39,8 +41,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			
 			//Analysis engine in
-			//XMLInputSource xmlIn = new XMLInputSource("test_descriptors/True.xml");
-			XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/testers/TESTERTrueNot.xml");
+			XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/logic/True.xml");
+			//XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/testers/TESTERTrueNot.xml");
 
 			
 			//AnalysisEngineDescription desc = UIMAFramework.getXMLParser().parseAnalysisEngineDescription(xmlIn);
@@ -245,11 +247,39 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	
 	protected void constructResourceMetaData(ResourceMetaData metaData){
 		
+		//Basic MetaData
 		metaData.setName(getTitle());
 		metaData.setDescription(getDescription());
 		metaData.setVendor(getVendor());
 		metaData.setVersion(getVersion());
 		metaData.setCopyright(getCopyright());
+		
+		//Parameters
+		ConfigurationParameterDeclarations settings = metaData.getConfigurationParameterDeclarations();
+		
+		for(Parameter param : getConfigurationParameters()){
+			ConfigurationParameter newParameter = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
+			
+			newParameter.setName(param.getName());
+			newParameter.setDescription(param.getDescription());
+			newParameter.setMandatory(param.isMandatory());
+			//newParameter.setMultiValued(...);//TODO
+			if(param instanceof BooleanParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
+			} else if (param instanceof StringParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_STRING);
+			} else if (param instanceof IntegerParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
+			} else if (param instanceof FloatParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
+			} else {
+				assert(false);
+			}
+			
+			settings.addConfigurationParameter(newParameter);
+		}
+		
+		//TODO parameter values
 		
 		//TODO
 		

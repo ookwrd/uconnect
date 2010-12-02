@@ -151,12 +151,15 @@ public class EditableTextPanel extends JPanel {
 		editableDescription.setText(descriptionText);
 	}
 	
-	public void registerActionListener(ActionListener listener){
+	public void registerActionListener(ActionListener listener) {
+		
 		this.changeListeners.add(listener);
 	}
 	
-	protected void notifyActionListeners(){
-		for(ActionListener listener : changeListeners){
+	protected void notifyActionListeners() {
+		
+		for(ActionListener listener : changeListeners) {
+			
 			listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Component Contents Changed")); 
 		}
 	}

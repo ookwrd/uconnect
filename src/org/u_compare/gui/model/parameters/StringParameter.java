@@ -32,5 +32,10 @@ public class StringParameter extends AbstractParameter{
 			return "";
 		}
 	}
+
+	@Override
+	public boolean isMultivalued() {
+		return false;
+	}
 	
 }

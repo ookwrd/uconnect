@@ -14,6 +14,8 @@ public interface Parameter {
 	public void setDescription(String description);
 	public boolean isMandatory();
 	public void setMandatory(boolean mandatory);
+	public boolean isMultivalued();
+	//public void setMultivalued(boolean multivalued); TODO
 	public String getParameterString();
 	public void addConstraint(Constraint constraint);
 	public ArrayList<Constraint> getConstraints();

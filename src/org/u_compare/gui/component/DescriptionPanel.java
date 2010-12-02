@@ -50,7 +50,7 @@ public class DescriptionPanel extends JPanel implements
 		innerPanel.registerActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				setDescription(innerPanel.getDescription());
 			}
 		});
 		
@@ -60,105 +60,6 @@ public class DescriptionPanel extends JPanel implements
 		setOpaque(false);
 		this.add(innerPanel);
 		
-		/*
-		descriptionListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
-				endEditingButton.setVisible(true);
-			}
-		};
-
-		descriptionFocusListener = new FocusListener() {
-
-			public void focusGained(FocusEvent e) {
-			}
-
-			public void focusLost(FocusEvent e) {
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
-				endEditingButton.setVisible(false);
-			}
-		};
-
-		endEditingListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				// TODO remove the useless lines
-				System.out.println("PUSHED STOP EDITING");
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
-				endEditingButton.setVisible(false);
-			}
-		};
-
-		// add a description panel under the top panel, and first set the layout
-		BorderLayout descriptionLayout = new BorderLayout();
-		setLayout(descriptionLayout);
-
-		setOpaque(false);
-		setBorder(new EmptyBorder(new Insets(DESCRIPTION_PANEL_PADDING,
-				DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING,
-				DESCRIPTION_PANEL_PADDING)));
-
-		descriptionText = component.getDescription();
-
-		description = new JTextArea(descriptionText);
-		description.setBackground(defaultColor);
-		description.setLineWrap(true);
-		description.setWrapStyleWord(true);
-		description.setEditable(false);
-
-		editableDescription = new JTextArea(descriptionText);
-		editableDescription.setBackground(Color.WHITE);
-		editableDescription.setLineWrap(true);
-		editableDescription.setWrapStyleWord(true);
-		editableDescription.setEditable(true);
-		editableDescription.setVisible(false);
-
-		endEditingButton = new JButton("Save");
-		endEditingButton.setActionCommand("End description editing");
-		endEditingButton.addActionListener(endEditingListener);
-		endEditingButton.setVisible(false);
-
-		add(description, BorderLayout.PAGE_START);
-		add(editableDescription, BorderLayout.LINE_START);
-		add(endEditingButton, BorderLayout.LINE_END);
-		// TODO change the layout to cardlayout, creating the cards as on
-		// http://download.oracle.com/javase/tutorial/uiswing/layout/card.html
-
-		setBackground(Color.WHITE);
-
-		description.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					// JPanel target = (JPanel) e.getSource();
-					if (!DescriptionPanel.this.component.getLockedStatus()) {
-						// setDescription(description.getText());
-						description.setVisible(false);
-						editableDescription.setVisible(true);
-
-						// editableDescription.requestFocusInWindow();
-						editableDescription.setVisible(false);
-						editableDescription.setVisible(true);
-						editableDescription.requestFocus();
-
-						endEditingButton.setVisible(true);
-					}
-				}
-			}
-		});
-		
-		
-		// editableDescription.addActionListener(descriptionListener); //
-		// useless: not a text field anymore
-		editableDescription.addFocusListener(descriptionFocusListener);
-		*/
-
 		// Register Listeners
 		component.registerComponentDescriptionChangeListener(this);
 

@@ -3,6 +3,7 @@ package org.u_compare.gui.component;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -81,6 +82,7 @@ public class TitlePanel extends JPanel {
 		}
 		titleTextField.setVisible(false);
 
+		//TODO fix the centering
 		titleLabel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
 		//titleLabel.setAlignmentY(CENTER_ALIGNMENT);
 		titleTextField.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -143,6 +145,17 @@ public class TitlePanel extends JPanel {
 		// the title JTextField has listeners
 		titleTextField.addActionListener(titleListener);
 		titleTextField.addFocusListener(titleFocusListener);
+		
+		// set a minimum size, in case the title is short
+		int h = getFontMetrics(titleTextField.getFont()).getHeight();
+		titleTextField.setMinimumSize(new Dimension(100, h));
+		titleTextField.setPreferredSize(new Dimension(100, h)); // just in case
+		titleLabel.setMinimumSize(new Dimension(100, h));
+		titleLabel.setPreferredSize(new Dimension(100, h)); // just in case
+		
+		// set a maximum size too
+		//titleTextField.setMaximumSize(new Dimension(, 10));
+		//titleLabel.setMaximumSize(new Dimension(, 10));
 
 	}
 
@@ -169,7 +182,7 @@ public class TitlePanel extends JPanel {
 						.println("TopPanel is still null, this is really not normal."); // TODO
 																						// fix
 			
-			// compute maximal text size
+			// compute maximal text size and set
 			int delta = 60; // TODO find the right value
 			String shortTitle = title;
 			int count = 1000;
@@ -181,6 +194,10 @@ public class TitlePanel extends JPanel {
 				count--;
 			}
 		}
+		
+		while (visualTitle.length()<8)
+			visualTitle += " ";
+		
 		this.titleLabel.setText(visualTitle);
 		titleTextField.setDocument(new JTextFieldLimit(TITLE_SIZE_LIMIT));
 

@@ -69,17 +69,17 @@ public class EditableTextPanel extends JPanel {
 			}
 		};
 
-		endEditingListener = new ActionListener() {
+		/*endEditingListener = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				// TODO remove the useless lines
+				// TODO remove useless lines
 				System.out.println("PUSHED STOP EDITING");
 				setDescription(editableDescription.getText());
 				editableDescription.setVisible(false);
 				description.setVisible(true);
 				endEditingButton.setVisible(false);
 			}
-		};
+		};*/
 
 		// add a description panel under the top panel, and first set the layout
 		BorderLayout descriptionLayout = new BorderLayout();
@@ -112,7 +112,16 @@ public class EditableTextPanel extends JPanel {
 
 		add(description, BorderLayout.PAGE_START);
 		add(editableDescription, BorderLayout.CENTER);
-		add(endEditingButton, BorderLayout.AFTER_LAST_LINE);
+		
+		JPanel saveButtonPanel = new JPanel();
+		JPanel saveButtonInnerPanel = new JPanel();
+		
+		saveButtonPanel.setLayout(new BorderLayout());
+		saveButtonPanel.add(saveButtonInnerPanel, BorderLayout.AFTER_LINE_ENDS);
+		
+		add(saveButtonPanel, BorderLayout.AFTER_LAST_LINE);
+		saveButtonInnerPanel.add(endEditingButton);
+		
 		// TODO change the layout to cardlayout, creating the cards as on
 		// http://download.oracle.com/javase/tutorial/uiswing/layout/card.html
 

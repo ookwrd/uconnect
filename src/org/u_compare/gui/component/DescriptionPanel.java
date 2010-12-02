@@ -50,7 +50,7 @@ public class DescriptionPanel extends JPanel implements
 		innerPanel.registerActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//innerPanel.
+				
 			}
 		});
 		

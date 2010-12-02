@@ -27,14 +27,14 @@ import org.u_compare.gui.model.DescriptionChangeListener;
 public class DescriptionPanel extends JPanel implements
 		DescriptionChangeListener {
 
-	private static final int DESCRIPTION_PANEL_PADDING = 5;
+	//private static final int DESCRIPTION_PANEL_PADDING = 5;
 
-	public final Color defaultColor = getBackground();
+	//public final Color defaultColor = getBackground();
 
 	private final ComponentController controller;
 	private final Component component;
 
-	private ActionListener descriptionListener;
+	/*private ActionListener descriptionListener;
 	private FocusListener descriptionFocusListener;
 
 	private JTextArea description;
@@ -43,13 +43,23 @@ public class DescriptionPanel extends JPanel implements
 	private JButton endEditingButton;
 
 	private ActionListener endEditingListener;
+	*/
 
 	public DescriptionPanel(ComponentController controller, Component component) {
 		super();
 
 		this.controller = controller;
 		this.component = component;
-
+		
+		EditableTextPanel innerPanel = new EditableTextPanel(controller, component);
+		
+		// add a description panel under the top panel, and first set the layout
+		BorderLayout descriptionLayout = new BorderLayout();
+		setLayout(descriptionLayout);
+		setOpaque(false);
+		this.add(innerPanel);
+		
+		/*
 		descriptionListener = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -141,16 +151,19 @@ public class DescriptionPanel extends JPanel implements
 				}
 			}
 		});
-
+		
+		
 		// editableDescription.addActionListener(descriptionListener); //
 		// useless: not a text field anymore
 		editableDescription.addFocusListener(descriptionFocusListener);
+		*/
 
 		// Register Listeners
 		component.registerComponentDescriptionChangeListener(this);
 
 	}
-
+	
+	
 	// TODO this might be set directly by the controller
 	protected void setDescription(String descriptionText) {
 		descriptionText = descriptionText.trim();
@@ -160,10 +173,13 @@ public class DescriptionPanel extends JPanel implements
 		 * (descriptionText.charAt(i)==a) tmp+="descriptionText.charAt(i); }
 		 * descriptionText = tmp;
 		 */
+		
+		/*
 		this.descriptionText = descriptionText;
 		description.setText(descriptionText);
 		editableDescription.setText(descriptionText);
 		this.controller.setDescription(descriptionText);
+		*/
 	}
 
 	@Override

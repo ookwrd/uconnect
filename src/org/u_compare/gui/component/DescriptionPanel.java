@@ -33,17 +33,7 @@ public class DescriptionPanel extends JPanel implements
 
 	private final ComponentController controller;
 	private final Component component;
-
-	/*private ActionListener descriptionListener;
-	private FocusListener descriptionFocusListener;
-
-	private JTextArea description;
-	private JTextArea editableDescription;
-	private String descriptionText;
-	private JButton endEditingButton;
-
-	private ActionListener endEditingListener;
-	*/
+	private EditableTextPanel innerPanel;
 
 	public DescriptionPanel(ComponentController controller, Component component) {
 		super();
@@ -51,7 +41,7 @@ public class DescriptionPanel extends JPanel implements
 		this.controller = controller;
 		this.component = component;
 		
-		EditableTextPanel innerPanel = new EditableTextPanel(controller, component);
+		innerPanel = new EditableTextPanel(controller, component);
 		
 		// add a description panel under the top panel, and first set the layout
 		BorderLayout descriptionLayout = new BorderLayout();
@@ -167,19 +157,9 @@ public class DescriptionPanel extends JPanel implements
 	// TODO this might be set directly by the controller
 	protected void setDescription(String descriptionText) {
 		descriptionText = descriptionText.trim();
-		/*
-		 * //description right trim String tmp = ""; for(int
-		 * i=descriptionText.length()-1; i>=0; i++) { if
-		 * (descriptionText.charAt(i)==a) tmp+="descriptionText.charAt(i); }
-		 * descriptionText = tmp;
-		 */
-		
-		/*
-		this.descriptionText = descriptionText;
-		description.setText(descriptionText);
-		editableDescription.setText(descriptionText);
+		innerPanel.setDescription(descriptionText);
 		this.controller.setDescription(descriptionText);
-		*/
+		
 	}
 
 	@Override

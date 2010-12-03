@@ -19,8 +19,15 @@ import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.ConfigurationParameter;
 import org.apache.uima.resource.metadata.ConfigurationParameterDeclarations;
 import org.apache.uima.resource.metadata.ConfigurationParameterSettings;
+import org.apache.uima.resource.metadata.FeatureDescription;
+import org.apache.uima.resource.metadata.FsIndexCollection;
+import org.apache.uima.resource.metadata.OperationalProperties;
 import org.apache.uima.resource.metadata.ProcessingResourceMetaData;
+import org.apache.uima.resource.metadata.ResourceManagerConfiguration;
 import org.apache.uima.resource.metadata.ResourceMetaData;
+import org.apache.uima.resource.metadata.TypeDescription;
+import org.apache.uima.resource.metadata.TypePriorities;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.apache.uima.tools.components.InlineXmlCasConsumer;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
@@ -35,10 +42,21 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.xml.sax.SAXException;
 
+import com.sun.jdi.connect.spi.TransportService.Capabilities;
 import com.sun.source.tree.NewClassTree;
+import com.sun.xml.internal.ws.api.FeatureConstructor;
 
 public class PrimitiveUIMAComponent extends AbstractComponent {
 
+	
+	//TODO move these to the model
+	private TypeSystemDescription typeSystemDescription;
+	private TypePriorities typePriorities;
+	private FsIndexCollection fsIndexCollection;
+	private Capability[] capabilities;
+	private OperationalProperties operationalProperties;
+	private ResourceManagerConfiguration resourceManagerConfiguration;
+	
 	public PrimitiveUIMAComponent(){
 		super();
 		
@@ -107,6 +125,19 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 						
 						AnalysisEngineDescription child = (AnalysisEngineDescription)specifier;
 						System.out.println("Child Name: " + child.getAnalysisEngineMetaData().getName());
+					}
+				}
+				
+				TypeSystemDescription typeSystemDescription = metaData.getTypeSystem();
+				
+				for(TypeDescription type :typeSystemDescription.getTypes()){
+					System.out.println(type.getName());
+					System.out.println(type.getDescription());
+					System.out.println(type.getSupertypeName());
+					
+					for(FeatureDescription feature : type.getFeatures()){
+						System.out.println(feature.getName());
+						
 					}
 				}
 				
@@ -187,7 +218,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		//TODO need to extract the setting of description level data to a helper method
 		
 		description.setImplementationName(getImplementationName());
-		
+		description.setResourceManagerConfiguration(resourceManagerConfiguration);//TODO actually do this.
 		//TODO Only doing this because we are primitive
 		description.setPrimitive(true);
 		
@@ -212,25 +243,40 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			//TODO extract to a helper method
 			setImplementationName(desc.getImplementationName());
-			
+			resourceManagerConfiguration = desc.getResourceManagerConfiguration();//TODO actually do it.
 		}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 	}
-	
-	protected void extractFromProcessingResouceMetaData(ProcessingResourceMetaData metaData){
-		extractFromResourceMetaData(metaData);
-		
-		//TODO inputs/outputs
-	}
+
 	
 	protected void constructProcessingResourceMetaData(ProcessingResourceMetaData metaData) {
 		
 		constructResourceMetaData(metaData);
 		
+		//TODO actually save this stuff in the model
+		metaData.setTypeSystem(typeSystemDescription);
+		metaData.setTypePriorities(typePriorities);
+		metaData.setFsIndexCollection(fsIndexCollection);
+		metaData.setCapabilities(capabilities);
+		metaData.setOperationalProperties(operationalProperties);
+
 		//TODO
+	}
+	
+	
+	protected void extractFromProcessingResouceMetaData(ProcessingResourceMetaData metaData){
+		extractFromResourceMetaData(metaData);
+		
+		//TODO actually construct these
+		typeSystemDescription = metaData.getTypeSystem();
+		typePriorities = metaData.getTypePriorities();
+		fsIndexCollection = metaData.getFsIndexCollection();
+		capabilities = metaData.getCapabilities();
+		operationalProperties = metaData.getOperationalProperties();
+		//TODO inputs/outputs
 	}
 	
 	protected void extractFromResourceMetaData(ResourceMetaData metaData){
@@ -251,7 +297,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			parameters.add(newParameter);
 			
 		}
-		//TODO make all the parameter constructors work
+		//TODO make all the parameter type constructors work
 		setConfigurationParameters(parameters);
 		
 	}

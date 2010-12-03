@@ -70,9 +70,9 @@ public class UIMAComponentTester {
 			System.out.println("Matches the first " + i + " characters (of "+ target.length() + "):");
 			System.out.println(result.substring(0, i));
 			System.out.println("\nTarget:");
-			System.out.println(target.substring(i - 10 > 0?i -10 : 0, i + 100));
+			System.out.println(target.substring(i - 10 > 0?i -10 : 0, i + 100<target.length()?i+100:target.length()));
 			System.out.println("\nProduced:");
-			System.out.println(result.substring(i - 10 > 0?i -10 : 0, i + 100));
+			System.out.println(result.substring(i - 10 > 0?i -10 : 0, (i + 100<result.length()?i+100:result.length())));
 			
 			return false;
 		}

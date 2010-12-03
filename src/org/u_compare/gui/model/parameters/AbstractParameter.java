@@ -165,7 +165,7 @@ public abstract class AbstractParameter implements
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = null; //TODO
+				retVal = new FloatParameter(name, description, mandatory, value!=null?(Float)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_INTEGER)) {
 			if(multivalued){

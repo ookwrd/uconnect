@@ -209,20 +209,20 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	public AnalysisEngineDescription getUIMADescription(){
 		
 		AnalysisEngineDescription description = UIMAFramework.getResourceSpecifierFactory().createAnalysisEngineDescription();
-		
 		AnalysisEngineMetaData metadata = description.getAnalysisEngineMetaData();
 		
-		constructProcessingResourceMetaData(metadata);
+		setupProcessingResourceMetaData(metadata);
+		setupAnalysisEngineDescription(description);
 		
-
-		//TODO need to extract the setting of description level data to a helper method
+		return description;
+	}
+	
+	protected void setupAnalysisEngineDescription(AnalysisEngineDescription description){
 		
 		description.setImplementationName(getImplementationName());
 		description.setResourceManagerConfiguration(resourceManagerConfiguration);//TODO actually do this.
-		//TODO Only doing this because we are primitive
-		description.setPrimitive(true);
+		description.setPrimitive(!isAggregate());
 		
-		return description;
 	}
 	
 	
@@ -252,9 +252,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	}
 
 	
-	protected void constructProcessingResourceMetaData(ProcessingResourceMetaData metaData) {
+	protected void setupProcessingResourceMetaData(ProcessingResourceMetaData metaData) {
 		
-		constructResourceMetaData(metaData);
+		setupResourceMetaData(metaData);
 		
 		//TODO actually save this stuff in the model
 		metaData.setTypeSystem(typeSystemDescription);
@@ -266,6 +266,60 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		//TODO
 	}
 	
+	protected void setupResourceMetaData(ResourceMetaData metaData){
+		
+		//Basic MetaData
+		metaData.setName(getTitle());
+		metaData.setDescription(getDescription());
+		metaData.setVendor(getVendor());
+		metaData.setVersion(getVersion());
+		metaData.setCopyright(getCopyright());
+		
+		//Parameters
+		ConfigurationParameterDeclarations settings = metaData.getConfigurationParameterDeclarations();
+		ConfigurationParameterSettings values = metaData.getConfigurationParameterSettings();
+		setupConfigurationParameterDeclarations(settings, values);
+		
+		//TODO
+	}
+	
+	protected void setupConfigurationParameterDeclarations(ConfigurationParameterDeclarations settings, ConfigurationParameterSettings values){
+		
+		for(Parameter param : getConfigurationParameters()){
+			ConfigurationParameter newParameter = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
+			
+			newParameter.setName(param.getName());
+			newParameter.setDescription(param.getDescription());
+			newParameter.setMandatory(param.isMandatory());
+			newParameter.setMultiValued(param.isMultivalued());
+			
+			Object value = null;
+			
+			if(param instanceof BooleanParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
+				value = ((BooleanParameter)param).getParameter();
+			} else if (param instanceof StringParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_STRING);
+				value = ((StringParameter)param).getParameter();
+			} else if (param instanceof IntegerParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
+				value = ((IntegerParameter)param).getParameter();
+			} else if (param instanceof FloatParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
+				value = ((FloatParameter)param).getParameter();
+			} else {
+				assert(false);
+			}
+			//newParameter.setSourceUrl(arg0) TODO
+			
+			if(value != null){
+				values.setParameterValue(param.getName(), value);
+			}
+			
+			settings.addConfigurationParameter(newParameter);
+		}
+		
+	}
 	
 	protected void extractFromProcessingResouceMetaData(ProcessingResourceMetaData metaData){
 		extractFromResourceMetaData(metaData);
@@ -302,59 +356,10 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 	}
 	
-	protected void constructResourceMetaData(ResourceMetaData metaData){
-		
-		//Basic MetaData
-		metaData.setName(getTitle());
-		metaData.setDescription(getDescription());
-		metaData.setVendor(getVendor());
-		metaData.setVersion(getVersion());
-		metaData.setCopyright(getCopyright());
-		
-		//Parameters
-		ConfigurationParameterDeclarations settings = metaData.getConfigurationParameterDeclarations();
-		ConfigurationParameterSettings values = metaData.getConfigurationParameterSettings();
-		
-		for(Parameter param : getConfigurationParameters()){
-			ConfigurationParameter newParameter = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
-			
-			newParameter.setName(param.getName());
-			newParameter.setDescription(param.getDescription());
-			newParameter.setMandatory(param.isMandatory());
-			newParameter.setMultiValued(param.isMultivalued());
-			
-			Object value = null;
-			
-			if(param instanceof BooleanParameter){
-				newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
-				value = ((BooleanParameter)param).getParameter();
-			} else if (param instanceof StringParameter){
-				newParameter.setType(ConfigurationParameter.TYPE_STRING);
-				value = ((StringParameter)param).getParameter();
-			} else if (param instanceof IntegerParameter){
-				newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
-				value = ((IntegerParameter)param).getParameter();
-			} else if (param instanceof FloatParameter){
-				newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
-				value = ((FloatParameter)param).getParameter();
-			} else {
-				assert(false);
-			}
-			//newParameter.setSourceUrl(arg0) TODO
-			
-			if(value != null){
-				values.setParameterValue(param.getName(), value);
-			}
-			
-			settings.addConfigurationParameter(newParameter);
-		}
-		
-		//TODO
-		
-	}
+	
 	
 	public static Component constructUIMAComponent(){
-		//TODO need as there are multiple kinds
+		//TODO needed as there are multiple kinds
 		return null;
 	}
 	

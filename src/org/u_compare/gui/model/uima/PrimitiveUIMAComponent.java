@@ -157,30 +157,6 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				
 				//metaData.buildFrom....
 				
-				
-				System.out.println("^^^^^^^^^^^^^^^^^^^");
-				
-				extractFromProcessingResouceMetaData(metaData);
-				
-				AnalysisEngineDescription newDescription = UIMAFramework.getResourceSpecifierFactory().createAnalysisEngineDescription();
-				
-				AnalysisEngineMetaData newMetaData = newDescription.getAnalysisEngineMetaData();
-				
-				constructProcessingResourceMetaData(newMetaData);
-				
-				//newDescription.setMetaData(newMetaData);
-				
-				
-				StringWriter writeInput = new StringWriter();
-				desc.toXML(writeInput);
-				String inputString = writeInput.toString();
-				
-				StringWriter writeConstructed = new StringWriter();
-				newDescription.toXML(writeConstructed);
-				String constructedString = writeConstructed.toString();
-				
-				
-				
 				//TODO
 				
 			}
@@ -207,11 +183,15 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 		constructProcessingResourceMetaData(metadata);
 		
+
+		//TODO Only doing this because we are primitive
+		description.setPrimitive(true);
+		
 		return description;
 	}
 	
 	
-	//TODO do I need a factory here?
+	//TODO do I need a factory here? Yes, how do i handle primitive vs non-primitive
 	
 	public PrimitiveUIMAComponent(String descriptorLocation) throws IOException, InvalidXMLException{
 		this(new XMLInputSource(descriptorLocation));

@@ -7,7 +7,6 @@ import org.u_compare.gui.model.MockAggregateComponent;
 import org.u_compare.gui.model.MockComponent;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.PrimitiveUIMAComponent;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
@@ -15,6 +14,7 @@ import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 import org.u_compare.gui.model.parameters.constraints.StringConstraint;
+import org.u_compare.gui.model.uima.PrimitiveUIMAComponent;
 
 import com.sun.xml.internal.ws.api.pipe.NextAction;
 

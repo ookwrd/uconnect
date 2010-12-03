@@ -184,6 +184,10 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		constructProcessingResourceMetaData(metadata);
 		
 
+		//TODO need to extract the setting of description level data to a helper method
+		
+		description.setImplementationName(getImplementationName());
+		
 		//TODO Only doing this because we are primitive
 		description.setPrimitive(true);
 		
@@ -205,6 +209,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			AnalysisEngineDescription desc = (AnalysisEngineDescription)resourceSpecifier;			
 			extractFromProcessingResouceMetaData(desc.getAnalysisEngineMetaData());
+			
+			//TODO extract to a helper method
+			setImplementationName(desc.getImplementationName());
 			
 		}
 		}catch(Exception e){

@@ -63,12 +63,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		CasConsumerDescription casConsumerDesc = null;
 		try {
 			
-			
-			//Analysis engine in
-			//XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/logic/True.xml");
-			XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/logic/SuperSimpleFalse.xml");
-			//XMLInputSource xmlIn = new XMLInputSource("src/org/evolutionarylinguistics/uima/testers/TESTERTrueNot.xml");
-
+			XMLInputSource xmlIn = new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSingleValuedParametersAndValues.xml");
 			
 			//AnalysisEngineDescription desc = UIMAFramework.getXMLParser().parseAnalysisEngineDescription(xmlIn);
 			//casConsumerDesc = UIMAFramework.getXMLParser().parseCasConsumerDescription(xmlIn);

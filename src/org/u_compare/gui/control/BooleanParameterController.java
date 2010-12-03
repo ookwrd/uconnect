@@ -32,7 +32,7 @@ public class BooleanParameterController extends ParameterController {
 		assert(!component.getLockedStatus());
 	
 		try{
-			param.update(value);
+			param.setValue(value);
 		}catch(ConstraintFailedException e){
 			processConstraintFailure(e);
 		}

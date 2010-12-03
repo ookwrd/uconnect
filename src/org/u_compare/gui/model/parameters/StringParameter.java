@@ -15,7 +15,7 @@ public class StringParameter extends AbstractParameter{
 		return parameter;
 	}
 
-	public void update(String input) throws ConstraintFailedException {
+	public void setValue(String input) throws ConstraintFailedException {
 		
 		if(!input.equals(parameter)){
 			parameter = input;
@@ -32,10 +32,4 @@ public class StringParameter extends AbstractParameter{
 			return "";
 		}
 	}
-
-	@Override
-	public boolean isMultivalued() {
-		return false;
-	}
-	
 }

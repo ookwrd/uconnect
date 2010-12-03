@@ -19,7 +19,7 @@ public class IntegerParameter extends AbstractParameter{
 	}	
 	
 	@Override
-	public void update(String input) throws ConstraintFailedException {
+	public void setValue(String input) throws ConstraintFailedException {
 
 		validateConstraints(input);
 		
@@ -38,11 +38,6 @@ public class IntegerParameter extends AbstractParameter{
 		}else{
 			return "";
 		}
-	}
-
-	@Override
-	public boolean isMultivalued() {
-		return false;
 	}
 
 }

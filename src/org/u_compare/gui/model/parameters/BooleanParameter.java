@@ -22,7 +22,8 @@ public class BooleanParameter extends
 		return parameter;
 	}
 
-	public void update(boolean input) throws ConstraintFailedException {
+	@Override
+	public void setValue(Boolean input) throws ConstraintFailedException {
 		
 		if(input != parameter){
 			parameter = input;
@@ -37,12 +38,6 @@ public class BooleanParameter extends
 		}else{
 			return null;
 		}
-	}
-
-	@Override
-	public boolean isMultivalued() {
-		return false;
-	}
-	
+	}	
 
 }

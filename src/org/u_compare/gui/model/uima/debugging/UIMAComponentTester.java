@@ -25,6 +25,12 @@ public class UIMAComponentTester {
 	public void tearDown(){
 	}
 	
+	/**
+	 * Check parsing/deparsing of basic UIMAComponent description metadata.
+	 * 
+	 * @throws IOException
+	 * @throws InvalidXMLException
+	 */
 	@Test
 	public void inOutTestSimple() throws IOException, InvalidXMLException{
 		XMLInputSource xmlIn = new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/BasicAE.xml");

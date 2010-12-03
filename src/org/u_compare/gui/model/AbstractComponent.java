@@ -357,7 +357,6 @@ public abstract class AbstractComponent implements Component {
 		}
 		
 		for(Parameter param : params){
-			System.out.println(param == null);
 			param.setOwner(this);
 		}
 		

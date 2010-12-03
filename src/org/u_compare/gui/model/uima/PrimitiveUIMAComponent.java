@@ -1,7 +1,8 @@
-package org.u_compare.gui.model;
+package org.u_compare.gui.model.uima;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
@@ -24,6 +25,8 @@ import org.apache.uima.tools.components.InlineXmlCasConsumer;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.omg.CORBA.PUBLIC_MEMBER;
+import org.u_compare.gui.model.AbstractComponent;
+import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.AbstractParameter;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.FloatParameter;
@@ -176,19 +179,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				newDescription.toXML(writeConstructed);
 				String constructedString = writeConstructed.toString();
 				
-				System.out.println("Input = Output: " + constructedString.equals(writeInput));
 				
-				int i = 0;
-				while(i<constructedString.length() && constructedString.regionMatches(0, inputString, 0, i)){
-					i++;
-				}
 				
-				System.out.println("Matches the first " + i + " characters.");
-				System.out.println(constructedString.substring(0, i));
-				System.out.println();
-				System.out.println(constructedString.substring(i - 10 > 0?i -10 : 0, i + 100));
-				System.out.println();
-				System.out.println(inputString.substring(i - 10 > 0?i -10 : 0, i + 100));
+				//TODO
 				
 			}
 			
@@ -205,6 +198,18 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 
 		
 	}
+	
+	public AnalysisEngineDescription getUIMADescription(){
+		
+		AnalysisEngineDescription description = UIMAFramework.getResourceSpecifierFactory().createAnalysisEngineDescription();
+		
+		AnalysisEngineMetaData metadata = description.getAnalysisEngineMetaData();
+		
+		constructProcessingResourceMetaData(metadata);
+		
+		return description;
+	}
+	
 	
 	//TODO do I need a factory here?
 	

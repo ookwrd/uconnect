@@ -16,6 +16,7 @@ public abstract class AbstractComponent implements Component {
 
 	//private (rather than protected) to ensure use of proper set methods by extending classes
 	private String title = "Unnamed";
+	private String implementationName = "Unknown";
 	private String description = "Undescribed";
 	private String vendor = "Unknown";
 	private String version = "Unspecified";
@@ -93,6 +94,22 @@ public abstract class AbstractComponent implements Component {
 		
 		this.title = title;
 		notifyComponentDescriptionChangeListeners();
+	}
+	
+	@Override
+	public String getImplementationName(){
+		return implementationName;
+	}
+	
+	@Override
+	public void setImplementationName(String implementationName){
+		
+		if(this.implementationName != null && this.implementationName.equals(implementationName)){
+			return;
+		}
+		
+		this.implementationName = implementationName;
+		notifyComponentDescriptionChangeListeners(); //TODO should be a more appropriate listener here.
 	}
 	
 	/**

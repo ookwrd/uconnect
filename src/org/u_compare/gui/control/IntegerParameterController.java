@@ -36,7 +36,7 @@ public class IntegerParameterController extends ParameterController {
 		assert(!parent.isLocked());
 
 		try{
-			param.update(parameterValue);
+			param.setValue(parameterValue);
 		}catch(ConstraintFailedException ex) {
 			processConstraintFailure(ex);
 		}

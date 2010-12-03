@@ -14,11 +14,6 @@ public class FloatParameter extends AbstractParameter {
 		return null;
 	}
 
-	@Override
-	public boolean isMultivalued() {
-		return false;
-	}
-
 	public Float getParameter() {
 		// TODO Auto-generated method stub
 		return null;

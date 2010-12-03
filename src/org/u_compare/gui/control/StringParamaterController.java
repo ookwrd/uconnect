@@ -35,7 +35,7 @@ public class StringParamaterController extends ParameterController {
 		assert(!component.getLockedStatus());
 		
 		try{
-			param.update(parameterValue);
+			param.setValue(parameterValue);
 		}catch(ConstraintFailedException e){
 			processConstraintFailure(e);
 		}

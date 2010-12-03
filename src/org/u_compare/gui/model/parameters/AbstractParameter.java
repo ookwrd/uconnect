@@ -16,6 +16,8 @@ public abstract class AbstractParameter implements
 	private boolean mandatory;
 	private ArrayList<Constraint> constraints;
 	
+	private ArrayList<Parameter> values = new ArrayList<Parameter>();
+	
 	private ArrayList<ParameterNameDescriptionChangedListener> nameDescriptionChangedListeners = new ArrayList<ParameterNameDescriptionChangedListener>();
 	private ArrayList<ParameterSettingsChangedListener> changedListeners = new ArrayList<ParameterSettingsChangedListener>();
 	private ArrayList<MandatoryStatusChangedListener> mandatoryStatusChangedListeners = new ArrayList<MandatoryStatusChangedListener>(); 
@@ -69,7 +71,12 @@ public abstract class AbstractParameter implements
 			notifyMandatoryStatusChangedListeners();
 		}
 	}
-		
+	
+	@Override
+	public boolean isMultivalued() {
+		return false;
+	}
+	
 	@Override
 	public void addConstraint(Constraint constraint){
 		constraints.add(constraint);
@@ -80,18 +87,18 @@ public abstract class AbstractParameter implements
 		return constraints;
 	}
 	
-	@Override
-	public void update(int value) throws ConstraintFailedException {
+	/*@Override
+	public void setValue(int value) throws ConstraintFailedException {
 		throw new IllegalArgumentException("The parameter: "+ description + ", is not an int.");
-	}
+	}*/
 	
 	@Override
-	public void update(String value) throws ConstraintFailedException{
+	public void setValue(String value) throws ConstraintFailedException{
 		throw new IllegalArgumentException("The parameter: "+ description + ", is not an String.");
 	}
 	
 	@Override
-	public void update(boolean value) throws ConstraintFailedException{
+	public void setValue(Boolean value) throws ConstraintFailedException{
 		throw new IllegalArgumentException("The parameter: "+ description + ", is not a boolean.");
 	}
 	

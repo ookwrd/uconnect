@@ -32,11 +32,33 @@ public class UIMAComponentTester {
 	 * @throws InvalidXMLException
 	 */
 	@Test
-	public void inOutTestSimple() throws IOException, InvalidXMLException{
-		XMLInputSource xmlIn = new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/BasicAE.xml");
+	public void inOutTestBasic() throws IOException, InvalidXMLException{
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAE.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicSingleValuedParameters() throws InvalidXMLException, IOException{
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSingleValuedParameters.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicSingleValuedParametersAndValues() throws InvalidXMLException, IOException{
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSingleValuedParametersAndValues.xml");
+	}
+	
+	/**
+	 * Performs a test to ensure the XML produced from loading a XMLDescriptor into the model and then
+	 * extracting it again matches the original XML.
+	 * 
+	 * @param location The location of the XMLDescriptor to test.
+	 * @throws IOException
+	 * @throws InvalidXMLException
+	 */
+	private void inOutTest(String location) throws IOException, InvalidXMLException{
+		XMLInputSource xmlIn = new XMLInputSource(location);
 		AnalysisEngineDescription desc = (AnalysisEngineDescription) UIMAFramework.getXMLParser().parse(xmlIn);
 		
-		PrimitiveUIMAComponent component = new PrimitiveUIMAComponent("src/org/u_compare/gui/model/uima/debugging/BasicAE.xml");
+		PrimitiveUIMAComponent component = new PrimitiveUIMAComponent(location);
 		
 		assertTrue(compare(descriptorToString(desc), descriptorToString(component.getUIMADescription())));
 	}

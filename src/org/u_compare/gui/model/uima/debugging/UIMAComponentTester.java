@@ -59,6 +59,7 @@ public class UIMAComponentTester {
 			return true;
 		}else{
 			System.out.println("Input = Output: " + result.equals(target));
+			System.out.println();
 			
 			int i = 0;//TODO find a better way of doing this
 			while(i<result.length() && result.regionMatches(0, target, 0, i)){
@@ -66,7 +67,7 @@ public class UIMAComponentTester {
 			}
 			i--;
 			
-			System.out.println("Matches the first " + i + " characters:");
+			System.out.println("Matches the first " + i + " characters (of "+ target.length() + "):");
 			System.out.println(result.substring(0, i));
 			System.out.println("\nTarget:");
 			System.out.println(target.substring(i - 10 > 0?i -10 : 0, i + 100));

@@ -62,7 +62,7 @@ public interface Component{
 	 *  
 	 * @return 	This component's name.
 	 */
-	public String getTitle();
+	public String getTitle();//TODO refactor as "Name" to match UIMA specs
 	
 	/**
 	 * Sets the name of this component to the specified name.
@@ -70,6 +70,10 @@ public interface Component{
 	 * @param name	 The new name.
 	 */
 	public void setTitle(String name);
+	
+	//TODO documentation
+	public String getImplementationName();
+	public void setImplementationName(String implementationName);
 	
 	/**
 	 * Return the description of this component.

@@ -35,6 +35,7 @@ public class UConnectSplitPane extends JSplitPane {
 	private static final boolean ONE_TOUCH_EXPANDABLE = true;
 	/* By default, distribute the new size evenly between our components */
 	private static final double DEFAULT_RE_SIZE_WEIGHT = 0.5D;
+	private static final double DIVIDER_START_POSITION = 0.5D;
 	private static final int SPLIT_ORIENTATION = JSplitPane.HORIZONTAL_SPLIT;
 	
 	public UConnectSplitPane(JComponent workflowPane,
@@ -73,7 +74,8 @@ public class UConnectSplitPane extends JSplitPane {
 				}
 				else {
 					// If we do we can set the divider location
-					setDividerLocation(0.5D);
+					setDividerLocation(
+							UConnectSplitPane.DIVIDER_START_POSITION);
 				}
 			}
 		});

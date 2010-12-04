@@ -17,8 +17,6 @@ import javax.swing.Scrollable;
 
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.component.WorkflowPanel;
-import org.u_compare.gui.control.ComponentController;
-import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
 
 /**
@@ -35,14 +33,14 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 	// TODO: Fix border handling, now there are two borders to the layout.
 	private WorkflowPanel topComponent;
 
-	private int maxUnitIncrement = 1;
-	private boolean missingPicture = false;
-
 	// Configuration
-	private static final int HORIZONTAL_SCROLLBAR_POLICY = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
-	private static final int VERTICAL_SCROLLBAR_POLICY = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+	private static final int HORIZONTAL_SCROLLBAR_POLICY =
+		ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+	private static final int VERTICAL_SCROLLBAR_POLICY =
+		ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 	// private static final String BORDER_TITLE = "Workflow";
-	private static final String TOOLTIP_TEXT = "Drag components from the component library here";
+	private static final String TOOLTIP_TEXT =
+		"Drag components from the component library here";
 
 	// TODO: LayoutManager
 	// TODO: WorkflowTransferManager
@@ -52,8 +50,10 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 	public WorkflowPane(WorkflowPanel topComponent) {
 		this.topComponent = topComponent;
 
-		this.setHorizontalScrollBarPolicy(WorkflowPane.HORIZONTAL_SCROLLBAR_POLICY);
-		this.setVerticalScrollBarPolicy(WorkflowPane.VERTICAL_SCROLLBAR_POLICY);
+		this.setHorizontalScrollBarPolicy(
+				WorkflowPane.HORIZONTAL_SCROLLBAR_POLICY);
+		this.setVerticalScrollBarPolicy(
+				WorkflowPane.VERTICAL_SCROLLBAR_POLICY);
 
 		// this.setBorder(new TitledBorder(new EtchedBorder(),
 		// WorkflowPane.BORDER_TITLE));
@@ -71,7 +71,11 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 
 		getVerticalScrollBar().setUnitIncrement(8);
 
-		new DnDVerticalScrollerPanel(getViewport());
+		//XXX: Removing these lines breaks the rendering?! /pontus
+		DnDVerticalScrollerPanel scrollerPanel = 
+			new DnDVerticalScrollerPanel();
+		this.viewport.addMouseListener(scrollerPanel);
+		//XXX: Whoever did the implementation needs to have a look at this
 
 		MouseMotionListener doScrollRectToVisible = new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
@@ -86,7 +90,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 		topComponent.addMouseMotionListener(doScrollRectToVisible);
 
 		// Let the user scroll by dragging to outside the window.
-		setAutoscrolls(true); // enable synthetic drag events
+		this.setAutoscrolls(true); // enable synthetic drag events
 		addMouseMotionListener(this); // handle mouse drags
 
 	}

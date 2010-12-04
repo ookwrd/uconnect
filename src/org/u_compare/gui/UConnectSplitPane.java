@@ -1,16 +1,22 @@
 package org.u_compare.gui;
 
-import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
+
+/*
+ * Good read: TODO:
+ * 
+ * When the user is resizing the Components the minimum size of the Components
+ * is used to determine the maximum/minimum position the Components can be set
+ * to. If the minimum size of the two components is greater than the size of
+ * the split pane the divider will not allow you to resize it. To alter the
+ * minimum size of a JComponent, see
+ * JComponent.setMinimumSize(java.awt.Dimension). 
+ */
 
 /**
  * XXX: TODO:
@@ -21,17 +27,16 @@ import javax.swing.plaf.basic.BasicSplitPaneUI;
  *
  */
 @SuppressWarnings("serial")
-public class UConnectSplitPane extends JSplitPane
-		implements ComponentListener {
+public class UConnectSplitPane extends JSplitPane {
 	
 	private static final boolean DEBUG = false;
 	
 	// Configuration
 	private static final boolean ONE_TOUCH_EXPANDABLE = true;
-	private static final double INITIIAL_DIVIDER__PREFERENCE = 0.5;
+	/* By default, distribute the new size evenly between our components */
+	private static final double DEFAULT_RE_SIZE_WEIGHT = 0.5D;
+	private static final double DIVIDER_START_POSITION = 0.5D;
 	private static final int SPLIT_ORIENTATION = JSplitPane.HORIZONTAL_SPLIT;
-	
-	private double dividerLocationPreference;
 	
 	public UConnectSplitPane(JComponent workflowPane,
 			JComponent libraryPane) {
@@ -50,85 +55,31 @@ public class UConnectSplitPane extends JSplitPane
 		    }
 		});
 		
-		// Do all the divider work here
+		// Carry out all the divider configurations here
 		this.setDividerSize(5);
-		
-		// We can not determine this yet, wait for a re-size update
-		this.dividerLocationPreference =
-			UConnectSplitPane.INITIIAL_DIVIDER__PREFERENCE;
+		// Space distribution between components when we grow
+		this.setResizeWeight(UConnectSplitPane.DEFAULT_RE_SIZE_WEIGHT);
 		this.setOrientation(UConnectSplitPane.SPLIT_ORIENTATION);
-		
-		/* Add a property change listener to maintain the user set ratio for
-		 * the divider
-		 */
-		//TODO: Extract this class since it is general enough
-		this.addPropertyChangeListener(
-				"dividerLocation",
-				new PropertyChangeListener() {
-					private static final boolean DEBUG = false;
-					
-					public void propertyChange(PropertyChangeEvent e) {
-						Number value = (Number) e.getNewValue();
-						
-						if (DEBUG) {
-							System.err.println(this.getClass().getName()
-									+ "relative divider position before update "
-									+ dividerLocationPreference);
-						}
-						
-						// Depending on our split we do this differently
-						if (getOrientation() == JSplitPane.HORIZONTAL_SPLIT) {
-							dividerLocationPreference =
-								value.doubleValue() / getWidth();
-						}
-						else if (getOrientation()
-								== JSplitPane.VERTICAL_SPLIT) {
-							dividerLocationPreference =
-								value.doubleValue() / getHeight();
-						}
-						else {
-							assert false: "given unknown split constant";
-						}
-						
-						if (DEBUG) {
-							System.err.println(this.getClass().getName()
-									+ "relative divider position after update "
-									+ dividerLocationPreference);
-						}
-					}
-				});
+		// Set the divider as centred later when everything else is set
+		// XXX: This is one hell of a hack! There has to be a better way!
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				if (DEBUG) {
+					System.err.println(this.getClass().getName()
+							+ "our current size" + getSize());
+				}
+				// Do we know our size yet? If not, wait a little more.
+				if (getSize().getHeight() == 0 && getSize().getWidth() == 0) {
+					SwingUtilities.invokeLater(this);
+				}
+				else {
+					// If we do we can set the divider location
+					setDividerLocation(
+							UConnectSplitPane.DIVIDER_START_POSITION);
+				}
+			}
+		});
 		
 		this.setContinuousLayout(true);
-	}
-
-	@Override
-	public void componentHidden(ComponentEvent e) {
-		// We will not act upon this
-		return;
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent e) {
-		// We will not act upon this
-		return;
-	}
-
-	@Override
-	public void componentResized(ComponentEvent e) {
-		Dimension currentSize = this.getSize();
-		
-		if (UConnectSplitPane.DEBUG) {
-			System.err.println(this.getClass().getName()
-					+ ": updating divider current size " + currentSize);
-		}
-		
-		// We need to re-adjust our properties
-		this.setDividerLocation(this.dividerLocationPreference);
-	}
-
-	@Override
-	public void componentShown(ComponentEvent e) {
-		// We will not act upon this
-		return;
 	}
 }

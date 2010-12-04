@@ -43,10 +43,6 @@ public class GUITestingHarness {
 		TestWindow testWindow = new TestWindow("GUITestingHarness",
 				uConnectSplit);
 		
-		// Add the window as a component listener to catch re-sizes etc.
-		testWindow.addComponentListener(uConnectSplit);
-		
-		// setVisible() fires a change event which will update sub-components
 		testWindow.setVisible(true);
 	}
 }

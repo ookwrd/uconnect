@@ -46,11 +46,15 @@ public class ComponentPanel extends DraggableJPanel implements
 	public static final int BORDER_WIDTH = 2;
 	public static final Color BORDER_COLOR = Color.DARK_GRAY;
 	public static Color HEADER_COLOR = Color.WHITE;
+	public final static Color SELECTED_HEADER_COLOR = new Color(16448250);
 	public static Color BODY_COLOR;
+	public static Color HIGHLIGHT_COLOR = new Color(16748574);
+	public static Color HIGHLIGHT_COLOR_2 = new Color(15631900);
 
 	protected JPanel innerPanel;
 	protected TopPanel topPanel;
-
+	protected JPanel outerPanel; // contains innerPanel et topPanel
+	
 	protected Component component;
 	protected ComponentController controller;
 	
@@ -81,11 +85,22 @@ public class ComponentPanel extends DraggableJPanel implements
 					.registerSubComponentsChangedListener(this);
 		}
 		
-		this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
+		//this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR, BORDER_ROUNDING, BORDER_WIDTH, false));
+		this.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
+
+		
+		innerPanel.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
 				BORDER_ROUNDING, BORDER_WIDTH, false));
 		
-
-		setupTopPanel(this, false);
+		// TODO the outerPanel was supposed to implement the colored borders, but it turns out to ruin the layout 
+		outerPanel = new JPanel();
+		outerPanel.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
+				BORDER_ROUNDING, BORDER_WIDTH, false));
+		this.add(outerPanel);
+		outerPanel.setOpaque(false);
+		outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.Y_AXIS));
+		
+		setupTopPanel(outerPanel, false);
 		setupInnerPanel();
 		
 		setupDescriptionPanel(innerPanel);
@@ -104,7 +119,8 @@ public class ComponentPanel extends DraggableJPanel implements
 
 		setupParametersPanel(innerPanel);
 		
-		this.add(innerPanel);
+		outerPanel.add(innerPanel);
+		this.add(outerPanel);
 	}
 	
 	protected void initialConfiguration(Component component,
@@ -134,11 +150,17 @@ public class ComponentPanel extends DraggableJPanel implements
 	}
 	
 	private void setBorderColored(boolean colored) {
-		if(colored) 
-			innerPanel.setBorder(new EtchedBorder(Color.LIGHT_GRAY, Color.DARK_GRAY));
-		else
-			innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
-					BORDER_WIDTH, BORDER_WIDTH));
+		if(colored) {
+			this.setBorder(new EtchedBorder(HIGHLIGHT_COLOR, HIGHLIGHT_COLOR_2));
+			//this.setBorder(new RoundedBorder(null, Color.BLUE, BODY_COLOR, BORDER_ROUNDING, BORDER_WIDTH, false));
+			//topPanel.setBorderColored(true);
+		}
+		else {
+			this.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
+			//this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR, BORDER_ROUNDING, BORDER_WIDTH, false));
+			//topPanel.setBorderColored(false);
+		}
+					
 	}
 	
 	protected void setupTopPanel(JPanel target, boolean isWorkflow){

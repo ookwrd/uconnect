@@ -69,7 +69,7 @@ public class DescriptionPanel extends JPanel implements
 	protected void setDescription(String descriptionText) {
 		
 		descriptionText = descriptionText.trim();
-		innerPanel.setDescription(descriptionText);
+		innerPanel.setContent(descriptionText);
 		this.controller.setDescription(descriptionText);
 	}
 

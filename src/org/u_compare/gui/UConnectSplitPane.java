@@ -64,7 +64,8 @@ public class UConnectSplitPane extends JSplitPane {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				if (DEBUG) {
-					System.err.println(this.getClass().getName() + getSize());
+					System.err.println(this.getClass().getName()
+							+ "our current size" + getSize());
 				}
 				// Do we know our size yet? If not, wait a little more.
 				if (getSize().getHeight() == 0 && getSize().getWidth() == 0) {

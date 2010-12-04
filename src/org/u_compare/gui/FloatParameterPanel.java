@@ -9,11 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.u_compare.gui.control.FloatParameterController;
-import org.u_compare.gui.control.IntegerParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.FloatParameter;
-import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
 
@@ -71,7 +69,9 @@ public class FloatParameterPanel extends ParameterPanel implements  ActionListen
 	}
 
 	private void textFieldChanged(){
-		//Change should not be reflected in view unless the underlying model changes
+		/* Change should not be reflected in view unless the underlying
+		 * model changes
+		 */
 		String value = textField.getText();
 		textField.setText(parameter.getParameterString());
 		controller.setValue(value);

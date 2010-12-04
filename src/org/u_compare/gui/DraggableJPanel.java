@@ -1,50 +1,24 @@
-/**
- * 
- */
 package org.u_compare.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.LayoutManager;
-import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
-import java.awt.dnd.DragSourceDragEvent;
-import java.awt.dnd.DragSourceDropEvent;
-import java.awt.dnd.DragSourceEvent;
-import java.awt.dnd.DragSourceListener;
-import java.awt.dnd.DragSourceMotionListener;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.Serializable;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.TransferHandler;
-import javax.swing.UIManager;
-import javax.swing.text.JTextComponent;
-
-import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.DragAndDropComponentController;
-import org.u_compare.gui.control.DragAndDropController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 
 /**
@@ -53,17 +27,15 @@ import org.u_compare.gui.debugging.GUITestingHarness;
  * @author olaf
  * @version 2010-06-01
  * 
- * Implementing DragGestureListener makes recognizing mouse gestures easier, since it varies from platform to platform 
+ * Implementing DragGestureListener makes recognizing mouse gestures easier,
+ * since it varies from platform to platform 
  * 
  */
+@SuppressWarnings("serial")
 public abstract class DraggableJPanel extends DroppableJPanel implements
 		DragGestureListener, Transferable, Serializable {
 
-	//protected DragAndDropComponentController controller; //now IF : DragAndDropComponentController
-	//protected DragAndDropComponentController controller; // defined in parent class !
-	private JPanel dropArea;
-	private DropTarget dt;
-	private boolean debug = true;
+	private final static boolean DEBUG = true;
 	
 	protected static DataFlavor componentFlavor =
         new DataFlavor(Color.class, "A Color Object");
@@ -91,13 +63,15 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
         ds.createDefaultDragGestureRecognizer(this,
             DnDConstants.ACTION_COPY, this);
 		
-        //WorkflowComponentTransferHandler th = new WorkflowComponentTransferHandler();
+        //WorkflowComponentTransferHandler th =
+        //		new WorkflowComponentTransferHandler();
 		//this.setTransferHandler(th);
 		
 	}
 	
 	/**
-	 * Used to identify what was being dragged, should be a more elegant solution.
+	 * Used to identify what was being dragged, should be a more elegant
+	 * solution.
 	 * 
 	 * @return
 	 */
@@ -134,12 +108,12 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	 * 
 	 */
 	public void drop(DropTargetDropEvent dtde) {
-		if (debug) System.out.println("Drop gesture recognized. ");
+		if (DEBUG) System.out.println("Drop gesture recognized. ");
 		// do nothing
 	}
 
 	public void dropActionChanged(DropTargetDragEvent ev) {
-		if (debug) System.out.println("Drop action changed. ");
+		if (DEBUG) System.out.println("Drop action changed. ");
 		this.setBackground(this.defaultColor);
 		//ev.acceptDrag(ev.getDropAction());
 	}
@@ -147,12 +121,13 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	// Methods implemented as a DragGestureListener
 	
 	public void dragGestureRecognized(DragGestureEvent evt) {
-		if (debug) System.out.println("Drag gesture recognized. ");
+		if (DEBUG) System.out.println("Drag gesture recognized. ");
 		this.setBackground(this.defaultColor);
 		Cursor cursor = null;
-        JPanel panel = (JPanel) evt.getComponent();
-        if (debug) if (controller==null) System.out.println("The variable <controller> is null.");
-        this.controller.setDragged(); // inform the controller of the component being dragged 
+        if (DEBUG) if (controller==null) System.out.println(
+        		"The variable <controller> is null.");
+        // inform the controller of the component being dragged
+        this.controller.setDragged(); 
 
         if (evt.getDragAction() == DnDConstants.ACTION_COPY) {
             cursor = DragSource.DefaultCopyDrop;
@@ -221,13 +196,12 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	 */
 	class MyDropTargetListener extends DropTargetAdapter {
 
-		private DropTarget dropTarget;
 		private DraggableJPanel panel;
 
 		public MyDropTargetListener(DraggableJPanel panel) {
 			this.panel = panel;
 
-			dropTarget = new DropTarget(panel, DnDConstants.ACTION_COPY, this,
+			new DropTarget(panel, DnDConstants.ACTION_COPY, this,
 					true, null);
 		}
 
@@ -244,9 +218,9 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 			
 	        try {
 
-	          Transferable tr = event.getTransferable();
-	          String s = (String) tr.getTransferData(
-	        		  new DataFlavor(ComponentPanel.class, "WorkflowComponent"));
+	          //Transferable tr = event.getTransferable();
+	          //String s = (String) tr.getTransferData(
+	          //	new DataFlavor(ComponentPanel.class, "WorkflowComponent"));
 	          //System.out.println("String transfered : "+s);
 	            if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 
@@ -261,7 +235,8 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	        }
 	      }
 
-		//TODO ??? Is there any reason these following two methods need their own implementation here overiding those in DroppableJPanel?
+		//TODO ??? Is there any reason these following two methods need their 
+		//		own implementation here overiding those in DroppableJPanel?
 		
 		/**
 		 * Drag enters the component area

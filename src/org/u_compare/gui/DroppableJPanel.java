@@ -1,30 +1,16 @@
-/**
- * 
- */
 package org.u_compare.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.LayoutManager;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.u_compare.gui.DraggableJPanel.MyDropTargetListener;
-import org.u_compare.gui.component.ComponentPanel;
-import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.DragAndDropComponentController;
-import org.u_compare.gui.control.DragAndDropController;
-import org.u_compare.gui.control.DropTargetController;
 
 /**
  * Drop target component in the GUI able to accept component drops
@@ -32,6 +18,7 @@ import org.u_compare.gui.control.DropTargetController;
  * @author olaf
  * 
  */
+@SuppressWarnings("serial")
 public abstract class DroppableJPanel extends JPanel {
 
 	// protected DragAndDropComponentController controller;
@@ -52,14 +39,12 @@ public abstract class DroppableJPanel extends JPanel {
 	 * @author olaf
 	 */
 	class MyDropTargetListener extends DropTargetAdapter {
-
-		private DropTarget dropTarget;
 		private DroppableJPanel panel;
 
 		public MyDropTargetListener(DroppableJPanel dropTargetPanel) {
 			this.panel = dropTargetPanel;
 
-			dropTarget = new DropTarget(dropTargetPanel,
+			new DropTarget(dropTargetPanel,
 					DnDConstants.ACTION_COPY, this, true, null);
 		}
 

@@ -19,8 +19,6 @@ import javax.swing.border.EmptyBorder;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
 
-import sun.tools.tree.ThisExpression;
-
 public class EditableTextPanel extends JPanel {
 
 	private static final int DESCRIPTION_PANEL_PADDING = 5;

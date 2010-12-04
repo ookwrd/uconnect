@@ -52,7 +52,7 @@ public class TitlePanel extends JPanel {
 		this.controller = controller;
 		this.component = component;
 		this.topPanel = topPanel; // there is no parent yet
-		
+
 		titleListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTitle(titleTextField.getText());
@@ -60,7 +60,7 @@ public class TitlePanel extends JPanel {
 				titleLabel.setVisible(true);
 			}
 		};
-		//this.setFocusable(false);
+		// this.setFocusable(false);
 
 		// add a title panel
 		BoxLayout bl = new BoxLayout(this, BoxLayout.X_AXIS);
@@ -151,9 +151,10 @@ public class TitlePanel extends JPanel {
 		// set a minimum size, in case the title is short
 		int h = getFontMetrics(titleTextField.getFont()).getHeight();
 		titleTextField.setMinimumSize(new Dimension(100, h));
-		//titleTextField.setPreferredSize(new Dimension(100, h)); // just in case
+		// titleTextField.setPreferredSize(new Dimension(100, h)); // just in
+		// case
 		titleLabel.setMinimumSize(new Dimension(100, h));
-		//titleLabel.setPreferredSize(new Dimension(100, h)); // just in case
+		// titleLabel.setPreferredSize(new Dimension(100, h)); // just in case
 
 		// set a maximum size too
 		// titleTextField.setMaximumSize(new Dimension(, 10));

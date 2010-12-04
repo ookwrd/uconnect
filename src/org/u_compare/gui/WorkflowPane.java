@@ -90,7 +90,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 		topComponent.addMouseMotionListener(doScrollRectToVisible);
 
 		// Let the user scroll by dragging to outside the window.
-		setAutoscrolls(true); // enable synthetic drag events
+		this.setAutoscrolls(true); // enable synthetic drag events
 		addMouseMotionListener(this); // handle mouse drags
 
 	}

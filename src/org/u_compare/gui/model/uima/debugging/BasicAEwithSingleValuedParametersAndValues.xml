@@ -39,6 +39,7 @@
       </configurationParameter>
       <configurationParameter>
         <name>MandatoryString</name>
+        <description>sdfasdf</description>
         <type>String</type>
         <multiValued>false</multiValued>
         <mandatory>true</mandatory>

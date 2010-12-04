@@ -1,26 +1,29 @@
 package org.u_compare.gui.control;
 
-import org.u_compare.gui.IntegerParameterPanel;
+import org.u_compare.gui.FloatParameterPanel;
 import org.u_compare.gui.ParameterPanel;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.parameters.IntegerParameter;
+import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
-public class IntegerParameterController extends ParameterController {
 
-	private IntegerParameter param;
+//TODO integrate this with the IntegerParameterController
+public class FloatParameterController extends ParameterController {
+
+	private FloatParameter param;
 	private ComponentController parent;
-	private IntegerParameterPanel view;//They look the same
+	private FloatParameterPanel view;//They look the same
 	private Component component;
 	
-	public IntegerParameterController(ComponentController control,
-			IntegerParameter param, Component component) {
+	public FloatParameterController(ComponentController control,
+			FloatParameter param, Component component) {
 		this.parent = control;
 		this.param = param;
 		this.component = component;
-		this.view = new IntegerParameterPanel(param, this, component);
+		this.view = new FloatParameterPanel(param, this, component);
 	}
 
+	//TODO push into the abstract base class
 	public ParameterPanel getView() {
 		return view;
 	}

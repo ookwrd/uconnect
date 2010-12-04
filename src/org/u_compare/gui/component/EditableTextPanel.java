@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -21,8 +23,9 @@ import org.u_compare.gui.model.Component;
 
 import sun.tools.tree.ThisExpression;
 
-public class EditableTextPanel extends JPanel {
+public class EditableTextPanel extends JPanel implements KeyListener {
 
+	private static final boolean debug = true;
 	private static final int PANEL_PADDING = 5;
 	public final Color defaultColor = getBackground();
 
@@ -62,10 +65,7 @@ public class EditableTextPanel extends JPanel {
 			}
 
 			public void focusLost(FocusEvent e) {
-				setContent(editableContent.getText());
-				editableContent.setVisible(false);
-				content.setVisible(true);
-				endEditingButton.setVisible(false);
+				releaseFocusAction();
 			}
 		};
 
@@ -140,6 +140,14 @@ public class EditableTextPanel extends JPanel {
 
 	}
 
+	protected void releaseFocusAction() {
+		
+		setContent(editableContent.getText());
+		editableContent.setVisible(false);
+		content.setVisible(true);
+		endEditingButton.setVisible(false);
+	}
+
 	protected void setContent(String text) {
 
 		this.contentText = text;
@@ -163,6 +171,29 @@ public class EditableTextPanel extends JPanel {
 
 	public String getDescription() {
 		return this.contentText;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+		if (debug) System.out.println("Key pressed.");
+		int code = e.getKeyCode(); 
+		if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_CAPS_LOCK) 
+		{ 
+			if (debug) System.out.println("ESC pressed.");
+			releaseFocusAction();
+		} 
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

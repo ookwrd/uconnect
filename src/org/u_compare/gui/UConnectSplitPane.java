@@ -12,12 +12,17 @@ import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
+/**
+ * XXX: TODO:
+ * 
+ * @author 	luke
+ * @author 	pontus
+ * @version 2010-12-04
+ *
+ */
 @SuppressWarnings("serial")
 public class UConnectSplitPane extends JSplitPane
 		implements ComponentListener {
-
-	private JComponent workflowPane;
-	private JComponent libraryPane;
 	
 	private static final boolean DEBUG = false;
 	
@@ -30,9 +35,6 @@ public class UConnectSplitPane extends JSplitPane
 	
 	public UConnectSplitPane(JComponent workflowPane,
 			JComponent libraryPane) {
-		
-		this.workflowPane = workflowPane;
-		this.libraryPane = libraryPane;
 		
 		this.setLeftComponent(workflowPane);
 		this.setRightComponent(libraryPane);

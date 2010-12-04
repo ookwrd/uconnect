@@ -6,13 +6,15 @@ import java.io.PrintStream;
  * 
  * Class aggregating Debugging variables
  * 
- * @author lukemccrohon
+ * @author luke
  *
  */
 public class Debug {
 
 	//Debuglevel values
-	//Implemented via int Enum Pattern to allow DEBUGLEVEL > X statement (using an "enum" wouldn't allow this).
+	/* Implemented via int Enum Pattern to allow DEBUGLEVEL > X statement
+	 * (using an "enum" wouldn't allow this).
+	 */
 	public static final int	NONE = 0;
 	public static final int ERROR = 1;
 	public static final int WARNING = 2;

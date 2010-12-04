@@ -18,8 +18,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
- * Component to be used as a tab flap that can display an icon and
- * is close-able using a button.
+ * Component to be used as a tab flap that can display an icon as a status
+ * indicator and is close-able using a button.
  * 
  * @author pontus
  * @author olaf

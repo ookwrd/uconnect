@@ -8,8 +8,6 @@ package org.u_compare.gui.component;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -22,9 +20,11 @@ import java.util.Map;
  */
 public class RoundedBorder implements Border {
 
-	public static final Map<RenderingHints.Key,Object> RENDERING_HINTS = new HashMap<RenderingHints.Key,Object>();
+	public static final Map<RenderingHints.Key,Object> RENDERING_HINTS =
+		new HashMap<RenderingHints.Key,Object>();
 	static {
-	RENDERING_HINTS.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	RENDERING_HINTS.put(RenderingHints.KEY_ANTIALIASING,
+			RenderingHints.VALUE_ANTIALIAS_ON);
 	} 
 	
     private final Color background;
@@ -44,7 +44,8 @@ public class RoundedBorder implements Border {
      * @param stroke
      * @param insets
      */
-    public RoundedBorder(Color background, Color outline, Color foreground, int radius, int stroke, boolean insets) {
+    public RoundedBorder(Color background, Color outline, Color foreground,
+    		int radius, int stroke, boolean insets) {
         this.background = background;
         this.outline = outline;
         this.foreground = foreground;
@@ -54,7 +55,8 @@ public class RoundedBorder implements Border {
         this.insets = insets;
     }
 
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+    public void paintBorder(Component c, Graphics g, int x, int y, int width,
+    		int height) {
         Graphics2D g2d = (Graphics2D)g.create();
         g2d.addRenderingHints(RENDERING_HINTS);
         int diameter = radius * 2;
@@ -101,10 +103,14 @@ public class RoundedBorder implements Border {
             int rightStroke = width - diameter + halfStroke;
             int topStroke = halfStroke;
             int bottomStroke = height - diameter + halfStroke;
-            g2d.drawArc(leftStroke,  topStroke,    strokeDiameter, strokeDiameter, 90, 90);
-            g2d.drawArc(rightStroke, topStroke,    strokeDiameter, strokeDiameter, 0,  90);
-            g2d.drawArc(leftStroke,  bottomStroke, strokeDiameter, strokeDiameter, 180, 90);
-            g2d.drawArc(rightStroke, bottomStroke, strokeDiameter, strokeDiameter, 270, 90);
+            g2d.drawArc(leftStroke,  topStroke,    strokeDiameter,
+            		strokeDiameter, 90, 90);
+            g2d.drawArc(rightStroke, topStroke,    strokeDiameter,
+            		strokeDiameter, 0,  90);
+            g2d.drawArc(leftStroke,  bottomStroke, strokeDiameter,
+            		strokeDiameter, 180, 90);
+            g2d.drawArc(rightStroke, bottomStroke, strokeDiameter,
+            		strokeDiameter, 270, 90);
 
             // stroke sides
             int sideBottom = height - stroke;
@@ -119,7 +125,8 @@ public class RoundedBorder implements Border {
     }
 
     public Insets getBorderInsets(Component c) {
-        return new Insets(insets?stroke:0, insets?radius:0, insets?stroke:0, insets?radius:0);//Lukes changes
+        return new Insets(insets?stroke:0, insets?radius:0,
+        		insets?stroke:0, insets?radius:0); //Lukes changes
     }
 
     public boolean isBorderOpaque() {
@@ -142,16 +149,20 @@ public class RoundedBorder implements Border {
             int s = 30;
             JPanel cell = new JPanel();
             cell.setOpaque(false);
-            cell.add(new JLabel("<html><i>radius</i>: " + p + "<br><i>stroke</i>: " + s));
-            cell.setBorder(new RoundedBorder(background, border, foreground, p, s, true));
+            cell.add(new JLabel("<html><i>radius</i>: " + p
+            		+ "<br><i>stroke</i>: " + s));
+            cell.setBorder(new RoundedBorder(background, border,
+            		foreground, p, s, true));
             cell.setBackground(Color.WHITE);
             panel.add(cell);
 
             for(p = 2; p < 20; p++) {
                 for(s = 0; s <= p; s++) {
                     cell = new JPanel();
-                    cell.add(new JLabel("<html><i>radius</i>: " + p + "<br><i>stroke</i>: " + s));
-                    cell.setBorder(new RoundedBorder(background, border, foreground, p, s, true));
+                    cell.add(new JLabel("<html><i>radius</i>: " + p
+                    		+ "<br><i>stroke</i>: " + s));
+                    cell.setBorder(new RoundedBorder(background, border,
+                    		foreground, p, s, true));
                     cell.setBackground(Color.WHITE);
                     panel.add(cell);
                 }

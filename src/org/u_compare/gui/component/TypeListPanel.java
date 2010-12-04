@@ -1,14 +1,11 @@
 package org.u_compare.gui.component;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.security.InvalidParameterException;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -16,7 +13,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -24,9 +20,6 @@ import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.model.AnnotationType;
 import org.u_compare.gui.model.InputOutputChangeListener;
 import org.u_compare.gui.model.LockedStatusChangeListener;
-import org.u_compare.gui.model.parameters.InvalidInputException;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @SuppressWarnings("serial")
 public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
@@ -48,7 +41,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	
 	private int listType;
 	
-	public TypeListPanel(org.u_compare.gui.model.Component component, int listType, TypeListPanelController controller){
+	public TypeListPanel(org.u_compare.gui.model.Component component,
+			int listType, TypeListPanelController controller){
 		
 		this.component = component;
 		this.listType = listType;
@@ -58,7 +52,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		setLayout(new BoxLayout(this,
 				BoxLayout.Y_AXIS));
 
-		ListSelectionListener listSelectionListener = new ListSelectionListener() {
+		ListSelectionListener listSelectionListener =
+			new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent evt) {
 				if (evt.getValueIsAdjusting()){
 					return;
@@ -116,12 +111,14 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				/*JList and DefaultListModel provide no way for accessing contents
-				*as anything other than an Object[]. Hence having to go through the
-				*array element by element and casting each selected name individually.
-				*/
+				/*JList and DefaultListModel provide no way for accessing
+				 * contents as anything other than an Object[]. Hence having
+				 * to go through the array element by element and casting each
+				 * selected name individually.
+				 */
 				for(Object name : list.getSelectedValues()){
-					TypeListPanel.this.controller.removeAnnotation((String)name);
+					TypeListPanel.this.controller
+						.removeAnnotation((String)name);
 				}
 				
 			}
@@ -154,7 +151,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	
 	private void configureLockStatus(){
 		if(component.getLockedStatus()){
-			//Sets the list items unselect-able, without changing their appearance
+			//Sets the list items unselect-able, without changing appearance
 			list.setEnabled(false);
 		    list.setCellRenderer(new DefaultListCellRenderer() {
 		        public Component getListCellRendererComponent(
@@ -164,7 +161,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		            boolean isSelected,
 		            boolean cellHasFocus) {
 
-		            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		            super.getListCellRendererComponent(list, value, index,
+		            		isSelected, cellHasFocus);
 		            this.setEnabled(true);
 		            return this;
 		        }
@@ -194,7 +192,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 			}
 			break;
 		default:
-			throw new Error("TypeListPanel listType not set to a valid value: " + listType);
+			throw new Error("TypeListPanel listType not set to a valid value: "
+					+ listType);
 		}
 	}
 	
@@ -204,7 +203,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	}
 
 	@Override
-	public void inputOutputChanged(org.u_compare.gui.model.Component component) {
+	public void inputOutputChanged(
+			org.u_compare.gui.model.Component component) {
 		rebuildListContents();
 	}
 	

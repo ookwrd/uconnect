@@ -14,7 +14,6 @@ public class TopPanel extends JPanel {
 	private Component component;
 	private TitlePanel titlePanel;
 	private ButtonPanel buttonPanel;
-	private boolean isWorkflow;
 
 	public TopPanel(ComponentController controller, Component component,
 			JPanel innerPanel, boolean isWorkflow) {
@@ -25,7 +24,6 @@ public class TopPanel extends JPanel {
 		BorderLayout topLayout = new BorderLayout();
 		setLayout(topLayout);
 		setOpaque(false);
-		this.isWorkflow = isWorkflow;
 
 		if (!isWorkflow) {
 			setBorder(new RoundedBorder(null, ComponentPanel.BORDER_COLOR,

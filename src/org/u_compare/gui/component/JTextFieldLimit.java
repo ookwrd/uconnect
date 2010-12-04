@@ -8,6 +8,7 @@ import javax.swing.text.*;
  * {@link http://www.java2s.com/}
  * 
  */
+@SuppressWarnings("serial")
 public class JTextFieldLimit extends PlainDocument {
 	private int limit;
 	// optional uppercase conversion

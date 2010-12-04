@@ -1,31 +1,22 @@
 package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.control.ComponentController;
-import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.debugging.GUITestingHarness;
-import org.u_compare.gui.model.DescriptionChangeListener;
 import org.u_compare.gui.model.SubComponentsChangedListener;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;

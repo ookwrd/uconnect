@@ -1,7 +1,5 @@
 package org.u_compare.gui.component;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -33,8 +31,6 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 	private ActionListener closeListener;
 	private ActionListener minListener;
 	private ActionListener lockListener;
-	private ActionListener closeHighlight; 
-	private ActionListener closeUnhighlight;
 	
 	private JButton closeButton;
 	private JButton minButton;
@@ -72,14 +68,14 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 			}
 		};
 
-		closeHighlight = new ActionListener() {
+		new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				closeButton.setBorderPainted(true);
 			}
 		};
 
-		closeUnhighlight = new ActionListener() {
+		new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				closeButton.setBorderPainted(false);
@@ -219,8 +215,8 @@ public class ButtonPanel extends JPanel implements MinimizedStatusChangeListener
 	}
 	
 	private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";
-	private final static String ICON_CLOSE_PATH_HIGHLIGHT =
-		"../gfx/icon_close1highlight.png";
+//	private final static String ICON_CLOSE_PATH_HIGHLIGHT =
+//		"../gfx/icon_close1highlight.png";
 	private final static String ICON_MAX_PATH = "../gfx/icon_maximize1.png";
 	private final static String ICON_MIN_PATH = "../gfx/icon_minimize1.png";
 	private final static String ICON_LOCKED_PATH = "../gfx/icon_locked.png";

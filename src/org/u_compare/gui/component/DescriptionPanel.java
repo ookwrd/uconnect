@@ -1,24 +1,10 @@
 package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
@@ -35,17 +21,14 @@ public class DescriptionPanel extends JPanel implements
 	private final ComponentController controller;
 	private final Component component;
 	private EditableTextPanel innerPanel;
-	
-	private static Font font;
 
 	public DescriptionPanel(ComponentController controller, Component component) {
 		super();
 
 		this.controller = controller;
 		this.component = component;
-		this.font = this.getFont();
 		
-		innerPanel = new EditableTextPanel(controller, component);
+		innerPanel = new EditableTextPanel(component);
 		
 		innerPanel.registerActionListener(new ActionListener(){
 			@Override

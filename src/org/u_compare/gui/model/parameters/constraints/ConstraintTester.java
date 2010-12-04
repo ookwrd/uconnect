@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.u_compare.gui.model.parameters.InvalidInputException;
 
 public class ConstraintTester {
 
@@ -113,7 +112,8 @@ public class ConstraintTester {
 	@Test
 	public void stringWhiteList() throws ConstraintFailedException{
 		StringConstraint constraint = new StringConstraint();
-		constraint.setWhiteList(new ArrayList<String>(Arrays.asList("a","b","cc")));
+		constraint.setWhiteList(
+				new ArrayList<String>(Arrays.asList("a","b","cc")));
 		constraint.validate("cc");
 		constraint.validate("a");
 	}
@@ -121,14 +121,16 @@ public class ConstraintTester {
 	@Test(expected=ConstraintFailedException.class)
 	public void stringWhiteList1() throws ConstraintFailedException{
 		StringConstraint constraint = new StringConstraint();
-		constraint.setWhiteList(new ArrayList<String>(Arrays.asList("a","b","cc")));
+		constraint.setWhiteList(
+				new ArrayList<String>(Arrays.asList("a","b","cc")));
 		constraint.validate("d");
 	}
 	
 	@Test
 	public void stringBlackList() throws ConstraintFailedException{
 		StringConstraint constraint = new StringConstraint();
-		constraint.setBlackList(new ArrayList<String>(Arrays.asList("a","b","cc")));
+		constraint.setBlackList(
+				new ArrayList<String>(Arrays.asList("a","b","cc")));
 		constraint.validate("d");
 		constraint.validate("a1");
 	}
@@ -136,7 +138,8 @@ public class ConstraintTester {
 	@Test(expected=ConstraintFailedException.class)
 	public void stringBlackList1() throws ConstraintFailedException{
 		StringConstraint constraint = new StringConstraint();
-		constraint.setBlackList(new ArrayList<String>(Arrays.asList("a","b","cc")));
+		constraint.setBlackList(
+				new ArrayList<String>(Arrays.asList("a","b","cc")));
 		constraint.validate("b");
 	}
 	

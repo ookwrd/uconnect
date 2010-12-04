@@ -1,22 +1,20 @@
 package org.u_compare.gui.control;
 
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-
-import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.component.WorkflowPanel;
-import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.InvalidStatusException;
 import org.u_compare.gui.model.Workflow;
 
 public class WorkflowController extends ComponentController {
 
 	
-	public WorkflowController(Workflow component, boolean showWorkflowControlPanel, boolean showWorkflowDetails, boolean allowEditing) {
+	public WorkflowController(Workflow component,
+			boolean showWorkflowControlPanel, boolean showWorkflowDetails,
+			boolean allowEditing) {
 		super(allowEditing);
 		
 		this.component = component;
-		this.componentView = new WorkflowPanel(component, this, showWorkflowControlPanel, showWorkflowDetails);
+		this.componentView = new WorkflowPanel(component, this,
+				showWorkflowControlPanel, showWorkflowDetails);
 		
 		
 	}

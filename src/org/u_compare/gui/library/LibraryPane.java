@@ -6,6 +6,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 //This class is intended to be an abstract base for the interchangeable library classes
+@SuppressWarnings("serial")
 public class LibraryPane extends JScrollPane {
 
 	// Configuration

@@ -11,13 +11,13 @@ public class IntegerParameterController extends ParameterController {
 	private IntegerParameter param;
 	private ComponentController parent;
 	private IntegerParameterPanel view;//They look the same
-	private Component component;
+//	private Component component;
 	
 	public IntegerParameterController(ComponentController control,
 			IntegerParameter param, Component component) {
 		this.parent = control;
 		this.param = param;
-		this.component = component;
+//		this.component = component;
 		this.view = new IntegerParameterPanel(param, this, component);
 	}
 

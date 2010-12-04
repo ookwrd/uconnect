@@ -7,7 +7,6 @@ import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.TypeOrFeature;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
-import org.apache.uima.collection.CasConsumerDescription;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.ConfigurationParameter;
@@ -48,18 +47,25 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	public PrimitiveUIMAComponent(){
 		super();
 		
-		CasConsumerDescription casConsumerDesc = null;
+//		CasConsumerDescription casConsumerDesc = null;
 		try {
 			
-			XMLInputSource xmlIn = new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSingleValuedParametersAndValues.xml");
+			XMLInputSource xmlIn = new XMLInputSource(
+					"src/org/u_compare/gui/model/uima/debugging/"
+					+ "BasicAEwithSingleValuedParametersAndValues.xml");
 			
-			//AnalysisEngineDescription desc = UIMAFramework.getXMLParser().parseAnalysisEngineDescription(xmlIn);
-			//casConsumerDesc = UIMAFramework.getXMLParser().parseCasConsumerDescription(xmlIn);
+			/*AnalysisEngineDescription desc = 
+			 		UIMAFramework.getXMLParser()
+			 		.parseAnalysisEngineDescription(xmlIn);
+			casConsumerDesc = UIMAFramework.getXMLParser()
+					.parseCasConsumerDescription(xmlIn);
+			*/
 			//etc
 			
 			
-			/*ResourceSpecifier specifier = 
-			    UIMAFramework.getXMLParser().parseResourceSpecifier(xmlIn);//Can i use this instead?
+			/*//Can i use this instead?
+			  ResourceSpecifier specifier = 
+			    UIMAFramework.getXMLParser().parseResourceSpecifier(xmlIn);
 			 */
 			
 			/** 	this is a nasty nasty way of doing this, but it is what I found done in 
@@ -91,27 +97,34 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				System.out.println(metaData.getDescription());
 				System.out.println(metaData.getVendor());
 				System.out.println(metaData.getVersion());
-				System.out.println(metaData.getCopyright());//wow, didnt know about this
+				//wow, didnt know about this
+				System.out.println(metaData.getCopyright());
 				
 				System.out.println("Primitive: " + desc.isPrimitive());
-				System.out.println("Implementation Name: " + desc.getImplementationName());
+				System.out.println("Implementation Name: "
+						+ desc.getImplementationName());
 				
 				
 				System.out.println("Subcomponents:");
-				for(String key : desc.getDelegateAnalysisEngineSpecifiers().keySet()){
+				for(String key :
+						desc.getDelegateAnalysisEngineSpecifiers().keySet()){
 					System.out.println("Key: " + key);
-					ResourceSpecifier specifier = desc.getDelegateAnalysisEngineSpecifiers().get(key);
+					ResourceSpecifier specifier =
+						desc.getDelegateAnalysisEngineSpecifiers().get(key);
 					
 					if(specifier instanceof AnalysisEngineDescription){
 						
 						System.out.println("In the child");
 						
-						AnalysisEngineDescription child = (AnalysisEngineDescription)specifier;
-						System.out.println("Child Name: " + child.getAnalysisEngineMetaData().getName());
+						AnalysisEngineDescription child =
+							(AnalysisEngineDescription)specifier;
+						System.out.println("Child Name: "
+								+ child.getAnalysisEngineMetaData().getName());
 					}
 				}
 				
-				TypeSystemDescription typeSystemDescription = metaData.getTypeSystem();
+				TypeSystemDescription typeSystemDescription =
+					metaData.getTypeSystem();
 				
 				for(TypeDescription type :typeSystemDescription.getTypes()){
 					System.out.println(type.getName());
@@ -127,7 +140,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				//TODO type system
 				
 				System.out.println("\nInputs & Outputs:\n");
-				for(Capability capability: metaData.getCapabilities()){//What exactly are the capability sets for? based on languages?
+				 //What exactly are the capability sets for? based on languages?
+				for(Capability capability: metaData.getCapabilities() ){
 					System.out.println(capability.getDescription());
 					System.out.println("Inputs:");
 					for(TypeOrFeature torf : capability.getInputs()){
@@ -143,22 +157,28 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				
 				
 				System.out.println("\nParameters:\n");
-				ConfigurationParameterSettings settings = metaData.getConfigurationParameterSettings();
-				for(ConfigurationParameter param : metaData.getConfigurationParameterDeclarations().getConfigurationParameters()){
+				ConfigurationParameterSettings settings =
+					metaData.getConfigurationParameterSettings();
+				for(ConfigurationParameter param :
+						metaData.getConfigurationParameterDeclarations()
+						.getConfigurationParameters()){
 					System.out.println(param.getName());
 					System.out.println(param.getDescription());
 					System.out.println(param.getType()); 
-					if(param.getType().equals(ConfigurationParameter.TYPE_BOOLEAN)){
+					if(param.getType().equals(
+							ConfigurationParameter.TYPE_BOOLEAN)){
 						System.out.println("Yay its a BOOLEAN!");
 					}
 					System.out.println("Multivalued: " + param.isMultiValued());
 					System.out.println("Mandatory: " + param.isMandatory());
-					System.out.println("Value: " +settings.getParameterValue(param.getName()));
+					System.out.println("Value: "
+							+ settings.getParameterValue(param.getName()));
 					System.out.println();		
 				}
 				
 				//Alternatively
-				/*for(org.apache.uima.resource.metadata.NameValuePair pair : settings.getParameterSettings()){
+				/*for(org.apache.uima.resource.metadata.NameValuePair pair :
+				  		settings.getParameterSettings()){
 					System.out.println("Name: " + pair.getName());
 					System.out.println("Value: " + pair.getValue());
 					System.out.println();
@@ -191,8 +211,11 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	
 	public AnalysisEngineDescription getUIMADescription(){
 		
-		AnalysisEngineDescription description = UIMAFramework.getResourceSpecifierFactory().createAnalysisEngineDescription();
-		AnalysisEngineMetaData metadata = description.getAnalysisEngineMetaData();
+		AnalysisEngineDescription description =
+			UIMAFramework.getResourceSpecifierFactory()
+			.createAnalysisEngineDescription();
+		AnalysisEngineMetaData metadata =
+			description.getAnalysisEngineMetaData();
 		
 		setupProcessingResourceMetaData(metadata);
 		setupAnalysisEngineDescription(description);
@@ -200,33 +223,41 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		return description;
 	}
 	
-	protected void setupAnalysisEngineDescription(AnalysisEngineDescription description){
+	protected void setupAnalysisEngineDescription(
+			AnalysisEngineDescription description) {
 		
 		description.setImplementationName(getImplementationName());
-		description.setResourceManagerConfiguration(resourceManagerConfiguration);//TODO actually do this.
+		description.setResourceManagerConfiguration(
+				resourceManagerConfiguration);//TODO actually do this.
 		description.setPrimitive(!isAggregate());
 		
 	}
 	
 	
-	//TODO do I need a factory here? Yes, how do i handle primitive vs non-primitive
+	//TODO Need factory here? Yes, how do i handle primitive vs non-primitive
 	
-	public PrimitiveUIMAComponent(String descriptorLocation) throws IOException, InvalidXMLException{
+	public PrimitiveUIMAComponent(String descriptorLocation)
+			throws IOException, InvalidXMLException {
 		this(new XMLInputSource(descriptorLocation));
 	}
 	
-	public PrimitiveUIMAComponent(XMLInputSource inputSource) throws InvalidXMLException{
-		try{
-		Object resourceSpecifier = UIMAFramework.getXMLParser().parse(inputSource);
+	public PrimitiveUIMAComponent(XMLInputSource inputSource)
+			throws InvalidXMLException{
+		try {
+		Object resourceSpecifier =
+			UIMAFramework.getXMLParser().parse(inputSource);
 		
 		if(resourceSpecifier instanceof AnalysisEngineDescription){
 			
-			AnalysisEngineDescription desc = (AnalysisEngineDescription)resourceSpecifier;			
-			extractFromProcessingResouceMetaData(desc.getAnalysisEngineMetaData());
+			AnalysisEngineDescription desc =
+				(AnalysisEngineDescription)resourceSpecifier;			
+			extractFromProcessingResouceMetaData(
+					desc.getAnalysisEngineMetaData());
 			
 			//TODO extract to a helper method
 			setImplementationName(desc.getImplementationName());
-			resourceManagerConfiguration = desc.getResourceManagerConfiguration();//TODO actually do it.
+			resourceManagerConfiguration =
+				desc.getResourceManagerConfiguration();//TODO actually do it.
 		}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -235,7 +266,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	}
 
 	
-	protected void setupProcessingResourceMetaData(ProcessingResourceMetaData metaData) {
+	protected void setupProcessingResourceMetaData(
+			ProcessingResourceMetaData metaData) {
 		
 		setupResourceMetaData(metaData);
 		
@@ -249,7 +281,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		//TODO
 	}
 	
-	protected void setupResourceMetaData(ResourceMetaData metaData){
+	protected void setupResourceMetaData(ResourceMetaData metaData) {
 		
 		//Basic MetaData
 		metaData.setName(getTitle());
@@ -259,17 +291,23 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		metaData.setCopyright(getCopyright());
 		
 		//Parameters
-		ConfigurationParameterDeclarations settings = metaData.getConfigurationParameterDeclarations();
-		ConfigurationParameterSettings values = metaData.getConfigurationParameterSettings();
+		ConfigurationParameterDeclarations settings = 
+			metaData.getConfigurationParameterDeclarations();
+		ConfigurationParameterSettings values = 
+			metaData.getConfigurationParameterSettings();
 		setupConfigurationParameterDeclarations(settings, values);
 		
 		//TODO
 	}
 	
-	protected void setupConfigurationParameterDeclarations(ConfigurationParameterDeclarations settings, ConfigurationParameterSettings values){
+	protected void setupConfigurationParameterDeclarations(
+			ConfigurationParameterDeclarations settings,
+			ConfigurationParameterSettings values){
 		
 		for(Parameter param : getConfigurationParameters()){
-			ConfigurationParameter newParameter = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
+			ConfigurationParameter newParameter =
+				UIMAFramework.getResourceSpecifierFactory()
+				.createConfigurationParameter();
 			
 			newParameter.setName(param.getName());
 			newParameter.setDescription(param.getDescription());
@@ -304,7 +342,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 	}
 	
-	protected void extractFromProcessingResouceMetaData(ProcessingResourceMetaData metaData){
+	protected void extractFromProcessingResouceMetaData(
+			ProcessingResourceMetaData metaData){
 		extractFromResourceMetaData(metaData);
 		
 		//TODO actually construct these
@@ -327,10 +366,14 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 		//Parameters
 		ArrayList<Parameter> parameters = new ArrayList<Parameter>(); 
-		ConfigurationParameterSettings settings = metaData.getConfigurationParameterSettings();
-		for(ConfigurationParameter param : metaData.getConfigurationParameterDeclarations().getConfigurationParameters()){
+		ConfigurationParameterSettings settings =
+			metaData.getConfigurationParameterSettings();
+		for(ConfigurationParameter param :
+			metaData.getConfigurationParameterDeclarations()
+			.getConfigurationParameters()){
 
-			Parameter newParameter = AbstractParameter.constructParameter(param, settings.getParameterValue(param.getName()));
+			Parameter newParameter = AbstractParameter.constructParameter(
+					param, settings.getParameterValue(param.getName()));
 			parameters.add(newParameter);
 			
 		}
@@ -347,7 +390,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	}
 	
 	public static void main(String[] args){
-		PrimitiveUIMAComponent comp = new PrimitiveUIMAComponent();
+		new PrimitiveUIMAComponent();
 	}
 	
 }

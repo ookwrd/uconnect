@@ -15,10 +15,10 @@ public class WorkflowPaneController {
 
 	private static final boolean SHOW_CONSOLE = true;
 	private static final boolean ALLOW_TABS = true;
-	private static final boolean SHOW_NEW_TAB = true; //TODO
+//	private static final boolean SHOW_NEW_TAB = true; //TODO
 	
 	private static final boolean allowEditing = true;
-	private static final boolean allowReordering = true; //TODO
+//	private static final boolean allowReordering = true; //TODO
 	
 	private static final boolean showWorkflowControlPanel = true;
 	private static final boolean showWorkflowDetails = true;
@@ -64,12 +64,12 @@ public class WorkflowPaneController {
 		return initialize(workflows);
 	}
 	
-	@SuppressWarnings("unused")
 	public JComponent initialize(ArrayList<Workflow> workflows){
 		
-		if(!ALLOW_TABS && workflows.size() > 1){
-			throw new IllegalArgumentException("As Workflow Tabs are currently disabled this method can handle at most a single workflow as input.");
-		}
+		//TODO:
+//		if(!ALLOW_TABS && workflows.size() > 1){
+//			throw new IllegalArgumentException("As Workflow Tabs are currently disabled this method can handle at most a single workflow as input.");
+//		}
 		
 		ArrayList<WorkflowSplitPane> workflowSplitPanes = new ArrayList<WorkflowSplitPane>();
 		

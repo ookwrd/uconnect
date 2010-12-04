@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.model.InvalidPositionException;
-import org.u_compare.gui.model.InvalidStatusException;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.Workflow;
 
 /**
  * 

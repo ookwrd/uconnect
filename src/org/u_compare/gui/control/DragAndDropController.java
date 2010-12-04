@@ -1,7 +1,5 @@
 package org.u_compare.gui.control;
 
-import java.awt.datatransfer.Transferable;
-
 import org.u_compare.gui.DraggableJPanel;
 
 /**

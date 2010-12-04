@@ -1,7 +1,6 @@
 package org.u_compare.gui.control;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 
 import org.u_compare.gui.component.AnnotationTypeChooser;
 import org.u_compare.gui.component.BasicAnnotationTypeChooser;
@@ -14,13 +13,15 @@ public class TypeListPanelController {
 	//Default Annotation Type Chooser, replaceable via setTypeChooser method
 	private AnnotationTypeChooser typeChooser = new BasicAnnotationTypeChooser();
 	
-	private ComponentController parentComponentController;
+//	private ComponentController parentComponentController;
 	private Component component;
 	private int listType;
 	
-	public TypeListPanelController(ComponentController parentComponentController, Component component, int listType){
+	public TypeListPanelController(
+			ComponentController parentComponentController,
+			Component component, int listType){
 		
-		this.parentComponentController = parentComponentController;
+//		this.parentComponentController = parentComponentController;
 		this.component = component;
 		this.listType = listType;
 		

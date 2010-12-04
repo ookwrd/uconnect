@@ -13,13 +13,13 @@ public class FloatParameterController extends ParameterController {
 	private FloatParameter param;
 	private ComponentController parent;
 	private FloatParameterPanel view;//They look the same
-	private Component component;
+//	private Component component;
 	
 	public FloatParameterController(ComponentController control,
 			FloatParameter param, Component component) {
 		this.parent = control;
 		this.param = param;
-		this.component = component;
+//		this.component = component;
 		this.view = new FloatParameterPanel(param, this, component);
 	}
 

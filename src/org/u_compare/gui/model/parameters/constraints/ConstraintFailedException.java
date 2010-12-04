@@ -1,5 +1,6 @@
 package org.u_compare.gui.model.parameters.constraints;
 
+@SuppressWarnings("serial")
 public class ConstraintFailedException extends Exception {
 
 	private String msgString;

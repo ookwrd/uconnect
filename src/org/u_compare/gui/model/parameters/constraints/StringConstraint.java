@@ -3,19 +3,20 @@ package org.u_compare.gui.model.parameters.constraints;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.u_compare.gui.model.parameters.InvalidInputException;
-
 
 public class StringConstraint extends Constraint {
 	
 		private int minlength = 0;
 		private int maxLength = Integer.MAX_VALUE;
 		
-		private ArrayList<String> whiteList; //Null corresponds to no whiteList restriction
-		private ArrayList<String> blackList; //Null corresponds to no blackList restriction
+		//Null corresponds to no whiteList restriction
+		private ArrayList<String> whiteList;
+		//Null corresponds to no blackList restriction
+		private ArrayList<String> blackList;
 		
-		private Pattern regex; //Null corresponds to no regex checking
-		private Pattern characters; //Null corresponds to no character checking
+		//Null corresponds to no regex checking
+		private Pattern regex;
+		private Pattern characters;//Null corresponds to no character checking
 		
 		public StringConstraint(){}
 		
@@ -66,11 +67,15 @@ public class StringConstraint extends Constraint {
 		public void validate(String value) throws ConstraintFailedException{		
 			
 			if(value.length() < minlength){
-				throw new ConstraintFailedException("Input is too short. Please input a string of at least " + minlength + " characters.");			
+				throw new ConstraintFailedException("Input is too short. "
+						+ "Please input a string of at least "
+						+ minlength + " characters.");			
 			}
 			
 			if(value.length() > maxLength){
-				throw new ConstraintFailedException("Input is too long. Please input a string of less than " + maxLength + " characters.");			
+				throw new ConstraintFailedException("Input is too long. "
+						+ "Please input a string of less than "
+						+ maxLength + " characters.");			
 			}
 			
 			if(whiteList != null){
@@ -83,7 +88,9 @@ public class StringConstraint extends Constraint {
 				}	
 				
 				if(!found){
-					throw new ConstraintFailedException("Input string does not belong to whiteListed set of acceptable values");
+					throw new ConstraintFailedException(
+							"Input string does not belong to whiteListed "
+							+ "set of acceptable values");
 				}	
 			}
 			
@@ -92,7 +99,9 @@ public class StringConstraint extends Constraint {
 				for(String i : blackList){
 					
 					if(i.equals(value)){
-						throw new ConstraintFailedException("Input string belongs to blackListed set of unacceptable values");
+						throw new ConstraintFailedException(
+								"Input string belongs to blackListed "
+								+ "set of unacceptable values");
 					}
 				}
 			}
@@ -101,7 +110,9 @@ public class StringConstraint extends Constraint {
 				Matcher matcher = regex.matcher(value);
 				
 				if(!matcher.matches()){
-					throw new ConstraintFailedException("Input string does not match the specified regex constraint: " + regex.pattern());
+					throw new ConstraintFailedException(
+							"Input string does not match the specified "
+							+ "regex constraint: " + regex.pattern());
 				}
 			}
 			
@@ -109,7 +120,11 @@ public class StringConstraint extends Constraint {
 				Matcher matcher = characters.matcher(value);
 				
 				if(!matcher.matches()){
-					throw new ConstraintFailedException("Input string does not match the specified character set constraint: " + characters.pattern().substring(1,characters.pattern().length()-2));
+					throw new ConstraintFailedException(
+							"Input string does not match the specified "
+							+ "character set constraint: "
+							+ characters.pattern().substring(1,
+									characters.pattern().length() - 2));
 				}
 			}
 		}

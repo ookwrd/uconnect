@@ -1,6 +1,5 @@
 package org.u_compare.gui.model.parameters.constraints;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import org.u_compare.gui.model.parameters.InvalidInputException;
@@ -24,15 +23,19 @@ public abstract class Constraint {
 	 * @throws InvalidInputException
 	 */
 	public void validate(String in) throws ConstraintFailedException{
-		throw new IllegalArgumentException("Single string validation not allowed by this constraint.");
+		throw new IllegalArgumentException(
+				"Single string validation not allowed by this constraint.");
 	}
 	
 	public void validate(int in) throws ConstraintFailedException{
-		throw new IllegalArgumentException("Single int validation not allowed by this constraint.");
+		throw new IllegalArgumentException(
+				"Single int validation not allowed by this constraint.");
 	}
 	
-	public void validate(ArrayList<String> in) throws ConstraintFailedException{
-		throw new IllegalArgumentException("String set validation not allowed by this constraint.");
+	public void validate(ArrayList<String> in)
+			throws ConstraintFailedException {
+		throw new IllegalArgumentException(
+				"String set validation not allowed by this constraint.");
 	}
 	
 }

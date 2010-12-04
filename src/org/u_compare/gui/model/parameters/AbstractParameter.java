@@ -7,8 +7,8 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
-public abstract class AbstractParameter implements
-		Parameter {
+public abstract class AbstractParameter
+		implements Parameter {
 
 	protected Component owner;
 	private String name;
@@ -16,13 +16,19 @@ public abstract class AbstractParameter implements
 	private boolean mandatory;
 	private ArrayList<Constraint> constraints;
 	
-	private ArrayList<Parameter> values = new ArrayList<Parameter>();
+//	private ArrayList<Parameter> values = new ArrayList<Parameter>();
 	
-	private ArrayList<ParameterNameDescriptionChangedListener> nameDescriptionChangedListeners = new ArrayList<ParameterNameDescriptionChangedListener>();
-	private ArrayList<ParameterSettingsChangedListener> changedListeners = new ArrayList<ParameterSettingsChangedListener>();
-	private ArrayList<MandatoryStatusChangedListener> mandatoryStatusChangedListeners = new ArrayList<MandatoryStatusChangedListener>(); 
+	private ArrayList<ParameterNameDescriptionChangedListener>
+		nameDescriptionChangedListeners =
+			new ArrayList<ParameterNameDescriptionChangedListener>();
+	private ArrayList<ParameterSettingsChangedListener> changedListeners =
+		new ArrayList<ParameterSettingsChangedListener>();
+	private ArrayList<MandatoryStatusChangedListener>
+		mandatoryStatusChangedListeners =
+			new ArrayList<MandatoryStatusChangedListener>(); 
 	
-	public AbstractParameter(String name, String description, boolean mandatory){
+	public AbstractParameter(String name, String description,
+			boolean mandatory) {
 		constraints = new ArrayList<Constraint>();
 		this.name = name;
 		this.description = description;
@@ -30,7 +36,7 @@ public abstract class AbstractParameter implements
 	}
 	
 	@Override
-	public void setOwner(Component owner){
+	public void setOwner(Component owner) {
 		this.owner = owner;
 	}
 	
@@ -41,7 +47,7 @@ public abstract class AbstractParameter implements
 	
 	@Override
 	public void setDescription(String description){
-		if(description != null && !description.equals(this.description)){
+		if(description != null && !description.equals(this.description)) {
 			this.description = description;
 			notifyParameterNameDescriptionChangedListeners();
 		}
@@ -89,63 +95,73 @@ public abstract class AbstractParameter implements
 	
 	/*@Override
 	public void setValue(int value) throws ConstraintFailedException {
-		throw new IllegalArgumentException("The parameter: "+ description + ", is not an int.");
+		throw new IllegalArgumentException("The parameter: "+ description
+				+ ", is not an int.");
 	}*/
 	
 	@Override
 	public void setValue(String value) throws ConstraintFailedException{
-		throw new IllegalArgumentException("The parameter: "+ description + ", is not an String.");
+		throw new IllegalArgumentException("The parameter: "+ description
+				+ ", is not an String.");
 	}
 	
 	@Override
 	public void setValue(Boolean value) throws ConstraintFailedException{
-		throw new IllegalArgumentException("The parameter: "+ description + ", is not a boolean.");
+		throw new IllegalArgumentException("The parameter: "+ description
+				+ ", is not a boolean.");
 	}
 	
-	public void registerParameterSettingsChangedListener(ParameterSettingsChangedListener listener){
+	public void registerParameterSettingsChangedListener(
+			ParameterSettingsChangedListener listener) {
 		assert(listener != null);
 		changedListeners.add(listener);
 	}
 	
-	protected void notifyParameterSettingsChangedListeners(){
-		for(ParameterSettingsChangedListener listener : changedListeners){
+	protected void notifyParameterSettingsChangedListeners() {
+		for(ParameterSettingsChangedListener listener : changedListeners) {
 			listener.parameterSettingsChanged(this);
 		}
 		owner.setComponentChanged();
 	}
 	
-	public void registerParameterNameDescriptionChangedListener(ParameterNameDescriptionChangedListener listener){
+	public void registerParameterNameDescriptionChangedListener(
+			ParameterNameDescriptionChangedListener listener) {
 		assert(listener != null);
 		nameDescriptionChangedListeners.add(listener);
 	}
 	
-	protected void notifyParameterNameDescriptionChangedListeners(){
-		for(ParameterNameDescriptionChangedListener listener : nameDescriptionChangedListeners){
+	protected void notifyParameterNameDescriptionChangedListeners() {
+		for(ParameterNameDescriptionChangedListener listener : 
+				nameDescriptionChangedListeners) {
 			listener.parameterNameDescriptionChanged(this);
 		}
 		owner.setComponentChanged();
 	}
 	
-	public void registerMandatoryStatusChangedListener(MandatoryStatusChangedListener listener){
+	public void registerMandatoryStatusChangedListener(
+			MandatoryStatusChangedListener listener) {
 		assert(listener != null);
 		mandatoryStatusChangedListeners.add(listener);
 	}
 	
-	protected void notifyMandatoryStatusChangedListeners(){
-		for(MandatoryStatusChangedListener listener : mandatoryStatusChangedListeners){
+	protected void notifyMandatoryStatusChangedListeners() {
+		for(MandatoryStatusChangedListener listener :
+				mandatoryStatusChangedListeners) {
 			listener.mandatoryStatusChanged(this);
 		}
 		owner.setComponentChanged();
 	}
 	
-	protected void validateConstraints(String parameter) throws ConstraintFailedException {
-		for(Constraint con : constraints){
+	protected void validateConstraints(String parameter)
+		throws ConstraintFailedException {
+		for(Constraint con : constraints) {
 			con.validate(parameter);	
 		}
 	}
 	
 	//TODO documentation
-	public static Parameter constructParameter(ConfigurationParameter param, Object value){
+	public static Parameter constructParameter(ConfigurationParameter param,
+			Object value){
 		
 		Parameter retVal;
 		
@@ -154,30 +170,35 @@ public abstract class AbstractParameter implements
 		boolean multivalued = param.isMultiValued();
 		boolean mandatory = param.isMandatory();
 		
-		String type = param.getType();//Why are the types Strings? I cant do a switch statement...
+		// Why are the types Strings? I cant do a switch statement..
+		String type = param.getType();
 		if(type.equals(ConfigurationParameter.TYPE_BOOLEAN)) {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = new BooleanParameter(name, description, mandatory, value!=null?(Boolean)value:null);
+				retVal = new BooleanParameter(name, description, mandatory,
+						value!=null?(Boolean)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_FLOAT)) {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = new FloatParameter(name, description, mandatory, value!=null?(Float)value:null);
+				retVal = new FloatParameter(name, description, mandatory,
+						value!=null?(Float)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_INTEGER)) {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = new IntegerParameter(name, description, mandatory, value!=null?(Integer)value:null);
+				retVal = new IntegerParameter(name, description, mandatory,
+						value!=null?(Integer)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_STRING)) {
 			if(multivalued){
 				retVal = null; //TODO
 			}else{
-				retVal = new StringParameter(name, description, mandatory, value!=null?(String)value:null);
+				retVal = new StringParameter(name, description, mandatory,
+						value!=null?(String)value:null);
 			}
 		} else {
 			retVal = null; //TODO throw an error here. 

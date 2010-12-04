@@ -18,7 +18,7 @@ public class MultivaluedParameter<T> extends AbstractParameter {
 	}
 	
 	public ArrayList<Parameter> getValues(){
-		return (ArrayList<Parameter>)valuesArrayList;
+		return (ArrayList<Parameter>) valuesArrayList;
 	}
 	
 	public void addValue(T value){

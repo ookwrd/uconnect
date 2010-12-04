@@ -18,21 +18,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
 
-import sun.tools.tree.ThisExpression;
-
+@SuppressWarnings("serial")
 public class EditableTextPanel extends JPanel implements KeyListener {
 
 	private static final boolean debug = true;
 	private static final int PANEL_PADDING = 5;
 	public final Color defaultColor = getBackground();
 
-	private final ComponentController controller;
 	private final Component component;
 
-	private ActionListener descriptionListener;
 	private FocusListener descriptionFocusListener;
 
 	private JTextArea content;
@@ -44,12 +40,11 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 
 	private ArrayList<ActionListener> changeListeners = new ArrayList<ActionListener>();
 
-	public EditableTextPanel(ComponentController controller, Component component) {
+	public EditableTextPanel(Component component) {
 
-		this.controller = controller;
 		this.component = component;
 
-		descriptionListener = new ActionListener() {
+		new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				setContent(editableContent.getText());

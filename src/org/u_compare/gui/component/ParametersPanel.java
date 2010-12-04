@@ -19,19 +19,16 @@ import org.u_compare.gui.model.parameters.Parameter;
 
 @SuppressWarnings("serial")
 public class ParametersPanel extends JPanel {
-
-	private Component component;
-	private ComponentController controller;
 	
-	public ParametersPanel(Component component, ComponentController controller){
+	public ParametersPanel(Component component,
+			ComponentController controller) {
 		super();
-		
-		this.component = component;
-		this.controller = controller;
 		
 		ArrayList<ParameterPanel> paramPanels = new ArrayList<ParameterPanel>();
 		for (Parameter param : component.getConfigurationParameters()){
-			ParameterController paramController = ParameterControllerFactory.getController(controller, param, component);
+			ParameterController paramController =
+				ParameterControllerFactory.getController(controller,
+						param, component);
 			paramPanels.add(paramController.getView());
 			controller.addParamaterController(paramController);
 		}

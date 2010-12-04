@@ -1,21 +1,18 @@
 package org.u_compare.gui.component;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 
 import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
@@ -35,7 +32,7 @@ public class WorkflowControlPanel extends JPanel implements
 
 	private static final boolean debug = true;
 	public final static String STATUS_PREFIX = "Workflow Status: ";
-	private static final int BUTTON_DECREMENT = 0;
+//	private static final int BUTTON_DECREMENT = 0;
 	public static final String ICON_RUN_PATH = "../gfx/icon_start.png";
 	public static final String ICON_STOP_PATH = "../gfx/icon_stop.png";
 	public static final String ICON_PAUSE_PATH = "../gfx/icon_pause.png";
@@ -63,9 +60,6 @@ public class WorkflowControlPanel extends JPanel implements
 
 	private BevelBorder highlighted;
 	private Border empty;
-
-	private ActionListener stopHighlight;
-	private ActionListener stopUnhighlight;
 
 	public WorkflowControlPanel(Workflow component,
 			WorkflowController controller) {
@@ -101,14 +95,12 @@ public class WorkflowControlPanel extends JPanel implements
 
 		WorkflowControlPanel.loadIcons();
 
-		Dimension buttonSize;
-
 		// run button
 		runButton = new JButton(runIcon);
 		runButton.setBorder(new BevelBorder(BevelBorder.RAISED,
 				Color.LIGHT_GRAY, Color.DARK_GRAY));
-		buttonSize = new Dimension(runIcon.getIconWidth() - BUTTON_DECREMENT,
-				runIcon.getIconHeight() - BUTTON_DECREMENT);
+//		new Dimension(runIcon.getIconWidth() - BUTTON_DECREMENT,
+//				runIcon.getIconHeight() - BUTTON_DECREMENT);
 		// stopButton.setPreferredSize(buttonSize);
 		runButton.setFocusPainted(false); // This may be needed for a mac
 											// specific behaviou
@@ -120,8 +112,8 @@ public class WorkflowControlPanel extends JPanel implements
 		stopButton = new JButton(stopIcon);
 		stopButton.setBorder(new BevelBorder(BevelBorder.RAISED,
 				Color.LIGHT_GRAY, Color.DARK_GRAY));
-		buttonSize = new Dimension(stopIcon.getIconWidth() - BUTTON_DECREMENT,
-				stopIcon.getIconHeight() - BUTTON_DECREMENT);
+//		new Dimension(stopIcon.getIconWidth() - BUTTON_DECREMENT,
+//				stopIcon.getIconHeight() - BUTTON_DECREMENT);
 		// stopButton.setPreferredSize(buttonSize);
 		stopButton.setFocusPainted(false);
 		stopButton.addActionListener(stopListener);

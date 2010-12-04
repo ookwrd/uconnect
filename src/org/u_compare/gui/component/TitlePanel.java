@@ -1,11 +1,8 @@
 package org.u_compare.gui.component;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -18,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.junit.internal.matchers.SubstringMatcher;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
 
@@ -29,7 +25,6 @@ public class TitlePanel extends JPanel {
 														// if too long
 	private static final Font font = new Font("sansserif", Font.BOLD, 12);
 	private static final Font titleFont = new Font("sansserif", Font.BOLD, 16);
-	private static int titleLabelSizeLimit = 60;
 	private TopPanel topPanel;
 
 	private final ComponentController controller;
@@ -181,15 +176,16 @@ public class TitlePanel extends JPanel {
 				titlePanelLimit = topPanel.getTitleLimit();
 				System.out.println("got titlePanel limit : " + titlePanelLimit);
 			} else
-				System.err
-						.println("TopPanel is still null, this is really not normal."); // TODO
-																						// fix
+				 // TODO: FIX
+				System.err.println(
+						"TopPanel is still null, this is really not normal.");
 
 			// compute maximal text size and set
 			int delta = 60; // TODO find the right value
 			String shortTitle = title;
 			int count = 1000;
-			while (getLength(shortTitle) > titlePanelLimit - delta && count > 0) {
+			while (getLength(shortTitle) >
+					titlePanelLimit - delta && count > 0) {
 				System.out.println(shortTitle + " --- " + titlePanelLimit
 						+ ", " + title);
 				shortTitle = shortTitle.substring(0, shortTitle.length() - 2);

@@ -23,7 +23,7 @@ import sun.tools.tree.ThisExpression;
 
 public class EditableTextPanel extends JPanel {
 
-	private static final int DESCRIPTION_PANEL_PADDING = 5;
+	private static final int PANEL_PADDING = 5;
 	public final Color defaultColor = getBackground();
 
 	private final ComponentController controller;
@@ -32,13 +32,13 @@ public class EditableTextPanel extends JPanel {
 	private ActionListener descriptionListener;
 	private FocusListener descriptionFocusListener;
 
-	private JTextArea description;
-	private JTextArea editableDescription;
-	private String descriptionText;
+	private JTextArea content;
+	private JTextArea editableContent;
+	private String contentText;
 	private JButton endEditingButton;
 
 	private ActionListener endEditingListener;
-	
+
 	private ArrayList<ActionListener> changeListeners = new ArrayList<ActionListener>();
 
 	public EditableTextPanel(ComponentController controller, Component component) {
@@ -49,9 +49,9 @@ public class EditableTextPanel extends JPanel {
 		descriptionListener = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
+				setContent(editableContent.getText());
+				editableContent.setVisible(false);
+				content.setVisible(true);
 				endEditingButton.setVisible(true);
 			}
 		};
@@ -62,84 +62,71 @@ public class EditableTextPanel extends JPanel {
 			}
 
 			public void focusLost(FocusEvent e) {
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
+				setContent(editableContent.getText());
+				editableContent.setVisible(false);
+				content.setVisible(true);
 				endEditingButton.setVisible(false);
 			}
 		};
 
-		/*endEditingListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				// TODO remove useless lines
-				System.out.println("PUSHED STOP EDITING");
-				setDescription(editableDescription.getText());
-				editableDescription.setVisible(false);
-				description.setVisible(true);
-				endEditingButton.setVisible(false);
-			}
-		};*/
-
-		// add a description panel under the top panel, and first set the layout
+		// add a content panel under the top panel, and first set the layout
 		BorderLayout descriptionLayout = new BorderLayout();
 		setLayout(descriptionLayout);
 
 		setOpaque(false);
-		setBorder(new EmptyBorder(new Insets(DESCRIPTION_PANEL_PADDING,
-				DESCRIPTION_PANEL_PADDING, DESCRIPTION_PANEL_PADDING,
-				DESCRIPTION_PANEL_PADDING)));
+		setBorder(new EmptyBorder(new Insets(PANEL_PADDING, PANEL_PADDING,
+				PANEL_PADDING, PANEL_PADDING)));
 
-		descriptionText = component.getDescription();
+		contentText = component.getDescription();
 
-		description = new JTextArea(descriptionText);
-		description.setBackground(defaultColor);
-		description.setLineWrap(true);
-		description.setWrapStyleWord(true);
-		description.setEditable(false);
+		content = new JTextArea(contentText);
+		content.setBackground(defaultColor);
+		content.setLineWrap(true);
+		content.setWrapStyleWord(true);
+		content.setEditable(false);
 
-		editableDescription = new JTextArea(descriptionText);
-		editableDescription.setBackground(Color.WHITE);
-		editableDescription.setLineWrap(true);
-		editableDescription.setWrapStyleWord(true);
-		editableDescription.setEditable(true);
-		editableDescription.setVisible(false);
+		editableContent = new JTextArea(contentText);
+		editableContent.setBackground(Color.WHITE);
+		editableContent.setLineWrap(true);
+		editableContent.setWrapStyleWord(true);
+		editableContent.setEditable(true);
+		editableContent.setVisible(false);
 
 		endEditingButton = new JButton("Save");
-		endEditingButton.setActionCommand("End description editing");
+		endEditingButton.setActionCommand("End content editing");
 		endEditingButton.addActionListener(endEditingListener);
 		endEditingButton.setVisible(false);
 
-		add(description, BorderLayout.PAGE_START);
-		add(editableDescription, BorderLayout.CENTER);
-		
+		add(content, BorderLayout.PAGE_START);
+		add(editableContent, BorderLayout.CENTER);
+
 		JPanel saveButtonPanel = new JPanel();
 		JPanel saveButtonInnerPanel = new JPanel();
-		
+
 		saveButtonPanel.setLayout(new BorderLayout());
 		saveButtonPanel.add(saveButtonInnerPanel, BorderLayout.AFTER_LINE_ENDS);
-		
+
 		add(saveButtonPanel, BorderLayout.AFTER_LAST_LINE);
 		saveButtonInnerPanel.add(endEditingButton);
-		
+
 		// TODO change the layout to cardlayout, creating the cards as on
 		// http://download.oracle.com/javase/tutorial/uiswing/layout/card.html
 
 		setBackground(Color.WHITE);
 
-		description.addMouseListener(new MouseAdapter() {
+		content.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					// JPanel target = (JPanel) e.getSource();
 					if (!EditableTextPanel.this.component.getLockedStatus()) {
-						// setDescription(description.getText());
-						description.setVisible(false);
-						editableDescription.setVisible(true);
+						// setDescription(content.getText());
+						content.setVisible(false);
+						editableContent.setVisible(true);
 
-						// editableDescription.requestFocusInWindow();
-						editableDescription.setVisible(false);
-						editableDescription.setVisible(true);
-						editableDescription.requestFocus();
+						// editableContent.requestFocusInWindow();
+						editableContent.setVisible(false);
+						editableContent.setVisible(true);
+						editableContent.requestFocus();
 
 						endEditingButton.setVisible(true);
 					}
@@ -147,35 +134,35 @@ public class EditableTextPanel extends JPanel {
 			}
 		});
 
-		// editableDescription.addActionListener(descriptionListener); //
+		// editableContent.addActionListener(descriptionListener); //
 		// useless: not a text field anymore
-		editableDescription.addFocusListener(descriptionFocusListener);
+		editableContent.addFocusListener(descriptionFocusListener);
 
 	}
 
-	protected void setDescription(String descriptionText) {
+	protected void setContent(String text) {
 
-		this.descriptionText = descriptionText;
-		description.setText(descriptionText);
-		editableDescription.setText(descriptionText);
+		this.contentText = text;
+		content.setText(text);
+		editableContent.setText(text);
 	}
-	
+
 	public void registerActionListener(ActionListener listener) {
-		
+
 		this.changeListeners.add(listener);
 	}
-	
+
 	protected void notifyActionListeners() {
-		
-		for(ActionListener listener : changeListeners) {
-			
-			listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Component Contents Changed")); 
+
+		for (ActionListener listener : changeListeners) {
+
+			listener.actionPerformed(new ActionEvent(this,
+					ActionEvent.ACTION_PERFORMED, "Component Contents Changed"));
 		}
 	}
-	
+
 	public String getDescription() {
-		return this.descriptionText;
+		return this.contentText;
 	}
-	
-	
+
 }

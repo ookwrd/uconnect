@@ -1,19 +1,13 @@
 package org.u_compare.gui.model.uima;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 
-import org.apache.uima.ResourceSpecifierFactory;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.TypeOrFeature;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
-import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CasConsumerDescription;
-import org.apache.uima.collection.metadata.NameValuePair;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.ConfigurationParameter;
@@ -28,10 +22,8 @@ import org.apache.uima.resource.metadata.ResourceMetaData;
 import org.apache.uima.resource.metadata.TypeDescription;
 import org.apache.uima.resource.metadata.TypePriorities;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.apache.uima.tools.components.InlineXmlCasConsumer;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.AbstractParameter;
@@ -41,10 +33,6 @@ import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.xml.sax.SAXException;
-
-import com.sun.jdi.connect.spi.TransportService.Capabilities;
-import com.sun.source.tree.NewClassTree;
-import com.sun.xml.internal.ws.api.FeatureConstructor;
 
 public class PrimitiveUIMAComponent extends AbstractComponent {
 

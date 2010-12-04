@@ -41,7 +41,6 @@ import org.u_compare.gui.model.Workflow;
 public class ComponentPanel extends DraggableJPanel implements
 		SubComponentsChangedListener, FocusListener, MouseListener {
 
-	public static final boolean debug = false;
 	public final static int PREFERRED_WIDTH = 300;
 	public static final int BORDER_ROUNDING = 5;
 	public static final int BORDER_WIDTH = 2;
@@ -304,7 +303,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		//setVisible(false);
 		//setVisible(true);
 		requestFocusInWindow();
-		if (debug) System.out.println("focus detected on the component");
+		System.out.println("focus detected on the component");
 	}
 
 	@Override

@@ -30,6 +30,8 @@ import org.u_compare.gui.model.WorkflowStatusListener;
 public class WorkflowTabbedPane extends JTabbedPane
 	implements WorkflowStatusListener {
 	
+	private static final boolean DEBUG = false;
+	
 	// Configuration
 	private static final String TOOLTIP_TEXT =
 		"Your current workflow(s)";
@@ -40,7 +42,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 	
 	// No, you in fact have different states... Odd...
 	//TODO: We do want to animate these in the end
-	private static boolean icons_loaded = false; 
+	private static boolean icons_loaded = true;
 
 	 //TODO: STOPPED should also indicate forcefully stopped?
 	private static Icon WORKFLOW_STOPPED;
@@ -196,9 +198,12 @@ public class WorkflowTabbedPane extends JTabbedPane
 	public void insertTab(String title, Icon icon,
 			java.awt.Component component, String tip, int index) {
 		//TODO: Override the default behaviour here to handle focus etc.
-		System.err.println("WorkflowTabbedPane: insertTab called, " +
-				"defaulting to super class implementation for now " +
-				"until we implement our own");
+		if (WorkflowTabbedPane.DEBUG) {
+			System.err.println(this.getClass().getName() +
+					": insertTab called, " +
+					"defaulting to super class implementation for now " +
+					"until we implement our own");
+		}
 		super.insertTab(title, icon, component, tip, index);
 	}
 	//TODO: We also need a safe add!

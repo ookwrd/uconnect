@@ -28,7 +28,7 @@ public class GUITestingHarness {
 		workflows.add(ExampleWorkflowFactory.aggregate());
 		//workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
 		//workflows.add(WorkflowPaneController.defaultWorkflow());
-		//workflows.add(ExampleWorkflowFactory.realComponents());
+		workflows.add(ExampleWorkflowFactory.realComponents());
 		
 		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
 		

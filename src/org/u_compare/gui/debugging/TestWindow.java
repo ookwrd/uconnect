@@ -40,6 +40,8 @@ public class TestWindow extends JFrame {
         this.setMinimumSize(TestWindow.MINIMUM_SIZE);
         
         this.setTitle(testTitle);
+        toDisplay.setPreferredSize(TestWindow.PREFERRED_SIZE);
+        toDisplay.setMinimumSize(TestWindow.MINIMUM_SIZE);
         this.setContentPane(toDisplay);
         this.pack();
         
@@ -104,11 +106,5 @@ public class TestWindow extends JFrame {
         
         // Center us on this device
         this.setLocation(xPos, yPos);
-
-        /*
-         * Make sure that this is ALWAYS after all calculations and
-         * configurations.
-         */
-        this.setVisible(true);
 	}
 }

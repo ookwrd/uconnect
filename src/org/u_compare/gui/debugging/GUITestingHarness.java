@@ -3,20 +3,20 @@ package org.u_compare.gui.debugging;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import org.u_compare.gui.UConnectSplitPane;
-import org.u_compare.gui.ConsolePane;
-import org.u_compare.gui.WorkflowPane;
-import org.u_compare.gui.WorkflowSplitPane;
-import org.u_compare.gui.WorkflowTabbedPane;
 
-import org.u_compare.gui.control.ComponentController;
-import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.library.LibraryPane;
 import org.u_compare.gui.model.Workflow;
+
+/**
+ * TODO: XXX:
+ * 
+ * @author 	luke
+ * @author 	pontus
+ * @version 2010-12-04
+ */
 
 public class GUITestingHarness {
 
@@ -40,8 +40,13 @@ public class GUITestingHarness {
 		// Combining
 		UConnectSplitPane uConnectSplit = new UConnectSplitPane(tabbedPane,
 				libraryPane);
-		
 		TestWindow testWindow = new TestWindow("GUITestingHarness",
 				uConnectSplit);
+		
+		// Add the window as a component listener to catch re-sizes etc.
+		testWindow.addComponentListener(uConnectSplit);
+		
+		// setVisible() fires a change event which will update sub-components
+		testWindow.setVisible(true);
 	}
 }

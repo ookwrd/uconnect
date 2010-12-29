@@ -2,6 +2,7 @@ package org.u_compare.gui;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.DescriptionChangeListener;
@@ -23,8 +24,11 @@ public class WorkflowSplitPane extends JSplitPane
 	
 	// Configuration
 	private static final boolean ONE_TOUCH_EXPANDABLE = true;
-	private static final double SEPARATOR_START_LOCATION_FROM_BOTTOM = 0.2D;
+	/* By default, distribute the new size evenly between our components */
+	private static final double DEFAULT_RE_SIZE_WEIGHT = 0.5D;
+	private static final double DIVIDER_START_POSITION = 0.85D;
 	private static final int SPLIT_ORIENTATION = JSplitPane.VERTICAL_SPLIT;
+	protected static final boolean DEBUG = false;
 	
 	private IconizedCloseableTabFlapComponent tab;
 	private JTabbedPane tabPane;
@@ -43,11 +47,32 @@ public class WorkflowSplitPane extends JSplitPane
 		this.setBottomComponent(this.consolePane);
 		
 		this.setOneTouchExpandable(WorkflowSplitPane.ONE_TOUCH_EXPANDABLE);
-		this.setDividerLocation(
-				WorkflowSplitPane.SEPARATOR_START_LOCATION_FROM_BOTTOM);
+		// Carry out all the divider configurations here
+		this.setDividerSize(5);
+		// Space distribution between components when we grow
+		this.setResizeWeight(WorkflowSplitPane.DEFAULT_RE_SIZE_WEIGHT);
 		this.setOrientation(WorkflowSplitPane.SPLIT_ORIENTATION);
-		 //XXX: Nasty, but we need the outer size to determine a relative value
-		this.setDividerLocation(500);
+		// Set the divider as centred later when everything else is set
+		// XXX: This is one hell of a hack! There has to be a better way!
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				if (DEBUG) {
+					System.err.println(this.getClass().getName()
+							+ "our current size" + getSize());
+				}
+				// Do we know our size yet? If not, wait a little more.
+				if (getSize().getHeight() == 0 && getSize().getWidth() == 0) {
+					SwingUtilities.invokeLater(this);
+				}
+				else {
+					// If we do we can set the divider location
+					setDividerLocation(
+							WorkflowSplitPane.DIVIDER_START_POSITION);
+				}
+			}
+		});
+		
+		this.setContinuousLayout(true);
 	}
 	
 	protected WorkflowPane getWorkflowPane() {

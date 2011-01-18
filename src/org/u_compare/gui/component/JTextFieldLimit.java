@@ -4,8 +4,7 @@ import javax.swing.text.*;
 
 /**
  * 
- * @author olaf
- * {@link http://www.java2s.com/}
+ * @author olaf {@link http://www.java2s.com/}
  * 
  */
 @SuppressWarnings("serial")
@@ -42,9 +41,8 @@ public class JTextFieldLimit extends PlainDocument {
 			if (toUppercase)
 				str = str.toUpperCase();
 			super.insertString(offset, str, attr);
-		}
-		else {
-			str=str.substring(0, limit-1);
+		} else {
+			str = str.substring(0, limit - 1);
 			if ((getLength() + str.length()) <= limit) {
 				if (toUppercase)
 					str = str.toUpperCase();

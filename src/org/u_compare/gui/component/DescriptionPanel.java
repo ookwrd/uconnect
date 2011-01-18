@@ -14,9 +14,9 @@ import org.u_compare.gui.model.DescriptionChangeListener;
 public class DescriptionPanel extends JPanel implements
 		DescriptionChangeListener {
 
-	//private static final int DESCRIPTION_PANEL_PADDING = 5;
+	// private static final int DESCRIPTION_PANEL_PADDING = 5;
 
-	//public final Color defaultColor = getBackground();
+	// public final Color defaultColor = getBackground();
 
 	private final ComponentController controller;
 	private final Component component;
@@ -27,30 +27,30 @@ public class DescriptionPanel extends JPanel implements
 
 		this.controller = controller;
 		this.component = component;
-		
+
 		innerPanel = new EditableTextPanel(component);
-		
-		innerPanel.registerActionListener(new ActionListener(){
+
+		innerPanel.registerActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setDescription(innerPanel.getDescription());
 			}
 		});
-		
+
 		// add a description panel under the top panel, and first set the layout
 		BorderLayout descriptionLayout = new BorderLayout();
 		setLayout(descriptionLayout);
 		setOpaque(false);
 		this.add(innerPanel);
-		
+
 		// Register Listeners
 		component.registerComponentDescriptionChangeListener(this);
 
 	}
-	
+
 	// TODO this might be set directly by the controller
 	protected void setDescription(String descriptionText) {
-		
+
 		descriptionText = descriptionText.trim();
 		innerPanel.setContent(descriptionText);
 		this.controller.setDescription(descriptionText);

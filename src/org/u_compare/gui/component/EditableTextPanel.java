@@ -175,7 +175,7 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
+		// TODO possibly http://www.devx.com/tips/Tip/13547
 		if (debug) System.out.println("Key pressed.");
 		int code = e.getKeyCode(); 
 		if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_CAPS_LOCK) 

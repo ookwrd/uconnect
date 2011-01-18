@@ -6,20 +6,18 @@ import javax.swing.JPanel;
 
 import org.u_compare.gui.model.LockedStatusChangeListener;
 
-
-
 @SuppressWarnings("serial")
-public abstract class ParameterPanel extends JPanel implements LockedStatusChangeListener{
+public abstract class ParameterPanel extends JPanel implements
+		LockedStatusChangeListener {
 
 	protected JLabel description;
 	protected JComponent field;
-	
-	
-	public JLabel getDescription(){
+
+	public JLabel getDescription() {
 		return description;
 	}
-	
-	public JComponent getField(){
+
+	public JComponent getField() {
 		return field;
 	}
 }

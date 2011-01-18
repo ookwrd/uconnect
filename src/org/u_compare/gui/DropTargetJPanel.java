@@ -27,11 +27,9 @@ public class DropTargetJPanel extends DroppableJPanel {
 	private static Icon intermediateDropTargetIcon;
 	private static String intermediateDropTargetIconCaption = "XXX"; // TODO:
 
-	private final static String intermediateDropTargetIconPath =
-		"gfx/intermediate_drop_target_icon.png";
+	private final static String intermediateDropTargetIconPath = "gfx/intermediate_drop_target_icon.png";
 
-	private JLabel solitaryLabel = new JLabel(
-			"Drag and drop a component here.");
+	private JLabel solitaryLabel = new JLabel("Drag and drop a component here.");
 
 	public DropTargetJPanel(DropTargetController controller) {
 		super(controller);
@@ -40,8 +38,7 @@ public class DropTargetJPanel extends DroppableJPanel {
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
 	}
 
-	public DropTargetJPanel(DropTargetController controller,
-			boolean setSolitary) {
+	public DropTargetJPanel(DropTargetController controller, boolean setSolitary) {
 		this(controller);
 		if (setSolitary) {
 			setSolitaryDropTarget();
@@ -52,17 +49,17 @@ public class DropTargetJPanel extends DroppableJPanel {
 		setBackground(Color.LIGHT_GRAY);
 		setOpaque(true);
 		this.repaint();
-		
+
 		// also change the cursor
 		Cursor cursor = new Cursor(Cursor.MOVE_CURSOR);
 		setCursor(cursor);
 	}
-	
+
 	public void highlightLocationsDroppable() {
 		setBackground(Color.CYAN);
 		setOpaque(true);
 		this.repaint();
-		
+
 		// also change the cursor
 		Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 		setCursor(cursor);
@@ -72,7 +69,7 @@ public class DropTargetJPanel extends DroppableJPanel {
 		setBackground(Color.RED);
 		setOpaque(true);
 		this.repaint();
-		
+
 		// also change the cursor
 		Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
 		setCursor(cursor);
@@ -81,7 +78,7 @@ public class DropTargetJPanel extends DroppableJPanel {
 	public void clearDragOverHighlighting() {
 		this.setOpaque(false);
 		this.repaint();
-		
+
 		// also change the cursor
 		Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
 		setCursor(cursor);
@@ -96,7 +93,7 @@ public class DropTargetJPanel extends DroppableJPanel {
 				TARGET_BORDER * 3));
 		JLabel interImage = new JLabel(intermediateDropTargetIcon);
 		// interImage.setSize(intermediateDropTargetIcon.getIconHeight(),
-		//		intermediateDropTargetIcon.getIconWidth());
+		// intermediateDropTargetIcon.getIconWidth());
 
 		this.add(interImage);
 	}

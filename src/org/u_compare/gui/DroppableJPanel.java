@@ -44,8 +44,8 @@ public abstract class DroppableJPanel extends JPanel {
 		public MyDropTargetListener(DroppableJPanel dropTargetPanel) {
 			this.panel = dropTargetPanel;
 
-			new DropTarget(dropTargetPanel,
-					DnDConstants.ACTION_COPY, this, true, null);
+			new DropTarget(dropTargetPanel, DnDConstants.ACTION_COPY, this,
+					true, null);
 		}
 
 		/**

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import org.u_compare.gui.component.gui_elements.HighlightButton;
 import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
@@ -32,7 +33,6 @@ public class WorkflowControlPanel extends JPanel implements
 
 	private static final boolean debug = true;
 	public final static String STATUS_PREFIX = "Workflow Status: ";
-//	private static final int BUTTON_DECREMENT = 0;
 	public static final String ICON_RUN_PATH = "../gfx/icon_start.png";
 	public static final String ICON_STOP_PATH = "../gfx/icon_stop.png";
 	public static final String ICON_PAUSE_PATH = "../gfx/icon_pause.png";
@@ -55,11 +55,8 @@ public class WorkflowControlPanel extends JPanel implements
 
 	private JLabel statusLabel;
 
-	private JButton runButton;
-	private JButton stopButton;
-
-	private BevelBorder highlighted;
-	private Border empty;
+	private HighlightButton runButton;
+	private HighlightButton stopButton;
 
 	public WorkflowControlPanel(Workflow component,
 			WorkflowController controller) {
@@ -96,59 +93,19 @@ public class WorkflowControlPanel extends JPanel implements
 		WorkflowControlPanel.loadIcons();
 
 		// run button
-		runButton = new JButton(runIcon);
-		runButton.setBorder(new BevelBorder(BevelBorder.RAISED,
-				Color.LIGHT_GRAY, Color.DARK_GRAY));
-//		new Dimension(runIcon.getIconWidth() - BUTTON_DECREMENT,
-//				runIcon.getIconHeight() - BUTTON_DECREMENT);
-		// stopButton.setPreferredSize(buttonSize);
-		runButton.setFocusPainted(false); // This may be needed for a mac
-											// specific behaviou
+		runButton = new HighlightButton(runIcon);
 		runButton.addActionListener(playListener);
 		runButton.setToolTipText(RUN_TOOLTIPTEXT);
 		this.add(runButton);
-
+		
 		// stop button
-		stopButton = new JButton(stopIcon);
-		stopButton.setBorder(new BevelBorder(BevelBorder.RAISED,
-				Color.LIGHT_GRAY, Color.DARK_GRAY));
-//		new Dimension(stopIcon.getIconWidth() - BUTTON_DECREMENT,
-//				stopIcon.getIconHeight() - BUTTON_DECREMENT);
-		// stopButton.setPreferredSize(buttonSize);
-		stopButton.setFocusPainted(false);
+		stopButton = new HighlightButton(stopIcon);
 		stopButton.addActionListener(stopListener);
 		stopButton.setToolTipText(STOP_TOOLTIPTEXT);
 		this.add(stopButton);
 
 		component.registerWorkflowStatusListener(this);
 
-		// set highlighting
-		highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
-				Color.LIGHT_GRAY);
-		empty = runButton.getBorder();
-		runButton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				runButton.setBorder(highlighted);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				runButton.setBorder(empty);
-			}
-		});
-
-		highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
-				Color.LIGHT_GRAY);
-		empty = stopButton.getBorder();
-		stopButton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				if(stopButtonActive())
-					stopButton.setBorder(highlighted);
-			}			
-
-			public void mouseExited(MouseEvent e) {
-				stopButton.setBorder(empty);
-			}
-		});
 	}
 
 	private boolean stopButtonActive() {

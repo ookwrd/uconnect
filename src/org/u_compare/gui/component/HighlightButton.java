@@ -62,7 +62,7 @@ public class HighlightButton extends JButton {
 	private void configure(){
 
 		setOpaque(false);
-		setFocusPainted(false);
+		setFocusPainted(false);// This may be needed for a mac specific behaviour
 		
 		//Add mouse over highlighting
 		highlighted = new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY,

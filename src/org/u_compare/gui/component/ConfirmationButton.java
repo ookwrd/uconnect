@@ -1,16 +1,12 @@
 package org.u_compare.gui.component;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,9 +19,11 @@ public class ConfirmationButton extends JButton {
 	private JPanel confirmPanel;
 
 	public ConfirmationButton(JButton mainButton, String confirmation){
+		super();
 		
 		setOpaque(false);
-		setLayout(new FlowLayout(FlowLayout.TRAILING));
+		
+		setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
 		setBorder(new EmptyBorder(0,0,0,0));
 		
 		this.mainButton = mainButton;
@@ -42,10 +40,11 @@ public class ConfirmationButton extends JButton {
 		confirmPanel = new JPanel();
 		confirmPanel.setOpaque(false);
 		confirmPanel.setVisible(false);
-		confirmPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+		confirmPanel.setLayout(new FlowLayout(FlowLayout.TRAILING,5,0));
 		confirmPanel.add(new JLabel(confirmation));
 
 		final HighlightButton confirm = new HighlightButton("Yes");
+		
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				confirm(e);

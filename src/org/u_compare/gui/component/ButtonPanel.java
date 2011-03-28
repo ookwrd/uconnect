@@ -1,20 +1,13 @@
 package org.u_compare.gui.component;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
@@ -29,15 +22,8 @@ public class ButtonPanel extends JPanel implements
 	private ComponentController controller;
 	private Component component;
 
-	private ActionListener closeListener;
-	private ActionListener minListener;
-	private ActionListener lockListener;
-
-	private JButton minButton;
-	private JButton lockButton;
-
-	private BevelBorder highlighted;
-	private Border empty;
+	private HighlightButton minButton;
+	private HighlightButton lockButton;
 
 	public ButtonPanel(ComponentController controller, Component component,
 			JPanel minimizeTarget) {
@@ -47,28 +33,6 @@ public class ButtonPanel extends JPanel implements
 		this.controller = controller;
 		this.component = component;
 
-		// set the buttons
-		closeListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				removeComponent();
-			}
-		};
-
-		minListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				toggleSize();
-			}
-		};
-
-		lockListener = new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				toggleLock();
-			}
-		};
-
 		// add buttons to expand/collapse/remove the component
 		setOpaque(false);
 		FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
@@ -77,27 +41,34 @@ public class ButtonPanel extends JPanel implements
 		ButtonPanel.loadIcons(); // TODO figure out how to load the
 									// icons in a better way (xml ?)
 
-		Dimension buttonSize;
-		minButton = new JButton(minIcon);
-		minButton.setFocusPainted(false); // This may be needed for a mac
-											// specific behaviour
-		buttonSize = new Dimension(minIcon.getIconWidth() - BUTTON_DECREMENT,
-				minIcon.getIconHeight() - BUTTON_DECREMENT);
-		minButton.setPreferredSize(buttonSize);
+
+		// set the buttons
+		ActionListener removeListener = new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				removeComponent();
+			}
+		};
+		
+		ActionListener lockListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				toggleLock();
+			}
+		};
+		
+		ActionListener minListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				toggleSize();
+			}
+		};
+		
+		minButton = new HighlightButton(minIcon);
 		minButton.setActionCommand("hide component");
 		minButton.addActionListener(minListener);
-		add(minButton);
-
-		ImageIcon lockIcon = component.getLockedStatus() ? lockedIcon
-				: unlockedIcon;
-		lockButton = new JButton(lockIcon);
-		lockButton.setFocusPainted(false); // This may be needed for a mac
-											// specific behaviour
-		buttonSize = new Dimension(unlockedIcon.getIconWidth()
-				- BUTTON_DECREMENT, unlockedIcon.getIconHeight()
-				- BUTTON_DECREMENT);
-		lockButton.setPreferredSize(buttonSize);
-		lockButton.setActionCommand("show component");
+		add(minButton);		
+				
+		lockButton = new HighlightButton(component.getLockedStatus() ? lockedIcon
+				: unlockedIcon);
+		lockButton.setActionCommand("show component");//needed <- olaf why?
 		lockButton.addActionListener(lockListener);
 		if (controller.allowEditing()) {
 			add(lockButton);
@@ -105,38 +76,10 @@ public class ButtonPanel extends JPanel implements
 		
 		ConfirmationButton removeButton = new ConfirmationButton(new HighlightButton(closeIcon), "Remove?");
 		removeButton.setActionCommand("remove component"); //needed <- olaf why?
-		removeButton.addActionListener(closeListener);
+		removeButton.addActionListener(removeListener);
 		if(controller.allowEditing()){
 			add(removeButton);
 		}
-
-		// set button highlighting
-		highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
-				Color.DARK_GRAY);
-
-		empty = lockButton.getBorder();
-
-		empty = lockButton.getBorder();
-		lockButton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				lockButton.setBorder(highlighted);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				lockButton.setBorder(empty);
-			}
-		});
-
-		empty = minButton.getBorder();
-		minButton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				minButton.setBorder(highlighted);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				minButton.setBorder(empty);
-			}
-		});
 		
 		component.registerLockedStatusChangeListener(this);
 		component.registerMinimizedStatusChangeListener(this);
@@ -154,11 +97,7 @@ public class ButtonPanel extends JPanel implements
 	}
 
 	protected void toggleLock() {
-		if (this.controller.isLocked()) {
-			this.controller.setLocked(false);
-		} else {
-			this.controller.setLocked(true);
-		}
+		controller.setLocked(!controller.isLocked());//TODO add toggleLocked to the controller
 	}
 
 	protected void setMinimizedStatus() {
@@ -189,13 +128,11 @@ public class ButtonPanel extends JPanel implements
 		}
 	}
 
-	private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";//TODO remove from here
+	private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";
 	private final static String ICON_MAX_PATH = "../gfx/icon_maximize1.png";
 	private final static String ICON_MIN_PATH = "../gfx/icon_minimize1.png";
 	private final static String ICON_LOCKED_PATH = "../gfx/icon_locked.png";
 	private final static String ICON_UNLOCKED_PATH = "../gfx/icon_unlocked.png";
-
-	private static final int BUTTON_DECREMENT = 0;
 
 	private static boolean iconsLoaded = false;
 	private static ImageIcon minIcon;

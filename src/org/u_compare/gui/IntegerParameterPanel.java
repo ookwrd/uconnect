@@ -30,8 +30,9 @@ public class IntegerParameterPanel extends ParameterPanel implements  ActionList
 		this.component = component;
 		this.parameter = parameter;
 		
-		description = new JLabel(parameter.getDescription());
-		this.add(description);
+		description = parameter.getDescription();
+		this.add(new JLabel(description));
+		mandatory = parameter.isMandatory();
 		
 		textField = new JTextField(parameter.getParameterString());
 		textField.addActionListener(this);

@@ -1,7 +1,6 @@
 package org.u_compare.gui;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.model.LockedStatusChangeListener;
@@ -10,14 +9,19 @@ import org.u_compare.gui.model.LockedStatusChangeListener;
 public abstract class ParameterPanel extends JPanel implements
 		LockedStatusChangeListener {
 
-	protected JLabel description;
+	protected String description;
+	protected boolean mandatory;
 	protected JComponent field;
 
-	public JLabel getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
 	public JComponent getField() {
 		return field;
+	}
+	
+	public boolean isMandatory(){
+		return mandatory;
 	}
 }

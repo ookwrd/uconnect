@@ -105,7 +105,7 @@ public class ExampleWorkflowFactory {
 				+ "Look at my 3 wonderful (simple) children.");
 		
 		ArrayList<Parameter> c1params = new ArrayList<Parameter>();
-		c1params.add(new BooleanParameter("bool1","A true boolean",false,true));
+		c1params.add(new BooleanParameter("bool1","A true boolean",true,true));
 		c1params.add(new BooleanParameter("bool2","A false boolean " + 
 				"with a really really long description " + 
 				"that will get in the way",false, false));
@@ -114,7 +114,7 @@ public class ExampleWorkflowFactory {
 		c2params.add(new StringParameter("String1","A String to configure",
 				false, "default value"));
 		c2params.add(new IntegerParameter("Integer1","An Integer to configure",
-				false, 5));
+				true, 5));
 		
 		ArrayList<Parameter> c3params = new ArrayList<Parameter>();
 		c3params.add(new BooleanParameter("bool1","A true boolean",

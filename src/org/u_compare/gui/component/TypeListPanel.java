@@ -108,7 +108,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		addListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TypeListPanel.this.controller.addAnnotation();
-				list.requestFocusInWindow();
+				list.requestFocusInWindow(); //To reopen the button panel.
 			}
 		};
 		

@@ -30,8 +30,9 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 		this.component = component;
 		this.parameter = param;
 		
-		description = new JLabel(param.getDescription());
-		this.add(description);
+		description = param.getDescription();
+		this.add(new JLabel(description));
+		mandatory = parameter.isMandatory();
 		
 		textField = new JTextField(param.getParameterString());
 		textField.addActionListener(this);

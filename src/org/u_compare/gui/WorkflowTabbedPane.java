@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
 
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.model.Component;
@@ -84,8 +85,9 @@ public class WorkflowTabbedPane extends JTabbedPane
 			}
 		};
 		
-		JButton newWorkflowButton = new JButton("New");
+		JButton newWorkflowButton = new JButton("New Workflow");
 		newWorkflowButton.setOpaque(false);
+		newWorkflowButton.setBorder(new EmptyBorder(0,0,0,0));
 		newWorkflowButton.addActionListener(workflowButtonListener);
 		
 		addTab("New Workflow", new JLabel("test"));

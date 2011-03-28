@@ -5,6 +5,7 @@ import java.security.InvalidParameterException;
 import org.u_compare.gui.component.AnnotationTypeChooser;
 import org.u_compare.gui.component.BasicAnnotationTypeChooser;
 import org.u_compare.gui.component.TypeListPanel;
+import org.u_compare.gui.component.TypeListPanel.LIST_TYPES;
 import org.u_compare.gui.model.AnnotationType;
 import org.u_compare.gui.model.Component;
 
@@ -15,15 +16,15 @@ public class TypeListPanelController {
 	
 //	private ComponentController parentComponentController;
 	private Component component;
-	private int listType;
+	private LIST_TYPES listType;
 	
 	public TypeListPanelController(
 			ComponentController parentComponentController,
-			Component component, int listType){
+			Component component, LIST_TYPES outputs){
 		
 //		this.parentComponentController = parentComponentController;
 		this.component = component;
-		this.listType = listType;
+		this.listType = outputs;
 		
 	}
 	
@@ -31,9 +32,9 @@ public class TypeListPanelController {
 		
 		AnnotationType newType = typeChooser.getNewAnnotation();
 		
-		if(listType == TypeListPanel.INPUTS_LIST){
+		if(listType == TypeListPanel.LIST_TYPES.INPUTS){
 			component.addInputType(newType);
-		}else if (listType == TypeListPanel.OUTPUTS_LIST){
+		}else if (listType == TypeListPanel.LIST_TYPES.OUTPUTS){
 			component.addOutputType(newType);
 		}else{
 			//TODO this state shouldnt occur
@@ -47,9 +48,9 @@ public class TypeListPanelController {
 		
 		AnnotationType type = new AnnotationType(selected);
 		
-		if(listType == TypeListPanel.INPUTS_LIST){
+		if(listType == TypeListPanel.LIST_TYPES.INPUTS){
 			component.removeInputType(type);
-		}else if (listType == TypeListPanel.OUTPUTS_LIST){
+		}else if (listType == TypeListPanel.LIST_TYPES.OUTPUTS){
 
 			System.out.println("here, tyring to remove outptu type");
 			component.removeOutputType(type);

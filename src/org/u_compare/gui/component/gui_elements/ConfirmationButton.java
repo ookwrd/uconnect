@@ -99,6 +99,16 @@ public class ConfirmationButton extends JButton {
 	
 	}
 
+	@Override
+	public void setEnabled(boolean enabled){
+		
+		if(!enabled){
+			cancel();
+		}
+		
+		mainButton.setEnabled(enabled);
+	}
+	
 	/*private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";
 	
 	private static boolean iconsLoaded = false;

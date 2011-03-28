@@ -25,6 +25,7 @@ public class ButtonPanel extends JPanel implements
 
 	private HighlightButton minButton;
 	private HighlightButton lockButton;
+	private ConfirmationButton removeButton;
 
 	public ButtonPanel(ComponentController controller, Component component,
 			JPanel minimizeTarget) {
@@ -75,7 +76,7 @@ public class ButtonPanel extends JPanel implements
 			add(lockButton);
 		}
 		
-		ConfirmationButton removeButton = new ConfirmationButton(new HighlightButton(closeIcon), "Remove?");
+		removeButton = new ConfirmationButton(new HighlightButton(closeIcon), "Remove?");
 		removeButton.setActionCommand("remove component"); //needed <- olaf why?
 		removeButton.addActionListener(removeListener);
 		if(controller.allowEditing()){
@@ -124,8 +125,10 @@ public class ButtonPanel extends JPanel implements
 
 		if (component.getLockedStatus()) {
 			this.lockButton.setIcon(lockedIcon);
+			this.removeButton.setEnabled(false);
 		} else {
 			this.lockButton.setIcon(unlockedIcon);
+			this.removeButton.setEnabled(true);
 		}
 	}
 

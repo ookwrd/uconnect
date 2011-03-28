@@ -11,6 +11,7 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -32,7 +33,6 @@ public class ButtonPanel extends JPanel implements
 	private ActionListener minListener;
 	private ActionListener lockListener;
 
-	private JButton closeButton;
 	private JButton minButton;
 	private JButton lockButton;
 
@@ -69,20 +69,6 @@ public class ButtonPanel extends JPanel implements
 			}
 		};
 
-		new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				closeButton.setBorderPainted(true);
-			}
-		};
-
-		new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				closeButton.setBorderPainted(false);
-			}
-		};
-
 		// add buttons to expand/collapse/remove the component
 		setOpaque(false);
 		FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
@@ -116,31 +102,19 @@ public class ButtonPanel extends JPanel implements
 		if (controller.allowEditing()) {
 			add(lockButton);
 		}
-
-		closeButton = new JButton(closeIcon);
-		buttonSize = new Dimension(closeIcon.getIconWidth() - BUTTON_DECREMENT,
-				closeIcon.getIconHeight() - BUTTON_DECREMENT);
-		closeButton.setPreferredSize(buttonSize);
-		closeButton.setActionCommand("remove component");
-		closeButton.addActionListener(closeListener);
-		if (controller.allowEditing()) {
-			add(closeButton);
+		
+		ConfirmationButton removeButton = new ConfirmationButton(new HighlightButton(closeIcon), "Remove?");
+		removeButton.setActionCommand("remove component"); //needed <- olaf why?
+		removeButton.addActionListener(closeListener);
+		if(controller.allowEditing()){
+			add(removeButton);
 		}
 
 		// set button highlighting
 		highlighted = new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY,
 				Color.DARK_GRAY);
 
-		empty = closeButton.getBorder();
-		closeButton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				closeButton.setBorder(highlighted);
-			}
-
-			public void mouseExited(MouseEvent e) {
-				closeButton.setBorder(empty);
-			}
-		});
+		empty = lockButton.getBorder();
 
 		empty = lockButton.getBorder();
 		lockButton.addMouseListener(new MouseAdapter() {
@@ -163,7 +137,7 @@ public class ButtonPanel extends JPanel implements
 				minButton.setBorder(empty);
 			}
 		});
-
+		
 		component.registerLockedStatusChangeListener(this);
 		component.registerMinimizedStatusChangeListener(this);
 
@@ -215,9 +189,7 @@ public class ButtonPanel extends JPanel implements
 		}
 	}
 
-	private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";
-	// private final static String ICON_CLOSE_PATH_HIGHLIGHT =
-	// "../gfx/icon_close1highlight.png";
+	private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";//TODO remove from here
 	private final static String ICON_MAX_PATH = "../gfx/icon_maximize1.png";
 	private final static String ICON_MIN_PATH = "../gfx/icon_minimize1.png";
 	private final static String ICON_LOCKED_PATH = "../gfx/icon_locked.png";

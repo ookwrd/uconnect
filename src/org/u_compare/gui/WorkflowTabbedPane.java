@@ -1,5 +1,6 @@
 package org.u_compare.gui;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -10,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.model.Component;
@@ -90,8 +93,14 @@ public class WorkflowTabbedPane extends JTabbedPane
 		newWorkflowButton.setBorder(new EmptyBorder(0,0,0,0));
 		newWorkflowButton.addActionListener(workflowButtonListener);
 		
-		addTab("New Workflow", new JLabel("test"));
+		addTab("New Workflow", new JLabel("You should not be seeing this message"){
+			public void paint(Graphics g){//Makes the tab undisplayable
+				setSelectedIndex(getTabCount()-2);//If this is drawn, show the previous tab instead.
+			}
+		});
 		setTabComponentAt(0, newWorkflowButton);
+		
+		//setEnabledAt(0, false);//Unfortunately not enough to prevent access to the New Tab. Fill the tab bar in OSX and then you can scroll to it. See Fix with StateChange Listener.
 	}
 	
 	public static String cleanTitle(String title){
@@ -173,6 +182,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 				tabFlapComponent);
 		
 		this.setSelectedIndex(inserted_index);
+		
 	}
 	
 	@Override

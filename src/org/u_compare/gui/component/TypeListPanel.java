@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.u_compare.gui.component.gui_elements.HighlightButton;
 import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.model.AnnotationType;
 import org.u_compare.gui.model.InputOutputChangeListener;
@@ -28,8 +29,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	public static final int OUTPUTS_LIST = 1;
 	
 	private JPanel buttons;
-	private JButton deleteButton;
-	private JButton addButton;
+	private HighlightButton deleteButton;
+	private HighlightButton addButton;
 	private JList list;
 	private DefaultListModel listModel;
 	
@@ -124,8 +125,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 			}
 		};
 		
-		deleteButton = new JButton("Delete Type");
-		addButton = new JButton("Add Type");
+		deleteButton = new HighlightButton("Delete Type");
+		addButton = new HighlightButton("Add Type");
 		
 		deleteButton.addActionListener(removeListener);
 		addButton.addActionListener(addListener);

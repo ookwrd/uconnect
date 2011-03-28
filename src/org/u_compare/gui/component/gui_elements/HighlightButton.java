@@ -25,6 +25,7 @@ public class HighlightButton extends JButton {
 	private Border unhighlighted;
 	
 	private boolean highlightingEnabled = true;
+	private boolean textButton = false;
 	
 	public HighlightButton(Icon icon){
 		super(icon);
@@ -33,11 +34,13 @@ public class HighlightButton extends JButton {
 	
 	public HighlightButton(String string){
 		super(string);
+		textButton = true;
 		configure();
 	}
 	
 	public HighlightButton(String string, Icon icon){
 		super(string, icon);
+		textButton = true;
 		configure();
 	}
 	
@@ -65,10 +68,15 @@ public class HighlightButton extends JButton {
 		setFocusPainted(false);// This may be needed for a mac specific behaviour
 		
 		//Add mouse over highlighting
-		highlighted = new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY,
-				Color.DARK_GRAY);
-		unhighlighted = new CompoundBorder(new LineBorder(Color.LIGHT_GRAY,1), new EmptyBorder(1,1,1,1));
-		
+		if(textButton){//Add a few pixels of horizontal space so the border isn't too tight
+			highlighted = new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY,
+					Color.DARK_GRAY), new EmptyBorder(0,2,0,2));
+			unhighlighted = new CompoundBorder(new LineBorder(Color.LIGHT_GRAY,1), new EmptyBorder(1,3,1,3));
+		}else{
+			highlighted = new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY,
+					Color.DARK_GRAY);
+			unhighlighted = new CompoundBorder(new LineBorder(Color.LIGHT_GRAY,1), new EmptyBorder(1,1,1,1));
+		}
 		setBorder(unhighlighted);
 		
 		addMouseListener(new MouseAdapter() {

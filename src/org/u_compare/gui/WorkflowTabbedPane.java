@@ -11,8 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.model.Component;
@@ -88,12 +86,10 @@ public class WorkflowTabbedPane extends JTabbedPane
 			}
 		};
 		
-		JButton newWorkflowButton = new JButton("New Workflow");
-		newWorkflowButton.setOpaque(false);
-		newWorkflowButton.setBorder(new EmptyBorder(0,0,0,0));
+		JButton newWorkflowButton = new ButtonTab("New Workflow", controller);
 		newWorkflowButton.addActionListener(workflowButtonListener);
 		
-		addTab("New Workflow", new JLabel("You should not be seeing this message"){
+		addTab("New Workflow", new JLabel(){//TODO can this be moved into ButtonTab as a generalization?
 			public void paint(Graphics g){//Makes the tab undisplayable
 				setSelectedIndex(getTabCount()-2);//If this is drawn, show the previous tab instead.
 			}

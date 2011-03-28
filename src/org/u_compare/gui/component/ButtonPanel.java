@@ -1,6 +1,5 @@
 package org.u_compare.gui.component;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +8,8 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import org.u_compare.gui.component.gui_elements.ConfirmationButton;
+import org.u_compare.gui.component.gui_elements.HighlightButton;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;

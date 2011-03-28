@@ -1,4 +1,4 @@
-package org.u_compare.gui.component;
+package org.u_compare.gui.component.gui_elements;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;

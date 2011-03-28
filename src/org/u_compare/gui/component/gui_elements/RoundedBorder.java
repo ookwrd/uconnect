@@ -1,4 +1,4 @@
-package org.u_compare.gui.component;
+package org.u_compare.gui.component.gui_elements;
 
 /**
  * Taken from Glazed Lists (http://publicobject.com/glazedlists/) under the
@@ -12,6 +12,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+
+//TODO can this be replaced by a line border with rounded edges?
 
 /**
  * A border with cute rounded edges.

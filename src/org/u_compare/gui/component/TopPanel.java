@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
+import org.u_compare.gui.component.gui_elements.RoundedBorder;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
 

@@ -33,8 +33,9 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			this.component = component;
 			this.param = param;
 			
-			description = new JLabel(param.getDescription());
-			this.add(description);
+			this.description = param.getDescription();
+			this.add(new JLabel(description));
+			this.mandatory = param.isMandatory();
 			
 			checkBox = new JCheckBox();
 			checkBox.setSelected(param.getParameter());

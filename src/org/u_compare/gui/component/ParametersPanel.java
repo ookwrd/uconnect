@@ -50,16 +50,33 @@ public class ParametersPanel extends JPanel {
 			
 			innerPanel.setLayout(new SpringLayout());
 			for (ParameterPanel parameterPanel : paramPanels) {
-				JLabel l = parameterPanel.getDescription();
+				
+				String description = parameterPanel.getDescription();
+				if(description.length() > 43){
+					description = description.substring(0,40) + "...";
+				}
+				JLabel l = new JLabel(description);
+				l.setToolTipText(parameterPanel.getDescription());
 				l.setHorizontalAlignment(JLabel.TRAILING);
 				innerPanel.add(l);
+				
+				//Mandatory Status
+				JLabel mandatory;
+				if(parameterPanel.isMandatory()){
+					mandatory = new JLabel("*");
+					mandatory.setToolTipText("Mandatory Parameter");
+				}else{
+					mandatory = new JLabel("");
+				}
+				
+				innerPanel.add(mandatory);
 				JComponent f = parameterPanel.getField();
 				l.setLabelFor(f);
 				innerPanel.add(f);
 			}
 			
 			SpringUtilities.makeCompactGrid(innerPanel,
-                    paramPanels.size(), 2, 	//rows, cols
+                    paramPanels.size(), 3, 	//rows, cols
                     6, 6,        			//initX, initY
                     6, 0);      			 //xPad, yPad
 

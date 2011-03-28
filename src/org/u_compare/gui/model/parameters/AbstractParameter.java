@@ -33,6 +33,7 @@ public abstract class AbstractParameter
 		this.name = name;
 		this.description = description;
 		this.mandatory = mandatory;
+		
 	}
 	
 	@Override

@@ -25,8 +25,8 @@ public class InputOutputPanel extends JPanel {
 		"Inputs:"));
 		//inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		TypeListPanelController typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.INPUTS_LIST);
-		TypeListPanel typeListPanel = new TypeListPanel(component, TypeListPanel.INPUTS_LIST, typeListPanelController);
+		TypeListPanelController typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.LIST_TYPES.INPUTS);
+		TypeListPanel typeListPanel = new TypeListPanel(component, TypeListPanel.LIST_TYPES.INPUTS, typeListPanelController);
 		
 		inputPanel.add(typeListPanel);
 		
@@ -37,8 +37,8 @@ public class InputOutputPanel extends JPanel {
 		//outputPanel.setLayout(new BoxLayout(outputPanel,
 			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.OUTPUTS_LIST);
-		typeListPanel = new TypeListPanel(component, TypeListPanel.OUTPUTS_LIST, typeListPanelController);
+		typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.LIST_TYPES.OUTPUTS);
+		typeListPanel = new TypeListPanel(component, TypeListPanel.LIST_TYPES.OUTPUTS, typeListPanelController);
 		
 		outputPanel.add(typeListPanel);
 		

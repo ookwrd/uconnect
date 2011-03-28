@@ -25,8 +25,7 @@ import org.u_compare.gui.model.LockedStatusChangeListener;
 @SuppressWarnings("serial")
 public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
 
-	public static final int INPUTS_LIST = 0; //TODO replace with enum
-	public static final int OUTPUTS_LIST = 1;
+	public static enum LIST_TYPES {INPUTS, OUTPUTS};
 	
 	private JPanel buttons;
 	private HighlightButton deleteButton;
@@ -40,12 +39,12 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	private org.u_compare.gui.model.Component component;
 	private TypeListPanelController controller;
 	
-	private int listType;
+	private LIST_TYPES listType;
 	
 	private boolean isEmpty = false;
 	
 	public TypeListPanel(org.u_compare.gui.model.Component component,
-			int listType, TypeListPanelController controller){
+			LIST_TYPES listType, TypeListPanelController controller){
 		
 		this.component = component;
 		this.listType = listType;
@@ -190,14 +189,14 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		deleteButton.setEnabled(true);
 		
 		switch(listType){
-		case INPUTS_LIST:
+		case INPUTS:
 			for(AnnotationType annotation : component.getInputTypes()){
 				
 				listModel.addElement(annotation.getTypeName());
 
 			}
 			break;
-		case OUTPUTS_LIST:
+		case OUTPUTS:
 			for(AnnotationType annotation : component.getOutputTypes()){
 				
 				listModel.addElement(annotation.getTypeName());

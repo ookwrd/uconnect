@@ -1,6 +1,4 @@
 package org.u_compare.gui.component;
-
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,9 +6,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -159,10 +155,11 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 
 	
 	private void configureLockStatus(){
+		
 		if(component.getLockedStatus()){
-			//Sets the list items unselect-able, without changing appearance
 			list.setEnabled(false);
-		    list.setCellRenderer(new DefaultListCellRenderer() {
+			//Sets the list items unselect-able, without changing appearance
+		    /*list.setCellRenderer(new DefaultListCellRenderer() {
 		        public Component getListCellRendererComponent(
 		            JList list,
 		            Object value,
@@ -175,7 +172,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		            this.setEnabled(true);
 		            return this;
 		        }
-		    });
+		    });*/
 		}else{
 			list.setEnabled(true);
 		}

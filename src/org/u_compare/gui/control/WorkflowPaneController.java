@@ -124,7 +124,9 @@ public class WorkflowPaneController {
 		//TODO clean up
 		DragAndDropController dndControl = DragAndDropController.getController();
 		DraggableJPanel dragged = dndControl.getDragged();
-		workflow.addSubComponent(((ComponentController)dragged.getController()).component);
+		ComponentController controllerDragged = (ComponentController)dragged.getController();
+		workflow.addSubComponent((controllerDragged).component);
+		controllerDragged.removeComponent();
 		
 		return workflow;
 	}

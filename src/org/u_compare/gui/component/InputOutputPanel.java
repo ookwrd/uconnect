@@ -23,8 +23,7 @@ public class InputOutputPanel extends JPanel {
 		inputPanel.setOpaque(false);
 		inputPanel.setBorder(new TitledBorder(new EtchedBorder(),
 		"Inputs:"));
-		//inputPanel.setLayout(new BoxLayout(inputPanel,
-			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
+		//inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
 		TypeListPanelController typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.INPUTS_LIST);
 		TypeListPanel typeListPanel = new TypeListPanel(component, TypeListPanel.INPUTS_LIST, typeListPanelController);

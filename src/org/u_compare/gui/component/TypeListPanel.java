@@ -25,7 +25,7 @@ import org.u_compare.gui.model.LockedStatusChangeListener;
 @SuppressWarnings("serial")
 public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
 
-	public static final int INPUTS_LIST = 0;
+	public static final int INPUTS_LIST = 0; //TODO replace with enum
 	public static final int OUTPUTS_LIST = 1;
 	
 	private JPanel buttons;
@@ -42,6 +42,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	
 	private int listType;
 	
+	private boolean isEmpty = false;
+	
 	public TypeListPanel(org.u_compare.gui.model.Component component,
 			int listType, TypeListPanelController controller){
 		
@@ -57,16 +59,20 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 			new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent evt) {
 				if (evt.getValueIsAdjusting()){
-					return;
+					return; //TODO why?
 				}
 			}
 		};
 		
 		FocusListener listFocusListener = new FocusListener() {
-			
 			public void focusGained(FocusEvent e) {
 				if(!TypeListPanel.this.component.getLockedStatus()){
 					buttons.setVisible(true);
+					
+					//Empty list Case
+					if(isEmpty){
+						list.setVisible(false);
+					}
 				}
 			}
 
@@ -83,6 +89,9 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 				
 				list.clearSelection();
 				buttons.setVisible(false);
+				
+				//Empty list case
+				list.setVisible(true);
 			}
 		};
 		
@@ -93,10 +102,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		
 		list.addListSelectionListener(listSelectionListener);
 		list.addFocusListener(listFocusListener);
-	
-		rebuildListContents();
-		this.add(list);
-		
 		
 		buttons = new JPanel();
 		buttons.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -139,8 +144,11 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		
 		buttons.setVisible(false);
 		
-		this.add(buttons);
+		rebuildListContents();
+		this.add(list);
 		
+		this.add(buttons);
+
 		configureLockStatus();
 
 		component.registerLockedStatusChangeListener(this);
@@ -177,6 +185,10 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		assert(list!=null);
 		listModel.clear();
 		
+		//Clear
+		isEmpty = false;
+		deleteButton.setEnabled(true);
+		
 		switch(listType){
 		case INPUTS_LIST:
 			for(AnnotationType annotation : component.getInputTypes()){
@@ -195,6 +207,12 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		default:
 			throw new Error("TypeListPanel listType not set to a valid value: "
 					+ listType);
+		}
+		
+		if(listModel.isEmpty()){
+			isEmpty = true;
+			listModel.addElement("(Click to add types)");
+			deleteButton.setEnabled(false);
 		}
 	}
 	

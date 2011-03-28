@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.u_compare.gui.component.gui_elements.JTextFieldLimit;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.model.Component;
 

@@ -1,4 +1,4 @@
-package org.u_compare.gui.component;
+package org.u_compare.gui.component.gui_elements;
 
 import javax.swing.text.*;
 
@@ -13,12 +13,12 @@ public class JTextFieldLimit extends PlainDocument {
 	// optional uppercase conversion
 	private boolean toUppercase = false;
 
-	JTextFieldLimit(int limit) {
+	public JTextFieldLimit(int limit) {
 		super();
 		this.limit = limit;
 	}
 
-	JTextFieldLimit(int limit, boolean upper) {
+	public JTextFieldLimit(int limit, boolean upper) {
 		super();
 		this.limit = limit;
 		toUppercase = upper;

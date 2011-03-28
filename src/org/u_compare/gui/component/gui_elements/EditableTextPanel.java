@@ -1,4 +1,4 @@
-package org.u_compare.gui.component;
+package org.u_compare.gui.component.gui_elements;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -143,7 +143,7 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 		endEditingButton.setVisible(false);
 	}
 
-	protected void setContent(String text) {
+	public void setContent(String text) {
 
 		this.contentText = text;
 		content.setText(text);

@@ -22,7 +22,7 @@ import org.u_compare.gui.control.DragAndDropComponentController;
 public abstract class DroppableJPanel extends JPanel {
 
 	// protected DragAndDropComponentController controller;
-	private boolean debug = false;
+	private final boolean debug = false;
 	protected DragAndDropComponentController controller;
 	protected final Color defaultColor = getBackground();
 
@@ -52,44 +52,14 @@ public abstract class DroppableJPanel extends JPanel {
 		 * Defines what happens when a drop occurs on the drop target
 		 */
 		public void drop(DropTargetDropEvent event) {
-
-			System.out.println("Dropped on DroppableJPanel. ");
-
 			this.panel.controller.somethingDroppedOnComponent();
-
-			if (debug)
-				this.panel.setBackground(Color.MAGENTA);
-			else
-				this.panel.setBackground(defaultColor); // if a non accepted
-														// drop has been
-														// performed, remove the
-														// highlighting
-
-			/*
-			 * //this was previously to handle drops from outside the app, on
-			 * wfcomponents
-			 * 
-			 * try {
-			 * 
-			 * Transferable tr = event.getTransferable(); String s = (String)
-			 * tr.getTransferData(new DataFlavor( ComponentPanel.class,
-			 * "WorkflowComponent")); System.out.println("String transfered : "
-			 * + s); if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-			 * 
-			 * event.acceptDrop(DnDConstants.ACTION_COPY);
-			 * event.dropComplete(true); return; } event.rejectDrop(); } catch
-			 * (Exception e) { e.printStackTrace(); event.rejectDrop(); }
-			 */
 		}
 
 		/**
 		 * Drag enters the component area
 		 */
 		public void dragEnter(DropTargetDragEvent dtde) {
-
-			System.out.println("DroppableJPanel: Drag enter");
 			this.panel.controller.setDragEnter();
-			// this.panel.setBackground(Color.LIGHT_GRAY);
 		}
 
 		/**

@@ -32,6 +32,11 @@ public class TypeListPanelController {
 		
 		AnnotationType newType = typeChooser.getNewAnnotation();
 		
+		if(newType == null || newType.getTypeName().equals("")){
+			System.out.println("Invalid Type returned by type chooser.");
+			return;
+		}
+		
 		if(listType == TypeListPanel.LIST_TYPES.INPUTS){
 			component.addInputType(newType);
 		}else if (listType == TypeListPanel.LIST_TYPES.OUTPUTS){

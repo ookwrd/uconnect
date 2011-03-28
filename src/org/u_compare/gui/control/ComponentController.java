@@ -466,12 +466,10 @@ public class ComponentController implements DragAndDropComponentController {
 	 * Validation needs to be handled at a level higher than the component that is being added/removed from.
 	 */
 	public void validateWorkflow(){
-		//componentView.getTopLevelAncestor().validate();
-		//Are there disadvantages to pushing validation this high?
 		if(parent != null){
 			parent.validateWorkflow();
 		}else{
-			componentView.validate();
+			componentView.getParent().validate();
 		}
 	}
 

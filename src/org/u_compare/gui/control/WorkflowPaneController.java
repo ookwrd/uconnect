@@ -1,11 +1,8 @@
 package org.u_compare.gui.control;
 
-import java.awt.Component;
 import java.util.ArrayList;
-
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.WorkflowPane;

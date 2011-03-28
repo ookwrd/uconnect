@@ -162,7 +162,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 		this.setToolTipTextAt(inserted_index, topComponent.getDescription());
 		
 		IconizedCloseableTabFlapComponent tabFlapComponent = 
-			new IconizedCloseableTabFlapComponent(this,
+			new WorkflowTabFlapComponent(this,
 					WorkflowTabbedPane.WORKFLOW_STOPPED);
 		
 		splitPane.linkTabbedPane(this, tabFlapComponent);

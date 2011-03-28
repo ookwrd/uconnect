@@ -175,7 +175,7 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 		this.controller.setDragged();
 
 		if (evt.getDragAction() == DnDConstants.ACTION_COPY) {
-			cursor = DragSource.DefaultCopyDrop;
+			cursor = DragSource.DefaultCopyDrop; //TODO a more appropriate cursor
 		}
 
 		evt.startDrag(cursor, this); // TODO the parameters in this method call

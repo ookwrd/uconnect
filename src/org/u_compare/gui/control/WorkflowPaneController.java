@@ -1,11 +1,13 @@
 package org.u_compare.gui.control;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import org.u_compare.gui.ConsolePane;
+import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
@@ -108,6 +110,25 @@ public class WorkflowPaneController {
 		
 	}
 	
+	private WorkflowSplitPane constructDraggedWorkflow(){
+		
+		return constructWorkflow(WorkflowPaneController.draggedWorkflow());
+		
+	}
+	
+	
+	private static Workflow draggedWorkflow() {
+		
+		Workflow workflow = defaultWorkflow();
+		
+		//TODO clean up
+		DragAndDropController dndControl = DragAndDropController.getController();
+		DraggableJPanel dragged = dndControl.getDragged();
+		workflow.addSubComponent(((ComponentController)dragged.getController()).component);
+		
+		return workflow;
+	}
+
 	public static Workflow defaultWorkflow(){
 
 		Workflow workflow = new Workflow();
@@ -123,6 +144,16 @@ public class WorkflowPaneController {
 		assert(ALLOW_TABS);
 		
 		tabbedPane.addWorkflow(constructDefaultWorkflow());
+		
+	}
+	
+	/**
+	 * Create a new workflow based on what is currently being dragged.
+	 */
+	public void requestNewWorkflowDragged(){
+		assert(ALLOW_TABS);
+		
+		tabbedPane.addWorkflow(constructDraggedWorkflow());
 		
 	}
 	

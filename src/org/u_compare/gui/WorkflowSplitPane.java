@@ -75,7 +75,7 @@ public class WorkflowSplitPane extends JSplitPane
 		this.setContinuousLayout(true);
 	}
 	
-	protected WorkflowPane getWorkflowPane() {
+	public WorkflowPane getWorkflowPane() {
 		return this.workflowPane;
 	}
 

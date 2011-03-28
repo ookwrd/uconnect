@@ -321,8 +321,6 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public void somethingDroppedOnChild(DropTargetController position){
 	
-		System.out.println("something dropped on component drop target " + dropTargetToPosition(position));
-		
 		if(!droppableOnChild(position)){//Ignore drop
 			System.out.println("Ignoring drop on invalid target");
 			return;
@@ -337,6 +335,13 @@ public class ComponentController implements DragAndDropComponentController {
 			System.out.println("Invalid Sub Component Exception");
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Used for dropping on New Workflow tab
+	 */
+	public void somethingDroppedOnTop(){
+		somethingDroppedOnChild(dropTargets.get(0));
 	}
 	
 	/**

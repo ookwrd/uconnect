@@ -10,7 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
-import javax.swing.border.EmptyBorder;
 
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.model.Component;
@@ -44,7 +43,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 	
 	// No, you in fact have different states... Odd...
 	//TODO: We do want to animate these in the end
-	private static boolean icons_loaded = true;
+	private static boolean icons_loaded = false;
 
 	 //TODO: STOPPED should also indicate forcefully stopped?
 	private static Icon WORKFLOW_STOPPED;

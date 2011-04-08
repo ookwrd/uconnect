@@ -8,9 +8,9 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import org.u_compare.gui.component.gui_elements.ConfirmationButton;
-import org.u_compare.gui.component.gui_elements.HighlightButton;
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.guiElements.ConfirmationButton;
+import org.u_compare.gui.guiElements.HighlightButton;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.MinimizedStatusChangeListener;

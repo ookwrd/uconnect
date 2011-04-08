@@ -13,11 +13,11 @@ import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
 
 @SuppressWarnings("serial")
-public class WorkflowPanel extends ComponentPanel {
+public class WorkflowConstructionPanel extends ComponentPanel {
 
 	private WorkflowControlPanel workflowControlPanel;
 	
-	public WorkflowPanel(Workflow component,
+	public WorkflowConstructionPanel(Workflow component,
 			ComponentController controller, boolean showWorkflowControlPanel,
 				boolean showWorkflowDetails){
 		super(controller);

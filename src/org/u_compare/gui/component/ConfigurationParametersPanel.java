@@ -9,11 +9,10 @@ import javax.swing.SpringLayout;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import org.u_compare.gui.ParameterPanel;
-import org.u_compare.gui.SpringUtilities;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.control.ParameterControllerFactory;
+import org.u_compare.gui.guiElements.SpringUtilities;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.Parameter;
 

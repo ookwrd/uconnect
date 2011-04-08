@@ -15,9 +15,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.DraggableJPanel;
-import org.u_compare.gui.component.gui_elements.RoundedBorder;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.GUITestingHarness;
+import org.u_compare.gui.guiElements.RoundedBorder;
 import org.u_compare.gui.model.SubComponentsChangedListener;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
@@ -44,7 +44,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	public static Color HIGHLIGHT_COLOR_2 = new Color(15631900);
 
 	protected JPanel innerPanel;
-	protected TopPanel topPanel;
+	protected ComponentTitleBar topPanel;
 	protected JPanel outerPanel; // contains innerPanel et topPanel
 	
 	protected Component component;
@@ -157,7 +157,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	protected void setupTopPanel(JPanel target, boolean isWorkflow){
 		
-		topPanel = new TopPanel(controller, component, innerPanel, isWorkflow);
+		topPanel = new ComponentTitleBar(controller, component, innerPanel, isWorkflow);
 		target.add(topPanel, BorderLayout.NORTH);
 		
 	}

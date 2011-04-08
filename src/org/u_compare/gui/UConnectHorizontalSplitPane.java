@@ -27,7 +27,7 @@ import javax.swing.plaf.basic.BasicSplitPaneUI;
  *
  */
 @SuppressWarnings("serial")
-public class UConnectSplitPane extends JSplitPane {
+public class UConnectHorizontalSplitPane extends JSplitPane {
 	
 	private static final boolean DEBUG = false;
 	
@@ -38,13 +38,13 @@ public class UConnectSplitPane extends JSplitPane {
 	private static final double DIVIDER_START_POSITION = 0.5D;
 	private static final int SPLIT_ORIENTATION = JSplitPane.HORIZONTAL_SPLIT;
 	
-	public UConnectSplitPane(JComponent workflowPane,
+	public UConnectHorizontalSplitPane(JComponent workflowPane,
 			JComponent libraryPane) {
 		
 		this.setLeftComponent(workflowPane);
 		this.setRightComponent(libraryPane);
 		
-		this.setOneTouchExpandable(UConnectSplitPane.ONE_TOUCH_EXPANDABLE);
+		this.setOneTouchExpandable(UConnectHorizontalSplitPane.ONE_TOUCH_EXPANDABLE);
 		
 		this.setUI(new BasicSplitPaneUI() {
 		    public BasicSplitPaneDivider createDefaultDivider() {
@@ -58,8 +58,8 @@ public class UConnectSplitPane extends JSplitPane {
 		// Carry out all the divider configurations here
 		this.setDividerSize(5);
 		// Space distribution between components when we grow
-		this.setResizeWeight(UConnectSplitPane.DEFAULT_RE_SIZE_WEIGHT);
-		this.setOrientation(UConnectSplitPane.SPLIT_ORIENTATION);
+		this.setResizeWeight(UConnectHorizontalSplitPane.DEFAULT_RE_SIZE_WEIGHT);
+		this.setOrientation(UConnectHorizontalSplitPane.SPLIT_ORIENTATION);
 		// Set the divider as centred later when everything else is set
 		// XXX: This is one hell of a hack! There has to be a better way!
 		SwingUtilities.invokeLater(new Runnable() {
@@ -75,7 +75,7 @@ public class UConnectSplitPane extends JSplitPane {
 				else {
 					// If we do we can set the divider location
 					setDividerLocation(
-							UConnectSplitPane.DIVIDER_START_POSITION);
+							UConnectHorizontalSplitPane.DIVIDER_START_POSITION);
 				}
 			}
 		});

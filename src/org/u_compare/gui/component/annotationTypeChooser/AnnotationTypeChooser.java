@@ -1,4 +1,4 @@
-package org.u_compare.gui.component;
+package org.u_compare.gui.component.annotationTypeChooser;
 
 import org.u_compare.gui.model.AnnotationType;
 

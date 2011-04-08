@@ -15,8 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.u_compare.gui.component.gui_elements.JTextFieldLimit;
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.guiElements.JTextFieldLimit;
 import org.u_compare.gui.model.Component;
 
 @SuppressWarnings("serial")
@@ -26,7 +26,7 @@ public class TitlePanel extends JPanel {
 														// if too long
 	private static final Font font = new Font("sansserif", Font.BOLD, 12);
 	private static final Font titleFont = new Font("sansserif", Font.BOLD, 16);
-	private TopPanel topPanel;
+	private ComponentTitleBar topPanel;
 
 	private final ComponentController controller;
 	private final Component component;
@@ -41,7 +41,7 @@ public class TitlePanel extends JPanel {
 	private boolean isWorkflow;
 
 	public TitlePanel(ComponentController controller, Component component,
-			boolean isWorkflow, TopPanel topPanel) {
+			boolean isWorkflow, ComponentTitleBar topPanel) {
 		super();
 
 		this.isWorkflow = isWorkflow;
@@ -171,7 +171,7 @@ public class TitlePanel extends JPanel {
 			int titlePanelLimit = 20;
 			if (topPanel == null) {
 				System.err.println("TopPanel is null, this is not normal.");
-				topPanel = (TopPanel) this.getParent();
+				topPanel = (ComponentTitleBar) this.getParent();
 			}
 			if (topPanel != null) {
 				titlePanelLimit = topPanel.getTitleLimit();

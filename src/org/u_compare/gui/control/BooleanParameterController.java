@@ -1,7 +1,7 @@
 package org.u_compare.gui.control;
 
-import org.u_compare.gui.BooleanParameterPanel;
-import org.u_compare.gui.ParameterPanel;
+import org.u_compare.gui.component.BooleanParameterPanel;
+import org.u_compare.gui.component.ParameterPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;

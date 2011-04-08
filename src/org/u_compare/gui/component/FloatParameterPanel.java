@@ -1,56 +1,60 @@
-package org.u_compare.gui;
+package org.u_compare.gui.component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JTextField;
-import org.u_compare.gui.control.StringParamaterController;
+import org.u_compare.gui.control.FloatParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
+import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
-import org.u_compare.gui.model.parameters.StringParameter;
 
 @SuppressWarnings("serial")
-public class StringParameterPanel extends ParameterPanel implements ActionListener, FocusListener, LockedStatusChangeListener, ParameterSettingsChangedListener {
+public class FloatParameterPanel extends ParameterPanel implements  ActionListener, FocusListener, LockedStatusChangeListener, ParameterSettingsChangedListener  {
 
-	private StringParamaterController controller;
-	private StringParameter parameter;
+	private FloatParameterController controller;
+	private FloatParameter parameter;
 	private JTextField textField;
 	
-	public StringParameterPanel(StringParameter param, StringParamaterController control,
-			Component component){
-		super(param, component);
+	public FloatParameterPanel(FloatParameter parameter, FloatParameterController control,
+			 Component component){
+		super(parameter, component);
 		
 		this.controller = control;
-		this.parameter = param;
+		this.parameter = parameter;
 		
-		textField = new JTextField(param.getParameterString());
+		textField = new JTextField(parameter.getParameterString());
 		textField.addActionListener(this);
 		textField.addFocusListener(this);
 		
 		this.add(textField);
 		
 		component.registerLockedStatusChangeListener(this);
-		param.registerParameterSettingsChangedListener(this);
+		parameter.registerParameterSettingsChangedListener(this);
 		
 		field = textField;
-		
+
 		updateLockedStatus();
 	}
-
+	
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
+		
 		textField.setText(parameter.getParameterString());
 	}
-	
+
 	private void textFieldChanged(){
+		/* Change should not be reflected in view unless the underlying
+		 * model changes
+		 */
 		String value = textField.getText();
-		textField.setText(parameter.getParameter());
+		textField.setText(parameter.getParameterString());
 		controller.setValue(value);
 	}
-
+	
 	@Override
 	public void focusGained(FocusEvent e) {
 		//No special action needed.
@@ -58,12 +62,12 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		textFieldChanged();		
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		textFieldChanged();
+		textFieldChanged();	
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		textFieldChanged();	
+	}
+	
 }

@@ -4,19 +4,19 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
-import org.u_compare.gui.component.gui_elements.RoundedBorder;
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.guiElements.RoundedBorder;
 import org.u_compare.gui.model.Component;
 
 @SuppressWarnings("serial")
-public class TopPanel extends JPanel {
+public class ComponentTitleBar extends JPanel {
 
 	private ComponentController controller;
 	private Component component;
 	private TitlePanel titlePanel;
 	private ButtonPanel buttonPanel;
 
-	public TopPanel(ComponentController controller, Component component,
+	public ComponentTitleBar(ComponentController controller, Component component,
 			JPanel innerPanel, boolean isWorkflow) {
 
 		this.controller = controller;

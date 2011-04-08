@@ -12,30 +12,40 @@ import org.u_compare.gui.model.parameters.Parameter;
 public abstract class ParameterPanel extends JPanel implements
 		LockedStatusChangeListener {
 
-	protected String description;
-	protected boolean mandatory;
+	protected Parameter param;
 	protected JComponent field;
 	protected Component component;
 
 	public ParameterPanel(Parameter param, Component component){
 		
-		this.mandatory = param.isMandatory();
-		this.description = param.getDescription();
-		this.add(new JLabel(description));
+		this.param = param;
+		this.add(new JLabel(param.getDescription()));
 		this.component = component;
 		
 	}
 	
-	public String getDescription() {
-		return description;
-	}
-
-	public JComponent getField() {
-		return field;
+	public String getDescription(){
+		return param.getDescription();
 	}
 	
-	public boolean isMandatory(){
+	public JLabel getDescriptionLabel() {
+		return new JLabel(param.getDescription()); //TODO refactor
+	}
+	
+	public JLabel getMandatoryLabel(){
+		
+		JLabel mandatory;
+		if(param.isMandatory()){
+			mandatory = new JLabel("*");
+			mandatory.setToolTipText("Mandatory Parameter");
+		}else{
+			mandatory = new JLabel("");
+		}
 		return mandatory;
+	}
+	
+	public JComponent getField() {
+		return field;
 	}
 	
 	@Override

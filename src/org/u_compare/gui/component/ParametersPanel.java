@@ -60,19 +60,17 @@ public class ParametersPanel extends JPanel {
 				l.setHorizontalAlignment(JLabel.TRAILING);
 				innerPanel.add(l);
 				
-				//Mandatory Status
-				JLabel mandatory;
-				if(parameterPanel.isMandatory()){
-					mandatory = new JLabel("*");
-					mandatory.setToolTipText("Mandatory Parameter");
-				}else{
-					mandatory = new JLabel("");
-				}
+				//Parameter Description Label
 				
+				//Parameter Mandatory Status Label
+				JLabel mandatory = parameterPanel.getMandatoryLabel();
 				innerPanel.add(mandatory);
-				JComponent f = parameterPanel.getField();
-				l.setLabelFor(f);
-				innerPanel.add(f);
+				
+				//Parameter Setting Field
+				JComponent selectionComponent = parameterPanel.getField();
+				l.setLabelFor(selectionComponent);
+				
+				innerPanel.add(selectionComponent);
 			}
 			
 			SpringUtilities.makeCompactGrid(innerPanel,

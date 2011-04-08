@@ -17,13 +17,20 @@ import org.u_compare.gui.control.ParameterControllerFactory;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.Parameter;
 
+
+/**
+ * Sets up the sub panel of component panel titled "Configuration Parameters:".
+ * 
+ * @author Luke Mccrohon
+ */
 @SuppressWarnings("serial")
-public class ParametersPanel extends JPanel {
+public class ConfigurationParametersPanel extends JPanel {
 	
-	public ParametersPanel(Component component,
+	public ConfigurationParametersPanel(Component component,
 			ComponentController controller) {
 		super();
 		
+		//Collect the descendent parameter panels.
 		ArrayList<ParameterPanel> paramPanels = new ArrayList<ParameterPanel>();
 		for (Parameter param : component.getConfigurationParameters()){
 			ParameterController paramController =

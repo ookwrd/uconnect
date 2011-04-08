@@ -52,7 +52,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	private DescriptionPanel descriptionPanel;
 	private InputOutputPanel inputOutputPanel;
-	private ParametersPanel parametersPanel;
+	private ConfigurationParametersPanel parametersPanel;
 	private SubComponentsPanel subComponentsPanel;
 	private JPanel subComponentsContainer;
 	
@@ -178,7 +178,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	protected void setupParametersPanel(JPanel target){
 		
-		parametersPanel = new ParametersPanel(component, controller);
+		parametersPanel = new ConfigurationParametersPanel(component, controller);
 		target.add(parametersPanel);
 	
 	}

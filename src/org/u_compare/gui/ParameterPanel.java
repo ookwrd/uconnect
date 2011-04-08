@@ -1,6 +1,7 @@
 package org.u_compare.gui;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.model.Component;
@@ -19,6 +20,8 @@ public abstract class ParameterPanel extends JPanel implements
 	public ParameterPanel(Parameter param, Component component){
 		
 		this.mandatory = param.isMandatory();
+		this.description = param.getDescription();
+		this.add(new JLabel(description));
 		this.component = component;
 		
 	}
@@ -34,4 +37,13 @@ public abstract class ParameterPanel extends JPanel implements
 	public boolean isMandatory(){
 		return mandatory;
 	}
+	
+	protected void updateLockedStatus(){
+		if(component.getLockedStatus()){
+			field.setEnabled(false);
+		}else{
+			field.setEnabled(true);
+		}
+	}
+
 }

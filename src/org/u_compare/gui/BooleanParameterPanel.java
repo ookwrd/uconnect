@@ -29,14 +29,8 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			BooleanParameter param, BooleanParameterController controller, Component component) {
 			super(param, component);
 		
-		
 			this.controller = controller;
-			this.component = component;
 			this.param = param;
-			
-			this.description = param.getDescription();
-			this.add(new JLabel(description));
-			this.mandatory = param.isMandatory();
 			
 			checkBox = new JCheckBox();
 			checkBox.setSelected(param.getParameter());
@@ -48,14 +42,8 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			param.registerParameterSettingsChangedListener(this);
 			
 			field = checkBox;
-	}
-
-	private void updateLockedStatus(){
-		if(component.getLockedStatus()){
-			checkBox.setEnabled(false);
-		}else{
-			checkBox.setEnabled(true);
-		}
+			
+			updateLockedStatus();
 	}
 	
 	@Override

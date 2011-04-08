@@ -18,21 +18,18 @@ import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
 public class IntegerParameterPanel extends ParameterPanel implements  ActionListener, FocusListener, LockedStatusChangeListener, ParameterSettingsChangedListener  {
 
 	private IntegerParameterController controller;
-	private Component component;
 	private IntegerParameter parameter;
-	
 	private JTextField textField;
 	
 	public IntegerParameterPanel(IntegerParameter parameter, IntegerParameterController control,
 			 Component component){
+		super(parameter, component);
 		
 		this.controller = control;
-		this.component = component;
 		this.parameter = parameter;
 		
 		description = parameter.getDescription();
 		this.add(new JLabel(description));
-		mandatory = parameter.isMandatory();
 		
 		textField = new JTextField(parameter.getParameterString());
 		textField.addActionListener(this);

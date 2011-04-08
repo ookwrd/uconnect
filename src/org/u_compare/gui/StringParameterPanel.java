@@ -18,21 +18,18 @@ import org.u_compare.gui.model.parameters.StringParameter;
 public class StringParameterPanel extends ParameterPanel implements ActionListener, FocusListener, LockedStatusChangeListener, ParameterSettingsChangedListener {
 
 	private StringParamaterController controller;
-	private Component component;
 	private StringParameter parameter;
-	
 	private JTextField textField;
 	
 	public StringParameterPanel(StringParameter param, StringParamaterController control,
 			Component component){
+		super(param, component);
 		
 		this.controller = control;
-		this.component = component;
 		this.parameter = param;
 		
 		description = param.getDescription();
 		this.add(new JLabel(description));
-		mandatory = parameter.isMandatory();
 		
 		textField = new JTextField(param.getParameterString());
 		textField.addActionListener(this);

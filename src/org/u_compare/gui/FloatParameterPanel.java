@@ -19,21 +19,18 @@ import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
 public class FloatParameterPanel extends ParameterPanel implements  ActionListener, FocusListener, LockedStatusChangeListener, ParameterSettingsChangedListener  {
 
 	private FloatParameterController controller;
-	private Component component;
 	private FloatParameter parameter;
-	
 	private JTextField textField;
 	
 	public FloatParameterPanel(FloatParameter parameter, FloatParameterController control,
 			 Component component){
+		super(parameter, component);
 		
 		this.controller = control;
-		this.component = component;
 		this.parameter = parameter;
 		
 		description = parameter.getDescription();
 		this.add(new JLabel(description));
-		mandatory = parameter.isMandatory();
 		
 		textField = new JTextField(parameter.getParameterString());
 		textField.addActionListener(this);

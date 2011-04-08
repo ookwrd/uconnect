@@ -23,11 +23,12 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 
 	private JCheckBox checkBox;
 	private BooleanParameterController controller;
-	private Component component;
 	private BooleanParameter param;
 	
 	public BooleanParameterPanel(
 			BooleanParameter param, BooleanParameterController controller, Component component) {
+			super(param, component);
+		
 		
 			this.controller = controller;
 			this.component = component;

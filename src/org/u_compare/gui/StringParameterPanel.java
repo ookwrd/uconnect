@@ -28,14 +28,9 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 		this.controller = control;
 		this.parameter = param;
 		
-		description = param.getDescription();
-		this.add(new JLabel(description));
-		
 		textField = new JTextField(param.getParameterString());
 		textField.addActionListener(this);
 		textField.addFocusListener(this);
-		
-		updateLockedStatus();
 		
 		this.add(textField);
 		
@@ -43,15 +38,8 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 		param.registerParameterSettingsChangedListener(this);
 		
 		field = textField;
-	}
-
-	private void updateLockedStatus(){
 		
-		if(component.getLockedStatus()){
-			textField.setEnabled(false);
-		}else{
-			textField.setEnabled(true);
-		}
+		updateLockedStatus();
 	}
 	
 	@Override
@@ -80,7 +68,6 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 		textFieldChanged();		
 	}
 	
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		textFieldChanged();

@@ -29,14 +29,9 @@ public class FloatParameterPanel extends ParameterPanel implements  ActionListen
 		this.controller = control;
 		this.parameter = parameter;
 		
-		description = parameter.getDescription();
-		this.add(new JLabel(description));
-		
 		textField = new JTextField(parameter.getParameterString());
 		textField.addActionListener(this);
 		textField.addFocusListener(this);
-		
-		updateLockedStatus();
 		
 		this.add(textField);
 		
@@ -44,15 +39,8 @@ public class FloatParameterPanel extends ParameterPanel implements  ActionListen
 		parameter.registerParameterSettingsChangedListener(this);
 		
 		field = textField;
-	}
 
-	private void updateLockedStatus(){
-		
-		if(component.getLockedStatus()){
-			textField.setEnabled(false);
-		}else{
-			textField.setEnabled(true);
-		}
+		updateLockedStatus();
 	}
 	
 	@Override

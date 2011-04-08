@@ -3,7 +3,6 @@ package org.u_compare.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import org.u_compare.gui.control.BooleanParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
@@ -44,11 +43,6 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			field = checkBox;
 			
 			updateLockedStatus();
-	}
-	
-	@Override
-	public void lockStatusChanged(Component component) {
-		updateLockedStatus();
 	}
 	
 	@Override

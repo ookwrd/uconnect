@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.u_compare.gui.control.StringParamaterController;
 import org.u_compare.gui.model.Component;
@@ -39,11 +37,6 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 		
 		field = textField;
 		
-		updateLockedStatus();
-	}
-	
-	@Override
-	public void lockStatusChanged(Component component) {
 		updateLockedStatus();
 	}
 

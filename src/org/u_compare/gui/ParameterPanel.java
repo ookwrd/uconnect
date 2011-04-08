@@ -38,6 +38,11 @@ public abstract class ParameterPanel extends JPanel implements
 		return mandatory;
 	}
 	
+	@Override
+	public void lockStatusChanged(Component component) {
+		updateLockedStatus();
+	}
+	
 	protected void updateLockedStatus(){
 		if(component.getLockedStatus()){
 			field.setEnabled(false);

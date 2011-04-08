@@ -51,16 +51,9 @@ public class ParametersPanel extends JPanel {
 			innerPanel.setLayout(new SpringLayout());
 			for (ParameterPanel parameterPanel : paramPanels) {
 				
-				String description = parameterPanel.getDescription();
-				if(description.length() > 43){
-					description = description.substring(0,40) + "...";
-				}
-				JLabel l = new JLabel(description);
-				l.setToolTipText(parameterPanel.getDescription());
-				l.setHorizontalAlignment(JLabel.TRAILING);
-				innerPanel.add(l);
-				
 				//Parameter Description Label
+				JLabel description = parameterPanel.getDescriptionLabel();
+				innerPanel.add(description);
 				
 				//Parameter Mandatory Status Label
 				JLabel mandatory = parameterPanel.getMandatoryLabel();
@@ -68,7 +61,7 @@ public class ParametersPanel extends JPanel {
 				
 				//Parameter Setting Field
 				JComponent selectionComponent = parameterPanel.getField();
-				l.setLabelFor(selectionComponent);
+				description.setLabelFor(selectionComponent);
 				
 				innerPanel.add(selectionComponent);
 			}

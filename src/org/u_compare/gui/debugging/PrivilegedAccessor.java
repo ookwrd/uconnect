@@ -26,7 +26,7 @@ import java.lang.reflect.*;
  * @author    Dale Anson (danson@germane-software.com)
  * @version   $Revision: 1.2 $
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"rawtypes","unchecked"})
 public class PrivilegedAccessor {
 
     /**
@@ -232,7 +232,7 @@ public class PrivilegedAccessor {
      * @return                           The method value
      * @exception NoSuchMethodException  Description of Exception
      */
-    public static Method getMethod(Class thisClass, String methodName, Class[] classTypes) throws NoSuchMethodException {
+	public static Method getMethod(Class thisClass, String methodName, Class[] classTypes) throws NoSuchMethodException {
         if (thisClass == null)
             throw new NoSuchMethodException("Invalid method : " + methodName);
         try {

@@ -1,6 +1,6 @@
 package org.u_compare.gui.control;
 
-import org.u_compare.gui.component.WorkflowPanel;
+import org.u_compare.gui.component.WorkflowConstructionPanel;
 import org.u_compare.gui.model.InvalidStatusException;
 import org.u_compare.gui.model.Workflow;
 
@@ -13,16 +13,16 @@ public class WorkflowController extends ComponentController {
 		super(allowEditing);
 		
 		this.component = component;
-		this.componentView = new WorkflowPanel(component, this,
+		this.componentView = new WorkflowConstructionPanel(component, this,
 				showWorkflowControlPanel, showWorkflowDetails);
 		
 		
 	}
 	
 	@Override
-	public WorkflowPanel getView(){
+	public WorkflowConstructionPanel getView(){
 		
-		return (WorkflowPanel)this.componentView;
+		return (WorkflowConstructionPanel)this.componentView;
 		
 	}
 	

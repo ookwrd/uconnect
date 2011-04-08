@@ -16,7 +16,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.Scrollable;
 
 import org.u_compare.gui.component.ComponentPanel;
-import org.u_compare.gui.component.WorkflowPanel;
+import org.u_compare.gui.component.WorkflowConstructionPanel;
 import org.u_compare.gui.model.Workflow;
 
 /**
@@ -30,15 +30,13 @@ import org.u_compare.gui.model.Workflow;
 @SuppressWarnings("serial")
 public class WorkflowPane extends JScrollPane implements Autoscroll,
 		Scrollable, MouseMotionListener {
-	// TODO: Fix border handling, now there are two borders to the layout.
-	private WorkflowPanel topComponent;
+	private WorkflowConstructionPanel topComponent;
 
 	// Configuration
 	private static final int HORIZONTAL_SCROLLBAR_POLICY =
 		ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 	private static final int VERTICAL_SCROLLBAR_POLICY =
 		ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-	// private static final String BORDER_TITLE = "Workflow";
 	private static final String TOOLTIP_TEXT =
 		"Drag components from the component library here";
 
@@ -47,7 +45,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 	// For dragging, observe the mouse and keep states for it here.
 	// Then observe the events and draw accordingly.
 
-	public WorkflowPane(WorkflowPanel topComponent) {
+	public WorkflowPane(WorkflowConstructionPanel topComponent) {
 		this.topComponent = topComponent;
 
 		this.setHorizontalScrollBarPolicy(
@@ -55,8 +53,6 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 		this.setVerticalScrollBarPolicy(
 				WorkflowPane.VERTICAL_SCROLLBAR_POLICY);
 
-		// this.setBorder(new TitledBorder(new EtchedBorder(),
-		// WorkflowPane.BORDER_TITLE));
 		this.setToolTipText(WorkflowPane.TOOLTIP_TEXT);
 
 		/**

@@ -1,30 +1,22 @@
 package org.u_compare.gui.component;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.URL;
-
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 
-import org.u_compare.gui.component.gui_elements.HighlightButton;
 import org.u_compare.gui.control.WorkflowController;
+import org.u_compare.gui.guiElements.HighlightButton;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
 
 /**
- * TODO:
+ * Workflow level panel allowing the workflow to be run/stopped/paused.
  * 
- * @author luke
- * @version 2010-11-10
+ * @author Luke McCrohon
  */
 
 @SuppressWarnings("serial")
@@ -38,7 +30,7 @@ public class WorkflowControlPanel extends JPanel implements
 	public static final String ICON_PAUSE_PATH = "../gfx/icon_pause.png";
 	private static final String RUN_TOOLTIPTEXT = "Run workflow";
 	private static final String STOP_TOOLTIPTEXT = "Stop workflow";
-	private static final boolean PAUSE = false;
+	private static final boolean PAUSE = false; //TODO are these needed?
 	private static final boolean PLAY = true;
 	
 	private static boolean iconsLoaded = false;
@@ -49,9 +41,6 @@ public class WorkflowControlPanel extends JPanel implements
 
 	private Workflow component;
 	private WorkflowController controller;
-
-	private ActionListener playListener;
-	private ActionListener stopListener;
 
 	private JLabel statusLabel;
 
@@ -65,14 +54,14 @@ public class WorkflowControlPanel extends JPanel implements
 		this.component = component;
 		this.controller = controller;
 
-		playListener = new ActionListener() {
+		ActionListener playListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playWorkflow();
 				System.out.println("Play button hit");
 			}
 		};
 
-		stopListener = new ActionListener() {
+		ActionListener stopListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(stopButtonActive()) {
 					stopWorkflow();

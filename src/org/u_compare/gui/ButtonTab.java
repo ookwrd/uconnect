@@ -5,7 +5,6 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
@@ -16,7 +15,7 @@ public class ButtonTab extends JButton implements DropTargetListener {
 
 	private WorkflowPaneController controller;
 	
-	public ButtonTab(String string, WorkflowPaneController controller){
+	public ButtonTab(String string, WorkflowPaneController controller){//TODO extract WorkflowPaneController out as an interface or something
 		super(string);
 		
 		this.controller = controller;

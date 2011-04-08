@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.component;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -8,6 +8,13 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
 
+/**
+ * 
+ * Abstract base class for common functionality of all ParameterPanel types.
+ * 
+ * @author Luke Mccrohon
+ *
+ */
 @SuppressWarnings("serial")
 public abstract class ParameterPanel extends JPanel implements
 		LockedStatusChangeListener {

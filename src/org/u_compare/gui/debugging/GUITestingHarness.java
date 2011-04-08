@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-import org.u_compare.gui.UConnectSplitPane;
+import org.u_compare.gui.UConnectHorizontalSplitPane;
 
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.library.LibraryPane;
@@ -38,7 +38,7 @@ public class GUITestingHarness {
 		LibraryPane libraryPane = new LibraryPane();
 		
 		// Combining
-		UConnectSplitPane uConnectSplit = new UConnectSplitPane(tabbedPane,
+		UConnectHorizontalSplitPane uConnectSplit = new UConnectHorizontalSplitPane(tabbedPane,
 				libraryPane);
 		TestWindow testWindow = new TestWindow("GUITestingHarness",
 				uConnectSplit);

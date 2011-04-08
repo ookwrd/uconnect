@@ -1,4 +1,4 @@
-package org.u_compare.gui.component.gui_elements;
+package org.u_compare.gui.guiElements;
 
 import javax.swing.text.*;
 

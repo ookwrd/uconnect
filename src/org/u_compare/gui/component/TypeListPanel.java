@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.u_compare.gui.component.gui_elements.HighlightButton;
 import org.u_compare.gui.control.TypeListPanelController;
+import org.u_compare.gui.guiElements.HighlightButton;
 import org.u_compare.gui.model.AnnotationType;
 import org.u_compare.gui.model.InputOutputChangeListener;
 import org.u_compare.gui.model.LockedStatusChangeListener;

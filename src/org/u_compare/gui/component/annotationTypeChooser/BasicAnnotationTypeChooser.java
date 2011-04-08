@@ -1,4 +1,4 @@
-package org.u_compare.gui.component;
+package org.u_compare.gui.component.annotationTypeChooser;
 
 import javax.swing.JOptionPane;
 
@@ -7,7 +7,7 @@ import org.u_compare.gui.model.AnnotationType;
 /**
  * Basic AnnotationTypeChooser for testing purposes. Should be replaced shortly.
  * 
- * @author lukemccrohon
+ * @author Luke McCrohon
  *
  */
 public class BasicAnnotationTypeChooser implements AnnotationTypeChooser {

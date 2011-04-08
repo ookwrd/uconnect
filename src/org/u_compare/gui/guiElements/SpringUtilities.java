@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
-package org.u_compare.gui;
+package org.u_compare.gui.guiElements;
 
 import javax.swing.*;
 import javax.swing.SpringLayout;

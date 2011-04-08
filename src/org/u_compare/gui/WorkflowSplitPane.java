@@ -87,6 +87,7 @@ public class WorkflowSplitPane extends JSplitPane
 	}
 	
 	// I am not sure if this really belongs here, not in the tabbed pane /pontus
+	//TODO refactor to tabbed pane /luke
 	@Override
 	public void ComponentDescriptionChanged(Component component) {
 		if(tab != null) {
@@ -97,6 +98,7 @@ public class WorkflowSplitPane extends JSplitPane
 	}
 
 	// I am not sure if this really belongs here, not in the tabbed pane /pontus
+	//TODO refactor to tabbed pane /luke
 	@Override
 	public void savedStatusChanged(Component component) {
 		System.out.println("Saved change listner notified");

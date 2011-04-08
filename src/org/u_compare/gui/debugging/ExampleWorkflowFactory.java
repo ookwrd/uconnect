@@ -182,9 +182,27 @@ public class ExampleWorkflowFactory {
 		workflowParams.add(new BooleanParameter("falseParam","A false boolean",
 				false, false));
 		
-		Component simplea = new MockComponent(workflowParams);
-		Component simpleb = new MockComponent(workflowParams);
-		Component simplec = new MockComponent(workflowParams);
+		ArrayList<Parameter> workflowParams1 = new ArrayList<Parameter>();
+		workflowParams1.add(new BooleanParameter("trueParam","A true boolean",
+				false, true));
+		workflowParams1.add(new BooleanParameter("falseParam","A false boolean",
+				false, false));
+		
+		ArrayList<Parameter> workflowParams2 = new ArrayList<Parameter>();
+		workflowParams2.add(new BooleanParameter("trueParam","A true boolean",
+				false, true));
+		workflowParams2.add(new BooleanParameter("falseParam","A false boolean",
+				false, false));
+		
+		ArrayList<Parameter> workflowParams3 = new ArrayList<Parameter>();
+		workflowParams3.add(new BooleanParameter("trueParam","A true boolean",
+				false, true));
+		workflowParams3.add(new BooleanParameter("falseParam","A false boolean",
+				false, false));
+		
+		Component simplea = new MockComponent(workflowParams1);
+		Component simpleb = new MockComponent(workflowParams2);
+		Component simplec = new MockComponent(workflowParams3);
 		
 		simplea.setTitle("Simple Component a");
 		simplea.setDescription(

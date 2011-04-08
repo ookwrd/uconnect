@@ -17,6 +17,7 @@ public class MultivaluedParameter<T> extends AbstractParameter {
 		return true;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Parameter> getValues(){
 		return (ArrayList<Parameter>) valuesArrayList;
 	}

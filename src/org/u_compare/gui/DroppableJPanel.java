@@ -22,7 +22,6 @@ import org.u_compare.gui.control.DragAndDropComponentController;
 public abstract class DroppableJPanel extends JPanel {
 
 	// protected DragAndDropComponentController controller;
-	private final boolean debug = false;
 	protected DragAndDropComponentController controller;
 	protected final Color defaultColor = getBackground();
 

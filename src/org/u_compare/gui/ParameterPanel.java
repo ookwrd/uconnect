@@ -12,6 +12,8 @@ import org.u_compare.gui.model.parameters.Parameter;
 public abstract class ParameterPanel extends JPanel implements
 		LockedStatusChangeListener {
 
+	private static final int DESCRIPTION_LENGTH = 43;
+	
 	protected Parameter param;
 	protected JComponent field;
 	protected Component component;
@@ -29,7 +31,15 @@ public abstract class ParameterPanel extends JPanel implements
 	}
 	
 	public JLabel getDescriptionLabel() {
-		return new JLabel(param.getDescription()); //TODO refactor
+		String description = param.getDescription();
+		if(description.length() > DESCRIPTION_LENGTH){
+			description = description.substring(0,DESCRIPTION_LENGTH-3) + "...";
+		}
+		JLabel descriptionLabel = new JLabel(description);
+		descriptionLabel.setToolTipText(param.getDescription());//Unabridged description
+		descriptionLabel.setHorizontalAlignment(JLabel.TRAILING);
+		
+		return descriptionLabel;
 	}
 	
 	public JLabel getMandatoryLabel(){

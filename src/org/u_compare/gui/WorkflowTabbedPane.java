@@ -1,6 +1,11 @@
 package org.u_compare.gui;
 
 import java.awt.Graphics;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -86,7 +91,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 			}
 		};
 		
-		JButton newWorkflowButton = new ButtonTab("New Workflow", controller);
+		JButton newWorkflowButton = new ButtonTabFlap("New Workflow", controller);
 		newWorkflowButton.addActionListener(workflowButtonListener);
 		
 		addTab("New Workflow", new JLabel(){//TODO can this be moved into ButtonTab as a generalization?
@@ -168,9 +173,23 @@ public class WorkflowTabbedPane extends JTabbedPane
 		// rather than add?
 		this.setToolTipTextAt(inserted_index, topComponent.getDescription());
 		
+		
+		//Listener for switching between tabs on component drag.
+		DropTargetListener dropListener = new DropTargetAdapter() {
+			@Override
+			public void drop(DropTargetDropEvent dtde) {
+				//Nothing
+			}
+			
+			@Override
+			public void dragEnter(DropTargetDragEvent dtde) {
+				//Get entered tabs index and set that tab selected.
+				setSelectedIndex(indexOfTabComponent(((DropTarget)dtde.getSource()).getComponent()));	
+			}
+		};
+		
 		IconizedCloseableTabFlapComponent tabFlapComponent = 
-			new WorkflowTabFlapComponent(this,
-					WorkflowTabbedPane.WORKFLOW_STOPPED);
+			new IconizedCloseableTabFlapComponent(this, WorkflowTabbedPane.WORKFLOW_STOPPED, dropListener);
 		
 		splitPane.linkTabbedPane(this, tabFlapComponent);
 		

@@ -2,6 +2,8 @@ package org.u_compare.gui.guiElements;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -45,7 +47,15 @@ public class IconizedCloseableTabFlapComponent
 		"Icon indicating closing a tab";
 	
 	public IconizedCloseableTabFlapComponent(
+			final JTabbedPane parentPane, Icon statusIcon, DropTargetListener dropListener){
+		this(parentPane, statusIcon);
+		
+		new DropTarget(this, dropListener);
+	}
+	
+	public IconizedCloseableTabFlapComponent(
 			final JTabbedPane parentPane, Icon statusIcon) {
+		
 		// Disable the spacing usually implied by the FlowLayout
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		

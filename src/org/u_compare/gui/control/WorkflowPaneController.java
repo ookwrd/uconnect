@@ -1,5 +1,8 @@
 package org.u_compare.gui.control;
 
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetListener;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -10,7 +13,7 @@ import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 import org.u_compare.gui.model.Workflow;
 
-public class WorkflowPaneController {
+public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener{
 
 	private static final boolean SHOW_CONSOLE = true;
 	private static final boolean ALLOW_TABS = true;
@@ -193,5 +196,10 @@ public class WorkflowPaneController {
 		
 		//TODO this is going to depend on a few things... like if we have component library...
 		
+	}
+
+	@Override
+	public void drop(DropTargetDropEvent arg0) {
+		requestNewWorkflowDragged();
 	}
 }

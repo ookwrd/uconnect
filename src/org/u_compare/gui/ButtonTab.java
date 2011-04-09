@@ -1,53 +1,39 @@
 package org.u_compare.gui;
 
 import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
-import org.u_compare.gui.control.WorkflowPaneController;
 
 @SuppressWarnings("serial")
-public class ButtonTab extends JButton implements DropTargetListener {
+public class ButtonTab extends JButton {
 
-	private WorkflowPaneController controller;
+	/**
+	 * Create a ButtonTab.
+	 * 
+	 * @param buttonText
+	 */
+	public ButtonTab(String buttonText){
 	
-	public ButtonTab(String string, WorkflowPaneController controller){//TODO extract WorkflowPaneController out as an interface or something
-		super(string);
-		
-		this.controller = controller;
-		
+		super(buttonText);
+
 		setOpaque(false);
 		setBorder(new EmptyBorder(0,0,0,0));
 		
-		new DropTarget(this,this);
 	}
 	
-	@Override
-	public void drop(DropTargetDropEvent arg0) {
-		controller.requestNewWorkflowDragged();
-	}
-
-	@Override
-	public void dragEnter(DropTargetDragEvent dtde) {
+	/**
+	 * Create ButtonTab that acts as a DropTarget.
+	 * 
+	 * @param string
+	 * @param dropListener
+	 */
+	public ButtonTab(String buttonText, DropTargetListener dropListener){
 		
-	}
-
-	@Override
-	public void dragExit(DropTargetEvent dte) {
+		this(buttonText);
 		
-	}
-
-	@Override
-	public void dragOver(DropTargetDragEvent dtde) {
-		
-	}
-
-	@Override
-	public void dropActionChanged(DropTargetDragEvent dtde) {
+		new DropTarget(this, dropListener);
 		
 	}
 

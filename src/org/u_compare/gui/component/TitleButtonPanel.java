@@ -16,7 +16,7 @@ import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.MinimizedStatusChangeListener;
 
 @SuppressWarnings("serial")
-public class ButtonPanel extends JPanel implements
+public class TitleButtonPanel extends JPanel implements
 		MinimizedStatusChangeListener, LockedStatusChangeListener {
 
 	private JPanel minimizeTarget;
@@ -27,7 +27,7 @@ public class ButtonPanel extends JPanel implements
 	private HighlightButton lockButton;
 	private ConfirmationButton removeButton;
 
-	public ButtonPanel(ComponentController controller, Component component,
+	public TitleButtonPanel(ComponentController controller, Component component,
 			JPanel minimizeTarget) {
 		super();
 
@@ -40,7 +40,7 @@ public class ButtonPanel extends JPanel implements
 		FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
 		setLayout(buttonLayout);
 
-		ButtonPanel.loadIcons(); // TODO figure out how to load the
+		TitleButtonPanel.loadIcons(); // TODO figure out how to load the
 									// icons in a better way (xml ?)
 
 
@@ -146,33 +146,33 @@ public class ButtonPanel extends JPanel implements
 	private static ImageIcon closeIcon;
 
 	protected static synchronized void loadIcons() {
-		if (ButtonPanel.iconsLoaded == true) {
+		if (TitleButtonPanel.iconsLoaded == true) {
 			return;
 		}
 
 		URL image_url;
-		image_url = ComponentPanel.class.getResource(ButtonPanel.ICON_MIN_PATH);
+		image_url = ComponentPanel.class.getResource(TitleButtonPanel.ICON_MIN_PATH);
 		assert image_url != null;
-		ButtonPanel.minIcon = new ImageIcon(image_url, "Minimize");
+		TitleButtonPanel.minIcon = new ImageIcon(image_url, "Minimize");
 
-		image_url = ComponentPanel.class.getResource(ButtonPanel.ICON_MAX_PATH);
+		image_url = ComponentPanel.class.getResource(TitleButtonPanel.ICON_MAX_PATH);
 		assert image_url != null;
-		ButtonPanel.maxIcon = new ImageIcon(image_url, "Maximize");
+		TitleButtonPanel.maxIcon = new ImageIcon(image_url, "Maximize");
 
-		image_url = ButtonPanel.class.getResource(ButtonPanel.ICON_LOCKED_PATH);
+		image_url = TitleButtonPanel.class.getResource(TitleButtonPanel.ICON_LOCKED_PATH);
 		assert image_url != null;
-		ButtonPanel.lockedIcon = new ImageIcon(image_url, "Lock");
+		TitleButtonPanel.lockedIcon = new ImageIcon(image_url, "Lock");
 
 		image_url = ComponentPanel.class
-				.getResource(ButtonPanel.ICON_UNLOCKED_PATH);
+				.getResource(TitleButtonPanel.ICON_UNLOCKED_PATH);
 		assert image_url != null;
-		ButtonPanel.unlockedIcon = new ImageIcon(image_url, "Unlock");
+		TitleButtonPanel.unlockedIcon = new ImageIcon(image_url, "Unlock");
 
-		image_url = ButtonPanel.class.getResource(ButtonPanel.ICON_CLOSE_PATH);
+		image_url = TitleButtonPanel.class.getResource(TitleButtonPanel.ICON_CLOSE_PATH);
 		assert image_url != null;
-		ButtonPanel.closeIcon = new ImageIcon(image_url, "Remove");
+		TitleButtonPanel.closeIcon = new ImageIcon(image_url, "Remove");
 
-		ButtonPanel.iconsLoaded = true;
+		TitleButtonPanel.iconsLoaded = true;
 		return;
 	}
 }

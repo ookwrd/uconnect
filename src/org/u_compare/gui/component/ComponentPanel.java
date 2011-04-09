@@ -50,7 +50,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	protected Component component;
 	protected ComponentController controller;
 	
-	private DescriptionPanel descriptionPanel;
+	private ComponentDescriptionPanel descriptionPanel;
 	private InputOutputPanel inputOutputPanel;
 	private ConfigurationParametersPanel parametersPanel;
 	private SubComponentsPanel subComponentsPanel;
@@ -164,7 +164,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	protected void setupDescriptionPanel(JPanel target){
 		
-		descriptionPanel = new DescriptionPanel(controller, component);
+		descriptionPanel = new ComponentDescriptionPanel(controller, component);
 		target.add(descriptionPanel);
 		
 	}

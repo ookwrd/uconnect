@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.component;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -9,7 +9,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import org.u_compare.gui.DroppableJPanel;
 import org.u_compare.gui.control.DropTargetController;
+import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 
 /**
  * TODO:
@@ -27,7 +29,7 @@ public class DropTargetJPanel extends DroppableJPanel {
 	private static Icon intermediateDropTargetIcon;
 	private static String intermediateDropTargetIconCaption = "XXX"; // TODO:
 
-	private final static String intermediateDropTargetIconPath = "gfx/intermediate_drop_target_icon.png";
+	private final static String intermediateDropTargetIconPath = "../gfx/intermediate_drop_target_icon.png";
 
 	private JLabel solitaryLabel = new JLabel("Drag and drop a component here.");
 
@@ -117,6 +119,9 @@ public class DropTargetJPanel extends DroppableJPanel {
 
 		image_url = IconizedCloseableTabFlapComponent.class
 				.getResource(DropTargetJPanel.intermediateDropTargetIconPath);
+		
+		System.out.println(DropTargetJPanel.intermediateDropTargetIconPath);
+		
 		assert image_url != null;
 		DropTargetJPanel.intermediateDropTargetIcon = new ImageIcon(image_url,
 				DropTargetJPanel.intermediateDropTargetIconCaption);

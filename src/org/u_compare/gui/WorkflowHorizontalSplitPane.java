@@ -4,6 +4,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
+import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.DescriptionChangeListener;
 import org.u_compare.gui.model.SavedStatusChangeListener;
@@ -16,7 +17,7 @@ import org.u_compare.gui.model.SavedStatusChangeListener;
  * @version 2009-08-28
  */
 @SuppressWarnings("serial")
-public class WorkflowSplitPane extends JSplitPane
+public class WorkflowHorizontalSplitPane extends JSplitPane
 	implements DescriptionChangeListener, SavedStatusChangeListener {
 	
 	private ConsolePane consolePane;
@@ -33,7 +34,7 @@ public class WorkflowSplitPane extends JSplitPane
 	private IconizedCloseableTabFlapComponent tab;
 	private JTabbedPane tabPane;
 	
-	public WorkflowSplitPane(WorkflowPane workflowPane,
+	public WorkflowHorizontalSplitPane(WorkflowPane workflowPane,
 			ConsolePane consolePane) {
 		this.workflowPane = workflowPane;
 		this.consolePane = consolePane;
@@ -46,12 +47,12 @@ public class WorkflowSplitPane extends JSplitPane
 		this.setTopComponent(this.workflowPane);
 		this.setBottomComponent(this.consolePane);
 		
-		this.setOneTouchExpandable(WorkflowSplitPane.ONE_TOUCH_EXPANDABLE);
+		this.setOneTouchExpandable(WorkflowHorizontalSplitPane.ONE_TOUCH_EXPANDABLE);
 		// Carry out all the divider configurations here
 		this.setDividerSize(5);
 		// Space distribution between components when we grow
-		this.setResizeWeight(WorkflowSplitPane.DEFAULT_RE_SIZE_WEIGHT);
-		this.setOrientation(WorkflowSplitPane.SPLIT_ORIENTATION);
+		this.setResizeWeight(WorkflowHorizontalSplitPane.DEFAULT_RE_SIZE_WEIGHT);
+		this.setOrientation(WorkflowHorizontalSplitPane.SPLIT_ORIENTATION);
 		// Set the divider as centred later when everything else is set
 		// XXX: This is one hell of a hack! There has to be a better way!
 		SwingUtilities.invokeLater(new Runnable() {
@@ -67,7 +68,7 @@ public class WorkflowSplitPane extends JSplitPane
 				else {
 					// If we do we can set the divider location
 					setDividerLocation(
-							WorkflowSplitPane.DIVIDER_START_POSITION);
+							WorkflowHorizontalSplitPane.DIVIDER_START_POSITION);
 				}
 			}
 		});

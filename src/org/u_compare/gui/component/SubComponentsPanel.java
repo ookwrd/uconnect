@@ -4,7 +4,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.u_compare.gui.DropTargetJPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.model.Component;

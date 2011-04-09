@@ -7,14 +7,14 @@ import javax.swing.border.EmptyBorder;
 
 
 @SuppressWarnings("serial")
-public class ButtonTab extends JButton {
+public class ButtonTabFlap extends JButton {
 
 	/**
 	 * Create a ButtonTab.
 	 * 
 	 * @param buttonText
 	 */
-	public ButtonTab(String buttonText){
+	public ButtonTabFlap(String buttonText){
 	
 		super(buttonText);
 
@@ -29,7 +29,7 @@ public class ButtonTab extends JButton {
 	 * @param string
 	 * @param dropListener
 	 */
-	public ButtonTab(String buttonText, DropTargetListener dropListener){
+	public ButtonTabFlap(String buttonText, DropTargetListener dropListener){
 		
 		this(buttonText);
 		

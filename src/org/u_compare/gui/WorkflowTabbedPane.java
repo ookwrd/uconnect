@@ -51,7 +51,6 @@ public class WorkflowTabbedPane extends JTabbedPane
 	//TODO: We do want to animate these in the end
 	private static boolean icons_loaded = false;
 
-	 //TODO: STOPPED should also indicate forcefully stopped?
 	private static Icon WORKFLOW_STOPPED;
 	private static Icon WORKFLOW_RUNNING;
 	private static Icon WORKFLOW_FINISHED;
@@ -62,7 +61,6 @@ public class WorkflowTabbedPane extends JTabbedPane
 		"gfx/workflow_stopped.png";
 	private final static String WORKFLOW_RUNNING_PATH =
 		"gfx/workflow_running.gif";
-	// Results are ready
 	private final static String WORKFLOW_FINISHED_PATH =
 		"gfx/workflow_finished.png";
 	private final static String WORKFLOW_PAUSED_PATH =
@@ -70,6 +68,16 @@ public class WorkflowTabbedPane extends JTabbedPane
 	private final static String WORKFLOW_ERROR_PATH =
 		"gfx/workflow_error.png";
 	
+	private final static String WORKFLOW_STOPPED_DESCRIPTION =
+		"The workflow is currently stopped";
+	private final static String WORKFLOW_RUNNING_DESCRIPTION =
+		"The workflow is currently running";
+	private final static String WORKFLOW_FINISHED_DESCRIPTION =
+		"The workflow has finished executioning";
+	private final static String WORKFLOW_PAUSED_DESCRIPTION =
+		"The workflow is currently paused";
+	private final static String WORKFLOW_ERROR_DESCRIPTION =
+		"An error has occured with this workflow";
 	private WorkflowPaneController controller;
 	
 	public WorkflowTabbedPane(WorkflowPaneController controller) {
@@ -94,6 +102,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 		JButton newWorkflowButton = new ButtonTabFlap("New Workflow", controller);
 		newWorkflowButton.addActionListener(workflowButtonListener);
 		
+		//Create a component that whenever it is displayed switches the tab to a previous one.
 		addTab("New Workflow", new JLabel(){//TODO can this be moved into ButtonTab as a generalization?
 			public void paint(Graphics g){//Makes the tab undisplayable
 				setSelectedIndex(getTabCount()-2);//If this is drawn, show the previous tab instead.
@@ -101,7 +110,6 @@ public class WorkflowTabbedPane extends JTabbedPane
 		});
 		setTabComponentAt(0, newWorkflowButton);
 		
-		//setEnabledAt(0, false);//Unfortunately not enough to prevent access to the New Tab. Fill the tab bar in OSX and then you can scroll to it. See Fix with StateChange Listener.
 	}
 	
 	public static String cleanTitle(String title){
@@ -114,38 +122,37 @@ public class WorkflowTabbedPane extends JTabbedPane
 
 	private static synchronized void load_icons() {
 		if (WorkflowTabbedPane.icons_loaded == false) {
-			//TODO: Extract descriptions to static final fields
 			URL image_url;
 			
 			image_url = WorkflowTabbedPane.class.getResource(
 					WorkflowTabbedPane.WORKFLOW_STOPPED_PATH);
 			assert image_url != null;
 			WorkflowTabbedPane.WORKFLOW_STOPPED = new ImageIcon(image_url,
-					"The workflow is currently stopped");
+					WorkflowTabbedPane.WORKFLOW_STOPPED_DESCRIPTION);
 			
 			image_url = WorkflowTabbedPane.class.getResource(
 					WorkflowTabbedPane.WORKFLOW_RUNNING_PATH);
 			assert image_url != null;
 			WorkflowTabbedPane.WORKFLOW_RUNNING = new ImageIcon(image_url,
-					"The workflow is currently running");
+					WorkflowTabbedPane.WORKFLOW_RUNNING_DESCRIPTION);
 			
 			image_url = WorkflowTabbedPane.class.getResource(
 					WorkflowTabbedPane.WORKFLOW_FINISHED_PATH);
 			assert image_url != null;
 			WorkflowTabbedPane.WORKFLOW_FINISHED = new ImageIcon(image_url,
-					"The workflow has finished its execution");
+					WorkflowTabbedPane.WORKFLOW_FINISHED_DESCRIPTION);
 			
 			image_url = WorkflowTabbedPane.class.getResource(
 					WorkflowTabbedPane.WORKFLOW_PAUSED_PATH);
 			assert image_url != null;
 			WorkflowTabbedPane.WORKFLOW_PAUSED = new ImageIcon(image_url,
-					"The workflow is currently paused");
+					WorkflowTabbedPane.WORKFLOW_PAUSED_DESCRIPTION);
 			
 			image_url = WorkflowTabbedPane.class.getResource(
 					WorkflowTabbedPane.WORKFLOW_ERROR_PATH);
 			assert image_url != null;
 			WorkflowTabbedPane.WORKFLOW_ERROR = new ImageIcon(image_url,
-					"The workflow has failed to execute");
+					WorkflowTabbedPane.WORKFLOW_ERROR_DESCRIPTION);
 			
 			WorkflowTabbedPane.icons_loaded = true;
 			return;

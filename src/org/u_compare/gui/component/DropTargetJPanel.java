@@ -120,8 +120,6 @@ public class DropTargetJPanel extends DroppableJPanel {
 		image_url = IconizedCloseableTabFlapComponent.class
 				.getResource(DropTargetJPanel.intermediateDropTargetIconPath);
 		
-		System.out.println(DropTargetJPanel.intermediateDropTargetIconPath);
-		
 		assert image_url != null;
 		DropTargetJPanel.intermediateDropTargetIcon = new ImageIcon(image_url,
 				DropTargetJPanel.intermediateDropTargetIconCaption);

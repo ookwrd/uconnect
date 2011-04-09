@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.WorkflowPane;
-import org.u_compare.gui.WorkflowSplitPane;
+import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 import org.u_compare.gui.model.Workflow;
 
@@ -25,7 +25,7 @@ public class WorkflowPaneController {
 	private WorkflowTabbedPane tabbedPane;
 
 	
-	private JComponent init(ArrayList<WorkflowSplitPane> workflowSplitPanes){
+	private JComponent init(ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes){
 		
 		if(workflowSplitPanes.size() == 0){
 			workflowSplitPanes.add(constructDefaultWorkflow());
@@ -35,7 +35,7 @@ public class WorkflowPaneController {
 			
 			tabbedPane = new WorkflowTabbedPane(this);
 			
-			for(WorkflowSplitPane workflowSplitPane : workflowSplitPanes){
+			for(WorkflowHorizontalSplitPane workflowSplitPane : workflowSplitPanes){
 				tabbedPane.addWorkflow(workflowSplitPane);
 			}
 			
@@ -52,7 +52,7 @@ public class WorkflowPaneController {
 	
 	public JComponent initialize(){
 		
-		ArrayList<WorkflowSplitPane> workflowSplitPanes = new ArrayList<WorkflowSplitPane>();
+		ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes = new ArrayList<WorkflowHorizontalSplitPane>();
 		return init(workflowSplitPanes);
 		
 	}
@@ -70,7 +70,7 @@ public class WorkflowPaneController {
 //			throw new IllegalArgumentException("As Workflow Tabs are currently disabled this method can handle at most a single workflow as input.");
 //		}
 		
-		ArrayList<WorkflowSplitPane> workflowSplitPanes = new ArrayList<WorkflowSplitPane>();
+		ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes = new ArrayList<WorkflowHorizontalSplitPane>();
 		
 		for(Workflow workflow : workflows) {
 			workflowSplitPanes.add(constructWorkflow(workflow));
@@ -79,7 +79,7 @@ public class WorkflowPaneController {
 		return init(workflowSplitPanes);
 	}
 	
-	private WorkflowSplitPane constructWorkflow(Workflow workflow){
+	private WorkflowHorizontalSplitPane constructWorkflow(Workflow workflow){
 		workflow.setComponentSaved();//TODO should this be moved to workflow constructor?
 		
 		if(!allowEditing){
@@ -98,16 +98,16 @@ public class WorkflowPaneController {
 			consolePane.addConsoleMessage("Workflow Loaded.");
 		}
 		
-		return new WorkflowSplitPane(workflowPane, consolePane);
+		return new WorkflowHorizontalSplitPane(workflowPane, consolePane);
 	}
 	
-	private WorkflowSplitPane constructDefaultWorkflow(){
+	private WorkflowHorizontalSplitPane constructDefaultWorkflow(){
 		
 		return constructWorkflow(WorkflowPaneController.defaultWorkflow());
 		
 	}
 	
-	private WorkflowSplitPane constructDraggedWorkflow(){
+	private WorkflowHorizontalSplitPane constructDraggedWorkflow(){
 		
 		return constructWorkflow(WorkflowPaneController.draggedWorkflow());
 		

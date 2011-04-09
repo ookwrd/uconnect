@@ -14,7 +14,7 @@ public class ComponentTitleBar extends JPanel {
 	private ComponentController controller;
 	private Component component;
 	private TitlePanel titlePanel;
-	private ButtonPanel buttonPanel;
+	private TitleButtonPanel buttonPanel;
 
 	public ComponentTitleBar(ComponentController controller, Component component,
 			JPanel innerPanel, boolean isWorkflow) {
@@ -62,7 +62,7 @@ public class ComponentTitleBar extends JPanel {
 
 	protected void setupButtonPanel(JPanel target, JPanel minimizable) {
 
-		buttonPanel = new ButtonPanel(controller, component, minimizable);
+		buttonPanel = new TitleButtonPanel(controller, component, minimizable);
 		target.add(buttonPanel, BorderLayout.LINE_END);
 
 	}

@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.guiElements;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -34,9 +34,9 @@ public class IconizedCloseableTabFlapComponent
 	private static Icon closeTabIcon;
 	private static Icon closeTabMouseOverIcon;
 	private final static String closeTabIconPath =
-		"gfx/close_tab.png";
+		"../gfx/close_tab.png";
 	private final static String closeTabMouseOverIconPath =
-		"gfx/close_tab_mouseover.png";
+		"../gfx/close_tab_mouseover.png";
 	private static boolean iconsLoaded = false;
 	
 	private final static String CLOSE_BUTTON_TOOLTIP =
@@ -99,7 +99,7 @@ public class IconizedCloseableTabFlapComponent
 		
 		//let the close button appear only when mouseover on the tab  
 		//close_button.setVisible(false); //TODO fix the component resizing
-		/*tabListener = new MouseListener() {
+		/*tabListener = new MouseListener() {//TODO use what is it call? Mouse adaptor?
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {

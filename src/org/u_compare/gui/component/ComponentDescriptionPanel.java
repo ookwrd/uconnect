@@ -12,7 +12,7 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.DescriptionChangeListener;
 
 @SuppressWarnings("serial")
-public class DescriptionPanel extends JPanel implements
+public class ComponentDescriptionPanel extends JPanel implements
 		DescriptionChangeListener {
 
 	// private static final int DESCRIPTION_PANEL_PADDING = 5;
@@ -23,7 +23,7 @@ public class DescriptionPanel extends JPanel implements
 	private final Component component;
 	private EditableTextPanel innerPanel;
 
-	public DescriptionPanel(ComponentController controller, Component component) {
+	public ComponentDescriptionPanel(ComponentController controller, Component component) {
 		super();
 
 		this.controller = controller;

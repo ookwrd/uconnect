@@ -1,4 +1,4 @@
-package org.u_compare.gui.component.annotationTypeChooser;
+package org.u_compare.gui.annotationTypeChooser;
 
 import javax.swing.JOptionPane;
 

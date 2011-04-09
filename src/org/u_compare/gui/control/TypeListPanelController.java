@@ -2,10 +2,10 @@ package org.u_compare.gui.control;
 
 import java.security.InvalidParameterException;
 
+import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
+import org.u_compare.gui.annotationTypeChooser.BasicAnnotationTypeChooser;
 import org.u_compare.gui.component.TypeListPanel;
 import org.u_compare.gui.component.TypeListPanel.LIST_TYPES;
-import org.u_compare.gui.component.annotationTypeChooser.AnnotationTypeChooser;
-import org.u_compare.gui.component.annotationTypeChooser.BasicAnnotationTypeChooser;
 import org.u_compare.gui.model.AnnotationType;
 import org.u_compare.gui.model.Component;
 

@@ -1,6 +1,6 @@
 package org.u_compare.gui.control;
 
-import org.u_compare.gui.DropTargetJPanel;
+import org.u_compare.gui.component.DropTargetJPanel;
 
 public class DropTargetController implements DragAndDropComponentController {
 

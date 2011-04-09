@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
 import org.u_compare.gui.control.WorkflowPaneController;
+import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.WorkflowStatusListener;
@@ -150,7 +151,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 	}
 	
 	//TODO: Where does it get it's title from?
-	public void addWorkflow(WorkflowSplitPane splitPane) {
+	public void addWorkflow(WorkflowHorizontalSplitPane splitPane) {
 		
 		Workflow workflow = splitPane.getWorkflowPane().getAssociatedWorkflow();
 		workflow.registerWorkflowStatusListener(this);
@@ -190,7 +191,7 @@ public class WorkflowTabbedPane extends JTabbedPane
 	@Override
 	public void remove(int i) {
 		controller.requestWorkflowClose(
-				((WorkflowSplitPane) this.getComponentAt(i))
+				((WorkflowHorizontalSplitPane) this.getComponentAt(i))
 				.getWorkflowPane().getAssociatedWorkflow());
 	}
 	
@@ -218,8 +219,8 @@ public class WorkflowTabbedPane extends JTabbedPane
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
 		for (int i = 0; i < this.getTabCount() - 1; i++) {
-			WorkflowSplitPane tab =
-				(WorkflowSplitPane) this.getComponentAt(i);
+			WorkflowHorizontalSplitPane tab =
+				(WorkflowHorizontalSplitPane) this.getComponentAt(i);
 			
 			if (tab.getWorkflowPane()
 					.getAssociatedWorkflow().equals(workflow)) {
@@ -250,8 +251,8 @@ public class WorkflowTabbedPane extends JTabbedPane
 	
 	public void removeWorkflow(Workflow workflow) {
 		for (int i = 0; i < this.getTabCount() - 1; i++) {
-			WorkflowSplitPane currentComponent =
-				(WorkflowSplitPane) this.getComponentAt(i); 
+			WorkflowHorizontalSplitPane currentComponent =
+				(WorkflowHorizontalSplitPane) this.getComponentAt(i); 
 			if (currentComponent.getWorkflowPane()
 					.getAssociatedWorkflow().equals(workflow)) {
 				this.safeRemove(i);

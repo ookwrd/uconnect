@@ -9,6 +9,8 @@ import java.awt.dnd.DropTargetListener;
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
+import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
+
 /**
  * Sets the tab as a DropTargetListener to allow dragging of components between tabs.
  * 

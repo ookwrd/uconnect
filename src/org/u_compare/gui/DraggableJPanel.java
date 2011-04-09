@@ -53,10 +53,9 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 		/**
 		 * Drag enters the component area
 		 */
+		@Override
 		public void dragEnter(DropTargetDragEvent dtde) {
 			this.panel.controller.setDragEnter();
-			// this.panel.setBackground(Color.LIGHT_GRAY);
-			// System.out.println("Drag enter");
 		}
 
 		// TODO ??? Is there any reason these following two methods need their
@@ -76,17 +75,11 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 		public void drop(DropTargetDropEvent event) {
 
 			System.out.println("Dropped on draggableJPanel. ");
-			// if (debug) this.panel.setBackground(Color.BLUE);
-			// this.panel.setVisible(false);
 
 			this.panel.controller.somethingDroppedOnComponent();
 
 			try {
 
-				// Transferable tr = event.getTransferable();
-				// String s = (String) tr.getTransferData(
-				// new DataFlavor(ComponentPanel.class, "WorkflowComponent"));
-				// System.out.println("String transfered : "+s);
 				if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 
 					event.acceptDrop(DnDConstants.ACTION_COPY);
@@ -125,23 +118,12 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	public DraggableJPanel(ComponentController controller) {
 
 		super(controller);
-		// this.control = controller;
-
-		/*
-		 * dropArea = new JPanel(); this.add(dropArea, BorderLayout.CENTER); dt
-		 * = new DropTarget(dropArea, this);
-		 */
-		// System.out.println("created drop target");
 
 		new MyDropTargetListener(this);
 
 		DragSource ds = new DragSource();
 		ds.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_COPY,
 				this);
-
-		// WorkflowComponentTransferHandler th =
-		// new WorkflowComponentTransferHandler();
-		// this.setTransferHandler(th);
 
 	}
 

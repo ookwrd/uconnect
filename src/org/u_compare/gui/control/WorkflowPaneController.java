@@ -3,6 +3,8 @@ package org.u_compare.gui.control;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -13,7 +15,7 @@ import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 import org.u_compare.gui.model.Workflow;
 
-public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener{
+public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
 
 	private static final boolean SHOW_CONSOLE = true;
 	private static final boolean ALLOW_TABS = true;
@@ -201,5 +203,10 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	@Override
 	public void drop(DropTargetDropEvent arg0) {
 		requestNewWorkflowDragged();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		requestNewWorkflow();
 	}
 }

@@ -150,7 +150,7 @@ public class TitleButtonPanel extends JPanel implements
 			return;
 		}
 
-		URL image_url;
+		URL image_url;//TODO remove references to ComponentPanel
 		image_url = ComponentPanel.class.getResource(TitleButtonPanel.ICON_MIN_PATH);
 		assert image_url != null;
 		TitleButtonPanel.minIcon = new ImageIcon(image_url, "Minimize");

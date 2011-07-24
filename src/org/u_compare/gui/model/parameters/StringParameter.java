@@ -1,14 +1,15 @@
 package org.u_compare.gui.model.parameters;
+import java.util.ArrayList;
+
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public class StringParameter extends AbstractParameter{
 
-	private String parameter; //null represents unset. TODO change this to an arraylist
+	private ArrayList<String> parametersArrayList = new ArrayList<String>(); //empty represents unset.
 	
 	public StringParameter(String name, String description, boolean mandatory, String parameter){
 		super(name, description, mandatory, false);
-		
-		this.parameter = parameter;
+		parametersArrayList.add(0, parameter);//TODO this should use an add method locally to ensure constraints.
 	}
 	
 	public StringParameter(String name, String description, boolean mandatory, String[] parameter){
@@ -18,20 +19,25 @@ public class StringParameter extends AbstractParameter{
 	}
 	
 	public String getParameter(){
-		return parameter;
+		if(parametersArrayList.size()>0){
+			return parametersArrayList.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	public void setValue(String input) throws ConstraintFailedException {
 		
-		if(!input.equals(parameter)){
-			parameter = input;
+		if(!input.equals(getParameter())){
 			validateConstraints(input);	
+			parametersArrayList.set(0, input);
 			notifyParameterValueChangedListeners();
 		}
 		
 	}
 
 	public String getParameterString() {
+		String parameter = getParameter();
 		if(parameter != null){
 			return parameter;
 		}else{

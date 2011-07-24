@@ -19,14 +19,9 @@ public abstract class AbstractParameter
 	
 //	private ArrayList<Parameter> values = new ArrayList<Parameter>();
 	
-	private ArrayList<ParameterNameDescriptionChangedListener>
-		nameDescriptionChangedListeners =
-			new ArrayList<ParameterNameDescriptionChangedListener>();
-	private ArrayList<ParameterValueChangedListener> changedListeners =
-		new ArrayList<ParameterValueChangedListener>();
-	private ArrayList<ParameterConfigurationChangedListener>
-		parameterConfigurationChangedListeners =
-			new ArrayList<ParameterConfigurationChangedListener>(); 
+	private ArrayList<ParameterNameDescriptionChangedListener> nameDescriptionChangedListeners = new ArrayList<ParameterNameDescriptionChangedListener>();
+	private ArrayList<ParameterValueChangedListener> changedListeners = new ArrayList<ParameterValueChangedListener>();
+	private ArrayList<ParameterConfigurationChangedListener> parameterConfigurationChangedListeners = new ArrayList<ParameterConfigurationChangedListener>(); 
 	
 	public AbstractParameter(String name, String description,
 			boolean mandatory, boolean multivalued) {
@@ -73,6 +68,7 @@ public abstract class AbstractParameter
 		return mandatory;
 	}
 	
+	@Override
 	public void setMandatory(boolean mandatory){
 		if(this.mandatory != mandatory){
 			this.mandatory = mandatory;
@@ -85,12 +81,12 @@ public abstract class AbstractParameter
 		return multivalued;
 	}
 	
+	@Override
 	public void setMultivalued(boolean multivalued){
 		if(this.multivalued != multivalued){
 			this.multivalued = multivalued;
 			notifyParameterConfigurationChangedListeners();
-		}
-		
+		}	
 	}
 	
 	@Override
@@ -102,12 +98,6 @@ public abstract class AbstractParameter
 	public ArrayList<Constraint> getConstraints(){
 		return constraints;
 	}
-	
-	/*@Override TODO  Why is this commented out??
-	public void setValue(int value) throws ConstraintFailedException {
-		throw new IllegalArgumentException("The parameter: "+ description
-				+ ", is not an int.");
-	}*/
 	
 	@Override
 	public void setValue(String value) throws ConstraintFailedException{
@@ -121,6 +111,7 @@ public abstract class AbstractParameter
 				+ ", is not a boolean.");
 	}
 	
+	@Override
 	public void registerParameterValueChangedListener(
 			ParameterValueChangedListener listener) {
 		assert(listener != null);
@@ -134,6 +125,7 @@ public abstract class AbstractParameter
 		owner.setComponentChanged();
 	}
 	
+	@Override
 	public void registerParameterNameDescriptionChangedListener(
 			ParameterNameDescriptionChangedListener listener) {
 		assert(listener != null);
@@ -148,6 +140,7 @@ public abstract class AbstractParameter
 		owner.setComponentChanged();
 	}
 	
+	@Override
 	public void registerParameterConfigurationChangedListener(
 			ParameterConfigurationChangedListener listener) {
 		assert(listener != null);

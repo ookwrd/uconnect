@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>org.u_compare.gui.model.uima.debugging.BasicAE</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>TESTERRed</name>
+    <description>Adds a true Truth annotation to the document.</description>
+    <version>1.0</version>
+    <vendor>Luke McCrohon - Tsujii Lab</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>string</name>
+        <description>THis is a string param</description>
+        <type>String</type>
+        <multiValued>true</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>int</name>
+        <description>This is an integer</description>
+        <type>Integer</type>
+        <multiValued>true</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>boolean</name>
+        <description>This is a boolean</description>
+        <type>Boolean</type>
+        <multiValued>true</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>float</name>
+        <description>this is a float parameter.</description>
+        <type>Float</type>
+        <multiValued>true</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>string</name>
+        <value>
+          <array>
+            <string>one</string>
+            <string>two</string>
+          </array>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>int</name>
+        <value>
+          <array>
+            <integer>1</integer>
+            <integer>2</integer>
+          </array>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>boolean</name>
+        <value>
+          <array>
+            <boolean>false</boolean>
+            <boolean>true</boolean>
+          </array>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>float</name>
+        <value>
+          <array>
+            <float>0.1</float>
+            <float>0.2</float>
+          </array>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription/>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

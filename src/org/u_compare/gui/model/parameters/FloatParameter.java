@@ -15,6 +15,13 @@ public class FloatParameter extends AbstractParameter {
 		addConstraint(new FloatConstraint());
 	}
 	
+	public FloatParameter(String name, String description, boolean mandatory, Float[] values) {
+		super(name, description, mandatory, true);
+		
+		//this.value = value;TODO
+		addConstraint(new FloatConstraint());
+	}
+	
 	public Float getParameter(){
 		return value;
 	}

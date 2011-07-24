@@ -3,7 +3,7 @@ package org.u_compare.gui.model.parameters;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public class BooleanParameter extends
-		AbstractParameter {
+		AbstractParameter<Boolean> {
 
 	private Boolean parameter; //null represents unset.
 	

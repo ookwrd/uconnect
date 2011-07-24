@@ -7,7 +7,7 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
-public abstract class AbstractParameter
+public abstract class AbstractParameter<T>
 		implements Parameter {
 
 	protected Component owner;
@@ -16,6 +16,9 @@ public abstract class AbstractParameter
 	private boolean mandatory;
 	private boolean multivalued;
 	private ArrayList<Constraint> constraints;
+	
+	protected ArrayList<T> parametersArrayList = new ArrayList<T>(); //empty represents unset.
+	
 	
 //	private ArrayList<Parameter> values = new ArrayList<Parameter>();
 	
@@ -110,6 +113,16 @@ public abstract class AbstractParameter
 		throw new IllegalArgumentException("The parameter: "+ description
 				+ ", is not a boolean.");
 	}
+	
+	public T getParameter(){
+		if(parametersArrayList.size()>0){
+			return parametersArrayList.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	
 	
 	@Override
 	public void registerParameterValueChangedListener(

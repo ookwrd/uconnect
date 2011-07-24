@@ -8,7 +8,7 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
-import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
+import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 
 /**
  * TODO
@@ -18,7 +18,7 @@ import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
  */
 
 @SuppressWarnings("serial")
-public class BooleanParameterPanel extends ParameterPanel implements ActionListener, LockedStatusChangeListener, ParameterSettingsChangedListener {
+public class BooleanParameterPanel extends ParameterPanel implements ActionListener, LockedStatusChangeListener, ParameterValueChangedListener {
 
 	private JCheckBox checkBox;
 	private BooleanParameterController controller;
@@ -38,7 +38,7 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			this.add(checkBox);
 			
 			component.registerLockedStatusChangeListener(this);
-			param.registerParameterSettingsChangedListener(this);
+			param.registerParameterValueChangedListener(this);
 			
 			field = checkBox;
 			

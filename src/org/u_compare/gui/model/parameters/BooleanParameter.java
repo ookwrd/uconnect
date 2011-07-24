@@ -14,7 +14,7 @@ public class BooleanParameter extends
 	 * @param value Null value represents value unset.
 	 */
 	public BooleanParameter(String name, String description, boolean mandatory, Boolean value){
-		super(name, description, mandatory);
+		super(name, description, mandatory, false);
 		this.parameter = value;
 	}
 	
@@ -28,7 +28,7 @@ public class BooleanParameter extends
 		if(input != parameter){
 			parameter = input;
 			//No necessity to validate against constraints as can't constrain boolean parameters
-			notifyParameterSettingsChangedListeners();
+			notifyParameterValueChangedListeners();
 		}
 	}
 

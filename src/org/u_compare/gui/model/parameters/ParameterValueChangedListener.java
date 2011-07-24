@@ -1,6 +1,6 @@
 package org.u_compare.gui.model.parameters;
 
-public interface ParameterSettingsChangedListener {
+public interface ParameterValueChangedListener {
 
 	public void parameterSettingsChanged(Parameter param);
 	

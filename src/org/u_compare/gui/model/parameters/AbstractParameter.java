@@ -14,6 +14,7 @@ public abstract class AbstractParameter
 	private String name;
 	private String description;
 	private boolean mandatory;
+	private boolean multivalued;
 	private ArrayList<Constraint> constraints;
 	
 //	private ArrayList<Parameter> values = new ArrayList<Parameter>();
@@ -21,19 +22,19 @@ public abstract class AbstractParameter
 	private ArrayList<ParameterNameDescriptionChangedListener>
 		nameDescriptionChangedListeners =
 			new ArrayList<ParameterNameDescriptionChangedListener>();
-	private ArrayList<ParameterSettingsChangedListener> changedListeners =
-		new ArrayList<ParameterSettingsChangedListener>();
-	private ArrayList<MandatoryStatusChangedListener>
-		mandatoryStatusChangedListeners =
-			new ArrayList<MandatoryStatusChangedListener>(); 
+	private ArrayList<ParameterValueChangedListener> changedListeners =
+		new ArrayList<ParameterValueChangedListener>();
+	private ArrayList<ParameterConfigurationChangedListener>
+		parameterConfigurationChangedListeners =
+			new ArrayList<ParameterConfigurationChangedListener>(); 
 	
 	public AbstractParameter(String name, String description,
-			boolean mandatory) {
+			boolean mandatory, boolean multivalued) {
 		constraints = new ArrayList<Constraint>();
 		this.name = name;
 		this.description = description;
 		this.mandatory = mandatory;
-		
+		this.multivalued = multivalued;
 	}
 	
 	@Override
@@ -75,13 +76,21 @@ public abstract class AbstractParameter
 	public void setMandatory(boolean mandatory){
 		if(this.mandatory != mandatory){
 			this.mandatory = mandatory;
-			notifyMandatoryStatusChangedListeners();
+			notifyParameterConfigurationChangedListeners();
 		}
 	}
 	
 	@Override
 	public boolean isMultivalued() {
-		return false;
+		return multivalued;
+	}
+	
+	public void setMultivalued(boolean multivalued){
+		if(this.multivalued != multivalued){
+			this.multivalued = multivalued;
+			notifyParameterConfigurationChangedListeners();
+		}
+		
 	}
 	
 	@Override
@@ -94,7 +103,7 @@ public abstract class AbstractParameter
 		return constraints;
 	}
 	
-	/*@Override
+	/*@Override TODO  Why is this commented out??
 	public void setValue(int value) throws ConstraintFailedException {
 		throw new IllegalArgumentException("The parameter: "+ description
 				+ ", is not an int.");
@@ -112,14 +121,14 @@ public abstract class AbstractParameter
 				+ ", is not a boolean.");
 	}
 	
-	public void registerParameterSettingsChangedListener(
-			ParameterSettingsChangedListener listener) {
+	public void registerParameterValueChangedListener(
+			ParameterValueChangedListener listener) {
 		assert(listener != null);
 		changedListeners.add(listener);
 	}
 	
-	protected void notifyParameterSettingsChangedListeners() {
-		for(ParameterSettingsChangedListener listener : changedListeners) {
+	protected void notifyParameterValueChangedListeners() {
+		for(ParameterValueChangedListener listener : changedListeners) {
 			listener.parameterSettingsChanged(this);
 		}
 		owner.setComponentChanged();
@@ -139,16 +148,16 @@ public abstract class AbstractParameter
 		owner.setComponentChanged();
 	}
 	
-	public void registerMandatoryStatusChangedListener(
-			MandatoryStatusChangedListener listener) {
+	public void registerParameterConfigurationChangedListener(
+			ParameterConfigurationChangedListener listener) {
 		assert(listener != null);
-		mandatoryStatusChangedListeners.add(listener);
+		parameterConfigurationChangedListeners.add(listener);
 	}
 	
-	protected void notifyMandatoryStatusChangedListeners() {
-		for(MandatoryStatusChangedListener listener :
-				mandatoryStatusChangedListeners) {
-			listener.mandatoryStatusChanged(this);
+	protected void notifyParameterConfigurationChangedListeners() {
+		for(ParameterConfigurationChangedListener listener :
+				parameterConfigurationChangedListeners) {
+			listener.parameterConfigurationChanged(this);
 		}
 		owner.setComponentChanged();
 	}

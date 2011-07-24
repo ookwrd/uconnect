@@ -9,11 +9,11 @@ import org.u_compare.gui.control.StringParamaterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
-import org.u_compare.gui.model.parameters.ParameterSettingsChangedListener;
+import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 import org.u_compare.gui.model.parameters.StringParameter;
 
 @SuppressWarnings("serial")
-public class StringParameterPanel extends ParameterPanel implements ActionListener, FocusListener, LockedStatusChangeListener, ParameterSettingsChangedListener {
+public class StringParameterPanel extends ParameterPanel implements ActionListener, FocusListener, LockedStatusChangeListener, ParameterValueChangedListener {
 
 	private StringParamaterController controller;
 	private StringParameter parameter;
@@ -33,7 +33,7 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 		this.add(textField);
 		
 		component.registerLockedStatusChangeListener(this);
-		param.registerParameterSettingsChangedListener(this);
+		param.registerParameterValueChangedListener(this);
 		
 		field = textField;
 		

@@ -44,10 +44,12 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	private OperationalProperties operationalProperties;
 	private ResourceManagerConfiguration resourceManagerConfiguration;
 	
+	/**
+	 * Constructor just for testing purposes.
+	 */
 	public PrimitiveUIMAComponent(){
 		super();
 		
-//		CasConsumerDescription casConsumerDesc = null;
 		try {
 			
 			XMLInputSource xmlIn = new XMLInputSource(
@@ -84,11 +86,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				desc.toXML(System.out);
 	
 				System.out.println();
-				
-				//Alter Description object
-				//not needed if we can decompose and then rebuild objects
-				//TODO
-				
+						
 				//Decompose description object
 				//ResourceMetaData metaData = desc.getMetaData();//Doesn't get us all the methods we need.
 				AnalysisEngineMetaData metaData = desc.getAnalysisEngineMetaData();//Also exists Processing Resource metaData, maybe the level we want
@@ -97,7 +95,6 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				System.out.println(metaData.getDescription());
 				System.out.println(metaData.getVendor());
 				System.out.println(metaData.getVersion());
-				//wow, didnt know about this
 				System.out.println(metaData.getCopyright());
 				
 				System.out.println("Primitive: " + desc.isPrimitive());
@@ -126,14 +123,13 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				TypeSystemDescription typeSystemDescription =
 					metaData.getTypeSystem();
 				
-				for(TypeDescription type :typeSystemDescription.getTypes()){
+				for(TypeDescription type : typeSystemDescription.getTypes()){
 					System.out.println(type.getName());
 					System.out.println(type.getDescription());
 					System.out.println(type.getSupertypeName());
 					
 					for(FeatureDescription feature : type.getFeatures()){
 						System.out.println(feature.getName());
-						
 					}
 				}
 				
@@ -202,10 +198,6 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		} catch (SAXException e) {
 			e.printStackTrace();
 		}
-
-		
-		
-
 		
 	}
 	
@@ -228,43 +220,10 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 		description.setImplementationName(getImplementationName());
 		description.setResourceManagerConfiguration(
-				resourceManagerConfiguration);//TODO actually do this.
+				resourceManagerConfiguration);
 		description.setPrimitive(!isAggregate());
 		
 	}
-	
-	
-	//TODO Need factory here? Yes, how do i handle primitive vs non-primitive
-	
-	public PrimitiveUIMAComponent(String descriptorLocation)
-			throws IOException, InvalidXMLException {
-		this(new XMLInputSource(descriptorLocation));
-	}
-	
-	public PrimitiveUIMAComponent(XMLInputSource inputSource)
-			throws InvalidXMLException{
-		try {
-		Object resourceSpecifier =
-			UIMAFramework.getXMLParser().parse(inputSource);
-		
-		if(resourceSpecifier instanceof AnalysisEngineDescription){
-			
-			AnalysisEngineDescription desc =
-				(AnalysisEngineDescription)resourceSpecifier;			
-			extractFromProcessingResouceMetaData(
-					desc.getAnalysisEngineMetaData());
-			
-			//TODO extract to a helper method
-			setImplementationName(desc.getImplementationName());
-			resourceManagerConfiguration =
-				desc.getResourceManagerConfiguration();//TODO actually do it.
-		}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-	}
-
 	
 	protected void setupProcessingResourceMetaData(
 			ProcessingResourceMetaData metaData) {
@@ -277,8 +236,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		metaData.setFsIndexCollection(fsIndexCollection);
 		metaData.setCapabilities(capabilities);
 		metaData.setOperationalProperties(operationalProperties);
-
 		//TODO
+		
 	}
 	
 	protected void setupResourceMetaData(ResourceMetaData metaData) {
@@ -342,6 +301,39 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 	}
 	
+	
+	
+	//TODO Need factory here? Yes, how do i handle primitive vs non-primitive
+	
+	public PrimitiveUIMAComponent(String descriptorLocation)
+			throws IOException, InvalidXMLException {
+		this(new XMLInputSource(descriptorLocation));
+	}
+	
+	public PrimitiveUIMAComponent(XMLInputSource inputSource)
+			throws InvalidXMLException{
+		try {
+		Object resourceSpecifier =
+			UIMAFramework.getXMLParser().parse(inputSource);
+		
+		if(resourceSpecifier instanceof AnalysisEngineDescription){
+			
+			AnalysisEngineDescription desc =
+				(AnalysisEngineDescription)resourceSpecifier;			
+			extractFromProcessingResouceMetaData(
+					desc.getAnalysisEngineMetaData());
+			
+			//TODO extract to a helper method
+			setImplementationName(desc.getImplementationName());
+			resourceManagerConfiguration =
+				desc.getResourceManagerConfiguration();
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+
 	protected void extractFromProcessingResouceMetaData(
 			ProcessingResourceMetaData metaData){
 		extractFromResourceMetaData(metaData);

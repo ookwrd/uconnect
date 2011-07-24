@@ -5,8 +5,8 @@ public class StringParameter extends AbstractParameter{
 
 	private String parameter; //null represents unset.
 	
-	public StringParameter(String name, String description, Boolean mandatory, String parameter){
-		super(name, description, mandatory);
+	public StringParameter(String name, String description, boolean mandatory, String parameter){
+		super(name, description, mandatory, false);
 		
 		this.parameter = parameter;
 	}
@@ -20,7 +20,7 @@ public class StringParameter extends AbstractParameter{
 		if(!input.equals(parameter)){
 			parameter = input;
 			validateConstraints(input);	
-			notifyParameterSettingsChangedListeners();
+			notifyParameterValueChangedListeners();
 		}
 		
 	}

@@ -9,7 +9,7 @@ public class FloatParameter extends AbstractParameter {
 	private Float value; //null represents unset
 	
 	public FloatParameter(String name, String description, boolean mandatory, Float value) {
-		super(name, description, mandatory);
+		super(name, description, mandatory, false);
 		
 		this.value = value;
 		addConstraint(new FloatConstraint());
@@ -28,7 +28,7 @@ public class FloatParameter extends AbstractParameter {
 	
 		if(inputFloat != value){//TODO does this work?
 			value = inputFloat;
-			notifyParameterSettingsChangedListeners();
+			notifyParameterValueChangedListeners();
 		}
 	}
 

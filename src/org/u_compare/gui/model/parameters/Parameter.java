@@ -18,6 +18,7 @@ public interface Parameter {
 	public void setMandatory(boolean mandatory);
 	
 	public boolean isMultivalued();
+	public void setMultivalued(boolean multivalued);
 	
 	public String getParameterString();
 	
@@ -26,9 +27,10 @@ public interface Parameter {
 	
 	public void setValue(String value) throws ConstraintFailedException;//String, float, integer
 	public void setValue(Boolean value) throws ConstraintFailedException;
-	//public void setValue(int value) throws ConstraintFailedException;
 	
-	
+	public void registerParameterValueChangedListener(ParameterValueChangedListener listener);
+	public void registerParameterNameDescriptionChangedListener(ParameterNameDescriptionChangedListener listener);
+	public void registerParameterConfigurationChangedListener(ParameterConfigurationChangedListener listener);
 	
 	/**
 	 * Must be called following construction.

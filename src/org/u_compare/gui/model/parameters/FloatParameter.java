@@ -4,7 +4,7 @@ import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 import org.u_compare.gui.model.parameters.constraints.FloatConstraint;
 
 //TODO
-public class FloatParameter extends AbstractParameter {
+public class FloatParameter extends AbstractParameter<Float> {
 
 	private Float value; //null represents unset
 	

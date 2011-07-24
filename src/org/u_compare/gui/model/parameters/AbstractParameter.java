@@ -177,28 +177,37 @@ public abstract class AbstractParameter
 		String type = param.getType();
 		if(type.equals(ConfigurationParameter.TYPE_BOOLEAN)) {
 			if(multivalued){
-				retVal = null; //TODO
+				retVal = new BooleanParameter(name, description, mandatory,
+						value!=null?(Boolean[])value:null);
 			}else{
 				retVal = new BooleanParameter(name, description, mandatory,
 						value!=null?(Boolean)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_FLOAT)) {
 			if(multivalued){
-				retVal = null; //TODO
+				retVal = new FloatParameter(name, description, mandatory,
+						value!=null?(Float[])value:null);
 			}else{
 				retVal = new FloatParameter(name, description, mandatory,
 						value!=null?(Float)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_INTEGER)) {
 			if(multivalued){
-				retVal = null; //TODO
+				retVal = new IntegerParameter(name, description, mandatory,
+						value!=null?(Integer[])value:null);
 			}else{
 				retVal = new IntegerParameter(name, description, mandatory,
 						value!=null?(Integer)value:null);
 			}
 		} else if (type.equals(ConfigurationParameter.TYPE_STRING)) {
 			if(multivalued){
-				retVal = null; //TODO
+				
+				System.out.println("Here in the multivalued string constructor");
+				System.out.println(value == null);
+			//	System.out.println("Type" + value.getClass().getName());
+				
+				retVal = new StringParameter(name, description, mandatory,
+						value!=null?(String[])value:null);
 			}else{
 				retVal = new StringParameter(name, description, mandatory,
 						value!=null?(String)value:null);

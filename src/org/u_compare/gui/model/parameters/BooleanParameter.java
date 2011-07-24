@@ -18,6 +18,11 @@ public class BooleanParameter extends
 		this.parameter = value;
 	}
 	
+	public BooleanParameter(String name, String description, boolean mandatory, Boolean[] values){
+		super(name, description, mandatory, true);
+		//this.parameter = value; TODO
+	}
+	
 	public Boolean getParameter(){
 		return parameter;
 	}

@@ -29,15 +29,4 @@ public class IntegerParameter extends AbstractParameter<Integer>{
 		Integer inputInt = Integer.parseInt(input);
 		simpleSet(inputInt);
 	}
-
-	@Override
-	public String getParameterString() {
-		Integer value = getParameter();
-		if(value!=null){
-			return String.valueOf(value);
-		}else{
-			return "";
-		}
-	}
-
 }

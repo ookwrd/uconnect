@@ -130,6 +130,16 @@ public abstract class AbstractParameter<T>
 		}
 	}
 	
+	@Override
+	public String getParameterString() {
+		T value = getParameter();
+		if(value!=null){
+			return value.toString();
+		}else{
+			return "";
+		}
+	}
+	
 	
 	@Override
 	public void registerParameterValueChangedListener(

@@ -30,15 +30,4 @@ public class FloatParameter extends AbstractParameter<Float> {
 		Float inputFloat = Float.parseFloat(input);
 		simpleSet(inputFloat);
 	}
-
-	@Override
-	public String getParameterString() {
-		Float value = getParameter();
-		if(value!=null){
-			return String.valueOf(value);
-		}else{
-			return "";
-		}
-	}
-
 }

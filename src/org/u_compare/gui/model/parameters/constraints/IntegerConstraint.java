@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Constraint class for expressing several common constraint types on individual integers.
  * 
- * @author Luke Mccrohon
+ * @author Luke McCrohon
  *
  */
 public class IntegerConstraint extends Constraint{
@@ -14,7 +14,7 @@ public class IntegerConstraint extends Constraint{
 	private int max = Integer.MAX_VALUE;
 	
 	//Null corresponds to no whiteList restriction
-	private ArrayList<Integer> whiteList;
+	private ArrayList<Integer> whiteList;//TODO push whitelist/blacklist into superclass.
 	//Null corresponds to no blackList restriction
 	private ArrayList<Integer> blackList;
 	

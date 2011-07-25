@@ -3,11 +3,13 @@ package org.u_compare.gui.model.parameters;
 import java.util.ArrayList;
 
 import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.Component.ParametersChangedListener;
 
 public class ParameterGroup {
 
 	private ArrayList<ParameterGroupConfigurationChangeListener> parameterGroupConfigurationChangeListeners = new ArrayList<ParameterGroupConfigurationChangeListener>();
-
+	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<Component.ParametersChangedListener>();
+	
 	private String[] names = new String[0];
 	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();
 	
@@ -44,23 +46,38 @@ public class ParameterGroup {
 		
 		this.configurationParameters = params;
 		
-		//notifyParametersChangedListeners();TODO
+		notifyParametersChangedListeners();
 	}
 	
 	
 	public void registerParameterGroupConfigurationChangedListener(ParameterGroupConfigurationChangeListener listener){
 		assert(listener != null);
+		parameterGroupConfigurationChangeListeners.add(listener);
 	}
 	
 	protected void notifyParameterGroupConfigurationChangedListeners(){
 		for(ParameterGroupConfigurationChangeListener listener : parameterGroupConfigurationChangeListeners){
 			listener.parameterGroupConfigurationChanged(this);
 		}
+		parent.setComponentChanged();
 	}
 	
 	public interface ParameterGroupConfigurationChangeListener{
 		public void parameterGroupConfigurationChanged(ParameterGroup group);
 	}
 	
+	public void registerParametersChangedListener(ParametersChangedListener listener){
+		assert(listener != null);
+		parametersChangedListeners.add(listener);
+	}
 	
+	/**
+	 * Not to be confused with ParameterSettingsChangeListener in the Parameter package.
+	 */
+	protected void notifyParametersChangedListeners(){
+		for(ParametersChangedListener listener : parametersChangedListeners){
+			listener.parametersChanged(parent);
+		}
+		parent.setComponentChanged();
+	}
 }

@@ -24,10 +24,7 @@ public abstract class AbstractComponent implements Component {
 	private String copyright = "Copyright information unknown";
 	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
-	
 	private ParameterGroup configParameters = new ParameterGroup(this);
-	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();//TODO remove
-	
 	private String parameterSearchStratergy = null;
 	private String parameterDefaultGroup = null;
 	private boolean unsavedChanges = false;
@@ -47,7 +44,6 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<DistributionInformationChangeListener> distributionInformationChangeListeners = new ArrayList<DistributionInformationChangeListener>();
 	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
 	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
-	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<ParametersChangedListener>();
 	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
 	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 	private ArrayList<ParameterConfigurationChangeListener> parameterConfigurationChangeListeners = new ArrayList<Component.ParameterConfigurationChangeListener>();
@@ -349,25 +345,12 @@ public abstract class AbstractComponent implements Component {
 	
 	@Override
 	public ArrayList<Parameter> getConfigurationParameters(){
-		return configurationParameters;
+		return configParameters.getConfigurationParameters();
 	}
 	
 	@Override
 	public void setConfigurationParameters(ArrayList<Parameter> params){
-		
-		//Remove old parameters
-		for(Parameter param : configurationParameters){
-			param.setOwner(null);
-		}
-		
-		for(Parameter param : params){
-			param.setOwner(this);
-		}
-		
-		this.configurationParameters = params;
-		
-		notifyParametersChangedListeners();
-		
+		configParameters.setConfigurationParameters(params);
 	}
 	
 	@Override
@@ -481,18 +464,8 @@ public abstract class AbstractComponent implements Component {
 	
 	@Override 
 	public void registerParametersChangedListener(ParametersChangedListener listener){
-		assert(listener != null);
-		parametersChangedListeners.add(listener);	
-	}
-	
-	/**
-	 * Not to be confused with ParameterSettingsChangeListener in the Parameter package.
-	 */
-	protected void notifyParametersChangedListeners(){
-		for(ParametersChangedListener listener : parametersChangedListeners){
-			listener.parametersChanged(this);
-		}
-		setComponentChanged();
+		configParameters.registerParametersChangedListener(listener);
+		//TODO register for all subgroups
 	}
 	
 	@Override
@@ -505,6 +478,7 @@ public abstract class AbstractComponent implements Component {
 		for(ParameterConfigurationChangeListener listener : parameterConfigurationChangeListeners){
 			listener.parameterConfigurationChanged(this);
 		}
+		setComponentChanged();
 	}
 	
 	@Override

@@ -6,12 +6,14 @@ import org.u_compare.gui.model.parameters.constraints.FloatConstraint;
 //TODO
 public class FloatParameter extends AbstractParameter<Float> {
 
-	private Float value; //null represents unset
-	
-	public FloatParameter(String name, String description, boolean mandatory, Float value) {
+	public FloatParameter(String name, String description, boolean mandatory, Float parameter) {
 		super(name, description, mandatory, false);
-		
-		this.value = value;
+		try {
+			add(parameter);
+		} catch (ConstraintFailedException e) {
+			System.out.println("Constraint failed on Parameter construction, this should not be possible.");
+			e.printStackTrace();
+		}
 		addConstraint(new FloatConstraint());
 	}
 	
@@ -21,26 +23,17 @@ public class FloatParameter extends AbstractParameter<Float> {
 		//this.value = value;TODO
 		addConstraint(new FloatConstraint());
 	}
-	
-	public Float getParameter(){
-		return value;
-	}
-	
+
 	@Override
 	public void setValue(String input) throws ConstraintFailedException {
-
 		validateConstraints(input);
-		
-		float inputFloat = Float.parseFloat(input);
-	
-		if(inputFloat != value){//TODO does this work?
-			value = inputFloat;
-			notifyParameterValueChangedListeners();
-		}
+		Float inputFloat = Float.parseFloat(input);
+		simpleSet(inputFloat);
 	}
 
 	@Override
 	public String getParameterString() {
+		Float value = getParameter();
 		if(value!=null){
 			return String.valueOf(value);
 		}else{

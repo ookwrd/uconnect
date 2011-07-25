@@ -274,6 +274,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			newParameter.setMultiValued(param.isMultivalued());
 			
 			Object value = null;
+			
 			if(!param.isMultivalued()){
 				//Single valued parameters
 				if(param instanceof BooleanParameter){
@@ -309,6 +310,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 					assert(false);
 				}
 			}
+			
 			//newParameter.setSourceUrl(arg0) TODO
 			
 			if(value != null){

@@ -7,7 +7,7 @@ import java.awt.event.FocusListener;
 import javax.swing.JTextField;
 import org.u_compare.gui.control.StringParamaterController;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.LockedStatusChangeListener;
+import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 import org.u_compare.gui.model.parameters.StringParameter;

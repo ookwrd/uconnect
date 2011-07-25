@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import org.u_compare.gui.control.BooleanParameterController;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.LockedStatusChangeListener;
+import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterValueChangedListener;

@@ -403,58 +403,45 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	protected void notifyComponentDescriptionChangeListeners(){
-		
 		for(DescriptionChangeListener listener : componentDescriptionChangeListeners){
 			listener.ComponentDescriptionChanged(this);
 		}
 		setComponentChanged();
-		
 	}
 	
 	@Override
 	public void registerDistibutionInformationChangedListener(DistributionInformationChangeListener listener){
-		
 		assert(listener != null);
 		distributionInformationChangeListeners.add(listener);
-		
 	}
 	
 	protected void notifyDistributionInformationChangedListeners(){
-		
 		for(DistributionInformationChangeListener listener : distributionInformationChangeListeners){
 			listener.distributionInformationChanged(this);
 		}
 		setComponentChanged();
-		
 	}
 	
 	@Override
 	public void registerInputOutputChangeListener(InputOutputChangeListener listener){
-		
 		assert(listener!=null);
 		inputOutputChangeListeners.add(listener);
-		
 	}
 	
 	protected void notifyInputOutputChangeListeners(){
-		
 		for(InputOutputChangeListener listener : inputOutputChangeListeners){
 			listener.inputOutputChanged(this);
 		}
 		setComponentChanged();
-		
 	}
 	
 	@Override
 	public void registerSavedStatusChangeListener(SavedStatusChangeListener listener){
-		
 		assert(listener != null);
 		savedStatusChangeListeners.add(listener);
-		
 	}
 	
 	protected void notifySavedStatusChangeListeners(){
-		
 		for(SavedStatusChangeListener listener : savedStatusChangeListeners){
 			listener.savedStatusChanged(this);
 		}
@@ -462,7 +449,6 @@ public abstract class AbstractComponent implements Component {
 	
 	@Override 
 	public void registerParametersChangedListener(ParametersChangedListener listener){
-		
 		assert(listener != null);
 		parametersChangedListeners.add(listener);	
 	}
@@ -471,30 +457,29 @@ public abstract class AbstractComponent implements Component {
 	 * Not to be confused with ParameterSettingsChangeListener in the Parameter package.
 	 */
 	protected void notifyParametersChangedListeners(){
-		
 		for(ParametersChangedListener listener : parametersChangedListeners){
 			listener.parametersChanged(this);
 		}
-		
 		setComponentChanged();
+	}
+	
+	public void registerParameterConfigurationChangeListener(){}
+	//TODO
+	public interface ParameterStatusChangeListener{
+		
 	}
 	
 	@Override
 	public void registerMinimizedStatusChangeListener(MinimizedStatusChangeListener listener){
-
 		assert(listener != null);
 		minimizedStatusChangeListeners.add(listener);
-		
 	}
 	
 	protected void notifyMinimizedStatusChangeListeners() {
-		
 		for(MinimizedStatusChangeListener listener : minimizedStatusChangeListeners){
 			listener.minimizedStatusChanged(this);
 		}
-		
 		//This is only a display property so no need to notify saved change listeners.
-		
 	}
 	
 	@Override
@@ -503,12 +488,9 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	protected void notifyLockedStatusChangeListeners(){
-		
 		for(LockedStatusChangeListener listener : lockedStatusChangeListeners){
 			listener.lockStatusChanged(this);
 		}
-		
 		//This is only a display property so no need to notify saved change listeners.
-		
 	}
 }

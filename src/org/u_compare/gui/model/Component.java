@@ -98,6 +98,10 @@ public interface Component{
 	 */
 	public void registerComponentDescriptionChangeListener(DescriptionChangeListener listener);
 
+	public interface DescriptionChangeListener {
+		public void ComponentDescriptionChanged(Component component);	
+	}
+	
 	//TODO documentation
 	public String getVendor();
 	public void setVendor(String vendor);
@@ -109,6 +113,10 @@ public interface Component{
 	public void setVersion(String version);
 	
 	public void registerDistibutionInformationChangedListener(DistributionInformationChangeListener listener);
+	
+	public interface DistributionInformationChangeListener {
+		public void distributionInformationChanged(Component component);
+	}
 	
 	/**
 	 * Adds an input type to this component.
@@ -152,6 +160,10 @@ public interface Component{
 	 */
 	public void registerInputOutputChangeListener(InputOutputChangeListener listener);
 	
+	public interface InputOutputChangeListener {
+		public void inputOutputChanged(Component component);	
+	}
+	
 	/**
 	 * Set this component as having been changed since saving.
 	 */
@@ -193,6 +205,10 @@ public interface Component{
 	 */
 	public void registerSavedStatusChangeListener(SavedStatusChangeListener listener); 
 	
+	public interface SavedStatusChangeListener {
+		public void savedStatusChanged(Component component);	
+	}
+	
 	/**
 	 * Get a list of this components configuration parameters.
 	 * 
@@ -214,7 +230,19 @@ public interface Component{
 	 */
 	public void registerParametersChangedListener(ParametersChangedListener listener);
 
+	public interface ParametersChangedListener {
+		public void parametersChanged(Component component);
+	}
+	
 	public void registerMinimizedStatusChangeListener(MinimizedStatusChangeListener listnener);
 	
+	public interface MinimizedStatusChangeListener {
+		public void minimizedStatusChanged(Component component);
+	}
+	
 	public void registerLockedStatusChangeListener(LockedStatusChangeListener listener);
+	
+	public interface LockedStatusChangeListener {
+		public void lockStatusChanged(Component component);	
+	}
 }

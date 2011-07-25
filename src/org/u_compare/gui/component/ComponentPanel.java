@@ -18,8 +18,8 @@ import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.guiElements.RoundedBorder;
-import org.u_compare.gui.model.SubComponentsChangedListener;
 import org.u_compare.gui.model.AggregateComponent;
+import org.u_compare.gui.model.AggregateComponent.SubComponentsChangedListener;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 

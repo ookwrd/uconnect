@@ -6,8 +6,8 @@ import javax.swing.SwingUtilities;
 
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.DescriptionChangeListener;
-import org.u_compare.gui.model.SavedStatusChangeListener;
+import org.u_compare.gui.model.Component.DescriptionChangeListener;
+import org.u_compare.gui.model.Component.SavedStatusChangeListener;
 
 /**
  * Holds the workflow pane and the console pane.

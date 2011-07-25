@@ -115,4 +115,8 @@ public interface AggregateComponent extends Component {
 	 * @param listener	Listener to be registered.
 	 */
 	public void registerSubComponentsChangedListener(SubComponentsChangedListener listener);
+	
+	public interface SubComponentsChangedListener {
+		public void subComponentsChanged();	
+	}
 }

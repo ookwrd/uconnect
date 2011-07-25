@@ -1,5 +1,6 @@
 package org.u_compare.gui.control;
 
+import java.awt.Container;
 import java.util.ArrayList;
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.component.ComponentPanel;
@@ -469,7 +470,14 @@ public class ComponentController implements DragAndDropComponentController {
 		if(parent != null){
 			parent.validateWorkflow();
 		}else{
-			componentView.getParent().validate();
+			
+			Container parent = componentView.getParent();
+			if(parent!=null){
+				parent.validate();	
+			}else{
+				System.out.println("Component Controller: Validate changes failed as view's parent is null. Should not occur in full system, but may occur during unittests.");
+			}
+			
 		}
 	}
 

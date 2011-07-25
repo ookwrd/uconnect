@@ -8,7 +8,7 @@
     <description>Adds a true Truth annotation to the document.</description>
     <version>1.0</version>
     <vendor>Luke McCrohon - Tsujii Lab</vendor>
-    <configurationParameters searchStrategy="language_fallback">
+    <configurationParameters defaultGroup="Group1" searchStrategy="language_fallback">
       <configurationParameter>
         <name>string</name>
         <description>THis is a string param</description>

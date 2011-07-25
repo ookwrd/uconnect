@@ -2,7 +2,10 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 
+import javax.imageio.spi.RegisterableService;
+
 import org.u_compare.gui.model.parameters.Parameter;
+import org.u_compare.gui.model.parameters.ParameterGroup;
 
 /**
  * Interface defining required features of model classes representing components.
@@ -256,5 +259,14 @@ public interface Component{
 	
 	public interface ParameterConfigurationChangeListener{
 		public void parameterConfigurationChanged(Component component);
+	}
+	
+	public ArrayList<ParameterGroup> getParameterGroups();
+	public void setParameterGroups(ArrayList<ParameterGroup> parameterGroups);
+	
+	public void registerParameterGroupsChangeListener(ParameterGroupsChangeListener listener);
+	
+	public interface ParameterGroupsChangeListener{
+		public void parameterGroupsChanged(Component component);
 	}
 }

@@ -1,8 +1,12 @@
 package org.u_compare.gui.model;
 
 import java.util.ArrayList;
+
+import org.u_compare.gui.model.Component.ParameterGroupsChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
  * Abstract base class implementing much of the functionality common to all components.
@@ -25,6 +29,7 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
 	private ParameterGroup configParameters = new ParameterGroup(this);
+	private ArrayList<ParameterGroup> parameterGroups = new ArrayList<ParameterGroup>();
 	private String parameterSearchStratergy = null;
 	private String parameterDefaultGroup = null;
 	private boolean unsavedChanges = false;
@@ -47,6 +52,7 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
 	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 	private ArrayList<ParameterConfigurationChangeListener> parameterConfigurationChangeListeners = new ArrayList<Component.ParameterConfigurationChangeListener>();
+	private ArrayList<ParameterGroupsChangeListener> parameterGroupsChangeListeners = new ArrayList<Component.ParameterGroupsChangeListener>();
 	
 	public AbstractComponent(){
 
@@ -354,6 +360,18 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
+	public ArrayList<ParameterGroup> getParameterGroups(){
+		return parameterGroups;
+	}
+	
+	@Override
+	public void setParameterGroups(ArrayList<ParameterGroup> parameterGroups){
+		//TODO check input is different from current
+		this.parameterGroups = parameterGroups;
+		notifyParameterGroupsChangeListeners();
+	}
+	
+	@Override
 	public String getParameterSearchStratergy(){
 		return parameterSearchStratergy;
 	}
@@ -504,5 +522,17 @@ public abstract class AbstractComponent implements Component {
 			listener.lockStatusChanged(this);
 		}
 		//This is only a display property so no need to notify saved change listeners.
+	}
+	
+	@Override
+	public void registerParameterGroupsChangeListener(ParameterGroupsChangeListener listener){
+		parameterGroupsChangeListeners.add(listener);
+	}
+	
+	protected void notifyParameterGroupsChangeListeners(){
+		for(ParameterGroupsChangeListener listener : parameterGroupsChangeListeners){
+			listener.parameterGroupsChanged(this);
+		}
+		setComponentChanged();
 	}
 }

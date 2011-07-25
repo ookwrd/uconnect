@@ -120,6 +120,15 @@ public abstract class AbstractParameter<T>
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public T[] getParameters(){
+		if(parametersArrayList.size() == 0){ 
+			return null;
+		} else {
+			return (T[])parametersArrayList.toArray();
+		}
+	}
+	
 	protected void setInitial(T value) {
 		if(value != null){
 			parametersArrayList.add(0, value);
@@ -227,6 +236,7 @@ public abstract class AbstractParameter<T>
 				retVal = new BooleanParameter(name, description, mandatory,
 						value!=null?(Boolean)value:null);
 			}
+			
 		} else if (type.equals(ConfigurationParameter.TYPE_FLOAT)) {
 			if(multivalued){
 				retVal = new FloatParameter(name, description, mandatory,
@@ -235,6 +245,7 @@ public abstract class AbstractParameter<T>
 				retVal = new FloatParameter(name, description, mandatory,
 						value!=null?(Float)value:null);
 			}
+			
 		} else if (type.equals(ConfigurationParameter.TYPE_INTEGER)) {
 			if(multivalued){
 				retVal = new IntegerParameter(name, description, mandatory,
@@ -243,19 +254,16 @@ public abstract class AbstractParameter<T>
 				retVal = new IntegerParameter(name, description, mandatory,
 						value!=null?(Integer)value:null);
 			}
+			
 		} else if (type.equals(ConfigurationParameter.TYPE_STRING)) {
 			if(multivalued){
-				
-				System.out.println("Here in the multivalued string constructor");
-				System.out.println(value == null);
-			//	System.out.println("Type" + value.getClass().getName());
-				
 				retVal = new StringParameter(name, description, mandatory,
 						value!=null?(String[])value:null);
 			}else{
 				retVal = new StringParameter(name, description, mandatory,
 						value!=null?(String)value:null);
 			}
+			
 		} else {
 			retVal = null; //TODO throw an error here. 
 		}

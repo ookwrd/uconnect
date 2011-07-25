@@ -10,7 +10,7 @@ public class BooleanParameter extends
 	
 	public BooleanParameter(String name, String description, boolean mandatory, Boolean[] values) {
 		super(name, description, mandatory, true);
-		//this.parameter = value; TODO
+		setInitials(values);
 	}
 	
 	@Override

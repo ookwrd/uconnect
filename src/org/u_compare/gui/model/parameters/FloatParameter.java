@@ -9,7 +9,7 @@ public class FloatParameter extends AbstractParameter<Float> {
 	public FloatParameter(String name, String description, boolean mandatory, Float parameter) {
 		super(name, description, mandatory, false);
 		try {
-			add(parameter);
+			setInitial(parameter);
 		} catch (ConstraintFailedException e) {
 			System.out.println("Constraint failed on Parameter construction, this should not be possible.");
 			e.printStackTrace();

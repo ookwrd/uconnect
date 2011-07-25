@@ -7,7 +7,7 @@ public class StringParameter extends AbstractParameter<String>{
 	public StringParameter(String name, String description, boolean mandatory, String parameter) {
 		super(name, description, mandatory, false);
 		try {
-			add(parameter);
+			setInitial(parameter);
 		} catch (ConstraintFailedException e) {
 			System.out.println("Constraint failed on Parameter construction, this should not be possible.");
 			e.printStackTrace();
@@ -24,5 +24,10 @@ public class StringParameter extends AbstractParameter<String>{
 	public void setValue(String input) throws ConstraintFailedException {
 		validateConstraints(input);
 		simpleSet(input);
+	}
+	
+	public static void main(String[] args){
+		StringParameter param = new StringParameter("Name", "Desc", true, (String)null);
+		System.out.println(param.getParameter());
 	}
 }

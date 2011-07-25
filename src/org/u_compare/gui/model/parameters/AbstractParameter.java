@@ -110,11 +110,7 @@ public abstract class AbstractParameter<T>
 		throw new IllegalArgumentException("The parameter: "+ description
 				+ ", is not a boolean.");
 	}
-	
-	public void add(T parameter) throws ConstraintFailedException {
-		parametersArrayList.add(0, parameter);//TODO constraints!!!
-	}
-	
+
 	public T getParameter(){
 		if(parametersArrayList.size()>0){
 			return parametersArrayList.get(0);
@@ -123,12 +119,23 @@ public abstract class AbstractParameter<T>
 		}
 	}
 	
-	public void simpleSet(T input) throws ConstraintFailedException {
-		if(!input.equals(getParameter())){
+	public void setInitial(T parameter) throws ConstraintFailedException { //TODO remove constraints failed exception
+		if(parameter != null){
+			parametersArrayList.add(0, parameter);
+		}
+	}
+	
+	public void simpleSet(T input) throws ConstraintFailedException { //TODO remove constraints failed exception
+		if(parametersArrayList.size()==0){
+			setInitial(input);
+			notifyParameterValueChangedListeners();
+		} else if(!input.equals(getParameter())){
 			parametersArrayList.set(0, input);
 			notifyParameterValueChangedListeners();
 		}
 	}
+	
+	
 	
 	@Override
 	public String getParameterString() {

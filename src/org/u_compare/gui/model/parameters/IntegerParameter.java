@@ -8,7 +8,7 @@ public class IntegerParameter extends AbstractParameter<Integer>{
 	public IntegerParameter(String name, String description, boolean mandatory, Integer parameter) {
 		super(name, description, mandatory, false);
 		try {
-			add(parameter);
+			setInitial(parameter);
 		} catch (ConstraintFailedException e) {
 			System.out.println("Constraint failed on Parameter construction, this should not be possible.");
 			e.printStackTrace();

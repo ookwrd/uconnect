@@ -377,7 +377,7 @@ public abstract class AbstractComponent implements Component {
 			return;
 		}
 		parameterSearchStratergy = stratergy;
-		notifyParameterConfigurationChangeListeners();
+		notifyParameterConfigurationChangeListers();
 	}
 	
 	@Override
@@ -391,7 +391,7 @@ public abstract class AbstractComponent implements Component {
 			return;
 		}
 		parameterDefaultGroup = defaultGroup;
-		notifyParameterConfigurationChangeListeners();
+		notifyParameterConfigurationChangeListers();
 	}
 	
 	@Override
@@ -497,7 +497,7 @@ public abstract class AbstractComponent implements Component {
 		parameterConfigurationChangeListeners.add(listener);
 	}
 
-	protected void notifyParameterConfigurationChangeListeners(){
+	protected void notifyParameterConfigurationChangeListers(){
 		for(ParameterConfigurationChangeListener listener : parameterConfigurationChangeListeners){
 			listener.parameterConfigurationChanged(this);
 		}

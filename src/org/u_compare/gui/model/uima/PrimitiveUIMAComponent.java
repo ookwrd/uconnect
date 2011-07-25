@@ -54,8 +54,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			XMLInputSource xmlIn = new XMLInputSource(
 					"src/org/u_compare/gui/model/uima/debugging/"
-					//+ "BasicAEwithSingleValuedParametersAndValues.xml");
-					+ "BasicAEwithSingleValuedParameterGroups.xml");
+					+ "BasicAEwithSingleValuedParametersAndValues.xml");
+					//+ "BasicAEwithSingleValuedParameterGroups.xml");
 			
 			/*AnalysisEngineDescription desc = 
 			 		UIMAFramework.getXMLParser()
@@ -274,7 +274,10 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			ConfigurationParameterDeclarations settings,
 			ConfigurationParameterSettings values){
 		
+		
+		
 		for(Parameter param : getConfigurationParameters()){
+			
 			ConfigurationParameter newParameter =
 				UIMAFramework.getResourceSpecifierFactory()
 				.createConfigurationParameter();
@@ -332,6 +335,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			settings.addConfigurationParameter(newParameter);
 		}
+		
+		settings.setSearchStrategy(getParameterSearchStratergy());
+		settings.setDefaultGroupName(getDefaultParameterGroup());
 		
 	}
 	
@@ -394,9 +400,14 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		ArrayList<Parameter> parameters = new ArrayList<Parameter>(); 
 		ConfigurationParameterSettings settings =
 			metaData.getConfigurationParameterSettings();
+		ConfigurationParameterDeclarations declarations =
+			metaData.getConfigurationParameterDeclarations();
+		
+		setParameterSearchStratergy(declarations.getSearchStrategy());
+		setDefaultParameterGroup(declarations.getDefaultGroupName());
+		
 		for(ConfigurationParameter param :
-			metaData.getConfigurationParameterDeclarations()
-			.getConfigurationParameters()){
+			declarations.getConfigurationParameters()){
 
 			Parameter newParameter = AbstractParameter.constructParameter(
 					param, settings.getParameterValue(param.getName()));

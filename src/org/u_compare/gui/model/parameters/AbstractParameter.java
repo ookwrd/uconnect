@@ -19,9 +19,6 @@ public abstract class AbstractParameter<T>
 	
 	protected ArrayList<T> parametersArrayList = new ArrayList<T>(); //empty represents unset.
 	
-	
-//	private ArrayList<Parameter> values = new ArrayList<Parameter>();
-	
 	private ArrayList<ParameterNameDescriptionChangedListener> nameDescriptionChangedListeners = new ArrayList<ParameterNameDescriptionChangedListener>();
 	private ArrayList<ParameterValueChangedListener> changedListeners = new ArrayList<ParameterValueChangedListener>();
 	private ArrayList<ParameterConfigurationChangedListener> parameterConfigurationChangedListeners = new ArrayList<ParameterConfigurationChangedListener>(); 
@@ -114,6 +111,10 @@ public abstract class AbstractParameter<T>
 				+ ", is not a boolean.");
 	}
 	
+	public void add(T parameter) throws ConstraintFailedException {
+		parametersArrayList.add(0, parameter);//TODO constraints!!!
+	}
+	
 	public T getParameter(){
 		if(parametersArrayList.size()>0){
 			return parametersArrayList.get(0);
@@ -122,6 +123,12 @@ public abstract class AbstractParameter<T>
 		}
 	}
 	
+	public void simpleSet(T input) throws ConstraintFailedException {
+		if(!input.equals(getParameter())){
+			parametersArrayList.set(0, input);
+			notifyParameterValueChangedListeners();
+		}
+	}
 	
 	
 	@Override
@@ -177,7 +184,7 @@ public abstract class AbstractParameter<T>
 	
 	//TODO documentation
 	public static Parameter constructParameter(ConfigurationParameter param,
-			Object value){
+			Object value) {
 		
 		Parameter retVal;
 		

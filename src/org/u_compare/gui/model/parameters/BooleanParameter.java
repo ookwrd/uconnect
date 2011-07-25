@@ -13,12 +13,12 @@ public class BooleanParameter extends
 	 * @param description
 	 * @param value Null value represents value unset.
 	 */
-	public BooleanParameter(String name, String description, boolean mandatory, Boolean value){
+	public BooleanParameter(String name, String description, boolean mandatory, Boolean value) {
 		super(name, description, mandatory, false);
 		this.parameter = value;
 	}
 	
-	public BooleanParameter(String name, String description, boolean mandatory, Boolean[] values){
+	public BooleanParameter(String name, String description, boolean mandatory, Boolean[] values) {
 		super(name, description, mandatory, true);
 		//this.parameter = value; TODO
 	}

@@ -2,6 +2,7 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 import org.u_compare.gui.model.parameters.Parameter;
+import org.u_compare.gui.model.parameters.ParameterGroup;
 
 /**
  * Abstract base class implementing much of the functionality common to all components.
@@ -23,7 +24,10 @@ public abstract class AbstractComponent implements Component {
 	private String copyright = "Copyright information unknown";
 	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
-	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();
+	
+	private ParameterGroup configParameters = new ParameterGroup(this);
+	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();//TODO remove
+	
 	private String parameterSearchStratergy = null;
 	private String parameterDefaultGroup = null;
 	private boolean unsavedChanges = false;

@@ -4,13 +4,15 @@ import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 
 public class IntegerParameter extends AbstractParameter<Integer>{
-
-	private Integer value; //null represents unset.
 	
-	public IntegerParameter(String name, String description, boolean mandatory, Integer value) {
+	public IntegerParameter(String name, String description, boolean mandatory, Integer parameter) {
 		super(name, description, mandatory, false);
-		
-		this.value = value;
+		try {
+			add(parameter);
+		} catch (ConstraintFailedException e) {
+			System.out.println("Constraint failed on Parameter construction, this should not be possible.");
+			e.printStackTrace();
+		}
 		addConstraint(new IntegerConstraint());
 	}
 	
@@ -19,27 +21,18 @@ public class IntegerParameter extends AbstractParameter<Integer>{
 		
 		//this.value = value; TODO
 		addConstraint(new IntegerConstraint());
-	}
-	
-	public Integer getParameter(){//TODO move into abstract base class
-		return value;
 	}	
 	
 	@Override
 	public void setValue(String input) throws ConstraintFailedException {
-
 		validateConstraints(input);
-		
-		int inputInt = Integer.parseInt(input);
-	
-		if(inputInt != value){	
-			value = inputInt;
-			notifyParameterValueChangedListeners();
-		}
-		
+		Integer inputInt = Integer.parseInt(input);
+		simpleSet(inputInt);
 	}
 
+	@Override
 	public String getParameterString() {
+		Integer value = getParameter();
 		if(value!=null){
 			return String.valueOf(value);
 		}else{

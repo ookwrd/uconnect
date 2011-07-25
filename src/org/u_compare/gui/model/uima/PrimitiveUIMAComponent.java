@@ -9,6 +9,7 @@ import org.apache.uima.analysis_engine.TypeOrFeature;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Capability;
+import org.apache.uima.resource.metadata.ConfigurationGroup;
 import org.apache.uima.resource.metadata.ConfigurationParameter;
 import org.apache.uima.resource.metadata.ConfigurationParameterDeclarations;
 import org.apache.uima.resource.metadata.ConfigurationParameterSettings;
@@ -54,8 +55,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			XMLInputSource xmlIn = new XMLInputSource(
 					"src/org/u_compare/gui/model/uima/debugging/"
-					+ "BasicAEwithSingleValuedParametersAndValues.xml");
-					//+ "BasicAEwithSingleValuedParameterGroups.xml");
+					//+ "BasicAEwithSingleValuedParametersAndValues.xml");
+					+ "BasicAEwithSingleValuedParameterGroups.xml");
 			
 			/*AnalysisEngineDescription desc = 
 			 		UIMAFramework.getXMLParser()
@@ -162,7 +163,13 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				
 				System.out.println("Deafult Group name: " + declarations.getDefaultGroupName());
 				System.out.println("Search Stratergy: " + declarations.getSearchStrategy());
-				System.out.println(declarations.getConfigurationGroups());
+				ConfigurationGroup group = declarations.getConfigurationGroups()[0];
+				if(group != null){
+					System.out.println("Group names: " + group.getNames());
+					for(ConfigurationParameter parameter : group.getConfigurationParameters()){
+						System.out.println(parameter.getName());
+					}
+				}
 				System.out.println();
 				
 				for(ConfigurationParameter param :

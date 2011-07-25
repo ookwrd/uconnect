@@ -56,7 +56,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			XMLInputSource xmlIn = new XMLInputSource(
 					"src/org/u_compare/gui/model/uima/debugging/"
 					//+ "BasicAEwithSingleValuedParametersAndValues.xml");
-					+ "BasicAEwithSingleValuedParameterGroups.xml");
+					+ "BasicAEwithSingleValuedParameterGroupsAndValues.xml");
 			
 			/*AnalysisEngineDescription desc = 
 			 		UIMAFramework.getXMLParser()
@@ -167,7 +167,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				if(group != null){
 					System.out.println("Group names: " + group.getNames());
 					for(ConfigurationParameter parameter : group.getConfigurationParameters()){
-						System.out.println(parameter.getName());
+						System.out.println("Name: " + parameter.getName());
+						System.out.println("Value: " + settings.getParameterValue(group.getNames()[0], parameter.getName()));
 					}
 				}
 				System.out.println();
@@ -281,66 +282,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			ConfigurationParameterDeclarations settings,
 			ConfigurationParameterSettings values){
 		
-		
-		
 		for(Parameter param : getConfigurationParameters()){
-			
-			ConfigurationParameter newParameter =
-				UIMAFramework.getResourceSpecifierFactory()
-				.createConfigurationParameter();
-			
-			newParameter.setName(param.getName());
-			newParameter.setDescription(param.getDescription());
-			newParameter.setMandatory(param.isMandatory());
-			newParameter.setMultiValued(param.isMultivalued());
-			
-			Object value = null;
-			
-			if(!param.isMultivalued()){
-				//Single valued parameters
-				if(param instanceof BooleanParameter){
-					newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
-					value = ((BooleanParameter)param).getParameter();
-				} else if (param instanceof StringParameter){
-					newParameter.setType(ConfigurationParameter.TYPE_STRING);
-					value = ((StringParameter)param).getParameter();
-				} else if (param instanceof IntegerParameter){
-					newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
-					value = ((IntegerParameter)param).getParameter();
-				} else if (param instanceof FloatParameter){
-					newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
-					value = ((FloatParameter)param).getParameter();
-				} else {
-					assert(false);
-				}
-			}else {
-				//Multi-valued parameters
-				if(param instanceof BooleanParameter){
-					newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
-					value = ((BooleanParameter)param).getParameters();
-				} else if (param instanceof StringParameter){
-					newParameter.setType(ConfigurationParameter.TYPE_STRING);
-					value = ((StringParameter)param).getParameters();
-				} else if (param instanceof IntegerParameter){
-					newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
-					value = ((IntegerParameter)param).getParameters();
-				} else if (param instanceof FloatParameter){
-					newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
-					value = ((FloatParameter)param).getParameters();
-				} else {
-					assert(false);
-				}
-			}
-			
-			//TODO Overrides?
-			
-			//TODO do we need to set the MetadataObject source?
-			
-			if(value != null){
-				values.setParameterValue(param.getName(), value);
-			}
-			
-			settings.addConfigurationParameter(newParameter);
+			constructConfigurationParameter(param, settings, values);
 		}
 		
 		settings.setSearchStrategy(getParameterSearchStratergy());
@@ -348,7 +291,67 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 	}
 	
-	
+	public void constructConfigurationParameter(Parameter param, 
+			ConfigurationParameterDeclarations settings,
+			ConfigurationParameterSettings values){
+		
+		ConfigurationParameter newParameter =
+			UIMAFramework.getResourceSpecifierFactory()
+			.createConfigurationParameter();
+		
+		newParameter.setName(param.getName());
+		newParameter.setDescription(param.getDescription());
+		newParameter.setMandatory(param.isMandatory());
+		newParameter.setMultiValued(param.isMultivalued());
+		
+		Object value = null;
+		
+		if(!param.isMultivalued()){
+			//Single valued parameters
+			if(param instanceof BooleanParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
+				value = ((BooleanParameter)param).getParameter();
+			} else if (param instanceof StringParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_STRING);
+				value = ((StringParameter)param).getParameter();
+			} else if (param instanceof IntegerParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
+				value = ((IntegerParameter)param).getParameter();
+			} else if (param instanceof FloatParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
+				value = ((FloatParameter)param).getParameter();
+			} else {
+				assert(false);
+			}
+		}else {
+			//Multi-valued parameters
+			if(param instanceof BooleanParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
+				value = ((BooleanParameter)param).getParameters();
+			} else if (param instanceof StringParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_STRING);
+				value = ((StringParameter)param).getParameters();
+			} else if (param instanceof IntegerParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
+				value = ((IntegerParameter)param).getParameters();
+			} else if (param instanceof FloatParameter){
+				newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
+				value = ((FloatParameter)param).getParameters();
+			} else {
+				assert(false);
+			}
+		}
+		
+		//TODO Overrides?
+		
+		//TODO do we need to set the MetadataObject source?
+		
+		if(value != null){
+			values.setParameterValue(param.getName(), value);
+		}
+
+		settings.addConfigurationParameter(newParameter);
+	}
 	
 	//TODO Need factory here? Yes, how do i handle primitive vs non-primitive
 	

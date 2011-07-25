@@ -1,6 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.uima.resource.metadata.ConfigurationParameter;
 import org.u_compare.gui.model.Component;
@@ -119,13 +120,19 @@ public abstract class AbstractParameter<T>
 		}
 	}
 	
-	public void setInitial(T parameter) throws ConstraintFailedException { //TODO remove constraints failed exception
-		if(parameter != null){
-			parametersArrayList.add(0, parameter);
+	protected void setInitial(T value) {
+		if(value != null){
+			parametersArrayList.add(0, value);
 		}
 	}
 	
-	public void simpleSet(T input) throws ConstraintFailedException { //TODO remove constraints failed exception
+	protected void setInitials(T[] values){
+		if(values != null){
+			parametersArrayList.addAll(Arrays.asList(values));
+		}
+	}
+	
+	public void simpleSet(T input) { //TODO remove constraints failed exception
 		if(parametersArrayList.size()==0){
 			setInitial(input);
 			notifyParameterValueChangedListeners();

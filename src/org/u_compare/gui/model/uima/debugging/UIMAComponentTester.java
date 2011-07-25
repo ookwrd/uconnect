@@ -61,6 +61,11 @@ public class UIMAComponentTester {
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSingleValuedParameterGroups.xml");
 	}
 	
+	@Test
+	public void inOutTestBasicParameterGroupsAndValues() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSingleValuedParameterGroupsAndValues.xml");
+	}
+	
 	/**
 	 * Performs a test to ensure the XML produced from loading a XMLDescriptor into the model and then
 	 * extracting it again matches the original XML.

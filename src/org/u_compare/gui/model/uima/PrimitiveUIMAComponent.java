@@ -274,21 +274,40 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			newParameter.setMultiValued(param.isMultivalued());
 			
 			Object value = null;
-			
-			if(param instanceof BooleanParameter){
-				newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
-				value = ((BooleanParameter)param).getParameter();
-			} else if (param instanceof StringParameter){
-				newParameter.setType(ConfigurationParameter.TYPE_STRING);
-				value = ((StringParameter)param).getParameter();
-			} else if (param instanceof IntegerParameter){
-				newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
-				value = ((IntegerParameter)param).getParameter();
-			} else if (param instanceof FloatParameter){
-				newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
-				value = ((FloatParameter)param).getParameter();
-			} else {
-				assert(false);
+			if(!param.isMultivalued()){
+				//Single valued parameters
+				if(param instanceof BooleanParameter){
+					newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
+					value = ((BooleanParameter)param).getParameter();
+				} else if (param instanceof StringParameter){
+					newParameter.setType(ConfigurationParameter.TYPE_STRING);
+					value = ((StringParameter)param).getParameter();
+				} else if (param instanceof IntegerParameter){
+					newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
+					value = ((IntegerParameter)param).getParameter();
+				} else if (param instanceof FloatParameter){
+					newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
+					value = ((FloatParameter)param).getParameter();
+				} else {
+					assert(false);
+				}
+			}else {
+				//Multi-valued parameters
+				if(param instanceof BooleanParameter){
+					newParameter.setType(ConfigurationParameter.TYPE_BOOLEAN);
+					value = ((BooleanParameter)param).getParameters();
+				} else if (param instanceof StringParameter){
+					newParameter.setType(ConfigurationParameter.TYPE_STRING);
+					value = ((StringParameter)param).getParameters();
+				} else if (param instanceof IntegerParameter){
+					newParameter.setType(ConfigurationParameter.TYPE_INTEGER);
+					value = ((IntegerParameter)param).getParameters();
+				} else if (param instanceof FloatParameter){
+					newParameter.setType(ConfigurationParameter.TYPE_FLOAT);
+					value = ((FloatParameter)param).getParameters();
+				} else {
+					assert(false);
+				}
 			}
 			//newParameter.setSourceUrl(arg0) TODO
 			

@@ -13,8 +13,7 @@ public class IntegerParameter extends AbstractParameter<Integer>{
 	
 	public IntegerParameter(String name, String description, boolean mandatory, Integer[] values) {
 		super(name, description, mandatory, true);
-		
-		//this.value = value; TODO
+		setInitials(values);
 		addConstraint(new IntegerConstraint());
 	}	
 	

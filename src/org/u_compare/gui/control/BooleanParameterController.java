@@ -16,7 +16,7 @@ public class BooleanParameterController extends ParameterController {
 	
 	public BooleanParameterController(ComponentController parent, BooleanParameter param, Component component){
 		this.param = param;
-//		this.parent = parent;
+//		this.parent = parent;//TODO if its not needed pull it from the method signature
 		this.component = component;
 		this.view = new BooleanParameterPanel(param, this, component);
 	}

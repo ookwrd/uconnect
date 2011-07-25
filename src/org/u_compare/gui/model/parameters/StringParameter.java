@@ -11,8 +11,7 @@ public class StringParameter extends AbstractParameter<String>{
 	
 	public StringParameter(String name, String description, boolean mandatory, String[] parameter) {
 		super(name, description, mandatory, true);
-		
-		//this.parameter = parameter;TODO
+		setInitials(parameter);
 	}
 
 	@Override

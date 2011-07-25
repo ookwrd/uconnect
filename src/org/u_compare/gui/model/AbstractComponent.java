@@ -24,6 +24,8 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();
+	private String parameterSearchStratergy = null;
+	private String parameterDefaultGroup = null;
 	private boolean unsavedChanges = false;
 	private boolean minimized = false;
 	protected LockStatusEnum lockStatus = LockStatusEnum.UNLOCKED;
@@ -160,7 +162,6 @@ public abstract class AbstractComponent implements Component {
 		if(this.copyright != null && this.copyright.equals(copyright)){
 			return;
 		}
-		
 		this.copyright = copyright;
 		notifyDistributionInformationChangedListeners();
 	}
@@ -175,10 +176,8 @@ public abstract class AbstractComponent implements Component {
 		if(this.version != null && this.version.equals(version)){
 			return;
 		}
-		
 		this.version = version;
 		notifyDistributionInformationChangedListeners();
-		
 	}
 
 	@Override
@@ -368,6 +367,34 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
+	public String getParameterSearchStratergy(){
+		return parameterSearchStratergy;
+	}
+	
+	@Override
+	public void setParameterSearchStratergy(String stratergy){
+		if(parameterSearchStratergy != null && parameterSearchStratergy.equals(stratergy)){
+			return;
+		}
+		parameterSearchStratergy = stratergy;
+		notifyParameterConfigurationChangeListeners();
+	}
+	
+	@Override
+	public String getDefaultParameterGroup(){
+		return parameterDefaultGroup;
+	}
+	
+	@Override
+	public void setDefaultParameterGroup(String defaultGroup){
+		if(parameterDefaultGroup != null && parameterDefaultGroup.equals(defaultGroup)){
+			return;
+		}
+		parameterDefaultGroup = defaultGroup;
+		notifyParameterConfigurationChangeListeners();
+	}
+	
+	@Override
 	public boolean checkUnsavedChanges(){
 		return unsavedChanges;
 	}
@@ -470,7 +497,7 @@ public abstract class AbstractComponent implements Component {
 		parameterConfigurationChangeListeners.add(listener);
 	}
 
-	protected void notifyParameterConfigurationChangeListers(){
+	protected void notifyParameterConfigurationChangeListeners(){
 		for(ParameterConfigurationChangeListener listener : parameterConfigurationChangeListeners){
 			listener.parameterConfigurationChanged(this);
 		}

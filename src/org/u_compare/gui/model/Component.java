@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.u_compare.gui.model.parameters.Parameter;
 
+import sun.security.action.PutAllAction;
+
 /**
  * Interface defining required features of model classes representing components.
  * 
@@ -245,6 +247,12 @@ public interface Component{
 	public interface LockedStatusChangeListener {
 		public void lockStatusChanged(Component component);	
 	}
+	
+	public String getParameterSearchStratergy();
+	public void setParameterSearchStratergy(String stratergy);
+	
+	public String getDefaultParameterGroup();
+	public void setDefaultParameterGroup(String defaultGroup);
 	
 	public void registerParameterConfigurationChangeListener(ParameterConfigurationChangeListener listener);
 	

@@ -19,15 +19,4 @@ public class BooleanParameter extends
 		super(name, description, mandatory, true);
 		//this.parameter = value; TODO
 	}
-
-	@Override
-	public String getParameterString() {
-		Boolean parameter = getParameter();
-		if(parameter!=null){
-			return String.valueOf(parameter);
-		}else{
-			return null;
-		}
-	}	
-
 }

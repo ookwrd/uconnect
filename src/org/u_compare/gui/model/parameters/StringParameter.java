@@ -25,14 +25,4 @@ public class StringParameter extends AbstractParameter<String>{
 		validateConstraints(input);
 		simpleSet(input);
 	}
-
-	@Override //TODO push into abstract base class.
-	public String getParameterString() {
-		String parameter = getParameter();
-		if(parameter != null){
-			return parameter;
-		}else{
-			return "";
-		}
-	}
 }

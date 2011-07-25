@@ -54,7 +54,8 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			XMLInputSource xmlIn = new XMLInputSource(
 					"src/org/u_compare/gui/model/uima/debugging/"
-					+ "BasicAEwithSingleValuedParametersAndValues.xml");
+					//+ "BasicAEwithSingleValuedParametersAndValues.xml");
+					+ "BasicAEwithSingleValuedParameterGroups.xml");
 			
 			/*AnalysisEngineDescription desc = 
 			 		UIMAFramework.getXMLParser()
@@ -155,8 +156,18 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				System.out.println("\nParameters:\n");
 				ConfigurationParameterSettings settings =
 					metaData.getConfigurationParameterSettings();
+				
+				ConfigurationParameterDeclarations declarations =
+					metaData.getConfigurationParameterDeclarations();
+				
+				System.out.println("Deafult Group name: " + declarations.getDefaultGroupName());
+				System.out.println("Search Stratergy: " + declarations.getSearchStrategy());
+				System.out.println(declarations.getConfigurationGroups());
+				System.out.println();
+				
 				for(ConfigurationParameter param :
 						metaData.getConfigurationParameterDeclarations()
+						//metaData.getConfigurationParameterDeclarations().getConfigurationGroups()[0]
 						.getConfigurationParameters()){
 					System.out.println(param.getName());
 					System.out.println(param.getDescription());
@@ -311,7 +322,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				}
 			}
 			
-			//newParameter.setSourceUrl(arg0) TODO
+			//TODO Overrides?
+			
+			//TODO do we need to set the MetadataObject source?
 			
 			if(value != null){
 				values.setParameterValue(param.getName(), value);

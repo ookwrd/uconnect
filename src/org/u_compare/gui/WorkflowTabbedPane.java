@@ -14,7 +14,7 @@ import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
-import org.u_compare.gui.model.WorkflowStatusListener;
+import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
  * Handles workflow tabs.

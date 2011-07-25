@@ -23,6 +23,9 @@ public class Workflow extends AbstractAggregateComponent {
 	
 	private ArrayList<WorkflowStatusListener> workflowStatusListeners;
 	
+	public interface WorkflowStatusListener {
+		public void workflowStatusChanged(Workflow workflow);	
+	}
 	
 	/**
 	 * Creates an empty workflow.

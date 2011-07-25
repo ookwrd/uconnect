@@ -12,8 +12,8 @@ import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.guiElements.ConfirmationButton;
 import org.u_compare.gui.guiElements.HighlightButton;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.LockedStatusChangeListener;
-import org.u_compare.gui.model.MinimizedStatusChangeListener;
+import org.u_compare.gui.model.Component.LockedStatusChangeListener;
+import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
 
 @SuppressWarnings("serial")
 public class TitleButtonPanel extends JPanel implements

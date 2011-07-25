@@ -15,8 +15,8 @@ import javax.swing.event.ListSelectionListener;
 import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.guiElements.HighlightButton;
 import org.u_compare.gui.model.AnnotationType;
-import org.u_compare.gui.model.InputOutputChangeListener;
-import org.u_compare.gui.model.LockedStatusChangeListener;
+import org.u_compare.gui.model.Component.InputOutputChangeListener;
+import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
 @SuppressWarnings("serial")
 public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {

@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.LockedStatusChangeListener;
+import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
 
 /**

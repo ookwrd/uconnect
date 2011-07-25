@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.guiElements.HighlightButton;
 import org.u_compare.gui.model.Workflow;
-import org.u_compare.gui.model.WorkflowStatusListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
+import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
  * Workflow level panel allowing the workflow to be run/stopped/paused.

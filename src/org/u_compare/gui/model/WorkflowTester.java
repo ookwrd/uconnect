@@ -7,7 +7,14 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.u_compare.gui.model.AggregateComponent.SubComponentsChangedListener;
+import org.u_compare.gui.model.Component.DescriptionChangeListener;
+import org.u_compare.gui.model.Component.InputOutputChangeListener;
+import org.u_compare.gui.model.Component.LockedStatusChangeListener;
+import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
+import org.u_compare.gui.model.Component.SavedStatusChangeListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
+import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 import org.u_compare.gui.debugging.PrivilegedAccessor;
 
 

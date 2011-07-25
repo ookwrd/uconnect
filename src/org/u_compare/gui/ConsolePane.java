@@ -13,7 +13,7 @@ import javax.swing.text.DefaultCaret;
 
 import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
-import org.u_compare.gui.model.WorkflowStatusListener;
+import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
  * Displays console output related to a given workflow.

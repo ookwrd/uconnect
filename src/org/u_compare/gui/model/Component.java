@@ -245,4 +245,10 @@ public interface Component{
 	public interface LockedStatusChangeListener {
 		public void lockStatusChanged(Component component);	
 	}
+	
+	public void registerParameterConfigurationChangeListener(ParameterConfigurationChangeListener listener);
+	
+	public interface ParameterConfigurationChangeListener{
+		public void parameterConfigurationChanged(Component component);
+	}
 }

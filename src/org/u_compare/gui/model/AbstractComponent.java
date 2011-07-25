@@ -44,6 +44,7 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<ParametersChangedListener>();
 	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
 	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
+	private ArrayList<ParameterConfigurationChangeListener> parameterConfigurationChangeListeners = new ArrayList<Component.ParameterConfigurationChangeListener>();
 	
 	public AbstractComponent(){
 
@@ -463,10 +464,16 @@ public abstract class AbstractComponent implements Component {
 		setComponentChanged();
 	}
 	
-	public void registerParameterConfigurationChangeListener(){}
-	//TODO
-	public interface ParameterStatusChangeListener{
-		
+	@Override
+	public void registerParameterConfigurationChangeListener(ParameterConfigurationChangeListener listener){
+		assert(listener != null);
+		parameterConfigurationChangeListeners.add(listener);
+	}
+
+	protected void notifyParameterConfigurationChangeListers(){
+		for(ParameterConfigurationChangeListener listener : parameterConfigurationChangeListeners){
+			listener.parameterConfigurationChanged(this);
+		}
 	}
 	
 	@Override

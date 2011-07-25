@@ -343,7 +343,6 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		}
 		
 		//TODO Overrides?
-		
 		//TODO do we need to set the MetadataObject source?
 		
 		if(value != null){

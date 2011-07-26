@@ -263,7 +263,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	protected void setupResourceMetaData(ResourceMetaData metaData) {
 		
 		//Basic MetaData
-		metaData.setName(getTitle());
+		metaData.setName(getName());
 		metaData.setDescription(getDescription());
 		metaData.setVendor(getVendor());
 		metaData.setVersion(getVersion());
@@ -427,7 +427,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	protected void extractFromResourceMetaData(ResourceMetaData metaData){
 		
 		//Basic metaData
-		setTitle(metaData.getName());
+		setName(metaData.getName());
 		setDescription(metaData.getDescription());
 		setVendor(metaData.getVendor());
 		setVersion(metaData.getVersion());

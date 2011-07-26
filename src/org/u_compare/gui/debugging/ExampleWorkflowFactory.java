@@ -39,7 +39,7 @@ public class ExampleWorkflowFactory {
 		
 		Workflow workflow = new Workflow();
 		
-		workflow.setTitle("Blank Workflow");
+		workflow.setName("Blank Workflow");
 		workflow.setDescription("As you can see this workflow is blank, "
 				+ "but think of all the wonderful possibilities");
 		
@@ -56,7 +56,7 @@ public class ExampleWorkflowFactory {
 		
 		Workflow workflow = new Workflow();
 		
-		workflow.setTitle("Simple Workflow");
+		workflow.setName("Simple Workflow");
 		workflow.setDescription("Some people might say I am simple, "
 				+ "but I am happy being who I am. Look at my 3 wonderful "
 				+ "(simple) childrem.");
@@ -65,9 +65,9 @@ public class ExampleWorkflowFactory {
 		Component component2 = new MockComponent();
 		Component component3 = new MockComponent();
 		
-		component1.setTitle("One");
-		component2.setTitle("Two");
-		component3.setTitle("Three");
+		component1.setName("One");
+		component2.setName("Two");
+		component3.setName("Three");
 		
 		component1.setDescription("Im the first and therefore the best, "
 				+ "my siblings don't realise this simple logic.");
@@ -99,7 +99,7 @@ public class ExampleWorkflowFactory {
 		
 		Workflow workflow = new Workflow();
 		
-		workflow.setTitle("Simple Workflow");
+		workflow.setName("Simple Workflow");
 		workflow.setDescription("Some people might say I am simple, "
 				+ "but I am happy being who I am. "
 				+ "Look at my 3 wonderful (simple) children.");
@@ -143,9 +143,9 @@ public class ExampleWorkflowFactory {
 		Component component2 = new MockComponent(c2params);
 		Component component3 = new MockComponent(c3params);
 		
-		component1.setTitle("One");
-		component2.setTitle("Two");
-		component3.setTitle("Three");
+		component1.setName("One");
+		component2.setName("Two");
+		component3.setName("Three");
 		
 		component1.setDescription("Im the first and therefore the best, " + 
 				"my siblings don't realise this simple logic.");
@@ -204,22 +204,22 @@ public class ExampleWorkflowFactory {
 		Component simpleb = new MockComponent(workflowParams2);
 		Component simplec = new MockComponent(workflowParams3);
 		
-		simplea.setTitle("Simple Component a");
+		simplea.setName("Simple Component a");
 		simplea.setDescription(
 				"This is a component. For some reason it is called a");
 		
-		simpleb.setTitle("Simple Component b");
+		simpleb.setName("Simple Component b");
 		simpleb.setDescription(
 				"This is a component. For some reason it is called b");
 
-		simplec.setTitle("Simple Component c");
+		simplec.setName("Simple Component c");
 		simplec.setDescription(
 				"This is a component. For some reason it is called c");
 		
 		AggregateComponent aggregate =
 			new MockAggregateComponent(workflowParams);
 		
-		aggregate.setTitle("The nasty nasty Aggregate Component");
+		aggregate.setName("The nasty nasty Aggregate Component");
 		aggregate.setDescription("Not afraid of aggregate components? "
 				+ "Well what a silly little boy you are then.");
 		
@@ -266,7 +266,7 @@ public class ExampleWorkflowFactory {
 
 		Workflow workflow = new Workflow();
 		
-		workflow.setTitle("Real UIMA Components");
+		workflow.setName("Real UIMA Components");
 		workflow.setDescription("The components in this workflow " 
 				+ "are constructed from UIMA decriptor files, "
 				+ "the workflow itself however is still assembled manually");

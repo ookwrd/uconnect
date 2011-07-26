@@ -31,7 +31,7 @@ public abstract class AbstractWhitelistBlacklistConstraint<T> extends Constraint
 			
 			if(!found){
 				throw new ConstraintFailedException(
-						"Input value does not belong "
+						"Input does not belong "
 						+ "to set of acceptable values");
 			}	
 		}

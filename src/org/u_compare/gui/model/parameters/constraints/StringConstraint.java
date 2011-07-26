@@ -1,18 +1,12 @@
 package org.u_compare.gui.model.parameters.constraints;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringConstraint extends Constraint {
+public class StringConstraint extends AbstractWhitelistBlacklistConstraint<String> {
 	
 		private int minlength = 0;
 		private int maxLength = Integer.MAX_VALUE;
-		
-		//Null corresponds to no whiteList restriction
-		private ArrayList<String> whiteList;
-		//Null corresponds to no blackList restriction
-		private ArrayList<String> blackList;
 		
 		//Null corresponds to no regex checking
 		private Pattern regex;
@@ -36,14 +30,6 @@ public class StringConstraint extends Constraint {
 		public void setLengthRange(int min, int max){
 			this.minlength = min;
 			this.maxLength = max;
-		}
-		
-		public void setWhiteList(ArrayList<String> whiteList){
-			this.whiteList = whiteList;
-		}
-		
-		public void setBlackList(ArrayList<String> blackList){
-			this.blackList = blackList;
 		}
 		
 		public void setCharacterSet(String characters) {
@@ -78,33 +64,7 @@ public class StringConstraint extends Constraint {
 						+ maxLength + " characters.");			
 			}
 			
-			if(whiteList != null){
-				boolean found = false;
-				for(String i : whiteList){
-					if (i.equals(value)) {
-						found = true;
-						break;
-					}
-				}	
-				
-				if(!found){
-					throw new ConstraintFailedException(
-							"Input string does not belong to whiteListed "
-							+ "set of acceptable values");
-				}	
-			}
-			
-			if(blackList != null){
-				
-				for(String i : blackList){
-					
-					if(i.equals(value)){
-						throw new ConstraintFailedException(
-								"Input string belongs to blackListed "
-								+ "set of unacceptable values");
-					}
-				}
-			}
+			super.validateBlacklistWhitelistConstraints(value);
 			
 			if(regex != null){
 				Matcher matcher = regex.matcher(value);

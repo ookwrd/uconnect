@@ -2,8 +2,6 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 
-import javax.imageio.spi.RegisterableService;
-
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
 

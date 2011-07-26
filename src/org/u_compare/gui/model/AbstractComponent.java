@@ -2,11 +2,8 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 
-import org.u_compare.gui.model.Component.ParameterGroupsChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
  * Abstract base class implementing much of the functionality common to all components.

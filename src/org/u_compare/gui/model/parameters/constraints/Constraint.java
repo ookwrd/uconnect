@@ -27,10 +27,12 @@ public abstract class Constraint {
 				"Single string validation not allowed by this constraint.");
 	}
 	
-	public void validate(int in) throws ConstraintFailedException{
+	public void validate(Integer in) throws ConstraintFailedException{
 		throw new IllegalArgumentException(
 				"Single int validation not allowed by this constraint.");
 	}
+	
+	
 	
 	public void validate(ArrayList<String> in)
 			throws ConstraintFailedException {

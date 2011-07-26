@@ -62,7 +62,7 @@ public class TitlePanel extends JPanel {
 		BoxLayout bl = new BoxLayout(this, BoxLayout.X_AXIS);
 		setLayout(bl);
 
-		title = component.getTitle();
+		title = component.getName();
 
 		titleLabel = new JLabel(title);
 		titleLabel.setText(title);

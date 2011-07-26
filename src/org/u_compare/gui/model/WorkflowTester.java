@@ -55,8 +55,8 @@ public class WorkflowTester{
 		assertTrue(testWorkflow.isWorkflow());
 
 		String name = "Component Name";
-		testWorkflow.setTitle(name);
-		assertTrue(testWorkflow.getTitle().equals(name));
+		testWorkflow.setName(name);
+		assertTrue(testWorkflow.getName().equals(name));
 
 		String description = "This is the components description";
 		testWorkflow.setDescription(description);
@@ -221,7 +221,7 @@ public class WorkflowTester{
 		}
 
 		public void ComponentDescriptionChanged(Component component) {
-			names.add(component.getTitle());
+			names.add(component.getName());
 			descriptions.add(component.getDescription());
 		}
 		
@@ -280,14 +280,14 @@ public class WorkflowTester{
 	@Test
 	public void testNamesAndDescriptions(){
 		
-		testWorkflow.setTitle("OriginalName");
+		testWorkflow.setName("OriginalName");
 		testWorkflow.setDescription("OriginalDescription");
 		
 		TestListener1 listener = new TestListener1(testWorkflow);
 		
 		testWorkflow.registerComponentDescriptionChangeListener(listener);
 		
-		testWorkflow.setTitle("NewName");
+		testWorkflow.setName("NewName");
 		testWorkflow.setDescription("NewDescription");
 		
 		ArrayList<String> names = listener.getNames();

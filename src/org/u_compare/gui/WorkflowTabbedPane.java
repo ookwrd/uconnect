@@ -112,7 +112,7 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 		int inserted_index = numberOfNonButtonTabs();
 		//TODO: Different mouse-over depending on if focused or not
 		// "Your current workflow" vs. "View this workflow"
-		splitPane.setName(cleanTitle(topComponent.getTitle()));
+		splitPane.setName(cleanTitle(topComponent.getName()));
 		this.add( splitPane, inserted_index);
 		// Why does the API force a fully specified tab when using insert
 		// rather than add?

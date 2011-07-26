@@ -61,7 +61,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 	public void ComponentDescriptionChanged(Component component1) {
 
 		System.out.println("Components name changed to: "
-				+ component.getTitle());
+				+ component.getName());
 		// TODO
 	}
 

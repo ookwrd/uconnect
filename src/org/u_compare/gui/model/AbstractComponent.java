@@ -17,7 +17,7 @@ public abstract class AbstractComponent implements Component {
 	private Component parentComponent;
 
 	//private (rather than protected) to ensure use of proper set methods by extending classes
-	private String title = "Unnamed";
+	private String name = "Unnamed";
 	private String implementationName = "Unknown";
 	private String description = "Undescribed";
 	private String vendor = "Unknown";
@@ -84,21 +84,21 @@ public abstract class AbstractComponent implements Component {
 	 * Returns the Name of the component.
 	 */
 	@Override
-	public String getTitle(){
-		return title;
+	public String getName(){
+		return name;
 	}
 	
 	/**
 	 * Sets the Name of the component.
 	 */
 	@Override
-	public void setTitle(String title){
+	public void setName(String title){
 		
-		if(this.title != null && this.title.equals(title)){
+		if(this.name != null && this.name.equals(title)){
 			return;
 		}
 		
-		this.title = title;
+		this.name = title;
 		notifyComponentDescriptionChangeListeners();
 	}
 	
@@ -481,6 +481,7 @@ public abstract class AbstractComponent implements Component {
 	public void registerParametersChangedListener(ParametersChangedListener listener){
 		configParameters.registerParametersChangedListener(listener);
 		//TODO register for all subgroups
+		//hmm need to move this back in here, so that the set of listeners don't change if the component groups are changed.
 	}
 	
 	@Override

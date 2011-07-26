@@ -137,7 +137,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 
 		Workflow workflow = new Workflow();
 		
-		workflow.setTitle("Untitled Workflow (Double-Click to edit)");
+		workflow.setName("Untitled Workflow (Double-Click to edit)");
 		workflow.setDescription("This is a new workflow. Double-Click here to edit its description. Duis quis arcu id enim elementum gravida quis sit amet justo. Cras non enim nec velit aliquet luctus sed faucibus arcu. Phasellus dolor quam, dapibus a consequat eget, fringilla vitae ipsum. Donec tristique elementum turpis, in pellentesque nulla viverra vitae. Curabitur eget turpis non quam auctor ornare. Aliquam tempus quam vitae lectus consectetur fringilla. Vivamus posuere pharetra elit ac interdum. Aenean vestibulum mattis justo et malesuada. Ut ultrices, nisl sit amet tempor porttitor, nulla ipsum feugiat purus, porta tincidunt sem sapien nec leo. Phasellus rhoncus elit sit amet lectus adipiscing vulputate. ");
 		
 		return workflow;

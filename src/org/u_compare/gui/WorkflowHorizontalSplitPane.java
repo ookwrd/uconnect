@@ -94,7 +94,7 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 		if(tab != null) {
 			tabPane.setTitleAt(tabPane.indexOfComponent(this),
 					(component.checkUnsavedChanges() ? "*" : "")
-					+ WorkflowTabbedPane.cleanTitle(component.getTitle()));
+					+ WorkflowTabbedPane.cleanTitle(component.getName()));
 		}
 	}
 
@@ -107,10 +107,10 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 			if(component.checkUnsavedChanges()) {
 				tabPane.setTitleAt(tabPane.indexOfComponent(this),
 						"*" +
-						WorkflowTabbedPane.cleanTitle(component.getTitle()));
+						WorkflowTabbedPane.cleanTitle(component.getName()));
 			} else {
 				tabPane.setTitleAt(tabPane.indexOfComponent(this),
-						WorkflowTabbedPane.cleanTitle(component.getTitle()));
+						WorkflowTabbedPane.cleanTitle(component.getName()));
 			}
 		}
 	}

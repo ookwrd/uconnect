@@ -73,7 +73,7 @@ public abstract class AbstractAggregateComponent extends
 		//Check subComponents contains component
 		if(!subComponents.contains(component)){
 			if(Debug.DEBUGLEVEL >= Debug.ERROR){
-				Debug.out.println("Warning: Abstract reorderSubComponent method called on " + getTitle() + " when component to be added is not in subComponents list.");
+				Debug.out.println("Warning: Abstract reorderSubComponent method called on " + getName() + " when component to be added is not in subComponents list.");
 			}
 			return;
 		}

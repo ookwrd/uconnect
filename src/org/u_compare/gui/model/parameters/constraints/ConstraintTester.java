@@ -78,10 +78,44 @@ public class ConstraintTester {
 	}
 	
 	@Test(expected=ConstraintFailedException.class)
-		public void integerBlackListTest1() throws ConstraintFailedException{	
+	public void integerBlackListTest1() throws ConstraintFailedException{	
 		IntegerConstraint constraint = new IntegerConstraint();
 		constraint.setBlackList(new ArrayList<Integer>(Arrays.asList(1,2,3)));
 		constraint.validate("2");	
+	}
+	
+	@Test(expected=ConstraintFailedException.class)
+	public void floatTest() throws ConstraintFailedException{
+		FloatConstraint constraint = new FloatConstraint();
+		constraint.validate("asdf");
+	}
+	
+	@Test(expected=ConstraintFailedException.class)
+	public void floatBlackListTest() throws ConstraintFailedException{
+		FloatConstraint constraint = new FloatConstraint();
+		constraint.setBlackList(new ArrayList<Float>(Arrays.asList(new Float(0.1),new Float(0.2))));
+		constraint.validate(new Float(0.2));
+	}
+	
+	@Test
+	public void floatBlackListTest1() throws ConstraintFailedException{
+		FloatConstraint constraint = new FloatConstraint();
+		constraint.setBlackList(new ArrayList<Float>(Arrays.asList(new Float(0.1),new Float(0.2))));
+		constraint.validate(new Float(0.3));
+	}
+	
+	@Test
+	public void floatWhiteListTest() throws ConstraintFailedException{
+		FloatConstraint constraint = new FloatConstraint();
+		constraint.setWhiteList(new ArrayList<Float>(Arrays.asList(new Float(0.1),new Float(0.2))));
+		constraint.validate(new Float(0.2));
+	}
+	
+	@Test(expected=ConstraintFailedException.class)
+	public void floatWhiteListTest1() throws ConstraintFailedException{
+		FloatConstraint constraint = new FloatConstraint();
+		constraint.setWhiteList(new ArrayList<Float>(Arrays.asList(new Float(0.1),new Float(0.2))));
+		constraint.validate(new Float(0.3));
 	}
 	
 	@Test 

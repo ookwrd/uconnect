@@ -31,6 +31,7 @@ import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
+import org.u_compare.gui.model.parameters.ParameterGroup;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.xml.sax.SAXException;
 
@@ -279,32 +280,63 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	}
 	
 	protected void setupConfigurationParameterDeclarations(
-			ConfigurationParameterDeclarations settings,
-			ConfigurationParameterSettings values){
+			ConfigurationParameterDeclarations declarations,
+			ConfigurationParameterSettings settings){
 		
+		declarations.setSearchStrategy(getParameterSearchStratergy());
+		declarations.setDefaultGroupName(getDefaultParameterGroup());
+		
+		//Ungrouped Parameters
 		for(Parameter param : getConfigurationParameters()){
-			constructConfigurationParameter(param, settings, values);
+		
+			ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
+			Object value = constructConfigurationParameter(param, newParam);
+			
+			if(value != null){
+				settings.setParameterValue(param.getName(), value);
+			}
+
+			declarations.addConfigurationParameter(newParam);
 		}
 		
-		settings.setSearchStrategy(getParameterSearchStratergy());
-		settings.setDefaultGroupName(getDefaultParameterGroup());
+		//Configuration Groups
+		ArrayList<ConfigurationGroup> groups = new ArrayList<ConfigurationGroup>();
+		for(ParameterGroup group : getParameterGroups()){
+			
+			ConfigurationGroup configGroup = UIMAFramework.getResourceSpecifierFactory().createConfigurationGroup();
+			configGroup.setNames(group.getNames());
+			
+			ArrayList<ConfigurationParameter> parameters = new ArrayList<ConfigurationParameter>();
+			for(Parameter param : group.getConfigurationParameters()){
+				
+				ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
+				Object value = constructConfigurationParameter(param, newParam);
+				
+				if(value != null){
+					//TODO do i need to do this for all group names??
+					settings.setParameterValue(group.getNames()[0]/*just the first*/,param.getName(), value);
+				}
+				
+				parameters.add(newParam);
+			}
+			configGroup.setConfigurationParameters(parameters.toArray(new ConfigurationParameter[parameters.size()]));
+			
+			groups.add(configGroup);
+		}
+		declarations.setConfigurationGroups(groups.toArray(new ConfigurationGroup[groups.size()]));
+		
 		
 	}
 	
-	public void constructConfigurationParameter(Parameter param, 
-			ConfigurationParameterDeclarations settings,
-			ConfigurationParameterSettings values){
+	public Object constructConfigurationParameter(Parameter param,
+			ConfigurationParameter newParameter){
 		
-		ConfigurationParameter newParameter =
-			UIMAFramework.getResourceSpecifierFactory()
-			.createConfigurationParameter();
+		Object value = null;	
 		
 		newParameter.setName(param.getName());
 		newParameter.setDescription(param.getDescription());
 		newParameter.setMandatory(param.isMandatory());
 		newParameter.setMultiValued(param.isMultivalued());
-		
-		Object value = null;
 		
 		if(!param.isMultivalued()){
 			//Single valued parameters
@@ -345,11 +377,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		//TODO Overrides?
 		//TODO do we need to set the MetadataObject source?
 		
-		if(value != null){
-			values.setParameterValue(param.getName(), value);
-		}
-
-		settings.addConfigurationParameter(newParameter);
+		return value;
 	}
 	
 	//TODO Need factory here? Yes, how do i handle primitive vs non-primitive
@@ -405,8 +433,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		setVersion(metaData.getVersion());
 		setCopyright(metaData.getCopyright());
 		
-		//Parameters
-		ArrayList<Parameter> parameters = new ArrayList<Parameter>(); 
+		//Parameters TODO extract to method
 		ConfigurationParameterSettings settings =
 			metaData.getConfigurationParameterSettings();
 		ConfigurationParameterDeclarations declarations =
@@ -415,16 +442,34 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		setParameterSearchStratergy(declarations.getSearchStrategy());
 		setDefaultParameterGroup(declarations.getDefaultGroupName());
 		
+		ArrayList<Parameter> parameters = new ArrayList<Parameter>(); 
 		for(ConfigurationParameter param :
 			declarations.getConfigurationParameters()){
 
 			Parameter newParameter = AbstractParameter.constructParameter(
 					param, settings.getParameterValue(param.getName()));
 			parameters.add(newParameter);
-			
 		}
-		//TODO make all the parameter type constructors work
 		setConfigurationParameters(parameters);
+		
+		//Parameter Groups
+		ArrayList<ParameterGroup> groups = new ArrayList<ParameterGroup>();
+		for(ConfigurationGroup group : declarations.getConfigurationGroups()){
+			ParameterGroup parameterGroup = new ParameterGroup(this);
+			parameterGroup.setNames(group.getNames());
+			
+			ArrayList<Parameter> groupParameters = new ArrayList<Parameter>();
+			for(ConfigurationParameter param : group.getConfigurationParameters()){
+				//TODO how do I handle multiple group names??
+				Object paramValue = settings.getParameterValue(group.getNames()[0], param.getName());
+				Parameter newParameter = AbstractParameter.constructParameter(param, paramValue);
+				groupParameters.add(newParameter);
+			}
+			parameterGroup.setConfigurationParameters(groupParameters);
+			
+			groups.add(parameterGroup);
+		}
+		setParameterGroups(groups);
 		
 	}
 	

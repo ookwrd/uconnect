@@ -36,8 +36,7 @@ public class IntegerConstraint extends AbstractWhitelistBlacklistConstraint<Inte
 		try{
 			value = Integer.parseInt(in);
 		}catch(NumberFormatException ex){
-			throw new ConstraintFailedException("Input not an Integer.");
-			//TODO wrap the number format exception
+			throw new ConstraintFailedException("Input not an Integer.", ex);
 		}
 		validate(value);
 	}
@@ -45,12 +44,12 @@ public class IntegerConstraint extends AbstractWhitelistBlacklistConstraint<Inte
 	@Override
 	public void validate(Integer value) throws ConstraintFailedException{		
 		if(value < min){
-			throw new ConstraintFailedException("Input value to low. "
+			throw new ConstraintFailedException("Input value too low. "
 					+ "Please input a value of " + min + " or higher.");			
 		}
 		
 		if(value > max){
-			throw new ConstraintFailedException("Input value to high. "
+			throw new ConstraintFailedException("Input value too high. "
 					+ "Please input a value of " + max + " or lower.");			
 		}
 

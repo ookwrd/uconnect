@@ -67,6 +67,16 @@ public class UIMAComponentTester {
 	}
 	
 	@Test
+	public void inOutTestBasicParameterGroupsWithMultipleNames() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSingleValuedParameterGroupsWithMultipleNames.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicParameterGroupsWithMultipleNamesAndCommonParams() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSingleValuedParameterGroupsWithMultipleNamesAndCommonParams.xml");
+	}
+	
+	@Test
 	public void inOutTestBasicSimpleInputsAndOutputs() throws InvalidXMLException, IOException {
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSimpleInputsAndOutputs.xml");
 	}

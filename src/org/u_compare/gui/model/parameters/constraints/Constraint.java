@@ -22,17 +22,20 @@ public abstract class Constraint {
 	 * @param in
 	 * @throws InvalidInputException
 	 */
-	public void validate(String in) throws ConstraintFailedException{
+	public void validate(String in) throws ConstraintFailedException {
 		throw new IllegalArgumentException(
 				"Single string validation not allowed by this constraint.");
 	}
 	
-	public void validate(Integer in) throws ConstraintFailedException{
+	public void validate(Integer in) throws ConstraintFailedException {
 		throw new IllegalArgumentException(
 				"Single int validation not allowed by this constraint.");
 	}
 	
-	
+	public void validate(Float in) throws ConstraintFailedException {
+		throw new IllegalArgumentException(
+			"Single float validation not allowed by this constraint.");
+	}
 	
 	public void validate(ArrayList<String> in)
 			throws ConstraintFailedException {

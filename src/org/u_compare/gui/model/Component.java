@@ -124,17 +124,17 @@ public interface Component{
 	 * 
 	 * @param inputType	Type to be added.
 	 */
-	public void addInputType(AnnotationType inputType);
+	public void addInputType(AnnotationTypeOrFeature inputType);
 	
-	public void removeInputType(AnnotationType inputType);
+	public void removeInputType(AnnotationTypeOrFeature inputType);
 	
-	public void setInputTypes(ArrayList<AnnotationType> inputTypes);
+	public void setInputTypes(ArrayList<AnnotationTypeOrFeature> inputTypes);
 	
-	public void addOutputType(AnnotationType outputType);
+	public void addOutputType(AnnotationTypeOrFeature outputType);
 	
-	public void removeOutputType(AnnotationType outputType);
+	public void removeOutputType(AnnotationTypeOrFeature outputType);
 	
-	public void setOutputTypes(ArrayList<AnnotationType> outputTypes);
+	public void setOutputTypes(ArrayList<AnnotationTypeOrFeature> outputTypes);
 	
 	/**
 	 * Gets list of this components output types.
@@ -143,7 +143,7 @@ public interface Component{
 	 * 
 	 * @return	List of output types.
 	 */
-	public ArrayList<AnnotationType> getOutputTypes();
+	public ArrayList<AnnotationTypeOrFeature> getOutputTypes();
 
 	/**
 	 * Gets list of this components input types.
@@ -152,7 +152,7 @@ public interface Component{
 	 * 
 	 * @return	List of this components input types.
 	 */
-	public ArrayList<AnnotationType> getInputTypes();
+	public ArrayList<AnnotationTypeOrFeature> getInputTypes();
 	
 	/**
 	 * Register listener to be notified of changes to Input and Output lists.

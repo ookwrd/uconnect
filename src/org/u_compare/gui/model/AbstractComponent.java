@@ -23,8 +23,8 @@ public abstract class AbstractComponent implements Component {
 	private String vendor = "Unknown";
 	private String version = "Unspecified";
 	private String copyright = "Copyright information unknown";
-	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
-	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
+	private ArrayList<AnnotationTypeOrFeature> inputTypes = new ArrayList<AnnotationTypeOrFeature>();
+	private ArrayList<AnnotationTypeOrFeature> outputTypes = new ArrayList<AnnotationTypeOrFeature>();
 	private ParameterGroup basicParameters = new ParameterGroup(this);
 	private ParameterGroup commonParameters = new ParameterGroup(this);
 	private ArrayList<ParameterGroup> parameterGroups = new ArrayList<ParameterGroup>();
@@ -195,12 +195,12 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public ArrayList<AnnotationType> getInputTypes(){
+	public ArrayList<AnnotationTypeOrFeature> getInputTypes(){
 		return inputTypes;
 	}
 	
 	@Override
-	public void addInputType(AnnotationType inputType){
+	public void addInputType(AnnotationTypeOrFeature inputType){
 		
 		if(inputTypes.contains(inputType)){
 			return;
@@ -212,7 +212,7 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public void removeInputType(AnnotationType inputType){
+	public void removeInputType(AnnotationTypeOrFeature inputType){
 		
 		if(!inputTypes.contains(inputType)){
 			return;
@@ -224,25 +224,25 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public void setInputTypes(ArrayList<AnnotationType> newInputTypes){
+	public void setInputTypes(ArrayList<AnnotationTypeOrFeature> newInputTypes){
 		
 		if(inputTypes.containsAll(newInputTypes) && inputTypes.size() == newInputTypes.size()){
 			return;
 		}
 		
-		inputTypes = new ArrayList<AnnotationType>();
+		inputTypes = new ArrayList<AnnotationTypeOrFeature>();
 		inputTypes.addAll(newInputTypes);
 		notifyInputOutputChangeListeners();
 		
 	}
 	
 	@Override
-	public ArrayList<AnnotationType> getOutputTypes(){
+	public ArrayList<AnnotationTypeOrFeature> getOutputTypes(){
 		return outputTypes;
 	}
 	
 	@Override
-	public void addOutputType(AnnotationType outputType){
+	public void addOutputType(AnnotationTypeOrFeature outputType){
 		
 		if(outputTypes.contains(outputType)){
 			return;
@@ -254,7 +254,7 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public void removeOutputType(AnnotationType outputType){
+	public void removeOutputType(AnnotationTypeOrFeature outputType){
 		
 		if(!outputTypes.contains(outputType)){
 			return;
@@ -266,13 +266,13 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public void setOutputTypes(ArrayList<AnnotationType> newOutputTypes){
+	public void setOutputTypes(ArrayList<AnnotationTypeOrFeature> newOutputTypes){
 		
 		if(outputTypes.containsAll(newOutputTypes) && newOutputTypes.size() == outputTypes.size()){//Only works because its a set.
 			return;
 		}
 		
-		outputTypes = new ArrayList<AnnotationType>();
+		outputTypes = new ArrayList<AnnotationTypeOrFeature>();
 		outputTypes.addAll(newOutputTypes);
 		notifyInputOutputChangeListeners();	
 	}

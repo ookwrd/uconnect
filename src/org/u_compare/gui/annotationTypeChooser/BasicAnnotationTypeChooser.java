@@ -2,7 +2,7 @@ package org.u_compare.gui.annotationTypeChooser;
 
 import javax.swing.JOptionPane;
 
-import org.u_compare.gui.model.AnnotationType;
+import org.u_compare.gui.model.AnnotationTypeOrFeature;
 
 /**
  * Basic AnnotationTypeChooser for testing purposes. Should be replaced shortly.
@@ -13,11 +13,11 @@ import org.u_compare.gui.model.AnnotationType;
 public class BasicAnnotationTypeChooser implements AnnotationTypeChooser {
 
 	@Override
-	public AnnotationType getNewAnnotation() {
+	public AnnotationTypeOrFeature getNewAnnotation() {
 		
 		String typeName = JOptionPane.showInputDialog("Please enter the type name to add:");
 		
-		return new AnnotationType(typeName);
+		return new AnnotationTypeOrFeature(typeName);
 	}
 
 }

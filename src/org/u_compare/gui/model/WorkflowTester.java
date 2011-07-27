@@ -201,8 +201,8 @@ public class WorkflowTester{
 		private ArrayList<String> descriptions= new ArrayList<String>();
 		private ArrayList<Boolean> saves = new ArrayList<Boolean>();
 		
-		private ArrayList<ArrayList<AnnotationType>> inputs = new ArrayList<ArrayList<AnnotationType>>();
-		private ArrayList<ArrayList<AnnotationType>> outputs = new ArrayList<ArrayList<AnnotationType>>();
+		private ArrayList<ArrayList<AnnotationTypeOrFeature>> inputs = new ArrayList<ArrayList<AnnotationTypeOrFeature>>();
+		private ArrayList<ArrayList<AnnotationTypeOrFeature>> outputs = new ArrayList<ArrayList<AnnotationTypeOrFeature>>();
 		
 		private ArrayList<ArrayList<Component>> subComponents = new ArrayList<ArrayList<Component>>();
 		
@@ -240,12 +240,12 @@ public class WorkflowTester{
 			
 		}
 		
-		public ArrayList<ArrayList<AnnotationType>> getInputs(){
+		public ArrayList<ArrayList<AnnotationTypeOrFeature>> getInputs(){
 			
 			return inputs;
 		}
 		
-		public ArrayList<ArrayList<AnnotationType>> getOutputs(){
+		public ArrayList<ArrayList<AnnotationTypeOrFeature>> getOutputs(){
 			return outputs;
 		}
 
@@ -306,12 +306,12 @@ public class WorkflowTester{
 		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.registerInputOutputChangeListener(listener);
 		
-		ArrayList<AnnotationType> input = new ArrayList<AnnotationType>();
+		ArrayList<AnnotationTypeOrFeature> input = new ArrayList<AnnotationTypeOrFeature>();
 		
-		AnnotationType type1 = new AnnotationType("type1");
+		AnnotationTypeOrFeature type1 = new AnnotationTypeOrFeature("type1");
 		
 		input.add(type1);
-		input.add(new AnnotationType("type2"));
+		input.add(new AnnotationTypeOrFeature("type2"));
 		testWorkflow.setInputTypes(input);
 		
 		assertTrue(listener.getInputs().size() == 1);
@@ -320,7 +320,7 @@ public class WorkflowTester{
 		assertTrue(listener.getOutputs().get(0).size() == 0);
 		assertTrue(listener.getInputs().get(0).contains(type1));
 		
-		AnnotationType type3 = new AnnotationType("Type3");
+		AnnotationTypeOrFeature type3 = new AnnotationTypeOrFeature("Type3");
 		testWorkflow.addOutputType(type3);
 		
 		assertTrue(listener.getInputs().size() == 2);
@@ -345,15 +345,15 @@ public class WorkflowTester{
 		TestListener1 listener = new TestListener1(testWorkflow);
 		testWorkflow.registerInputOutputChangeListener(listener);
 		
-		ArrayList<AnnotationType> input = new ArrayList<AnnotationType>();
+		ArrayList<AnnotationTypeOrFeature> input = new ArrayList<AnnotationTypeOrFeature>();
 		
-		AnnotationType type1 = new AnnotationType("type1");
+		AnnotationTypeOrFeature type1 = new AnnotationTypeOrFeature("type1");
 		
 		input.add(type1);
-		input.add(new AnnotationType("type2"));
+		input.add(new AnnotationTypeOrFeature("type2"));
 		testWorkflow.setInputTypes(input);
 		
-		testWorkflow.removeInputType(new AnnotationType("Not Real"));
+		testWorkflow.removeInputType(new AnnotationTypeOrFeature("Not Real"));
 		
 		assertTrue(listener.getInputs().size() == 1);
 		assertTrue(listener.getOutputs().size() == 1);

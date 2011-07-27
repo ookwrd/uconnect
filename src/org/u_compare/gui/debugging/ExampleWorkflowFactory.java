@@ -2,7 +2,7 @@ package org.u_compare.gui.debugging;
 
 import java.util.ArrayList;
 
-import org.u_compare.gui.model.AnnotationType;
+import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.MockAggregateComponent;
 import org.u_compare.gui.model.MockComponent;
 import org.u_compare.gui.model.AggregateComponent;
@@ -75,11 +75,11 @@ public class ExampleWorkflowFactory {
 		component2.setDescription("Lucky number 3! wait what? 7? " +
 				"Thats not even a number!");
 		
-		component1.addInputType(new AnnotationType("input1"));
-		component1.addInputType(new AnnotationType("input2"));
-		component1.addInputType(new AnnotationType("input3"));
+		component1.addInputType(new AnnotationTypeOrFeature("input1"));
+		component1.addInputType(new AnnotationTypeOrFeature("input2"));
+		component1.addInputType(new AnnotationTypeOrFeature("input3"));
 		
-		component1.addOutputType(new AnnotationType("output1"));
+		component1.addOutputType(new AnnotationTypeOrFeature("output1"));
 		
 		
 		workflow.addSubComponent(component1);
@@ -153,11 +153,11 @@ public class ExampleWorkflowFactory {
 		component2.setDescription(
 				"Lucky number 3! wait what? 7? Thats not even a number!");
 		
-		component1.addInputType(new AnnotationType("input1"));
-		component1.addInputType(new AnnotationType("input2"));
-		component1.addInputType(new AnnotationType("input3"));
+		component1.addInputType(new AnnotationTypeOrFeature("input1"));
+		component1.addInputType(new AnnotationTypeOrFeature("input2"));
+		component1.addInputType(new AnnotationTypeOrFeature("input3"));
 		
-		component1.addOutputType(new AnnotationType("output1"));
+		component1.addOutputType(new AnnotationTypeOrFeature("output1"));
 		
 		workflow.addSubComponent(component1);
 		workflow.addSubComponent(component2);

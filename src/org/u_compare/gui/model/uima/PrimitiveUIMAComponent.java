@@ -286,17 +286,28 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		declarations.setSearchStrategy(getParameterSearchStratergy());
 		declarations.setDefaultGroupName(getDefaultParameterGroup());
 		
-		//Ungrouped Parameters
+		//Basic Parameters
 		for(Parameter param : getConfigurationParameters()){
 		
 			ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
 			Object value = constructConfigurationParameter(param, newParam);
-			
 			if(value != null){
 				settings.setParameterValue(param.getName(), value);
 			}
 
 			declarations.addConfigurationParameter(newParam);
+		}
+		
+		//Common Parameters
+		for(Parameter param : getCommonParameters()){
+			
+			ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
+			Object value = constructConfigurationParameter(param, newParam);
+			if(value != null){
+				settings.setParameterValue(param.getName(), value);
+			}
+
+			declarations.addCommonParameter(newParam);
 		}
 		
 		//Configuration Groups
@@ -442,15 +453,25 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		setParameterSearchStratergy(declarations.getSearchStrategy());
 		setDefaultParameterGroup(declarations.getDefaultGroupName());
 		
+		//Basic Parameters
 		ArrayList<Parameter> parameters = new ArrayList<Parameter>(); 
 		for(ConfigurationParameter param :
 			declarations.getConfigurationParameters()){
-
 			Parameter newParameter = AbstractParameter.constructParameter(
 					param, settings.getParameterValue(param.getName()));
 			parameters.add(newParameter);
 		}
 		setConfigurationParameters(parameters);
+		
+		//Common Parameters
+		parameters = new ArrayList<Parameter>(); 
+		for(ConfigurationParameter param :
+			declarations.getCommonParameters()){
+			Parameter newParameter = AbstractParameter.constructParameter(
+					param, settings.getParameterValue(param.getName()));
+			parameters.add(newParameter);
+		}
+		setCommonParameters(parameters);
 		
 		//Parameter Groups
 		ArrayList<ParameterGroup> groups = new ArrayList<ParameterGroup>();

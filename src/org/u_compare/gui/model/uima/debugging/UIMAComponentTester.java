@@ -125,6 +125,9 @@ public class UIMAComponentTester {
 	 * Performs a test to ensure the XML produced from loading a XMLDescriptor into the model and then
 	 * extracting it again matches the original XML.
 	 * 
+	 * Currently uses string matching to determine if a correct match is produced. This will sometimes 
+	 * produced false negatives. Should be replaced with an XML comparator TODO
+	 * 
 	 * @param location The location of the XMLDescriptor to test.
 	 * @throws IOException
 	 * @throws InvalidXMLException

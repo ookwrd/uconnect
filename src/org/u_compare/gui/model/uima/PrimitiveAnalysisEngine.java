@@ -77,6 +77,7 @@ public class PrimitiveAnalysisEngine extends AbstractComponent {
 				System.out.println(metaData.getVendor());
 				System.out.println(metaData.getVersion());
 				System.out.println(metaData.getCopyright());
+				metaData.getFlowConstraints();
 				
 				System.out.println("Primitive: " + desc.isPrimitive());
 				System.out.println("Implementation Name: "

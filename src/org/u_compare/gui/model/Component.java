@@ -224,6 +224,9 @@ public interface Component{
 	 */
 	public void setConfigurationParameters(ArrayList<Parameter> params);
 	
+	public ArrayList<Parameter> getCommonParameters();
+	public void setCommonParameters(ArrayList<Parameter> params);
+	
 	/**
 	 * Register listener to be notified when the parameter list of this component is altered.
 	 * 

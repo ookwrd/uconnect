@@ -17,6 +17,8 @@ import org.xml.sax.SAXException;
 
 public class UIMAComponentTester {
 
+	public static boolean[] flags = new boolean[] {false,false};
+	
 	@Before
 	public void setUp(){
 	}
@@ -34,6 +36,11 @@ public class UIMAComponentTester {
 	@Test
 	public void inOutTestBasic() throws IOException, InvalidXMLException{
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAE.xml");
+	}
+	
+	@Test
+	public void inOutTestBasic1() throws IOException, InvalidXMLException{
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAE1.xml");
 	}
 	
 	@Test
@@ -119,6 +126,16 @@ public class UIMAComponentTester {
 	@Test
 	public void inOutTestEverythingMinusAggregation() throws InvalidXMLException, IOException {
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEEverythingMinusAggregate.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicAggregation() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/AggregateAE.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicAggregationWithChildren() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/AggregateAEWithChildren.xml");
 	}
 	
 	/**

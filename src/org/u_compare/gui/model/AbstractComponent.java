@@ -25,7 +25,8 @@ public abstract class AbstractComponent implements Component {
 	private String copyright = "Copyright information unknown";
 	private ArrayList<AnnotationType> inputTypes = new ArrayList<AnnotationType>();
 	private ArrayList<AnnotationType> outputTypes = new ArrayList<AnnotationType>();
-	private ParameterGroup configParameters = new ParameterGroup(this);
+	private ParameterGroup basicParameters = new ParameterGroup(this);
+	private ParameterGroup commonParameters = new ParameterGroup(this);
 	private ArrayList<ParameterGroup> parameterGroups = new ArrayList<ParameterGroup>();
 	private String parameterSearchStratergy = null;
 	private String parameterDefaultGroup = null;
@@ -348,12 +349,22 @@ public abstract class AbstractComponent implements Component {
 	
 	@Override
 	public ArrayList<Parameter> getConfigurationParameters(){
-		return configParameters.getConfigurationParameters();
+		return basicParameters.getConfigurationParameters();
 	}
 	
 	@Override
 	public void setConfigurationParameters(ArrayList<Parameter> params){
-		configParameters.setConfigurationParameters(params);
+		basicParameters.setConfigurationParameters(params);
+	}
+	
+	@Override
+	public ArrayList<Parameter> getCommonParameters(){
+		return commonParameters.getConfigurationParameters();
+	}
+	
+	@Override
+	public void setCommonParameters(ArrayList<Parameter> params){
+		commonParameters.setConfigurationParameters(params);
 	}
 	
 	@Override
@@ -479,7 +490,8 @@ public abstract class AbstractComponent implements Component {
 	
 	@Override 
 	public void registerParametersChangedListener(ParametersChangedListener listener){
-		configParameters.registerParametersChangedListener(listener);
+		basicParameters.registerParametersChangedListener(listener);
+		//TODO common parameters
 		//TODO register for all subgroups
 		//hmm need to move this back in here, so that the set of listeners don't change if the component groups are changed.
 	}

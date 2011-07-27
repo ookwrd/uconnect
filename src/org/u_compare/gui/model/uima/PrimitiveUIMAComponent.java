@@ -18,7 +18,6 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.u_compare.gui.model.AbstractComponent;
-import org.u_compare.gui.model.Component;
 import org.xml.sax.SAXException;
 
 public class PrimitiveUIMAComponent extends AbstractComponent {
@@ -207,7 +206,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	
 	//TODO Need factory here? Yes, how do i handle primitive vs non-primitive
 	
-	public PrimitiveUIMAComponent(String descriptorLocation)
+	/*public PrimitiveUIMAComponent(String descriptorLocation)
 			throws IOException, InvalidXMLException {
 		this(new XMLInputSource(descriptorLocation));
 	}
@@ -222,6 +221,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			
 			AnalysisEngineDescription desc =
 				(AnalysisEngineDescription)resourceSpecifier;			
+			
 			extractFromProcessingResouceMetaData(
 					desc.getAnalysisEngineMetaData());
 			
@@ -233,12 +233,15 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			e.printStackTrace();
 		}
 		
-	}
-
+	}*/
 	
-	public static Component constructUIMAComponent(){
-		//TODO needed as there are multiple kinds
-		return null;
+	public PrimitiveUIMAComponent(AnalysisEngineDescription desc){
+		extractFromProcessingResouceMetaData(
+				desc.getAnalysisEngineMetaData());
+		
+		setImplementationName(desc.getImplementationName());
+		resourceManagerConfiguration =
+			desc.getResourceManagerConfiguration();
 	}
 	
 	public static void main(String[] args){

@@ -2,6 +2,7 @@ package org.u_compare.gui.debugging;
 
 import java.util.ArrayList;
 
+import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.MockAggregateComponent;
 import org.u_compare.gui.model.MockComponent;
@@ -271,7 +272,7 @@ public class ExampleWorkflowFactory {
 				+ "are constructed from UIMA decriptor files, "
 				+ "the workflow itself however is still assembled manually");
 		try{
-			PrimitiveUIMAComponent real1 = new PrimitiveUIMAComponent(
+			Component real1 = AbstractComponent.constructComponentFromXML(
 					"src/org/u_compare/gui/model/uima/debugging/"
 					+ "BasicAEwithSingleValuedParametersAndValues.xml");
 			workflow.addSubComponent(real1);
@@ -294,7 +295,7 @@ public class ExampleWorkflowFactory {
 				+ "are constructed from UIMA decriptor files, "
 				+ "the workflow itself however is still assembled manually");
 		try{
-			PrimitiveUIMAComponent real1 = new PrimitiveUIMAComponent(
+			Component real1 = AbstractComponent.constructComponentFromXML(
 					"src/org/u_compare/gui/model/uima/debugging/"
 					+ "BasicAEwithSimpleInputsAndOutputsIncludingFeatures.xml");
 			workflow.addSubComponent(real1);

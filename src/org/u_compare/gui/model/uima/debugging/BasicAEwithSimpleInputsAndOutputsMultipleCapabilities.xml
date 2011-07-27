@@ -25,6 +25,15 @@
         </outputs>
         <languagesSupported/>
       </capability>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">uima.cas.AnnotationBase</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">uima.tcas.Annotation</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
     </capabilities>
     <operationalProperties>
       <modifiesCas>true</modifiesCas>

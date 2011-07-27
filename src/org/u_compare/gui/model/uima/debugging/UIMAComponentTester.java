@@ -82,6 +82,26 @@ public class UIMAComponentTester {
 	}
 	
 	@Test
+	public void inOutTestBasicSimpleInputsAndOutputsIncludingFeatures() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSimpleInputsAndOutputsIncludingFeatures.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicSimpleInputsAndOutputsAndLanguage() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSimpleInputsAndOutputsLanguage.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicSimpleInputsAndOutputsSofas() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSimpleInputsAndOutputsSofas.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicSimpleInputsAndOutputsCapabilities() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSimpleInputsAndOutputsMultipleCapabilities.xml");
+	}
+	
+	@Test
 	public void inOutTestBasicTypeSystem() throws InvalidXMLException, IOException {
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithTypeSystem.xml");
 	}

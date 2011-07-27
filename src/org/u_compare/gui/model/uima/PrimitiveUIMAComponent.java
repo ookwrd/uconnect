@@ -37,8 +37,7 @@ import org.xml.sax.SAXException;
 
 public class PrimitiveUIMAComponent extends AbstractComponent {
 
-	
-	//TODO move these to the model
+	//TODO move some of these to the model
 	private TypeSystemDescription typeSystemDescription;
 	private TypePriorities typePriorities;
 	private FsIndexCollection fsIndexCollection;
@@ -57,8 +56,10 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			XMLInputSource xmlIn = new XMLInputSource(
 					"src/org/u_compare/gui/model/uima/debugging/"
 					//+ "BasicAEwithSingleValuedParametersAndValues.xml");
-					+ "BasicAEwithSingleValuedParameterGroupsAndValues.xml");
+					//+ "BasicAEwithSingleValuedParameterGroupsAndValues.xml");
+					+ "BasicAEwithSimpleInputsAndOutputsIncludingFeatures.xml");
 			
+					
 			/*AnalysisEngineDescription desc = 
 			 		UIMAFramework.getXMLParser()
 			 		.parseAnalysisEngineDescription(xmlIn);
@@ -123,6 +124,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 					}
 				}
 				
+				System.out.println();
+				System.out.println("Type system");
+				
 				TypeSystemDescription typeSystemDescription =
 					metaData.getTypeSystem();
 				
@@ -141,12 +145,15 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				System.out.println("\nInputs & Outputs:\n");
 				 //What exactly are the capability sets for? based on languages?
 				for(Capability capability: metaData.getCapabilities() ){
-					System.out.println(capability.getDescription());
+					System.out.println(capability.getDescription());//TODO how the hell do I set a capability in the XML editor description?
 					System.out.println("Inputs:");
+					
 					for(TypeOrFeature torf : capability.getInputs()){
 						System.out.println(torf.getName());
 						System.out.println(torf.isType());
+						System.out.println();
 					}
+					
 					System.out.println("Outputs:");
 					for(TypeOrFeature torf : capability.getOutputs()){
 						System.out.println(torf.getName());
@@ -164,8 +171,9 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				
 				System.out.println("Deafult Group name: " + declarations.getDefaultGroupName());
 				System.out.println("Search Stratergy: " + declarations.getSearchStrategy());
-				ConfigurationGroup group = declarations.getConfigurationGroups()[0];
-				if(group != null){
+				ConfigurationGroup[] groups = declarations.getConfigurationGroups();
+				if(groups != null && groups.length != 0){
+					ConfigurationGroup group = groups[0];
 					System.out.println("Group names: " + group.getNames());
 					for(ConfigurationParameter parameter : group.getConfigurationParameters()){
 						System.out.println("Name: " + parameter.getName());
@@ -204,6 +212,10 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 				//TODO
 				//Metadata fields are all setable...
 				
+				//Capabilities
+				for(Capability capability : metaData.getCapabilities()){
+					capability.getInputs();
+				}
 				
 				//metaData.buildFrom....
 				
@@ -274,12 +286,12 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 			metaData.getConfigurationParameterDeclarations();
 		ConfigurationParameterSettings values = 
 			metaData.getConfigurationParameterSettings();
-		setupConfigurationParameterDeclarations(settings, values);
+		setupConfigurationParameters(settings, values);
 		
 		//TODO
 	}
 	
-	protected void setupConfigurationParameterDeclarations(
+	protected void setupConfigurationParameters(
 			ConfigurationParameterDeclarations declarations,
 			ConfigurationParameterSettings settings){
 		
@@ -288,7 +300,6 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 		//Basic Parameters
 		for(Parameter param : getConfigurationParameters()){
-		
 			ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
 			Object value = constructConfigurationParameter(param, newParam);
 			if(value != null){
@@ -300,7 +311,6 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 		//Common Parameters
 		for(Parameter param : getCommonParameters()){
-			
 			ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
 			Object value = constructConfigurationParameter(param, newParam);
 			if(value != null){
@@ -313,33 +323,35 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		//Configuration Groups
 		ArrayList<ConfigurationGroup> groups = new ArrayList<ConfigurationGroup>();
 		for(ParameterGroup group : getParameterGroups()){
-			
 			ConfigurationGroup configGroup = UIMAFramework.getResourceSpecifierFactory().createConfigurationGroup();
 			configGroup.setNames(group.getNames());
 			
 			ArrayList<ConfigurationParameter> parameters = new ArrayList<ConfigurationParameter>();
 			for(Parameter param : group.getConfigurationParameters()){
-				
 				ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
 				Object value = constructConfigurationParameter(param, newParam);
-				
 				if(value != null){
-					//TODO do i need to do this for all group names??
 					settings.setParameterValue(group.getNames()[0]/*just the first*/,param.getName(), value);
 				}
-				
 				parameters.add(newParam);
 			}
 			configGroup.setConfigurationParameters(parameters.toArray(new ConfigurationParameter[parameters.size()]));
 			
 			groups.add(configGroup);
 		}
+		
 		declarations.setConfigurationGroups(groups.toArray(new ConfigurationGroup[groups.size()]));
-		
-		
 	}
 	
-	public Object constructConfigurationParameter(Parameter param,
+	/**
+	 * Based on the input parameter param, produces a new ConfigurationParameter 
+	 * newParam whose value is returned as an Object.
+	 * 
+	 * @param param Input from the model.
+	 * @param newParameter Output ConfigurationParameter
+	 * @return the value of newParameter
+	 */
+	protected Object constructConfigurationParameter(Parameter param,
 			ConfigurationParameter newParameter){
 		
 		Object value = null;	

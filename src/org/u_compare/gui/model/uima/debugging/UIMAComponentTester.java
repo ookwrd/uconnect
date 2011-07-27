@@ -140,6 +140,16 @@ public class UIMAComponentTester {
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/AggregateAEWithChildren.xml");
 	}
 	
+	@Test
+	public void inOutTestBasicCasConsumer() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/basicCasConsumerDescriptor.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicCollectionReader() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/basicCollectionReaderDescriptor.xml");
+	}
+	
 	/**
 	 * Performs a test to ensure the XML produced from loading a XMLDescriptor into the model and then
 	 * extracting it again matches the original XML.
@@ -153,7 +163,7 @@ public class UIMAComponentTester {
 	 */
 	private void inOutTest(String location) throws IOException, InvalidXMLException{
 		XMLInputSource xmlIn = new XMLInputSource(location);
-		AnalysisEngineDescription desc = (AnalysisEngineDescription) UIMAFramework.getXMLParser().parse(xmlIn);
+		ResourceSpecifier desc = (ResourceSpecifier) UIMAFramework.getXMLParser().parse(xmlIn);
 		
 		Component component = AbstractComponent.constructComponentFromXML(location);
 		

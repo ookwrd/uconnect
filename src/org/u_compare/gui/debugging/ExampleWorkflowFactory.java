@@ -285,5 +285,27 @@ public class ExampleWorkflowFactory {
 		
 	}
 		
+	public static Workflow realComponents1(){
+
+		Workflow workflow = new Workflow();
+		
+		workflow.setName("Real UIMA Components");
+		workflow.setDescription("The components in this workflow " 
+				+ "are constructed from UIMA decriptor files, "
+				+ "the workflow itself however is still assembled manually");
+		try{
+			PrimitiveUIMAComponent real1 = new PrimitiveUIMAComponent(
+					"src/org/u_compare/gui/model/uima/debugging/"
+					+ "BasicAEwithSimpleInputsAndOutputsIncludingFeatures.xml");
+			workflow.addSubComponent(real1);
+		}catch(Exception e){
+			System.out.println("Error while constructing workflow"
+					+ e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return workflow;
+		
+	}
 		
 }

@@ -82,6 +82,11 @@ public class UIMAComponentTester {
 	}
 	
 	@Test
+	public void inOutTestBasicSimpleInputsAndOutputs1() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSimpleInputsAndOutputs1.xml");
+	}
+	
+	@Test
 	public void inOutTestBasicSimpleInputsAndOutputsIncludingFeatures() throws InvalidXMLException, IOException {
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/BasicAEwithSimpleInputsAndOutputsIncludingFeatures.xml");
 	}

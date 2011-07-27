@@ -23,7 +23,10 @@
           <type>uima.tcas.Annotation</type>
           <type allAnnotatorFeatures="true">uima.cas.AnnotationBase</type>
         </outputs>
-        <languagesSupported/>
+        <languagesSupported>
+          <language>en</language>
+          <language>fr</language>
+        </languagesSupported>
       </capability>
     </capabilities>
     <operationalProperties>

@@ -23,6 +23,10 @@
           <type>uima.tcas.Annotation</type>
           <type allAnnotatorFeatures="true">uima.cas.AnnotationBase</type>
         </outputs>
+        <inputSofas>
+          <sofaName>aSofa</sofaName>
+          <sofaName>AnotherSofa</sofaName>
+        </inputSofas>
         <languagesSupported/>
       </capability>
     </capabilities>

@@ -17,11 +17,12 @@
       <capability>
         <inputs>
           <type>uima.tcas.Annotation</type>
-          <type allAnnotatorFeatures="true">uima.tcas.DocumentAnnotation</type>
+          <feature>uima.tcas.Annotation:begin</feature>
+          <feature>uima.tcas.Annotation:sofa</feature>
         </inputs>
         <outputs>
-          <type>uima.tcas.Annotation</type>
-          <type allAnnotatorFeatures="true">uima.cas.AnnotationBase</type>
+          <type>uima.cas.AnnotationBase</type>
+          <feature>uima.cas.AnnotationBase:sofa</feature>
         </outputs>
         <languagesSupported/>
       </capability>

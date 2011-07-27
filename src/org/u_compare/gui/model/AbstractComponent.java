@@ -583,6 +583,7 @@ public abstract class AbstractComponent implements Component {
 		setComponentChanged();
 	}
 	
+	@Override
 	public AnalysisEngineDescription getUIMADescription(){
 		
 		AnalysisEngineDescription description =
@@ -772,7 +773,7 @@ public abstract class AbstractComponent implements Component {
 	
 
 	protected void extractFromProcessingResouceMetaData(
-			ProcessingResourceMetaData metaData){
+			AnalysisEngineMetaData metaData){
 		extractFromResourceMetaData(metaData);
 		
 		typeSystemDescription = metaData.getTypeSystem();
@@ -863,12 +864,10 @@ public abstract class AbstractComponent implements Component {
 	public static Component constructComponentFromXML(XMLInputSource inputSource){
 		
 		try {
-
 			Object resourceSpecifier =
 				UIMAFramework.getXMLParser().parse(inputSource);
 			
 			if(resourceSpecifier instanceof AnalysisEngineDescription){
-
 				AnalysisEngineDescription desc =
 					(AnalysisEngineDescription)resourceSpecifier;	
 
@@ -879,12 +878,10 @@ public abstract class AbstractComponent implements Component {
 				}
 				
 			} else if (resourceSpecifier instanceof CasConsumerDescription){
-			
-				return null;
+				return null;//TODO
 				
 			} else if (resourceSpecifier instanceof CollectionReaderDescription){
-			
-				return null;
+				return null;//TODO
 				
 			}else{
 				return null;

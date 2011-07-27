@@ -1,7 +1,13 @@
 package org.u_compare.gui.model;
 
 import java.util.ArrayList;
+
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
+import org.apache.uima.analysis_engine.metadata.FlowConstraints;
+import org.apache.uima.analysis_engine.metadata.FlowControllerDeclaration;
 import org.u_compare.gui.debugging.Debug;
+import org.u_compare.gui.model.parameters.constraints.FloatConstraint;
 
 /**
  * Abstract base class implementing functionality common to all aggregate components.
@@ -13,6 +19,9 @@ public abstract class AbstractAggregateComponent extends
 
 	private ArrayList<SubComponentsChangedListener> subComponentsChangedListeners = new ArrayList<SubComponentsChangedListener>();
 	private ArrayList<Component> subComponents = new ArrayList<Component>();
+	
+	protected FlowControllerDeclaration flowController;
+	protected FlowConstraints flowConstraints;
 	
 	/**
 	 * All extending classes should call this constructor.
@@ -249,5 +258,21 @@ public abstract class AbstractAggregateComponent extends
 				child.indirectlyUnlocked();
 			}
 		}
+	}
+	
+	@Override
+	public AnalysisEngineDescription getUIMADescription(){
+		System.out.println("Here" + flowController);
+		AnalysisEngineDescription retVal = super.getUIMADescription();
+		retVal.setFlowControllerDeclaration(flowController);
+		retVal.getAnalysisEngineMetaData().setFlowConstraints(flowConstraints);
+		return retVal;
+	}
+	
+	protected void extractFromProcessingResouceMetaData(
+			AnalysisEngineMetaData metaData){
+		super.extractFromProcessingResouceMetaData(metaData);
+		
+		flowConstraints = metaData.getFlowConstraints();
 	}
 }

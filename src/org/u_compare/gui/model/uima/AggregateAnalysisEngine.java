@@ -10,6 +10,8 @@ public class AggregateAnalysisEngine extends AbstractAggregateComponent {
 				desc.getAnalysisEngineMetaData());
 		
 		setImplementationName(desc.getImplementationName());
+		flowController = desc.getFlowControllerDeclaration();
+		
 		resourceManagerConfiguration =
 			desc.getResourceManagerConfiguration();
 	}

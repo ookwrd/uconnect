@@ -7,6 +7,8 @@ import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.TypeOrFeature;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
+import org.apache.uima.collection.CasConsumerDescription;
+import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.ConfigurationGroup;
@@ -863,12 +865,21 @@ public abstract class AbstractComponent implements Component {
 
 			Object resourceSpecifier =
 				UIMAFramework.getXMLParser().parse(inputSource);
+			
 			if(resourceSpecifier instanceof AnalysisEngineDescription){
 
 				AnalysisEngineDescription desc =
 					(AnalysisEngineDescription)resourceSpecifier;	
-				
+
 				return new PrimitiveUIMAComponent(desc);
+				
+			} else if (resourceSpecifier instanceof CasConsumerDescription){
+			
+				return null;
+				
+			} else if (resourceSpecifier instanceof CollectionReaderDescription){
+			
+				return null;
 				
 			}else{
 				return null;

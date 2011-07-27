@@ -14,15 +14,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.uima.PrimitiveUIMAComponent;
 import org.xml.sax.SAXException;
 
 public class UIMAComponentTester {
 
-	public static boolean[] flags = new boolean[] {false,false};
+	public static boolean[] flags;
 	
 	@Before
 	public void setUp(){
+		flags = new boolean[] {false,false};
 	}
 
 	@After

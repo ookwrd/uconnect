@@ -18,6 +18,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.u_compare.gui.model.AbstractComponent;
+import org.u_compare.gui.model.Component;
 import org.xml.sax.SAXException;
 
 public class PrimitiveUIMAComponent extends AbstractComponent {
@@ -235,6 +236,25 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		
 	}*/
 	
+	public static void main(String[] args){
+		new PrimitiveUIMAComponent();
+	}
+	
+	/*public static void main(String[] args){
+		
+		try {
+			Component component = AbstractComponent.constructComponentFromXML("src/org/u_compare/gui/model/uima/debugging/" + "basicCollectionReaderDescriptor.xml");
+		} catch (InvalidXMLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}*/
+	
+	
 	public PrimitiveUIMAComponent(AnalysisEngineDescription desc){
 		extractFromProcessingResouceMetaData(
 				desc.getAnalysisEngineMetaData());
@@ -242,10 +262,6 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		setImplementationName(desc.getImplementationName());
 		resourceManagerConfiguration =
 			desc.getResourceManagerConfiguration();
-	}
-	
-	public static void main(String[] args){
-		new PrimitiveUIMAComponent();
 	}
 	
 }

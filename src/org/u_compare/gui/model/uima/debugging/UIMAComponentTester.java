@@ -12,6 +12,8 @@ import org.apache.uima.util.XMLInputSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.u_compare.gui.model.AbstractComponent;
+import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.uima.PrimitiveUIMAComponent;
 import org.xml.sax.SAXException;
 
@@ -153,7 +155,7 @@ public class UIMAComponentTester {
 		XMLInputSource xmlIn = new XMLInputSource(location);
 		AnalysisEngineDescription desc = (AnalysisEngineDescription) UIMAFramework.getXMLParser().parse(xmlIn);
 		
-		PrimitiveUIMAComponent component = new PrimitiveUIMAComponent(location);
+		Component component = AbstractComponent.constructComponentFromXML(location);
 		
 		assertTrue(compare(descriptorToString(desc), descriptorToString(component.getUIMADescription())));
 	}

@@ -1,11 +1,13 @@
 package org.u_compare.gui.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.TypeOrFeature;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
+import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.ConfigurationGroup;
 import org.apache.uima.resource.metadata.ConfigurationParameter;
@@ -18,6 +20,8 @@ import org.apache.uima.resource.metadata.ResourceManagerConfiguration;
 import org.apache.uima.resource.metadata.ResourceMetaData;
 import org.apache.uima.resource.metadata.TypePriorities;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.apache.uima.util.InvalidXMLException;
+import org.apache.uima.util.XMLInputSource;
 import org.u_compare.gui.model.parameters.AbstractParameter;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.FloatParameter;
@@ -25,6 +29,7 @@ import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
 import org.u_compare.gui.model.parameters.StringParameter;
+import org.u_compare.gui.model.uima.PrimitiveUIMAComponent;
 
 /**
  * Abstract base class implementing much of the functionality common to all components.
@@ -846,5 +851,34 @@ public abstract class AbstractComponent implements Component {
 			groups.add(parameterGroup);
 		}
 		setParameterGroups(groups);	
+	}
+	
+	public static Component constructComponentFromXML(String descriptorLocation) throws IOException, InvalidXMLException { 
+		return constructComponentFromXML(new XMLInputSource(descriptorLocation));
+	}
+	
+	public static Component constructComponentFromXML(XMLInputSource inputSource){
+		
+		try {
+
+			Object resourceSpecifier =
+				UIMAFramework.getXMLParser().parse(inputSource);
+			if(resourceSpecifier instanceof AnalysisEngineDescription){
+
+				AnalysisEngineDescription desc =
+					(AnalysisEngineDescription)resourceSpecifier;	
+				
+				return new PrimitiveUIMAComponent(desc);
+				
+			}else{
+				return null;
+				//TODO
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+			//TODO
+		}
 	}
 }

@@ -25,6 +25,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.u_compare.gui.model.AbstractComponent;
+import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.AbstractParameter;
 import org.u_compare.gui.model.parameters.BooleanParameter;
@@ -159,6 +160,13 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 						System.out.println(torf.getName());
 						System.out.println(torf.isType());
 					}
+					
+					UIMAFramework.getResourceSpecifierFactory().createTypeOrFeature();
+					
+					//TODO what are the preconditions and how are they set??
+					//capability.getPreconditions()
+					//http://uima.apache.org/d/uimaj-2.3.1/api/org/apache/uima/resource/metadata/Precondition.html
+					//Not fully supported by the framework, so I will ignore.
 				}
 				
 				
@@ -266,10 +274,38 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		metaData.setTypeSystem(typeSystemDescription);
 		metaData.setTypePriorities(typePriorities);
 		metaData.setFsIndexCollection(fsIndexCollection);
-		metaData.setCapabilities(capabilities);
 		metaData.setOperationalProperties(operationalProperties);
+		
+		//TODO move to its own method
+		//Pack up capabilities from the model
+		//Capability capabilityOne = UIMAFramework.getResourceSpecifierFactory().createCapability();
+		Capability capabilityOne = capabilities[0];
+		//Inputs
+		capabilityOne.setInputs(convertTypeOrFeatureList(getInputTypes()));
+		//Outputs
+		capabilityOne.setOutputs(convertTypeOrFeatureList(getOutputTypes()));
+		
+		//TODO everything else about capabilityOne? Should just be borrowed from the stored one though right?
+		
+		capabilities[0] = capabilityOne;
+		metaData.setCapabilities(capabilities);
 		//TODO
 		
+	}
+	
+	private TypeOrFeature[] convertTypeOrFeatureList(ArrayList<AnnotationTypeOrFeature> list){
+		
+		ArrayList<TypeOrFeature> returnVals = new ArrayList<TypeOrFeature>();
+		for(AnnotationTypeOrFeature tof : list){
+			TypeOrFeature newTypeOrFeature = UIMAFramework.getResourceSpecifierFactory().createTypeOrFeature();
+			
+			newTypeOrFeature.setName(tof.getTypeName());
+			newTypeOrFeature.setType(tof.isType());
+			newTypeOrFeature.setAllAnnotatorFeatures(tof.isAllAnnotatorFeatures());
+			
+			returnVals.add(newTypeOrFeature);
+		}
+		return returnVals.toArray(new TypeOrFeature[returnVals.size()]);
 	}
 	
 	protected void setupResourceMetaData(ResourceMetaData metaData) {
@@ -299,7 +335,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		declarations.setDefaultGroupName(getDefaultParameterGroup());
 		
 		//Basic Parameters
-		for(Parameter param : getConfigurationParameters()){
+		for(Parameter param : getConfigurationParameters()){//TODO factor this out into a helper method
 			ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
 			Object value = constructConfigurationParameter(param, newParam);
 			if(value != null){
@@ -442,9 +478,26 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 		typeSystemDescription = metaData.getTypeSystem();
 		typePriorities = metaData.getTypePriorities();
 		fsIndexCollection = metaData.getFsIndexCollection();
-		capabilities = metaData.getCapabilities();
 		operationalProperties = metaData.getOperationalProperties();
-		//TODO inputs/outputs
+		
+		capabilities = metaData.getCapabilities();
+		Capability capabilityOne = capabilities[0];
+		ArrayList<AnnotationTypeOrFeature> inputs = extractAnnotationTypeOrFeatureList(capabilityOne.getInputs());
+		setInputTypes(inputs);
+		ArrayList<AnnotationTypeOrFeature> outputs = extractAnnotationTypeOrFeatureList(capabilityOne.getOutputs());
+		setOutputTypes(outputs);
+		
+	}
+	
+	private ArrayList<AnnotationTypeOrFeature> extractAnnotationTypeOrFeatureList(TypeOrFeature[] list){
+		ArrayList<AnnotationTypeOrFeature> retVals = new ArrayList<AnnotationTypeOrFeature>();
+		for(TypeOrFeature tof : list){
+			AnnotationTypeOrFeature annotationTypeOrFeature = new AnnotationTypeOrFeature(tof.getName());
+			annotationTypeOrFeature.setAllAnnotatorFeatures(tof.isAllAnnotatorFeatures());
+			annotationTypeOrFeature.setType(tof.isType());
+			retVals.add(annotationTypeOrFeature);
+		}
+		return retVals;
 	}
 	
 	protected void extractFromResourceMetaData(ResourceMetaData metaData){

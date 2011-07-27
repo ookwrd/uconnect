@@ -16,11 +16,9 @@
     <capabilities>
       <capability>
         <inputs>
-          <type>uima.tcas.Annotation</type>
           <type allAnnotatorFeatures="true">uima.tcas.DocumentAnnotation</type>
         </inputs>
         <outputs>
-          <type>uima.tcas.Annotation</type>
           <type allAnnotatorFeatures="true">uima.cas.AnnotationBase</type>
         </outputs>
         <languagesSupported/>

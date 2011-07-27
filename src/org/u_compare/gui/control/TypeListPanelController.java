@@ -6,7 +6,7 @@ import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
 import org.u_compare.gui.annotationTypeChooser.BasicAnnotationTypeChooser;
 import org.u_compare.gui.component.TypeListPanel;
 import org.u_compare.gui.component.TypeListPanel.LIST_TYPES;
-import org.u_compare.gui.model.AnnotationType;
+import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component;
 
 public class TypeListPanelController {
@@ -30,7 +30,7 @@ public class TypeListPanelController {
 	
 	public void addAnnotation(){
 		
-		AnnotationType newType = typeChooser.getNewAnnotation();
+		AnnotationTypeOrFeature newType = typeChooser.getNewAnnotation();
 		
 		if(newType == null || newType.getTypeName().equals("")){
 			System.out.println("Invalid Type returned by type chooser.");
@@ -51,7 +51,7 @@ public class TypeListPanelController {
 		
 		System.out.println("Removing");
 		
-		AnnotationType type = new AnnotationType(selected);
+		AnnotationTypeOrFeature type = new AnnotationTypeOrFeature(selected);
 		
 		if(listType == TypeListPanel.LIST_TYPES.INPUTS){
 			component.removeInputType(type);

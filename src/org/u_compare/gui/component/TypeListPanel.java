@@ -14,7 +14,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.guiElements.HighlightButton;
-import org.u_compare.gui.model.AnnotationType;
+import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component.InputOutputChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
@@ -188,14 +188,14 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		
 		switch(listType){
 		case INPUTS:
-			for(AnnotationType annotation : component.getInputTypes()){
+			for(AnnotationTypeOrFeature annotation : component.getInputTypes()){
 				
 				listModel.addElement(annotation.getTypeName());
 
 			}
 			break;
 		case OUTPUTS:
-			for(AnnotationType annotation : component.getOutputTypes()){
+			for(AnnotationTypeOrFeature annotation : component.getOutputTypes()){
 				
 				listModel.addElement(annotation.getTypeName());
 				

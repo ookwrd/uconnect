@@ -18,15 +18,14 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.u_compare.gui.model.AbstractComponent;
-import org.u_compare.gui.model.Component;
 import org.xml.sax.SAXException;
 
-public class PrimitiveUIMAComponent extends AbstractComponent {
+public class PrimitiveAnalysisEngine extends AbstractComponent {
 	
 	/**
 	 * Constructor just for testing purposes.
 	 */
-	public PrimitiveUIMAComponent(){
+	public PrimitiveAnalysisEngine(){
 		super();
 		
 		try {
@@ -237,7 +236,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	}*/
 	
 	public static void main(String[] args){
-		new PrimitiveUIMAComponent();
+		new PrimitiveAnalysisEngine();
 	}
 	
 	/*public static void main(String[] args){
@@ -255,7 +254,7 @@ public class PrimitiveUIMAComponent extends AbstractComponent {
 	}*/
 	
 	
-	public PrimitiveUIMAComponent(AnalysisEngineDescription desc){
+	public PrimitiveAnalysisEngine(AnalysisEngineDescription desc){
 		extractFromProcessingResouceMetaData(
 				desc.getAnalysisEngineMetaData());
 		

@@ -31,7 +31,8 @@ import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
 import org.u_compare.gui.model.parameters.StringParameter;
-import org.u_compare.gui.model.uima.PrimitiveUIMAComponent;
+import org.u_compare.gui.model.uima.AggregateAnalysisEngine;
+import org.u_compare.gui.model.uima.PrimitiveAnalysisEngine;
 
 /**
  * Abstract base class implementing much of the functionality common to all components.
@@ -871,7 +872,11 @@ public abstract class AbstractComponent implements Component {
 				AnalysisEngineDescription desc =
 					(AnalysisEngineDescription)resourceSpecifier;	
 
-				return new PrimitiveUIMAComponent(desc);
+				if(desc.isPrimitive()){
+					return new PrimitiveAnalysisEngine(desc);
+				}else{
+					return new AggregateAnalysisEngine(desc);
+				}
 				
 			} else if (resourceSpecifier instanceof CasConsumerDescription){
 			

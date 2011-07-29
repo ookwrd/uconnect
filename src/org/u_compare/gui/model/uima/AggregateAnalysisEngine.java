@@ -30,8 +30,17 @@ public class AggregateAnalysisEngine extends AbstractAggregateComponent {
 			Import imp = (Import)spec;
 			System.out.println(imp.getName() + "  " + imp.getLocation());
 			
-			Component comp = AbstractComponent.constructComponentFromXML((ResourceSpecifier)spec);
-			addSubComponent(comp);
+			//Component comp = AbstractComponent.constructComponentFromXML((ResourceSpecifier)spec);
+			//addSubComponent(comp);
+		}
+		
+		try {
+			for(ResourceSpecifier specifier : desc.getDelegateAnalysisEngineSpecifiers().values()){
+				addSubComponent(AbstractComponent.constructComponentFromXML(specifier));
+			}
+		} catch (InvalidXMLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		resourceManagerConfiguration =

@@ -308,5 +308,28 @@ public class ExampleWorkflowFactory {
 		return workflow;
 		
 	}
+	
+	public static Workflow realComponents2(){
+
+		Workflow workflow = new Workflow();
 		
+		workflow.setName("Real UIMA Aggregate Components");
+		workflow.setDescription("The components in this workflow " 
+				+ "are constructed from UIMA decriptor files, "
+				+ "the workflow itself however is still assembled manually");
+		try{
+			Component real1 = AbstractComponent.constructComponentFromXML(
+					"src/org/u_compare/gui/model/uima/debugging/"
+					+ "AggregateAEWithChildren.xml");
+			workflow.addSubComponent(real1);
+		}catch(Exception e){
+			System.out.println("Error while constructing workflow"
+					+ e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return workflow;
+		
+	}
+	
 }

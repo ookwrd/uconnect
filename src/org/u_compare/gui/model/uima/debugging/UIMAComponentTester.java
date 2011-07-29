@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.io.StringWriter;
 import org.apache.uima.UIMAFramework;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
@@ -18,7 +17,7 @@ import org.xml.sax.SAXException;
 
 public class UIMAComponentTester {
 
-	public static boolean[] flags;
+	public static boolean[] flags = new boolean[] {false,false};
 	
 	@Before
 	public void setUp(){
@@ -197,7 +196,7 @@ public class UIMAComponentTester {
 			i--;
 			
 			System.out.println("Matches the first " + i + " characters (of "+ target.length() + "):");
-			System.out.println(result.substring(0, i));
+			System.out.print(result.substring(0, i)+ "\nXXXXXXXXXXXXXXXX\n" + result.substring(i,result.length())); 
 			System.out.println("\nTarget:");
 			System.out.println(target.substring(i - 10 > 0?i -10 : 0, i + 100<target.length()?i+100:target.length()));
 			System.out.println("\nProduced:");

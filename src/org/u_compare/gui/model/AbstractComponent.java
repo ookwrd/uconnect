@@ -857,16 +857,32 @@ public abstract class AbstractComponent implements Component {
 		setParameterGroups(groups);	
 	}
 	
-	public static Component constructComponentFromXML(String descriptorLocation) throws IOException, InvalidXMLException { 
-		return constructComponentFromXML(new XMLInputSource(descriptorLocation));
+	public static Component constructComponentFromXML(String descriptorLocation){ 
+		try {
+			return constructComponentFromXML(new XMLInputSource(descriptorLocation));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static Component constructComponentFromXML(XMLInputSource inputSource){
-		
 		try {
-			Object resourceSpecifier =
-				UIMAFramework.getXMLParser().parse(inputSource);
-			
+			ResourceSpecifier resourceSpecifier =
+				(ResourceSpecifier) UIMAFramework.getXMLParser().parse(inputSource);
+			return constructComponentFromXML(resourceSpecifier);
+		} catch (InvalidXMLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Component constructComponentFromXML(ResourceSpecifier resourceSpecifier){
+		
+		//try {
+
 			if(resourceSpecifier instanceof AnalysisEngineDescription){
 				AnalysisEngineDescription desc =
 					(AnalysisEngineDescription)resourceSpecifier;	
@@ -888,10 +904,10 @@ public abstract class AbstractComponent implements Component {
 				//TODO
 			}
 			
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 			//TODO
-		}
+		}*/
 	}
 }

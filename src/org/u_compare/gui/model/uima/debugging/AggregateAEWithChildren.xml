@@ -11,9 +11,9 @@
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
-    <name>TESTERRed</name>
-    <description>Adds a true Truth annotation to the document.</description>
-    <version>1.0</version>
+    <name>Aggregate</name>
+    <description>An aggregate</description>
+    <version>2.0</version>
     <vendor>Luke McCrohon - Tsujii Lab</vendor>
     <configurationParameters searchStrategy="language_fallback"/>
     <configurationParameterSettings/>

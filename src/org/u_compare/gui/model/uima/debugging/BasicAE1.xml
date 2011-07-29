@@ -4,7 +4,7 @@
   <primitive>true</primitive>
   <annotatorImplementationName>org.u_compare.gui.model.uima.debugging.BasicAE1</annotatorImplementationName>
   <analysisEngineMetaData>
-    <name>TESTERRed</name>
+    <name>AE1</name>
     <description>Adds a true Truth annotation to the document.</description>
     <version>1.0</version>
     <vendor>Luke McCrohon - Tsujii Lab</vendor>

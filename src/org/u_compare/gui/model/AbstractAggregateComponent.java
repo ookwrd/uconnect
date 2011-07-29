@@ -1,13 +1,20 @@
 package org.u_compare.gui.model;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.analysis_engine.metadata.FlowConstraints;
 import org.apache.uima.analysis_engine.metadata.FlowControllerDeclaration;
+import org.apache.uima.resource.ResourceSpecifier;
+import org.apache.uima.resource.metadata.Import;
+import org.apache.uima.resource.metadata.MetaDataObject;
+import org.apache.uima.util.InvalidXMLException;
 import org.u_compare.gui.debugging.Debug;
 import org.u_compare.gui.model.parameters.constraints.FloatConstraint;
+
 
 /**
  * Abstract base class implementing functionality common to all aggregate components.
@@ -260,12 +267,33 @@ public abstract class AbstractAggregateComponent extends
 		}
 	}
 	
+	protected ArrayList<Import> imports = new ArrayList<Import>();
+	
 	@Override
 	public AnalysisEngineDescription getUIMADescription(){
-		System.out.println("Here" + flowController);
 		AnalysisEngineDescription retVal = super.getUIMADescription();
 		retVal.setFlowControllerDeclaration(flowController);
 		retVal.getAnalysisEngineMetaData().setFlowConstraints(flowConstraints);
+		
+		Map<String, MetaDataObject> metaData;
+		metaData = retVal.getDelegateAnalysisEngineSpecifiersWithImports();
+		
+		for(Import imp : imports){
+			//UIMAFramework.getResourceSpecifierFactory().createMe
+			//metaData.put(comp.getName(),comp.getUIMADescription()); //TODO if I do it this way can I run??
+			//TODO obviously
+			
+			/*
+			 * So can I avoid saving everything to the file system piecemeal by making use of
+			 * components with their subcomponents built?
+			 * 
+			 *  Similarly, can I save the xml like this in a single file? Rather than seperately.
+			 *  
+			 *  Lets try.
+			 */
+		}
+	
+		
 		return retVal;
 	}
 	
@@ -274,5 +302,15 @@ public abstract class AbstractAggregateComponent extends
 		super.extractFromProcessingResouceMetaData(metaData);
 		
 		flowConstraints = metaData.getFlowConstraints();
+		
+		
+		//TODO remove this
+		if(metaData.getDelegateAnalysisEngineMetaData()!= null){
+			for(AnalysisEngineMetaData subComponent: metaData.getDelegateAnalysisEngineMetaData()){
+				System.out.println(subComponent.getName());
+			}
+		}else{
+			System.out.println("it was null");
+		}
 	}
 }

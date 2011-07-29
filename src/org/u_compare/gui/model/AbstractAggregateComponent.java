@@ -294,6 +294,12 @@ public abstract class AbstractAggregateComponent extends
 		}
 	
 		
+		for(Component comp : getSubComponents()){
+			//its not comp.getName()? what is it supposed to be?? 
+			metaData.put("Basic" + comp.getName(),comp.getUIMADescription());
+			
+		}
+		
 		return retVal;
 	}
 	

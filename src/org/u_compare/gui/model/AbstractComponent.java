@@ -33,6 +33,7 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.u_compare.gui.model.uima.AggregateAnalysisEngine;
+import org.u_compare.gui.model.uima.CasConsumer;
 import org.u_compare.gui.model.uima.CollectionReader;
 import org.u_compare.gui.model.uima.PrimitiveAnalysisEngine;
 
@@ -903,8 +904,8 @@ public abstract class AbstractComponent implements Component {
 				}
 				
 			} else if (resourceSpecifier instanceof CasConsumerDescription){
-				//TODO
-				return null;
+				CasConsumerDescription description = (CasConsumerDescription)resourceSpecifier;
+				return new CasConsumer(description);
 				
 			} else if (resourceSpecifier instanceof CollectionReaderDescription){
 				CollectionReaderDescription description = (CollectionReaderDescription)resourceSpecifier;

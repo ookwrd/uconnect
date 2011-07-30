@@ -32,8 +32,7 @@ public class GUITestingHarness {
 		//workflows.add(ExampleWorkflowFactory.realComponents1());
 		workflows.add(ExampleWorkflowFactory.realComponents2());
 		
-		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
-		
+		WorkflowPaneController workflowPaneController = new WorkflowPaneController();	
 		JComponent tabbedPane = workflowPaneController.initialize(workflows);
 		
 		// Library panel

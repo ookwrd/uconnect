@@ -8,6 +8,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.analysis_engine.metadata.FlowConstraints;
 import org.apache.uima.analysis_engine.metadata.FlowControllerDeclaration;
+import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
@@ -270,8 +271,8 @@ public abstract class AbstractAggregateComponent extends
 	protected ArrayList<Import> imports = new ArrayList<Import>();
 	
 	@Override
-	public AnalysisEngineDescription getUIMADescription(){
-		AnalysisEngineDescription retVal = super.getUIMADescription();
+	public ResourceCreationSpecifier getUIMADescription(){
+		AnalysisEngineDescription retVal = (AnalysisEngineDescription)super.getUIMADescription();
 		retVal.setFlowControllerDeclaration(flowController);
 		retVal.getAnalysisEngineMetaData().setFlowConstraints(flowConstraints);
 		

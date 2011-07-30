@@ -9,6 +9,7 @@ import org.apache.uima.analysis_engine.TypeOrFeature;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.collection.CasConsumerDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.ConfigurationGroup;
@@ -32,6 +33,7 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.u_compare.gui.model.uima.AggregateAnalysisEngine;
+import org.u_compare.gui.model.uima.CollectionReader;
 import org.u_compare.gui.model.uima.PrimitiveAnalysisEngine;
 
 /**
@@ -584,8 +586,8 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public AnalysisEngineDescription getUIMADescription(){
-		
+	public ResourceCreationSpecifier getUIMADescription(){
+		//TODO move this 
 		AnalysisEngineDescription description =
 			UIMAFramework.getResourceSpecifierFactory()
 			.createAnalysisEngineDescription();
@@ -598,13 +600,15 @@ public abstract class AbstractComponent implements Component {
 		return description;
 	}
 	
-	protected void setupAnalysisEngineDescription(
-			AnalysisEngineDescription description) {
+	protected void setupAnalysisEngineDescription(//TODO rename
+			ResourceCreationSpecifier description) {
 		
 		description.setImplementationName(getImplementationName());
 		description.setResourceManagerConfiguration(
 				resourceManagerConfiguration);
-		description.setPrimitive(!isAggregate());
+		if(description instanceof AnalysisEngineDescription){
+			((AnalysisEngineDescription)description).setPrimitive(!isAggregate());
+		}
 		
 	}
 	
@@ -619,11 +623,13 @@ public abstract class AbstractComponent implements Component {
 		metaData.setOperationalProperties(operationalProperties);
 		
 		//Use capabilities from the model to override base capabilities
-		Capability capabilityOne = capabilities[0];
-		capabilityOne.setInputs(convertTypeOrFeatureList(getInputTypes()));
-		capabilityOne.setOutputs(convertTypeOrFeatureList(getOutputTypes()));
-		capabilities[0] = capabilityOne;
-		metaData.setCapabilities(capabilities);
+		if(capabilities != null){
+			Capability capabilityOne = capabilities[0];
+			capabilityOne.setInputs(convertTypeOrFeatureList(getInputTypes()));
+			capabilityOne.setOutputs(convertTypeOrFeatureList(getOutputTypes()));
+			capabilities[0] = capabilityOne;
+			metaData.setCapabilities(capabilities);
+			}
 	}
 	
 	private TypeOrFeature[] convertTypeOrFeatureList(ArrayList<AnnotationTypeOrFeature> list){
@@ -773,7 +779,7 @@ public abstract class AbstractComponent implements Component {
 	
 
 	protected void extractFromProcessingResouceMetaData(
-			AnalysisEngineMetaData metaData){
+			ProcessingResourceMetaData metaData){
 		extractFromResourceMetaData(metaData);
 		
 		typeSystemDescription = metaData.getTypeSystem();
@@ -881,7 +887,8 @@ public abstract class AbstractComponent implements Component {
 	
 	public static Component constructComponentFromXML(ResourceSpecifier resourceSpecifier){
 		
-		//try {
+		//try {System.out.println("here we are");
+		System.out.println("here we are outside" + resourceSpecifier.getClass());
 
 			if(resourceSpecifier instanceof AnalysisEngineDescription){
 				AnalysisEngineDescription desc =
@@ -894,10 +901,13 @@ public abstract class AbstractComponent implements Component {
 				}
 				
 			} else if (resourceSpecifier instanceof CasConsumerDescription){
-				return null;//TODO
+				//TODO
+				return null;
 				
 			} else if (resourceSpecifier instanceof CollectionReaderDescription){
-				return null;//TODO
+				System.out.println("here we are");
+				CollectionReaderDescription description = (CollectionReaderDescription)resourceSpecifier;
+				return new CollectionReader(description);
 				
 			}else{
 				return null;

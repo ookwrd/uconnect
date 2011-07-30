@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.WorkflowPane;
@@ -18,7 +20,7 @@ import org.u_compare.gui.model.Workflow;
 public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
 
 	private static final boolean SHOW_CONSOLE = true;
-	private static final boolean ALLOW_TABS = true;
+	private static boolean ALLOW_TABS = true;
 //	private static final boolean SHOW_NEW_TAB = true; //TODO
 	
 	private static final boolean allowEditing = true;
@@ -82,6 +84,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		}
 		
 		return init(workflowSplitPanes);
+		
 	}
 	
 	private WorkflowHorizontalSplitPane constructWorkflow(Workflow workflow){
@@ -208,5 +211,9 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		requestNewWorkflow();
+	}
+	
+	public void setAllowTabs(boolean allowTabs){
+		this.ALLOW_TABS = allowTabs;
 	}
 }

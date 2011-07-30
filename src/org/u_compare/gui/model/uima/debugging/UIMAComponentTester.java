@@ -165,7 +165,7 @@ public class UIMAComponentTester {
 		ResourceSpecifier desc = (ResourceSpecifier) UIMAFramework.getXMLParser().parse(xmlIn);
 		
 		Component component = AbstractComponent.constructComponentFromXML(location);
-		
+
 		assertTrue(compare(descriptorToString(desc), descriptorToString(component.getUIMADescription())));
 	}
 	

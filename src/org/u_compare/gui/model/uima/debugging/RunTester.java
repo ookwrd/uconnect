@@ -18,7 +18,7 @@ public class RunTester {
 		Component component = AbstractComponent.constructComponentFromXML(location);
 		
 		AnalysisEngine ae = 
-		    UIMAFramework.produceAnalysisEngine(component.getUIMADescription());
+		    UIMAFramework.produceAnalysisEngine(component.getResourceCreationSpecifier());
 
 		JCas jcas = ae.newJCas();
 		  

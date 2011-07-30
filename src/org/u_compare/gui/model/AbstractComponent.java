@@ -586,21 +586,20 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public ResourceCreationSpecifier getUIMADescription(){
-		//TODO move this 
+	public ResourceCreationSpecifier getResourceCreationSpecifier(){
+		//TODO move this to somewhere Analysis engine specific?
 		AnalysisEngineDescription description =
 			UIMAFramework.getResourceSpecifierFactory()
 			.createAnalysisEngineDescription();
-		AnalysisEngineMetaData metadata =
-			description.getAnalysisEngineMetaData();
 		
-		setupProcessingResourceMetaData(metadata);
-		setupAnalysisEngineDescription(description);
+		setupProcessingResourceMetaData(
+				description.getAnalysisEngineMetaData());
+		setupResourceCreationSpecifier(description);
 		
 		return description;
 	}
 	
-	protected void setupAnalysisEngineDescription(//TODO rename
+	protected void setupResourceCreationSpecifier(
 			ResourceCreationSpecifier description) {
 		
 		description.setImplementationName(getImplementationName());
@@ -777,6 +776,12 @@ public abstract class AbstractComponent implements Component {
 		return value;
 	}
 	
+
+	protected void extractFromSpecifier(ResourceCreationSpecifier spec){
+		setImplementationName(spec.getImplementationName());
+		resourceManagerConfiguration =
+			spec.getResourceManagerConfiguration();
+	}
 
 	protected void extractFromProcessingResouceMetaData(
 			ProcessingResourceMetaData metaData){

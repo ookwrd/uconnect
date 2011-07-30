@@ -271,8 +271,8 @@ public abstract class AbstractAggregateComponent extends
 	protected ArrayList<Import> imports = new ArrayList<Import>();
 	
 	@Override
-	public ResourceCreationSpecifier getUIMADescription(){
-		AnalysisEngineDescription retVal = (AnalysisEngineDescription)super.getUIMADescription();
+	public ResourceCreationSpecifier getResourceCreationSpecifier(){
+		AnalysisEngineDescription retVal = (AnalysisEngineDescription)super.getResourceCreationSpecifier();
 		retVal.setFlowControllerDeclaration(flowController);
 		retVal.getAnalysisEngineMetaData().setFlowConstraints(flowConstraints);
 		
@@ -297,7 +297,7 @@ public abstract class AbstractAggregateComponent extends
 		
 		for(Component comp : getSubComponents()){
 			//its not comp.getName()? what is it supposed to be?? 
-			metaData.put("Basic" + comp.getName(),comp.getUIMADescription());
+			metaData.put("Basic" + comp.getName(),comp.getResourceCreationSpecifier());
 			
 		}
 		

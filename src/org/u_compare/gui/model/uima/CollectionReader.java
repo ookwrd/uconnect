@@ -12,18 +12,15 @@ public class CollectionReader extends AbstractComponent {
 		ProcessingResourceMetaData metaData = desc.getCollectionReaderMetaData();
 		extractFromProcessingResouceMetaData(metaData);
 		
-		setImplementationName(desc.getImplementationName());//TODO refactor these up somewhere?
-		resourceManagerConfiguration =
-			desc.getResourceManagerConfiguration();
+		extractFromSpecifier(desc);
 	}
 	
 	@Override
-	public ResourceCreationSpecifier getUIMADescription(){
+	public ResourceCreationSpecifier getResourceCreationSpecifier(){
 		CollectionReaderDescription description = UIMAFramework.getResourceSpecifierFactory().createCollectionReaderDescription();
-		ProcessingResourceMetaData metaData = description.getCollectionReaderMetaData();
-		
-		setupProcessingResourceMetaData(metaData);
-		setupAnalysisEngineDescription(description);
+	
+		setupProcessingResourceMetaData(description.getCollectionReaderMetaData());
+		setupResourceCreationSpecifier(description);
 		
 		return description;
 	}

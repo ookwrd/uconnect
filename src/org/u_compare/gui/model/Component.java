@@ -273,5 +273,5 @@ public interface Component{
 		public void parameterGroupsChanged(Component component);
 	}
 	
-	public ResourceCreationSpecifier getUIMADescription();
+	public ResourceCreationSpecifier getResourceCreationSpecifier();
 }

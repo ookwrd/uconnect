@@ -259,9 +259,7 @@ public class PrimitiveAnalysisEngine extends AbstractComponent {
 		extractFromProcessingResouceMetaData(
 				desc.getAnalysisEngineMetaData());
 		
-		setImplementationName(desc.getImplementationName());
-		resourceManagerConfiguration =
-			desc.getResourceManagerConfiguration();
+		extractFromSpecifier(desc);
 	}
 	
 }

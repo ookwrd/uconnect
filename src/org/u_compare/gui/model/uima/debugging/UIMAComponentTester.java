@@ -149,6 +149,16 @@ public class UIMAComponentTester {
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/basicCollectionReaderDescriptor.xml");
 	}
 	
+	@Test
+	public void inOutTestBasicCollectionReader1() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/basicCollectionReaderDescriptor1.xml");
+	}
+	
+	@Test
+	public void inOutTestBasicCollectionReader2() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/basicCollectionReaderDescriptor2.xml");
+	}
+	
 	/**
 	 * Performs a test to ensure the XML produced from loading a XMLDescriptor into the model and then
 	 * extracting it again matches the original XML.

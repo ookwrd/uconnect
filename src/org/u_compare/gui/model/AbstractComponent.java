@@ -892,9 +892,6 @@ public abstract class AbstractComponent implements Component {
 	
 	public static Component constructComponentFromXML(ResourceSpecifier resourceSpecifier){
 		
-		//try {System.out.println("here we are");
-		System.out.println("here we are outside" + resourceSpecifier.getClass());
-
 			if(resourceSpecifier instanceof AnalysisEngineDescription){
 				AnalysisEngineDescription desc =
 					(AnalysisEngineDescription)resourceSpecifier;	
@@ -910,7 +907,6 @@ public abstract class AbstractComponent implements Component {
 				return null;
 				
 			} else if (resourceSpecifier instanceof CollectionReaderDescription){
-				System.out.println("here we are");
 				CollectionReaderDescription description = (CollectionReaderDescription)resourceSpecifier;
 				return new CollectionReader(description);
 				
@@ -918,11 +914,5 @@ public abstract class AbstractComponent implements Component {
 				return null;
 				//TODO
 			}
-			
-		/*} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-			//TODO
-		}*/
 	}
 }

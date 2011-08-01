@@ -2,7 +2,6 @@ package org.u_compare.gui.model.uima;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.collection.CasConsumerDescription;
-import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.metadata.ProcessingResourceMetaData;
 import org.u_compare.gui.model.AbstractComponent;

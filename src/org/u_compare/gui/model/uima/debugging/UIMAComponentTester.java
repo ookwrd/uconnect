@@ -159,6 +159,11 @@ public class UIMAComponentTester {
 		inOutTest("src/org/u_compare/gui/model/uima/debugging/basicCollectionReaderDescriptor2.xml");
 	}
 	
+	@Test
+	public void inOutTestBasicCPE() throws InvalidXMLException, IOException {
+		Component component = AbstractComponent.constructComponentFromXML("src/org/u_compare/gui/model/uima/debugging/basicCPE.xml");
+	}
+	
 	/**
 	 * Performs a test to ensure the XML produced from loading a XMLDescriptor into the model and then
 	 * extracting it again matches the original XML.

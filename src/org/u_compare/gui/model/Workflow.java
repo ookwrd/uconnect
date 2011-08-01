@@ -8,7 +8,7 @@ import java.util.Timer;
  * Model class representing a UIMA Workflow. The workflow is modelled as a
  * special UIMAAggregateComponent.
  * 
- * @author lukemccrohon
+ * @author luke mccrohon
  *
  */
 public class Workflow extends AbstractAggregateComponent {

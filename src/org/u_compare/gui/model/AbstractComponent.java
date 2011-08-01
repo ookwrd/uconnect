@@ -9,6 +9,7 @@ import org.apache.uima.analysis_engine.TypeOrFeature;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.collection.CasConsumerDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Capability;
@@ -821,7 +822,7 @@ public abstract class AbstractComponent implements Component {
 		setVersion(metaData.getVersion());
 		setCopyright(metaData.getCopyright());
 		
-		//Parameters TODO extract to method
+		//Parameters
 		ConfigurationParameterSettings settings =
 			metaData.getConfigurationParameterSettings();
 		ConfigurationParameterDeclarations declarations =
@@ -911,7 +912,13 @@ public abstract class AbstractComponent implements Component {
 				CollectionReaderDescription description = (CollectionReaderDescription)resourceSpecifier;
 				return new CollectionReader(description);
 				
-			}else{
+			} else if (resourceSpecifier instanceof CpeDescription){
+				
+				System.out.println("yep its a cpedescription");
+				
+				return null;
+				
+			} else {
 				return null;
 				//TODO
 			}

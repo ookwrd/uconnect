@@ -6,6 +6,7 @@ import org.apache.uima.collection.metadata.CpeCollectionReader;
 import org.apache.uima.collection.metadata.CpeConfiguration;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
+import org.u_compare.gui.model.InvalidStatusException;
 import org.u_compare.gui.model.Workflow;
 
 public class CPE extends Workflow {
@@ -19,9 +20,15 @@ public class CPE extends Workflow {
 	public CPE(CpeDescription desc) throws CpeDescriptorException{
 		
 		collectionReaders = desc.getAllCollectionCollectionReaders();
-		cpeCasProcessors = desc.getCpeCasProcessors();
+		cpeCasProcessors = desc.getCpeCasProcessors(); //<- this is where the subcomponents are
 		cpeConfiguration = desc.getCpeConfiguration();
 		
+	}
+	
+	@Override
+	public void runWorkflow() throws InvalidStatusException {
+		super.runWorkflow();
+		System.out.println("Running in CPE");
 	}
 	
 	public CpeDescription getResourceCPEDescription(){

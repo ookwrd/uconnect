@@ -332,4 +332,9 @@ public class ExampleWorkflowFactory {
 		
 	}
 	
+	public static Workflow cpeWorkflow(){
+		return Workflow.constructWorkflowFromXML("src/org/u_compare/gui/model/uima/debugging/basicCPE.xml");
+		
+	}
+	
 }

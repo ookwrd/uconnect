@@ -274,4 +274,7 @@ public interface Component{
 	}
 	
 	public ResourceCreationSpecifier getResourceCreationSpecifier();
+	
+	public void setFlowControllerIdentifier(String identifier);
+	public String getFlowControllerIdentifier();
 }

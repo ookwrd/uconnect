@@ -1,6 +1,7 @@
 package org.u_compare.gui.model.uima;
 
 import org.apache.uima.UIMAFramework;
+import org.apache.uima.collection.metadata.CpeCasProcessor;
 import org.apache.uima.collection.metadata.CpeCasProcessors;
 import org.apache.uima.collection.metadata.CpeCollectionReader;
 import org.apache.uima.collection.metadata.CpeConfiguration;
@@ -21,6 +22,9 @@ public class CPE extends Workflow {
 		
 		collectionReaders = desc.getAllCollectionCollectionReaders();
 		cpeCasProcessors = desc.getCpeCasProcessors(); //<- this is where the subcomponents are
+		for(CpeCasProcessor processor : cpeCasProcessors.getAllCpeCasProcessors()){
+			processor.getCpeComponentDescriptor().getImport();//TODO load these into memory
+		}
 		cpeConfiguration = desc.getCpeConfiguration();
 		
 	}

@@ -51,6 +51,7 @@ public abstract class AbstractComponent implements Component {
 
 	//private (rather than protected) to ensure use of proper set methods by extending classes
 	private String name = "Unnamed";
+	private String identifier = "Unidentified";
 	private String implementationName = "Unknown";
 	private String description = "Undescribed";
 	private String vendor = "Unknown";
@@ -471,6 +472,18 @@ public abstract class AbstractComponent implements Component {
 			notifySavedStatusChangeListeners();
 		}
 	}
+	
+	@Override
+	public void setFlowControllerIdentifier(String identifier){
+		this.identifier = identifier;
+		//TODO does this need a listener?
+	}
+	
+	@Override
+	public String getFlowControllerIdentifier(){
+		return identifier;
+	}
+	
 	
 	/**
 	 * Registers a new component to be notified if the general description of the

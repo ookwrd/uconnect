@@ -1,8 +1,17 @@
 package org.u_compare.gui.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
+
+import org.apache.uima.UIMAFramework;
+import org.apache.uima.collection.metadata.CpeDescription;
+import org.apache.uima.collection.metadata.CpeDescriptorException;
+import org.apache.uima.util.InvalidXMLException;
+import org.apache.uima.util.XMLInputSource;
+import org.apache.uima.util.XMLizable;
+import org.u_compare.gui.model.uima.CPE;
 
 /**
  * Model class representing a UIMA Workflow. The workflow is modelled as a
@@ -189,6 +198,40 @@ public class Workflow extends AbstractAggregateComponent {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static Workflow constructWorkflowFromXML(String location){
+		try {
+			return constructWorkflowFromXML(new XMLInputSource(location));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Workflow constructWorkflowFromXML(XMLInputSource inputSource){
+		
+		try {
+			XMLizable desc = UIMAFramework.getXMLParser().parse(inputSource);
+		
+			if(desc instanceof CpeDescription){
+				System.out.println("Right kind of description");
+				return new CPE((CpeDescription)desc);
+			} else {
+				//TODO error
+				return null;
+			}
+			
+		} catch (InvalidXMLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (CpeDescriptorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 }

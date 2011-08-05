@@ -3,19 +3,14 @@ package org.u_compare.gui.model;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.analysis_engine.metadata.FlowConstraints;
 import org.apache.uima.analysis_engine.metadata.FlowControllerDeclaration;
 import org.apache.uima.resource.ResourceCreationSpecifier;
-import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
-import org.apache.uima.util.InvalidXMLException;
 import org.u_compare.gui.debugging.Debug;
-import org.u_compare.gui.model.parameters.constraints.FloatConstraint;
-
 
 /**
  * Abstract base class implementing functionality common to all aggregate components.
@@ -297,7 +292,8 @@ public abstract class AbstractAggregateComponent extends
 		
 		for(Component comp : getSubComponents()){
 			//its not comp.getName()? what is it supposed to be?? 
-			metaData.put("Basic" + comp.getName(),comp.getResourceCreationSpecifier());
+			
+			metaData.put(comp.getFlowControllerIdentifier(),comp.getResourceCreationSpecifier());
 			
 		}
 		

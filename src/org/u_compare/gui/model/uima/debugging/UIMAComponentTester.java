@@ -5,14 +5,18 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.io.StringWriter;
 import org.apache.uima.UIMAFramework;
+import org.apache.uima.collection.metadata.CpeDescription;
+import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
+import org.apache.uima.util.XMLizable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.uima.CPE;
 import org.xml.sax.SAXException;
 
 public class UIMAComponentTester {
@@ -160,8 +164,8 @@ public class UIMAComponentTester {
 	}
 	
 	@Test
-	public void inOutTestBasicCPE() throws InvalidXMLException, IOException {
-		Component component = AbstractComponent.constructComponentFromXML("src/org/u_compare/gui/model/uima/debugging/basicCPE.xml");
+	public void inOutTestBasicCPE() throws InvalidXMLException, IOException, CpeDescriptorException {
+		inOutTestCPE("src/org/u_compare/gui/model/uima/debugging/basicCPE.xml");
 	}
 	
 	/**
@@ -184,7 +188,16 @@ public class UIMAComponentTester {
 		assertTrue(compare(descriptorToString(desc), descriptorToString(component.getResourceCreationSpecifier())));
 	}
 	
-	private static String descriptorToString(ResourceSpecifier in){
+	private void inOutTestCPE(String location) throws IOException, InvalidXMLException, CpeDescriptorException {
+		XMLInputSource xmlIn = new XMLInputSource(location);
+		CpeDescription desc = (CpeDescription) UIMAFramework.getXMLParser().parse(xmlIn);
+		
+		CPE workflow = new CPE(desc);
+		
+		assertTrue(compare(descriptorToString(desc), descriptorToString(workflow.getResourceCPEDescription())));
+	}
+	
+	private static String descriptorToString(XMLizable in){
 		StringWriter writeInput = new StringWriter();
 		try {
 			in.toXML(writeInput);

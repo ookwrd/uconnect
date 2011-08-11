@@ -455,12 +455,7 @@ public class ComponentController implements DragAndDropComponentController {
 	 * @return Currently dragged component.
 	 */
 	private ComponentController getCurrentlyDragged(){
-		//TODO clean this up.
-		
-		//TODO memoization
-		DragAndDropController dndControl = DragAndDropController.getController();
-		DraggableJPanel dragged = dndControl.getDragged();
-		return (ComponentController)dragged.getController();
+			return DragAndDropController.getController().getDraggedComponent();
 	}
 
 	/**

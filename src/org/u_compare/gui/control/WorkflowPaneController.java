@@ -134,11 +134,8 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		
 		Workflow workflow = defaultWorkflow();
 		
-		//TODO clean up
-		DragAndDropController dndControl = DragAndDropController.getController();
-		DraggableJPanel dragged = dndControl.getDragged();
-		ComponentController controllerDragged = (ComponentController)dragged.getController();
-		workflow.addSubComponent((controllerDragged).component);
+		ComponentController controllerDragged = DragAndDropController.getController().getDraggedComponent();
+		workflow.addSubComponent(controllerDragged.component);
 		controllerDragged.removeComponent();
 		
 		return workflow;

@@ -39,11 +39,17 @@ public class DragAndDropController {
         return dragged;
     }
  
-    static public ComponentController toComponentController(DraggableJPanel input) throws ClassCastException{
+    public ComponentController getDraggedComponent() throws ClassCastException{
     	
-    	//TODO move casting of DraggableJPanels to ComponentControllers here.
-    	
-    	throw new ClassCastException("DragAndDropController can't convert input DraggableJPanel to a ComponentController");
+    	if(dragged.getController() instanceof ComponentController){
+    		return (ComponentController)dragged.getController();
+    	} else if ( false /*dragged.getController() instance of Library Descriptor*/ ){
+    		
+    		//TODO build the component from the descriptor
+    		return null;
+    		
+    	} else{
+    		throw new ClassCastException("DragAndDropController can't convert input DraggableJPanel to a ComponentController");
+    	}
     }
-    
 }

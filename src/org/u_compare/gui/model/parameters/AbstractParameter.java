@@ -40,6 +40,7 @@ public abstract class AbstractParameter<T>
 	
 	@Override
 	public String getDescription() {
+		assert(description!=null);
 		return description;
 	}
 	
@@ -53,6 +54,7 @@ public abstract class AbstractParameter<T>
 	
 	@Override 
 	public String getName(){
+		assert(name!=null);
 		return name;
 	}
 	

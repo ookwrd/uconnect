@@ -30,8 +30,8 @@ public class GUITestingHarness {
 		//workflows.add(ExampleWorkflowFactory.deepAggregate(5,2));
 		workflows.add(ExampleWorkflowFactory.realComponents());
 		//workflows.add(ExampleWorkflowFactory.realComponents1());
-		workflows.add(ExampleWorkflowFactory.realComponents2());
-		
+		//workflows.add(ExampleWorkflowFactory.realComponents2());
+		workflows.add(ExampleWorkflowFactory.cpeWorkflow());
 		
 		WorkflowPaneController workflowPaneController = new WorkflowPaneController();	
 		JComponent tabbedPane = workflowPaneController.initialize(workflows);

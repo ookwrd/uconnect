@@ -216,7 +216,6 @@ public class Workflow extends AbstractAggregateComponent {
 			XMLizable desc = UIMAFramework.getXMLParser().parse(inputSource);
 		
 			if(desc instanceof CpeDescription){
-				System.out.println("Right kind of description");
 				return new CPE((CpeDescription)desc);
 			} else {
 				//TODO error

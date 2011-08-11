@@ -8,17 +8,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import org.u_compare.gui.ConsolePane;
-import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Workflow;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
 
@@ -39,8 +35,6 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	
 	private static final boolean showWorkflowControlPanel = true;
 	private static final boolean showWorkflowDetails = true;
-	
-	private WorkflowTabbedPane tabbedPane;
 
 	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser(){
 		@Override
@@ -60,6 +54,8 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		}
 	};
 	
+	private WorkflowTabbedPane tabbedPane;
+	
 	private JComponent init(ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes){
 		
 		if(workflowSplitPanes.size() == 0){
@@ -67,7 +63,6 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		}
 		
 		if(ALLOW_TABS){
-			
 			tabbedPane = new WorkflowTabbedPane(this);
 			
 			for(WorkflowHorizontalSplitPane workflowSplitPane : workflowSplitPanes){
@@ -77,19 +72,15 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 			return tabbedPane;
 			
 		}else{
-			
 			assert(workflowSplitPanes.size() == 1);
 			return workflowSplitPanes.get(0);
-			
 		}
 		
 	}
 	
 	public JComponent initialize(){
-		
 		ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes = new ArrayList<WorkflowHorizontalSplitPane>();
 		return init(workflowSplitPanes);
-		
 	}
 	
 	public JComponent initialize(Workflow workflow){

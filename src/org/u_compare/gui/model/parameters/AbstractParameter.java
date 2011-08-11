@@ -223,8 +223,15 @@ public abstract class AbstractParameter<T>
 		
 		String name = param.getName();
 		String description = param.getDescription();
+		
+		//Replace null values
+		name = name==null?"":name;
+		description = description==null?"":description;
+		
 		boolean multivalued = param.isMultiValued();
 		boolean mandatory = param.isMandatory();
+		
+		
 		
 		// Why are the types Strings? I cant do a switch statement..
 		String type = param.getType();

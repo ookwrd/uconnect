@@ -1,7 +1,5 @@
 package org.u_compare.gui.control;
 
-import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
-import org.u_compare.gui.annotationTypeChooser.BasicAnnotationTypeChooser;
 import org.u_compare.gui.component.TypeListPanel;
 import org.u_compare.gui.component.TypeListPanel.LIST_TYPES;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;

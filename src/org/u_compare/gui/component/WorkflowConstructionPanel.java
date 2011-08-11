@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
+import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
@@ -89,5 +90,5 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 		target.add(new JLabel("Save panel"));
 		
 	}
-	
+
 }

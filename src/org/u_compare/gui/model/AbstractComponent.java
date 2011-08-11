@@ -692,7 +692,7 @@ public abstract class AbstractComponent implements Component {
 			ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
 			Object value = constructConfigurationParameter(param, newParam);
 			if(value != null){
-				settings.setParameterValue(param.getName(), value);
+				settings.setParameterValue(param.getName().equals("")?null:param.getName(), value);
 			}
 
 			declarations.addConfigurationParameter(newParam);
@@ -746,7 +746,7 @@ public abstract class AbstractComponent implements Component {
 		Object value = null;	
 		
 		newParameter.setName(param.getName());
-		newParameter.setDescription(param.getDescription());
+		newParameter.setDescription(param.getDescription().equals("")?null:param.getDescription());
 		newParameter.setMandatory(param.isMandatory());
 		newParameter.setMultiValued(param.isMultivalued());
 		

@@ -15,8 +15,7 @@ import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
-import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
-import org.u_compare.gui.annotationTypeChooser.BasicAnnotationTypeChooser;
+import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Workflow;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -25,6 +24,10 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 
 	public interface WorkflowFactory{
 		public Workflow constructWorkflow();
+	}
+	
+	public interface AnnotationTypeChooser {
+		public AnnotationTypeOrFeature getNewAnnotation();	
 	}
 	
 	private static final boolean SHOW_CONSOLE = true;
@@ -39,7 +42,13 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	
 	private WorkflowTabbedPane tabbedPane;
 
-	public static AnnotationTypeChooser typeChooser = new BasicAnnotationTypeChooser();
+	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser(){
+		@Override
+		public AnnotationTypeOrFeature getNewAnnotation() {
+			String typeName = JOptionPane.showInputDialog("Please enter the type name to add:");
+			return new AnnotationTypeOrFeature(typeName);
+		}
+	};
 	
 	public static WorkflowFactory defaultWorkflowFactory = new WorkflowFactory(){
 		@Override

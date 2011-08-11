@@ -15,7 +15,11 @@ import org.u_compare.gui.DraggableJPanel;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
+import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
+import org.u_compare.gui.annotationTypeChooser.BasicAnnotationTypeChooser;
 import org.u_compare.gui.model.Workflow;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
 
@@ -31,6 +35,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	
 	private WorkflowTabbedPane tabbedPane;
 
+	public static AnnotationTypeChooser typeChooser = new BasicAnnotationTypeChooser();
 	
 	private JComponent init(ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes){
 		
@@ -121,6 +126,9 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		
 	}
 	
+	public static void setTypeChooser(AnnotationTypeChooser typeChooser){
+		WorkflowPaneController.typeChooser = typeChooser;
+	}
 	
 	private static Workflow draggedWorkflow() {
 		
@@ -216,4 +224,5 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	public void setAllowTabs(boolean allowTabs){
 		this.ALLOW_TABS = allowTabs;
 	}
+	
 }

@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.DraggableJPanel;
+import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.guiElements.RoundedBorder;

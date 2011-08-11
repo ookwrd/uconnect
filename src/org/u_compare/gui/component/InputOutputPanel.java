@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.model.Component;
@@ -14,6 +15,9 @@ public class InputOutputPanel extends JPanel {
 	
 	private JPanel inputPanel;
 	private JPanel outputPanel;
+	
+	private TypeListPanelController inputsController;
+	private TypeListPanelController outputsController;
 	
 	public InputOutputPanel(Component component,
 			ComponentController controller) {
@@ -25,8 +29,8 @@ public class InputOutputPanel extends JPanel {
 		"Inputs:"));
 		//inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		TypeListPanelController typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.LIST_TYPES.INPUTS);
-		TypeListPanel typeListPanel = new TypeListPanel(component, TypeListPanel.LIST_TYPES.INPUTS, typeListPanelController);
+		inputsController = new TypeListPanelController(controller, component, TypeListPanel.LIST_TYPES.INPUTS);
+		TypeListPanel typeListPanel = new TypeListPanel(component, TypeListPanel.LIST_TYPES.INPUTS, inputsController);
 		
 		inputPanel.add(typeListPanel);
 		
@@ -37,8 +41,8 @@ public class InputOutputPanel extends JPanel {
 		//outputPanel.setLayout(new BoxLayout(outputPanel,
 			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
-		typeListPanelController = new TypeListPanelController(controller, component, TypeListPanel.LIST_TYPES.OUTPUTS);
-		typeListPanel = new TypeListPanel(component, TypeListPanel.LIST_TYPES.OUTPUTS, typeListPanelController);
+		outputsController = new TypeListPanelController(controller, component, TypeListPanel.LIST_TYPES.OUTPUTS);
+		typeListPanel = new TypeListPanel(component, TypeListPanel.LIST_TYPES.OUTPUTS, outputsController);
 		
 		outputPanel.add(typeListPanel);
 		
@@ -47,5 +51,4 @@ public class InputOutputPanel extends JPanel {
 		add(outputPanel);
 		
 	}
-	
 }

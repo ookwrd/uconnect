@@ -1,7 +1,5 @@
 package org.u_compare.gui.control;
 
-import java.security.InvalidParameterException;
-
 import org.u_compare.gui.annotationTypeChooser.AnnotationTypeChooser;
 import org.u_compare.gui.annotationTypeChooser.BasicAnnotationTypeChooser;
 import org.u_compare.gui.component.TypeListPanel;
@@ -10,11 +8,8 @@ import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component;
 
 public class TypeListPanelController {
-
-	//Default Annotation Type Chooser, replaceable via setTypeChooser method
-	private AnnotationTypeChooser typeChooser = new BasicAnnotationTypeChooser();
 	
-//	private ComponentController parentComponentController;
+	private ComponentController parentComponentController;
 	private Component component;
 	private LIST_TYPES listType;
 	
@@ -22,7 +17,7 @@ public class TypeListPanelController {
 			ComponentController parentComponentController,
 			Component component, LIST_TYPES outputs){
 		
-//		this.parentComponentController = parentComponentController;
+		this.parentComponentController = parentComponentController;
 		this.component = component;
 		this.listType = outputs;
 		
@@ -30,7 +25,7 @@ public class TypeListPanelController {
 	
 	public void addAnnotation(){
 		
-		AnnotationTypeOrFeature newType = typeChooser.getNewAnnotation();
+		AnnotationTypeOrFeature newType = WorkflowPaneController.typeChooser.getNewAnnotation();
 		
 		if(newType == null || newType.getTypeName().equals("")){
 			System.out.println("Invalid Type returned by type chooser.");
@@ -62,16 +57,6 @@ public class TypeListPanelController {
 		}else{
 			//TODO this state shouldnt occur
 		}
-		
-	}
-	
-	public void setTypeChooser(AnnotationTypeChooser typeChooser){
-		
-		if(typeChooser == null){
-			throw new InvalidParameterException("Specified AnnotationTypeChooser is null");
-		}
-		
-		this.typeChooser = typeChooser;
 		
 	}
 	

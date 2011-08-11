@@ -2,18 +2,17 @@ package org.u_compare.gui.model.uima.debugging;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.apache.uima.resource.ResourceSpecifier;
-import org.apache.uima.util.XMLInputSource;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 
 public class RunTester {
 
 	public RunTester(String location) throws ResourceInitializationException{
+		//TODO factor this into a unittest
+		//TODO test the creation of an aggregate component from scratch
 		
 		Component component = AbstractComponent.constructComponentFromXML(location);
 		

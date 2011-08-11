@@ -14,7 +14,7 @@ import org.u_compare.gui.model.Component;
  * 
  * Controller responsible for handling userinput directed at a specific component/workflow.
  * 
- * @author luke mccrohon
+ * @author Luke McCrohon
  *
  */
 public class ComponentController implements DragAndDropComponentController {

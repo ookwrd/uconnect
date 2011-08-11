@@ -39,5 +39,11 @@ public class DragAndDropController {
         return dragged;
     }
  
+    static public ComponentController toComponentController(DraggableJPanel input) throws ClassCastException{
+    	
+    	//TODO move casting of DraggableJPanels to ComponentControllers here.
+    	
+    	throw new ClassCastException("DragAndDropController can't convert input DraggableJPanel to a ComponentController");
+    }
     
 }

@@ -1,5 +1,6 @@
 package org.u_compare.gui;
 
+import java.awt.Graphics;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
@@ -9,6 +10,8 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
@@ -29,7 +32,7 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 //TODO: Should have mnemonics
 //TODO: Should never be empty, we always have at least one tab
 public class WorkflowTabbedPane extends ButtonTabbedPane
-	implements WorkflowStatusListener {
+	implements WorkflowStatusListener, ChangeListener {
 	
 	// Configuration
 	private static final String TOOLTIP_TEXT =
@@ -81,6 +84,8 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 		this.setToolTipText(WorkflowTabbedPane.TOOLTIP_TEXT);
 		
 		this.initializeTabButtons();
+		
+		this.addChangeListener(this);
 	}
 	
 	private void initializeTabButtons(){
@@ -146,9 +151,58 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 	@Override
 	public void setIconAt(int index, Icon icon) {
 		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index))
-				.setStatusIcon(icon);
+				.setStatusIcon(icon, false);
 	}
 	
+	/**
+	 * Use this version if it is an icon that should be cleared when the tab is visited.
+	 * 
+	 * @param index
+	 * @param icon
+	 */
+	public void setNotifactionIconAt(int index, Icon icon){
+		if(index == getSelectedIndex()){
+			clearIconAt(index);
+			return;
+		}
+		
+		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index))
+		.setStatusIcon(icon, true);
+	}
+	
+
+	/**
+	 *  see if we need to clear a notification Icon.
+	 */
+	@Override
+	public void stateChanged(ChangeEvent e) {
+        clearNotificationIconAt(getSelectedIndex());
+	}
+	
+	public void clearNotificationIconAt(int index){
+		if(this.getTabComponentAt(index) instanceof IconizedCloseableTabFlapComponent){
+			IconizedCloseableTabFlapComponent tab = ((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index));
+			if(tab.iconIsNotification()){
+				clearIconAt(index);
+			}
+		}
+	}
+	
+	public void clearIconAt(int index){
+		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index)).setStatusIcon(new Icon() {//An empty icon.
+			@Override
+			public void paintIcon(java.awt.Component c, Graphics g, int x, int y) {
+			}
+			@Override
+			public int getIconWidth() {
+				return 16;
+			}
+			@Override
+			public int getIconHeight() {
+				return 16;
+			}
+		}, false);
+	}
 	
 	@Override
 	public void remove(int i) {
@@ -186,13 +240,13 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_STOPPED);
 						break;
 					case ERROR:
-						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_ERROR);
+						this.setNotifactionIconAt(i, WorkflowTabbedPane.WORKFLOW_ERROR);	
 						break;
 					case PAUSED:
 						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_PAUSED);
 						break;
 					case FINISHED:
-						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_FINISHED);
+						this.setNotifactionIconAt(i, WorkflowTabbedPane.WORKFLOW_FINISHED);	
 						break;
 					default:
 						assert false: "Unimplemented WorkflowStatus received";
@@ -256,4 +310,5 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 			return;
 		}
 	}
+
 }

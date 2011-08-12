@@ -69,13 +69,10 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 	 * Should be used to start workflow processing.
 	 * 
 	 */
-	public void runWorkflow() throws InvalidStatusException {
-		
+	public void runWorkflow() {
+		assert(status == WorkflowStatus.READY || status == WorkflowStatus.FINISHED);//TODO
+
 		notifyWorkflowMessageListeners("Play button hit.");
-		
-		if(status != WorkflowStatus.READY) {
-			throw new InvalidStatusException(status, WorkflowStatus.READY);
-		}
 		
 		setStatus(WorkflowStatus.INITIALIZING);
 		
@@ -118,28 +115,22 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 	 * 
 	 * @throws InvalidStatusException
 	 */
-	public void pauseWorkflow() throws InvalidStatusException{
-		
-		if(status != WorkflowStatus.RUNNING){
-			throw new InvalidStatusException(status, WorkflowStatus.RUNNING);
-		}
+	public void pauseWorkflow(){
+		assert(status == WorkflowStatus.RUNNING);
 		
 		//TODO make this do something
+		//TODO actually call this.
 		
 	}
 	
 	/**
 	 * should be used to stop workflow processing
 	 */
-	public void stopWorkflow() throws InvalidStatusException {
+	public void stopWorkflow() {
+		assert(status == WorkflowStatus.RUNNING || status == WorkflowStatus.PAUSED);
 		
 		notifyWorkflowMessageListeners("Stopped??!?!?");
 		
-		if(!(status == WorkflowStatus.RUNNING || status == WorkflowStatus.PAUSED)){
-			throw new InvalidStatusException(status, WorkflowStatus.RUNNING);
-		}
-		
-		notifyWorkflowMessageListeners("Stopped??!?!?");
 		
 		//TODO make this do something
 		

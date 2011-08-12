@@ -1,7 +1,6 @@
 package org.u_compare.gui.control;
 
 import org.u_compare.gui.component.WorkflowConstructionPanel;
-import org.u_compare.gui.model.InvalidStatusException;
 import org.u_compare.gui.model.Workflow;
 
 public class WorkflowController extends ComponentController {
@@ -28,43 +27,23 @@ public class WorkflowController extends ComponentController {
 	
 	
 	public void workflowPlayRequest(){
-
 		assert(component.isWorkflow());
 	
-		try {
-			((Workflow)component).runWorkflow();
-		} catch (InvalidStatusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		((Workflow)component).runWorkflow();
+
 	}
 	
 	
 	public void workflowPauseRequest(){
-		
 		assert(component.isWorkflow());
 		
-		try {
-			((Workflow)component).runWorkflow();
-		} catch (InvalidStatusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		((Workflow)component).runWorkflow();	
 	}
 	
 	public void workflowStopRequest(){
-		
 		assert(component.isWorkflow());
 		
-		try {
-			((Workflow)component).runWorkflow();
-		} catch (InvalidStatusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		((Workflow)component).runWorkflow();		
 	}
 	
 }

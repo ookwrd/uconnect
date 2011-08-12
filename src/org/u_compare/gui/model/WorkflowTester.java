@@ -152,48 +152,6 @@ public class WorkflowTester{
 		assertTrue(statuses.get(2) == WorkflowStatus.LOADING);
 		assertTrue(statuses.get(3) == WorkflowStatus.LOADING);
 	}
-
-	@Test(expected=InvalidStatusException.class)
-	public void failOnErrorStatus() throws Throwable{
-		PrivilegedAccessor.invokeMethod(testWorkflow,"setStatus",WorkflowStatus.ERROR);
-		try{
-			PrivilegedAccessor.invokeMethod(testWorkflow,"runWorkflow", new Object[]{});
-		}catch(Exception e){
-			if(e.getCause() != null){
-				throw e.getCause();
-			}else{
-				throw e;	
-			}
-		}
-	}	
-	
-	@Test(expected=InvalidStatusException.class)
-	public void stopOnLoading() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InvalidStatusException{
-		try{
-			PrivilegedAccessor.invokeMethod(testWorkflow,"setStatus",WorkflowStatus.LOADING);
-			PrivilegedAccessor.invokeMethod(testWorkflow,"stopWorkflow", new Object[]{});
-		}catch(InvocationTargetException e){
-			if(e.getCause() instanceof InvalidStatusException){
-				throw (InvalidStatusException)e.getCause();
-			}else{
-				throw e;
-			}
-		}
-	}
-	
-	@Test(expected=InvalidStatusException.class)
-	public void runOnError() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InvalidStatusException{		
-		try{
-		PrivilegedAccessor.invokeMethod(testWorkflow,"setStatus",WorkflowStatus.ERROR);
-		PrivilegedAccessor.invokeMethod(testWorkflow,"runWorkflow");
-		}catch(InvocationTargetException e){
-			if(e.getCause() instanceof InvalidStatusException){
-				throw (InvalidStatusException)e.getCause();
-			}else{
-				throw e;
-			}
-		}
-	}
 	
 	private static class TestListener1 implements DescriptionChangeListener, InputOutputChangeListener, SubComponentsChangedListener, SavedStatusChangeListener, MinimizedStatusChangeListener, LockedStatusChangeListener{
 

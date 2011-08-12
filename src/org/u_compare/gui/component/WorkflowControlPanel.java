@@ -23,15 +23,15 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 public class WorkflowControlPanel extends JPanel implements
 		WorkflowStatusListener {
 
-	private static final boolean debug = true;
-	public final static String STATUS_PREFIX = "Workflow Status: ";
 	public static final String ICON_RUN_PATH = "../gfx/icon_start.png";
 	public static final String ICON_STOP_PATH = "../gfx/icon_stop.png";
 	public static final String ICON_PAUSE_PATH = "../gfx/icon_pause.png";
+
+	private final static String STATUS_PREFIX = "Workflow Status: ";
 	private static final String RUN_TOOLTIPTEXT = "Run workflow";
+	private static final String PAUSED_TOOLTIPTEXT = "Resume Processing";
+	private static final String PAUSE_TOOLTIPTEXT = "Pause Processing";
 	private static final String STOP_TOOLTIPTEXT = "Stop workflow";
-	private static final boolean PAUSE = false; //TODO are these needed?
-	private static final boolean PLAY = true;
 	
 	private static boolean iconsLoaded = false;
 
@@ -57,18 +57,12 @@ public class WorkflowControlPanel extends JPanel implements
 		ActionListener playListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playWorkflow();
-				System.out.println("Play button hit");
 			}
 		};
 
 		ActionListener stopListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(stopButtonActive()) {
-					stopWorkflow();
-				}
-				else {
-					if (debug) System.out.println("Button stop currently not active");
-				}
+				stopWorkflow();
 			}
 		};
 
@@ -94,10 +88,6 @@ public class WorkflowControlPanel extends JPanel implements
 
 		component.registerWorkflowStatusListener(this);
 
-	}
-
-	private boolean stopButtonActive() {
-		return ((Workflow) component).getStatus() != WorkflowStatus.READY;
 	}
 	
 	protected static synchronized void loadIcons() {
@@ -140,30 +130,65 @@ public class WorkflowControlPanel extends JPanel implements
 		controller.workflowStopRequest();
 	}
 
-	/**
-	 * Toggle the button appearance and message. "Play" if the parameter play is
-	 * true, "Pause" otherwise.
-	 * 
-	 * @param play
-	 */
-	private void togglePlayButton(boolean play) {
-		if (play) {
+	private void setPlayButton(WorkflowStatus status) {
+		
+		switch (status) {
+		case READY:
+		case ERROR:
+		case FINISHED:
+			runButton.setEnabled(true);
 			runButton.setIcon(runIcon);
-			runButton.setToolTipText("Play");
-		} else {
+			runButton.setToolTipText(RUN_TOOLTIPTEXT);
+			break;
+			
+		case PAUSED:
+			runButton.setEnabled(true);
+			runButton.setIcon(runIcon);
+			runButton.setToolTipText(PAUSED_TOOLTIPTEXT);
+			break;
+			
+		case LOADING:
+		case INITIALIZING:
+			runButton.setEnabled(false);
+			break;
+
+		case RUNNING:
+			runButton.setEnabled(true);
 			runButton.setIcon(pauseIcon);
-			runButton.setToolTipText("Pause");
+			runButton.setToolTipText(PAUSE_TOOLTIPTEXT);
+			break;
 		}
+		
+	}
+	
+	private void setStopButton(WorkflowStatus status){
+		
+		switch (status) {
+		case READY:
+		case LOADING:
+		case INITIALIZING:
+		case ERROR:
+		case FINISHED:
+			stopButton.setEnabled(false);
+			break;
+			
+		case PAUSED:
+		case RUNNING:
+			stopButton.setEnabled(true);
+			break;
+		}
+		
 	}
 
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
-		statusLabel.setText(STATUS_PREFIX + workflow.getStatus());
-		// TODO: Update Buttons
-		if (workflow.getStatus().equals(WorkflowStatus.RUNNING))
-			togglePlayButton(PAUSE);
-		else
-			togglePlayButton(PLAY);
+		
+		System.out.println("Status Change" + workflow.getStatus());
+		
+		WorkflowStatus status = workflow.getStatus();
+		statusLabel.setText(STATUS_PREFIX + status);
+		setPlayButton(status);
+		setStopButton(status);
 	}
 
 }

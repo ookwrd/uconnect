@@ -24,6 +24,8 @@ public class CPE extends Workflow {
 	private CpeCasProcessors cpeCasProcessors;
 	private CpeConfiguration cpeConfiguration;
 	
+	private String sourceFileName = "CPE Workflow";
+	
 	public CPE(CpeDescription desc) throws CpeDescriptorException{
 		
 		String path = desc.getSourceUrlString();
@@ -45,6 +47,10 @@ public class CPE extends Workflow {
 		}
 		cpeConfiguration = desc.getCpeConfiguration();
 		
+		if(desc.getSourceUrlString()!=null){
+			String urlString = desc.getSourceUrlString();
+			sourceFileName = urlString.substring(urlString.lastIndexOf("/")+1,urlString.length()-4);
+		}
 	}
 	
 	@Override
@@ -136,6 +142,24 @@ public class CPE extends Workflow {
 		retVal.setCpeConfiguration(cpeConfiguration);
 		
 		return retVal;
+	}
+	
+	@Override
+	public String getName(){
+		return sourceFileName;
+	}
+	
+	@Override
+	public String getDescription(){
+		return "This is a CPE workflow and so certain functionality may be unavailable. It is highly reccomended that users make use of UIMA AS workflows when possible.";
+	}
+	
+	/**
+	 * CPE workflow's don't have editable titles or descriptions.
+	 */
+	@Override
+	public boolean getLockedStatus(){//TODO a more general way of doing this
+		return true;
 	}
 	
 	public static void main(String[] args){

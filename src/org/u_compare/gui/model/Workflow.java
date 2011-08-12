@@ -70,37 +70,9 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 	 * 
 	 */
 	public void runWorkflow() {
-		assert(status == WorkflowStatus.READY || status == WorkflowStatus.FINISHED);//TODO
+		assert(status == WorkflowStatus.READY || status == WorkflowStatus.FINISHED || status == WorkflowStatus.ERROR);//TODO
 
-		notifyWorkflowMessageListeners("Play button hit.");
-		
-		setStatus(WorkflowStatus.INITIALIZING);
-		
-		/*//TODO
-		
-		setStatus(WorkflowStatus.RUNNING);
-		
-		//TODO
-		
-		
-		TimerTask task = new TimerTask() {
-			
-			private int x = 5;
-			
-			@Override
-			public void run() {
-				x--;
-				notifyWorkflowStatusListeners();
-				if(x < 1) {
-					timer.cancel();
-					afterRunning();
-				}
-			}
-		};
-		
-		timer.schedule(task, 0, 1000);
-		
-		*/
+	
 	}
 	
 	private void afterRunning(){
@@ -117,6 +89,7 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 	 */
 	public void pauseWorkflow(){
 		assert(status == WorkflowStatus.RUNNING);
+		
 		
 		//TODO make this do something
 		//TODO actually call this.
@@ -231,6 +204,15 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 		
 		System.out.println("aborted");
 	}
+	
+	@Override
+	public void paused() {
+		// TODO Auto-generated method stub
+		
+		notifyWorkflowMessageListeners("Workflow processing paused");
+		setStatus(WorkflowStatus.PAUSED);
+		System.out.println("paused");
+	}
 
 
 	@Override
@@ -238,7 +220,7 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 		System.out.println("batchProcessComplete");
 		
 
-		setStatus(WorkflowStatus.FINISHED);
+		//setStatus(WorkflowStatus.FINISHED);
 		
 	}
 
@@ -260,16 +242,6 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 
 
 	@Override
-	public void paused() {
-		// TODO Auto-generated method stub
-		System.out.println("paused");
-		
-
-		setStatus(WorkflowStatus.PAUSED);
-	}
-
-
-	@Override
 	public void resumed() {
 
 		System.out.println("resumed");
@@ -282,6 +254,7 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 	public void entityProcessComplete(CAS arg0, EntityProcessStatus arg1) {
 		// TODO Auto-generated method stub
 		
+		notifyWorkflowMessageListeners("Entity processing complete with status: " + arg1.getStatusMessage());
 		
 		System.out.println("Entity");
 		System.out.println(arg1.getStatusMessage());

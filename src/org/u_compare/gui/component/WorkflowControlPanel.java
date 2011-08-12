@@ -187,9 +187,6 @@ public class WorkflowControlPanel extends JPanel implements
 
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
-		
-		System.out.println("Status Change" + workflow.getStatus());
-		
 		WorkflowStatus status = workflow.getStatus();
 		statusLabel.setText(STATUS_PREFIX + status);
 		setPlayButton(status);

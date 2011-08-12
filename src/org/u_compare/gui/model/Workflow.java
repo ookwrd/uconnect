@@ -47,7 +47,6 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 		super();
 	}
 	
-	
 	/**
 	 * Creates a workflow from the specified list of components.
 	 * 
@@ -262,7 +261,7 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 	}
 	
 	protected void addStatusCallBackListeners() {
-		//TODO
+		//TODO incase other people want to add their own
 	}
 	
 }

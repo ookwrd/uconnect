@@ -69,6 +69,13 @@ public class CPE extends Workflow {
 				CpeDescription cpeDesc = getResourceCPEDescription(); 
 				notifyWorkflowMessageListeners("Workflow Descriptor initialzed.");
 
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				setStatus(Workflow.WorkflowStatus.LOADING);
 				CollectionProcessingEngine mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
 				mCPE.addStatusCallbackListener(CPE.this);
@@ -77,7 +84,7 @@ public class CPE extends Workflow {
 				mCPE.process();//Runs on a seperate thread.
 
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

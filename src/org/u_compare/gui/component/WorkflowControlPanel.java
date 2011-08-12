@@ -90,7 +90,6 @@ public class WorkflowControlPanel extends JPanel implements
 		workflowStatusChanged(component);
 		
 		component.registerWorkflowStatusListener(this);
-
 	}
 	
 	protected static synchronized void loadIcons() {

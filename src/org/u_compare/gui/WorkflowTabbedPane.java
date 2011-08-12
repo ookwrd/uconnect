@@ -39,8 +39,6 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 	
 	//XXX: We will conflict with the "Change tab" key shortcuts, override!
 	
-	// No, you in fact have different states... Odd...
-	//TODO: We do want to animate these in the end
 	private static boolean icons_loaded = false;
 
 	private static Icon WORKFLOW_STOPPED;

@@ -1,5 +1,6 @@
 package org.u_compare.gui.component;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -72,6 +73,9 @@ public class WorkflowControlPanel extends JPanel implements
 
 		statusLabel = new JLabel(STATUS_PREFIX
 				+ ((Workflow) component).getStatus());
+		//Adjust preferredSize so Label doesn't resize when messaged changed.
+		Dimension labelSize = statusLabel.getPreferredSize();
+		statusLabel.setPreferredSize(new Dimension(labelSize.width+40,labelSize.height));
 		this.add(statusLabel);
 
 		WorkflowControlPanel.loadIcons();
@@ -175,6 +179,7 @@ public class WorkflowControlPanel extends JPanel implements
 		case ERROR:
 		case FINISHED:
 			stopButton.setEnabled(false);
+			stopButton.setToolTipText(STOP_TOOLTIPTEXT);
 			break;
 			
 		case PAUSED:

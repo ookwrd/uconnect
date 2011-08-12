@@ -334,12 +334,12 @@ public class ExampleWorkflowFactory {
 	
 	public static Workflow cpeWorkflow(){
 		return Workflow.constructWorkflowFromXML(
-				"src/org/u_compare/gui/model/uima/debugging/basicCPE.xml");
+				"src/org/u_compare/gui/model/uima/debugging/CPEimport.xml");
 	}
 	
-	public static Workflow cpeWorkflow1(){
+	public static Workflow cpeWorkflowDirect(){
 		return Workflow.constructWorkflowFromXML(
-				"/Users/lukemccrohon/ParttimeWork/U-Compare/apache-uima/examples/descriptors/collection_processing_engine/MeetingFinderCPE_Integrated.xml");
+				"src/org/u_compare/gui/model/uima/debugging/CPEdirect.xml");
 	}
 	
 }

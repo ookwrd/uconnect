@@ -69,13 +69,13 @@ public class CPE extends Workflow {
 		//	
 			CpeDescription cpeDesc;
 			try {
-				cpeDesc = UIMAFramework.getXMLParser().parseCpeDescription(new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/CPE3.xml"));
+				cpeDesc = UIMAFramework.getXMLParser().parseCpeDescription(new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/CPEimport.xml"));
 			
 				CollectionProcessingEngine mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
 
 				//mCPE.addStatusCallbackListener(new SimpleRunCPE.StatusCallbackListenerImpl());
 				
-				mCPE.process();
+				mCPE.process();//On a seperate thread.
 			} catch (InvalidXMLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

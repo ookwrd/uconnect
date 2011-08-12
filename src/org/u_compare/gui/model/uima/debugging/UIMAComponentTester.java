@@ -164,8 +164,13 @@ public class UIMAComponentTester {
 	}
 	
 	@Test
-	public void inOutTestBasicCPE() throws InvalidXMLException, IOException, CpeDescriptorException {
-		inOutTestCPE("src/org/u_compare/gui/model/uima/debugging/basicCPE.xml");
+	public void inOutTestCPEimport() throws InvalidXMLException, IOException, CpeDescriptorException {
+		inOutTestCPE("src/org/u_compare/gui/model/uima/debugging/CPEimport.xml");
+	}
+	
+	@Test
+	public void inOutTestCPEdirect() throws InvalidXMLException, IOException, CpeDescriptorException {
+		inOutTestCPE("src/org/u_compare/gui/model/uima/debugging/CPEdirect.xml");
 	}
 	
 	/**

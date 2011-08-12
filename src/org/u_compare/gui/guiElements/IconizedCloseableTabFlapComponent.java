@@ -53,6 +53,8 @@ public class IconizedCloseableTabFlapComponent
 		new DropTarget(this, dropListener);
 	}
 	
+	private boolean iconIsNotification = false;
+	
 	public IconizedCloseableTabFlapComponent(
 			final JTabbedPane parentPane, Icon statusIcon) {
 		
@@ -214,7 +216,17 @@ public class IconizedCloseableTabFlapComponent
 	 * 
 	 * @param icon New icon to use as our status icon
 	 */
-	public void setStatusIcon(Icon icon) {
+	public void setStatusIcon(Icon icon, boolean iconIsNotification) {
 		this.statusIconLabel.setIcon(icon);
+		this.iconIsNotification = iconIsNotification;
+	}
+	
+	/**
+	 * Is this an icon that should be cleared when the tab is selected?
+	 * 
+	 * @return
+	 */
+	public boolean iconIsNotification(){
+		return iconIsNotification;
 	}
 }

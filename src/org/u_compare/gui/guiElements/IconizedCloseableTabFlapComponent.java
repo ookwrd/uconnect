@@ -75,7 +75,7 @@ public class IconizedCloseableTabFlapComponent
 		
 		// First, we add the icon
 		this.statusIconLabel = new JLabel(statusIcon);
-		this.statusIconLabel.setPreferredSize(new Dimension(14, 14));
+		this.statusIconLabel.setSize(new Dimension(16, 16));
 		this.statusIconLabel.setBorder(
 				BorderFactory.createEmptyBorder(0, 0, 0, 5));
 		this.add(this.statusIconLabel);

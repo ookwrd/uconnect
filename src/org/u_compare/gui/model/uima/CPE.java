@@ -10,6 +10,7 @@ import org.apache.uima.collection.metadata.CpeCollectionReader;
 import org.apache.uima.collection.metadata.CpeConfiguration;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
+import org.apache.uima.examples.cpe.SimpleRunCPE;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.util.InvalidXMLException;
@@ -54,7 +55,7 @@ public class CPE extends Workflow {
 	
 	@Override
 	public void runWorkflow() throws InvalidStatusException {
-		super.runWorkflow();
+		//super.runWorkflow();
 		System.out.println("Running in CPE");
 		
 
@@ -68,11 +69,11 @@ public class CPE extends Workflow {
 		//	
 			CpeDescription cpeDesc;
 			try {
-				cpeDesc = UIMAFramework.getXMLParser().parseCpeDescription(new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/basicCPE.xml"));
+				cpeDesc = UIMAFramework.getXMLParser().parseCpeDescription(new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/CPE3.xml"));
 			
 				CollectionProcessingEngine mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
 
-				//mCPE.addStatusCallbackListener(new StatusCallbackListenerImpl());
+				//mCPE.addStatusCallbackListener(new SimpleRunCPE.StatusCallbackListenerImpl());
 				
 				mCPE.process();
 			} catch (InvalidXMLException e) {
@@ -111,6 +112,10 @@ public class CPE extends Workflow {
 		retVal.setCpeConfiguration(cpeConfiguration);
 		
 		return retVal;
+	}
+	
+	public static void main(String[] args){
+		System.out.println("test");
 	}
 	
 }

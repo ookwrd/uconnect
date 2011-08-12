@@ -55,7 +55,7 @@ public class CPE extends Workflow {
 	
 	@Override
 	public void runWorkflow() throws InvalidStatusException {
-		//super.runWorkflow();
+		super.runWorkflow();
 		System.out.println("Running in CPE");
 		
 
@@ -73,7 +73,7 @@ public class CPE extends Workflow {
 			
 				CollectionProcessingEngine mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
 
-				//mCPE.addStatusCallbackListener(new SimpleRunCPE.StatusCallbackListenerImpl());
+				mCPE.addStatusCallbackListener(this);
 				
 				mCPE.process();//On a seperate thread.
 			} catch (InvalidXMLException e) {

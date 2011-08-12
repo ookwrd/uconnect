@@ -65,7 +65,6 @@ public class WorkflowControlPanel extends JPanel implements
 			public void actionPerformed(ActionEvent e) {
 				if(stopButtonActive()) {
 					stopWorkflow();
-					//if (debug) System.out.println("Button stop hit, it was active");
 				}
 				else {
 					if (debug) System.out.println("Button stop currently not active");

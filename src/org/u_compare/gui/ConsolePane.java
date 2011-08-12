@@ -13,6 +13,7 @@ import javax.swing.text.DefaultCaret;
 
 import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
+import org.u_compare.gui.model.Workflow.WorkflowMessageListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
@@ -25,7 +26,7 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 @SuppressWarnings("serial")
 public class ConsolePane extends JScrollPane
-	implements WorkflowStatusListener {
+	implements WorkflowStatusListener, WorkflowMessageListener {
 	
 	/**
 	 * TODO:
@@ -68,6 +69,7 @@ public class ConsolePane extends JScrollPane
 
 		this.workflow = workflow;
 		workflow.registerWorkflowStatusListener(this);
+		workflow.registerWorkflowMessageListener(this);
 		
 		this.console = new JEditorPane();
 		
@@ -161,6 +163,11 @@ public class ConsolePane extends JScrollPane
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
 		addConsoleMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus());
+	}
+	
+	@Override
+	public void workflowMessageSent(Workflow workflow, String message){
+		addConsoleMessage(message);
 	}
 	
 	public Workflow getAssociatedWorkflow() {

@@ -79,15 +79,16 @@ public class WorkflowControlPanel extends JPanel implements
 		// run button
 		runButton = new HighlightButton(runIcon);
 		runButton.addActionListener(playListener);
-		runButton.setToolTipText(RUN_TOOLTIPTEXT);
 		this.add(runButton);
 		
 		// stop button
 		stopButton = new HighlightButton(stopIcon);
 		stopButton.addActionListener(stopListener);
-		stopButton.setToolTipText(STOP_TOOLTIPTEXT);
 		this.add(stopButton);
 
+		//To configure initial status
+		workflowStatusChanged(component);
+		
 		component.registerWorkflowStatusListener(this);
 
 	}

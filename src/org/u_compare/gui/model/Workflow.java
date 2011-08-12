@@ -25,7 +25,7 @@ import org.u_compare.gui.model.uima.CPE;
  */
 public class Workflow extends AbstractAggregateComponent implements StatusCallbackListener {
 	
-	public enum WorkflowStatus {LOADING, READY, INITIALIZING, RUNNING, ERROR,
+	public enum WorkflowStatus {READY, LOADING, INITIALIZING, RUNNING, ERROR,
 		PAUSED, FINISHED};
 	
 	public interface WorkflowStatusListener {
@@ -71,7 +71,7 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 	 */
 	public void runWorkflow() throws InvalidStatusException {
 		
-notifyWorkflowMessageListeners("Play button hit.");
+		notifyWorkflowMessageListeners("Play button hit.");
 		
 		if(status != WorkflowStatus.READY) {
 			throw new InvalidStatusException(status, WorkflowStatus.READY);
@@ -150,7 +150,7 @@ notifyWorkflowMessageListeners("Play button hit.");
 	 * 
 	 * @param newStatus
 	 */
-	private void setStatus(WorkflowStatus newStatus){
+	protected void setStatus(WorkflowStatus newStatus){
 		if(status == newStatus){return;}
 		
 		status = newStatus;
@@ -291,6 +291,14 @@ notifyWorkflowMessageListeners("Play button hit.");
 	public void entityProcessComplete(CAS arg0, EntityProcessStatus arg1) {
 		// TODO Auto-generated method stub
 		
+		
+		System.out.println("Entity");
+		System.out.println(arg1.getStatusMessage());
+		
+	}
+	
+	protected void addStatusCallBackListeners() {
+		//TODO
 	}
 	
 }

@@ -16,6 +16,12 @@ public class BasicAE extends JCasAnnotator_ImplBase {
 	public void process(JCas aJCas) throws AnalysisEngineProcessException {
 		UIMAComponentTester.flags[0] = true;
 		System.out.println("Processing Zero");
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

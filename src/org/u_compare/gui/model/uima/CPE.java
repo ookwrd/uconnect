@@ -63,19 +63,17 @@ public class CPE extends Workflow {
 
 		try {
 			
-
 			System.out.println("Before:" + UIMAComponentTester.flags[0]+ " " + UIMAComponentTester.flags[1]);
 			
-		//	
 			CpeDescription cpeDesc;
 			try {
+				
+				setStatus(Workflow.WorkflowStatus.LOADING);
 				cpeDesc = UIMAFramework.getXMLParser().parseCpeDescription(new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/CPEimport.xml"));
-			
 				CollectionProcessingEngine mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
-
 				mCPE.addStatusCallbackListener(this);
 				
-				mCPE.process();//On a seperate thread.
+				mCPE.process();//Runs on a seperate thread.
 			} catch (InvalidXMLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

@@ -49,25 +49,19 @@ public class CPE extends Workflow {
 	@Override
 	public void runWorkflow() {
 		super.runWorkflow();
-		System.out.println("Running in CPE");
-		
-
-		//CpeDescription cpeDesc = getResourceCPEDescription();
 
 		try {
 			
 			System.out.println("Before:" + UIMAComponentTester.flags[0]+ " " + UIMAComponentTester.flags[1]);
 			
-			CpeDescription cpeDesc;
 				
-				setStatus(Workflow.WorkflowStatus.LOADING);
-				cpeDesc = getResourceCPEDescription(); //UIMAFramework.getXMLParser().parseCpeDescription(new XMLInputSource("src/org/u_compare/gui/model/uima/debugging/CPEimport.xml"));
-				CollectionProcessingEngine mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
-				mCPE.addStatusCallbackListener(this);
+			setStatus(Workflow.WorkflowStatus.LOADING);
+			CpeDescription cpeDesc = getResourceCPEDescription(); 
+			CollectionProcessingEngine mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
+			mCPE.addStatusCallbackListener(this);
 				
-				mCPE.process();//Runs on a seperate thread.
+			mCPE.process();//Runs on a seperate thread.
 
-				System.out.println("done");
 			
 			System.out.println("After:" + UIMAComponentTester.flags[0]+ " " + UIMAComponentTester.flags[1]);
 		} catch (ResourceInitializationException e) {

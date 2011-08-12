@@ -28,22 +28,18 @@ public class WorkflowController extends ComponentController {
 	
 	public void workflowPlayRequest(){
 		assert(component.isWorkflow());
-	
 		((Workflow)component).runWorkflow();
-
 	}
 	
 	
 	public void workflowPauseRequest(){
 		assert(component.isWorkflow());
-		
-		((Workflow)component).runWorkflow();	
+		((Workflow)component).pauseWorkflow();	
 	}
 	
 	public void workflowStopRequest(){
 		assert(component.isWorkflow());
-		
-		((Workflow)component).runWorkflow();		
+		((Workflow)component).stopWorkflow();		
 	}
 	
 }

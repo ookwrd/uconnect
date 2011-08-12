@@ -46,6 +46,8 @@ public class WorkflowControlPanel extends JPanel implements
 
 	private HighlightButton runButton;
 	private HighlightButton stopButton;
+	
+	private boolean pauseMode = false;
 
 	public WorkflowControlPanel(Workflow component,
 			WorkflowController controller) {
@@ -56,13 +58,13 @@ public class WorkflowControlPanel extends JPanel implements
 
 		ActionListener playListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				playWorkflow();
+				playButtonClicked();
 			}
 		};
 
 		ActionListener stopListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				stopWorkflow();
+				stopButtonClicked();
 			}
 		};
 
@@ -115,19 +117,18 @@ public class WorkflowControlPanel extends JPanel implements
 		return;
 	}
 
-	private void stopWorkflow() {
-		WorkflowStatus currentStatus = ((Workflow) component).getStatus();
-		if (currentStatus == WorkflowStatus.READY
-				|| currentStatus == WorkflowStatus.PAUSED) {
-			controller.workflowPlayRequest();
-		} else if (currentStatus == WorkflowStatus.RUNNING
-				|| currentStatus == WorkflowStatus.INITIALIZING) {
-			controller.workflowPauseRequest();
-		}
+	private void stopButtonClicked() {
+		//TODO assertion about workflow status
+		controller.workflowStopRequest();
 	}
 
-	private void playWorkflow() {
-		controller.workflowStopRequest();
+	private void playButtonClicked() {
+		//TODO assertion about workflow status
+		if(pauseMode){
+			controller.workflowPauseRequest();
+		}else{
+			controller.workflowPlayRequest();
+		}
 	}
 
 	private void setPlayButton(WorkflowStatus status) {
@@ -136,12 +137,14 @@ public class WorkflowControlPanel extends JPanel implements
 		case READY:
 		case ERROR:
 		case FINISHED:
+			pauseMode = false;
 			runButton.setEnabled(true);
 			runButton.setIcon(runIcon);
 			runButton.setToolTipText(RUN_TOOLTIPTEXT);
 			break;
 			
 		case PAUSED:
+			pauseMode = false;
 			runButton.setEnabled(true);
 			runButton.setIcon(runIcon);
 			runButton.setToolTipText(PAUSED_TOOLTIPTEXT);
@@ -149,10 +152,12 @@ public class WorkflowControlPanel extends JPanel implements
 			
 		case LOADING:
 		case INITIALIZING:
+			pauseMode = false;
 			runButton.setEnabled(false);
 			break;
 
 		case RUNNING:
+			pauseMode = true;
 			runButton.setEnabled(true);
 			runButton.setIcon(pauseIcon);
 			runButton.setToolTipText(PAUSE_TOOLTIPTEXT);

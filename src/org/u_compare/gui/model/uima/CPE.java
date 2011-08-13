@@ -7,9 +7,11 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionProcessingEngine;
 import org.apache.uima.collection.EntityProcessStatus;
 import org.apache.uima.collection.StatusCallbackListener;
+import org.apache.uima.collection.impl.metadata.cpe.CpeDescriptorFactory;
 import org.apache.uima.collection.metadata.CpeCasProcessor;
 import org.apache.uima.collection.metadata.CpeCasProcessors;
 import org.apache.uima.collection.metadata.CpeCollectionReader;
+import org.apache.uima.collection.metadata.CpeComponentDescriptor;
 import org.apache.uima.collection.metadata.CpeConfiguration;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
@@ -37,7 +39,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		for(CpeCollectionReader reader : collectionReaders){
 			Import imp = reader.getDescriptor().getImport();
 			Component comp = AbstractComponent.constructComponentFromXML(pathBase+imp.getLocation());
-			super.addSubComponent(comp);//TODO make this special
+			super.addSubComponent(comp);
 		}
 		cpeCasProcessors = desc.getCpeCasProcessors(); //<- this is where the subcomponents are
 		for(CpeCasProcessor processor : cpeCasProcessors.getAllCpeCasProcessors()){
@@ -189,12 +191,34 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		
 		try {
 			retVal.setAllCollectionCollectionReaders(collectionReaders);
+			
+			cpeCasProcessors.removeAllCpeCasProcessors();
+			
+			for(Component comp : getSubComponents()){
+				if(comp instanceof CollectionReader){
+					break; //TODO
+				}
+				
+				CpeCasProcessor processor = CpeDescriptorFactory.produceCasProcessor(comp.getName());
+				
+			//	CpeComponentDescriptor desc = CpeDescriptorFactory.produceComponentDescriptor(null);//TODO
+				//I can only get it from the file system??? I have mine in memory!
+				//processor.setCpeComponentDescriptor(desc);
+				processor.setBatchSize(10000);
+			    processor.getErrorHandling().getErrorRateThreshold().setMaxErrorCount(0);
+
+				//cpeCasProcessors.addCpeCasProcessor(arg0);
+				
+			}
 		} catch (CpeDescriptorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		
 		retVal.setCpeCasProcessors(cpeCasProcessors);
+		
+		
 		retVal.setCpeConfiguration(cpeConfiguration);
 		
 		return retVal;
@@ -278,11 +302,6 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		System.out.println("Entity");
 		System.out.println(arg1.getStatusMessage());
 		
-	}
-	
-	
-	public static void main(String[] args){
-		System.out.println("test");
 	}
 	
 }

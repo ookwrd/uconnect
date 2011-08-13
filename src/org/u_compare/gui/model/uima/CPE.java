@@ -201,6 +201,8 @@ public class CPE extends Workflow implements StatusCallbackListener {
 				
 				CpeCasProcessor processor = CpeDescriptorFactory.produceCasProcessor(comp.getName());
 				
+				//TODO investifate CpmPanel
+				
 			//	CpeComponentDescriptor desc = CpeDescriptorFactory.produceComponentDescriptor(null);//TODO
 				//I can only get it from the file system??? I have mine in memory!
 				//processor.setCpeComponentDescriptor(desc);

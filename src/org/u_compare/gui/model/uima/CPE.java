@@ -1,7 +1,10 @@
 package org.u_compare.gui.model.uima;
 
 import org.apache.uima.UIMAFramework;
+import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionProcessingEngine;
+import org.apache.uima.collection.EntityProcessStatus;
+import org.apache.uima.collection.StatusCallbackListener;
 import org.apache.uima.collection.metadata.CpeCasProcessor;
 import org.apache.uima.collection.metadata.CpeCasProcessors;
 import org.apache.uima.collection.metadata.CpeCollectionReader;
@@ -15,7 +18,7 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.uima.debugging.UIMAComponentTester;
 
-public class CPE extends Workflow {
+public class CPE extends Workflow implements StatusCallbackListener {
 
 	private CpeCollectionReader[] collectionReaders;
 	private CpeCasProcessors cpeCasProcessors;
@@ -167,6 +170,69 @@ public class CPE extends Workflow {
 	public boolean getLockedStatus(){//TODO a more general way of doing this.... DAMN this doesnt work
 		return true;
 	}*/
+	
+	protected void addStatusCallBackListeners() {
+		//TODO incase other people want to add their own
+	}
+	
+
+	@Override
+	public void aborted() {
+		//TODO console message
+		
+		notifyWorkflowMessageListeners("Workflow processing aborted");
+		setStatus(WorkflowStatus.FINISHED);
+		
+		System.out.println("aborted");
+	}
+	
+	/**
+	 * paused and resumed are never called. I checked the UIMA CPM panel and RunAE and these don't
+	 * seem to be called either. I think this may be a bug in UIMA. TODO Look this up.
+	 */
+	@Override
+	public void paused() {
+		setStatus(WorkflowStatus.PAUSED);
+		System.out.println("paused");
+	}
+	@Override
+	public void resumed() {
+		setStatus(WorkflowStatus.RUNNING);
+		System.out.println("resumed");	
+	}
+	
+
+	@Override
+	public void batchProcessComplete() {
+		System.out.println("batchProcessComplete");
+	}
+
+
+	@Override
+	public void collectionProcessComplete() {
+		// TODO Auto-generated method stub
+		System.out.println("CollectionProcessComplete");
+
+		setStatus(WorkflowStatus.FINISHED);
+	}
+
+
+	@Override
+	public void initializationComplete() {
+		setStatus(WorkflowStatus.RUNNING);
+	}
+
+	@Override
+	public void entityProcessComplete(CAS arg0, EntityProcessStatus arg1) {
+		// TODO Auto-generated method stub
+		
+		notifyWorkflowMessageListeners("Entity processing complete with status: " + arg1.getStatusMessage());
+		
+		System.out.println("Entity");
+		System.out.println(arg1.getStatusMessage());
+		
+	}
+	
 	
 	public static void main(String[] args){
 		System.out.println("test");

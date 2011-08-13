@@ -23,7 +23,7 @@ import org.u_compare.gui.model.uima.CPE;
  * @author Luke McCrohon
  *
  */
-public class Workflow extends AbstractAggregateComponent implements StatusCallbackListener {
+public class Workflow extends AbstractAggregateComponent  {
 	
 	public enum WorkflowStatus {READY, LOADING, INITIALIZING, RUNNING, ERROR,
 		PAUSED, FINISHED};
@@ -194,70 +194,7 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 	}
 
 
-	@Override
-	public void aborted() {
-		//TODO console message
-		
-		notifyWorkflowMessageListeners("Workflow processing aborted");
-		setStatus(WorkflowStatus.FINISHED);
-		
-		System.out.println("aborted");
-	}
-	
-	/**
-	 * paused and resumed are never called. I checked the UIMA CPM panel and RunAE and these don't
-	 * seem to be called either. I think this may be a bug in UIMA. TODO Look this up.
-	 */
-	@Override
-	public void paused() {
-		setStatus(WorkflowStatus.PAUSED);
-		System.out.println("paused");
-	}
-	@Override
-	public void resumed() {
-		setStatus(WorkflowStatus.RUNNING);
-		System.out.println("resumed");	
-	}
-	
 
-	@Override
-	public void batchProcessComplete() {
-		System.out.println("batchProcessComplete");
-	}
-
-
-	@Override
-	public void collectionProcessComplete() {
-		// TODO Auto-generated method stub
-		System.out.println("CollectionProcessComplete");
-
-		setStatus(WorkflowStatus.FINISHED);
-	}
-
-
-	@Override
-	public void initializationComplete() {
-		setStatus(WorkflowStatus.RUNNING);
-	}
-
-
-
-
-
-	@Override
-	public void entityProcessComplete(CAS arg0, EntityProcessStatus arg1) {
-		// TODO Auto-generated method stub
-		
-		notifyWorkflowMessageListeners("Entity processing complete with status: " + arg1.getStatusMessage());
-		
-		System.out.println("Entity");
-		System.out.println(arg1.getStatusMessage());
-		
-	}
-	
-	protected void addStatusCallBackListeners() {
-		//TODO incase other people want to add their own
-	}
 	
 }
 

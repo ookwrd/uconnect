@@ -192,7 +192,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		try {
 			retVal.setAllCollectionCollectionReaders(collectionReaders);
 			
-			cpeCasProcessors.removeAllCpeCasProcessors();
+			//cpeCasProcessors.removeAllCpeCasProcessors();
 			
 			for(Component comp : getSubComponents()){
 				if(comp instanceof CollectionReader){

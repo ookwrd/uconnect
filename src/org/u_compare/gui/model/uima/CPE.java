@@ -1,5 +1,7 @@
 package org.u_compare.gui.model.uima;
 
+import java.util.ArrayList;
+
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionProcessingEngine;
@@ -61,6 +63,51 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		
 		System.out.println("afterwards");
 	}
+	
+	/**
+	 * Overridden to ensure the first component is a collection reader.
+	 */
+	@Override
+	public boolean canAddSubComponent(Component component, int position){
+		
+		//Can't add a collection reader except in first place
+		if(component instanceof CollectionReader && position > 0){
+			return false;
+		}
+		
+		//Can't add something in front of a collection reader
+		if(position == 0){
+			ArrayList<Component> subComponents = getSubComponents();
+			if(subComponents.size() > 0 && subComponents.get(0) instanceof CollectionReader){
+				return false;
+			}
+		}
+		
+		return super.canAddSubComponent(component, position);
+	}
+	
+	/**
+	 * Overridden to ensure the first component is a collection reader.
+	 */
+	@Override
+	public boolean canReorderSubComponent(Component component, int position){
+		
+		//Can't move a collection reader except in first place
+		if(component instanceof CollectionReader && position > 0){
+			return false;
+		}
+		
+		//Can't move something in front of a collection reader
+		if(position == 0){
+			ArrayList<Component> subComponents = getSubComponents();
+			if(!(component instanceof CollectionReader) && subComponents.get(0) instanceof CollectionReader){
+				return false;
+			}
+		}
+		
+		return super.canReorderSubComponent(component, position);
+	}
+	
 	
 	private class WorkflowInitializer implements Runnable {
 		@Override

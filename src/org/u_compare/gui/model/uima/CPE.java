@@ -20,6 +20,7 @@ import org.apache.uima.resource.metadata.Import;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
+import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.uima.debugging.UIMAComponentTester;
 
 public class CPE extends Workflow implements StatusCallbackListener {
@@ -29,6 +30,9 @@ public class CPE extends Workflow implements StatusCallbackListener {
 	private CpeConfiguration cpeConfiguration;
 	
 	private String sourceFileName = "CPE Workflow";
+	
+	private CollectionProcessingEngine mCPE;
+	private boolean paused;
 	
 	public CPE(CpeDescription desc) throws CpeDescriptorException{
 		
@@ -53,17 +57,6 @@ public class CPE extends Workflow implements StatusCallbackListener {
 			String urlString = desc.getSourceUrlString();
 			sourceFileName = urlString.substring(urlString.lastIndexOf("/")+1,urlString.length()-4);
 		}
-	}
-	
-	@Override
-	public void runWorkflow() {
-
-		Runnable runWorkflow  = new WorkflowInitializer();
-	
-		Thread newTread = new Thread(runWorkflow);
-		newTread.start();
-		
-		System.out.println("afterwards");
 	}
 	
 	/**
@@ -116,9 +109,8 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		public void run() {
 			
 			try {
-				CPE.super.runWorkflow();
+				CPE.super.runResumeWorkflow();
 				
-				setStatus(WorkflowStatus.INITIALIZING);
 				CpeDescription cpeDesc = getResourceCPEDescription(); 
 				//CpeConfiguration cpeConfiguration = cpeDesc.getCpeConfiguration();
 				//cpeConfiguration.setDeployment("interactive");
@@ -132,46 +124,15 @@ public class CPE extends Workflow implements StatusCallbackListener {
 				}
 				
 				setStatus(Workflow.WorkflowStatus.LOADING);
-				CollectionProcessingEngine mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
+				mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
 				mCPE.addStatusCallbackListener(CPE.this);
 				notifyWorkflowMessageListeners("Workflow loaded Successfully.");	
 				
 				mCPE.process();//Runs on a seperate thread.
 
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				
-				mCPE.pause();
+				setStatus(WorkflowStatus.RUNNING);
 				
-				notifyWorkflowMessageListeners("It should be paused...");
-				
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				mCPE.resume();
-				
-
-				notifyWorkflowMessageListeners("It should have resumed...");
-				
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				mCPE.stop();
-				
-				System.out.println("After:" + UIMAComponentTester.flags[0]+ " " + UIMAComponentTester.flags[1]);
 			} catch (ResourceInitializationException e) {
 				// TODO Auto-generated catch block
 
@@ -184,6 +145,40 @@ public class CPE extends Workflow implements StatusCallbackListener {
 			}*/
 			
 		}
+	}
+	
+	@Override
+	public void runResumeWorkflow() {
+		Runnable runWorkflow  = new WorkflowInitializer();
+	
+		if(mCPE == null || !paused){
+			Thread newTread = new Thread(runWorkflow);
+			newTread.start();
+			paused = false;
+		} else {
+			mCPE.resume();
+			resumeWorkflow();
+			paused = false;
+		}
+	}
+	
+	@Override
+	public void stopWorkflow() {
+		mCPE.removeStatusCallbackListener(this);//DOesnt work...
+		mCPE.stop();
+		mCPE = null;
+		
+		notifyWorkflowMessageListeners("Workflow processing aborted");
+		
+		paused = false;
+		super.stopWorkflow();
+	}
+	
+	@Override
+	public void pauseWorkflow(){
+		mCPE.pause();
+		paused = true;
+		super.pauseWorkflow();
 	}
 	
 	public CpeDescription getResourceCPEDescription(){
@@ -226,6 +221,10 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		return retVal;
 	}
 	
+	/**
+	 * CPE Workflows don't have a name field so use the description field.
+	 * 
+	 */
 	@Override
 	public String getName(){
 		return sourceFileName;
@@ -251,12 +250,6 @@ public class CPE extends Workflow implements StatusCallbackListener {
 
 	@Override
 	public void aborted() {
-		//TODO console message
-		
-		notifyWorkflowMessageListeners("Workflow processing aborted");
-		setStatus(WorkflowStatus.FINISHED);
-		
-		System.out.println("aborted");
 	}
 	
 	/**
@@ -283,10 +276,8 @@ public class CPE extends Workflow implements StatusCallbackListener {
 
 	@Override
 	public void collectionProcessComplete() {
-		// TODO Auto-generated method stub
-		System.out.println("CollectionProcessComplete");
-
 		setStatus(WorkflowStatus.FINISHED);
+		mCPE = null;
 	}
 
 
@@ -297,13 +288,8 @@ public class CPE extends Workflow implements StatusCallbackListener {
 
 	@Override
 	public void entityProcessComplete(CAS arg0, EntityProcessStatus arg1) {
-		// TODO Auto-generated method stub
-		
+		//TODO don't report if mCPE is set to null as removeStatusCallbackListener doesn't work
 		notifyWorkflowMessageListeners("Entity processing complete with status: " + arg1.getStatusMessage());
-		
-		System.out.println("Entity");
-		System.out.println(arg1.getStatusMessage());
-		
 	}
 	
 }

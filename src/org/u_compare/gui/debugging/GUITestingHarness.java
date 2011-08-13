@@ -3,6 +3,7 @@ package org.u_compare.gui.debugging;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 
 import org.u_compare.gui.UConnectHorizontalSplitPane;
 
@@ -44,8 +45,7 @@ public class GUITestingHarness {
 		// Combining
 		UConnectHorizontalSplitPane uConnectSplit = new UConnectHorizontalSplitPane(tabbedPane,
 				libraryPane);
-		TestWindow testWindow = new TestWindow("GUITestingHarness",
-				uConnectSplit);
+		TestWindow testWindow = new TestWindow("GUITestingHarness", uConnectSplit);
 		
 		testWindow.setVisible(true);
 	}

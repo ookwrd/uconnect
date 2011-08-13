@@ -1,5 +1,7 @@
 package org.u_compare.gui;
 
+import java.awt.Dimension;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -26,7 +28,7 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 	// Configuration
 	private static final boolean ONE_TOUCH_EXPANDABLE = true;
 	/* By default, distribute the new size evenly between our components */
-	private static final double DEFAULT_RE_SIZE_WEIGHT = 0.5D;
+	private static final double DEFAULT_RE_SIZE_WEIGHT = 0.85D;
 	private static final double DIVIDER_START_POSITION = 0.85D;
 	private static final int SPLIT_ORIENTATION = JSplitPane.VERTICAL_SPLIT;
 	protected static final boolean DEBUG = false;
@@ -53,25 +55,6 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 		// Space distribution between components when we grow
 		this.setResizeWeight(WorkflowHorizontalSplitPane.DEFAULT_RE_SIZE_WEIGHT);
 		this.setOrientation(WorkflowHorizontalSplitPane.SPLIT_ORIENTATION);
-		// Set the divider as centred later when everything else is set
-		// XXX: This is one hell of a hack! There has to be a better way!
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				if (DEBUG) {
-					System.err.println(this.getClass().getName()
-							+ "our current size" + getSize());
-				}
-				// Do we know our size yet? If not, wait a little more.
-				if (getSize().getHeight() == 0 && getSize().getWidth() == 0) {
-					SwingUtilities.invokeLater(this);
-				}
-				else {
-					// If we do we can set the divider location
-					setDividerLocation(
-							WorkflowHorizontalSplitPane.DIVIDER_START_POSITION);
-				}
-			}
-		});
 		
 		this.setContinuousLayout(true);
 	}
@@ -114,4 +97,5 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 			}
 		}
 	}
+
 }

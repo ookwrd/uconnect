@@ -204,23 +204,25 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 		System.out.println("aborted");
 	}
 	
+	/**
+	 * paused and resumed are never called. I checked the UIMA CPM panel and RunAE and these don't
+	 * seem to be called either. I think this may be a bug in UIMA. TODO Look this up.
+	 */
 	@Override
 	public void paused() {
-		// TODO Auto-generated method stub
-		
-		notifyWorkflowMessageListeners("Workflow processing paused");
 		setStatus(WorkflowStatus.PAUSED);
 		System.out.println("paused");
 	}
-
+	@Override
+	public void resumed() {
+		setStatus(WorkflowStatus.RUNNING);
+		System.out.println("resumed");	
+	}
+	
 
 	@Override
 	public void batchProcessComplete() {
 		System.out.println("batchProcessComplete");
-		
-
-		//setStatus(WorkflowStatus.FINISHED);
-		
 	}
 
 
@@ -235,18 +237,11 @@ public class Workflow extends AbstractAggregateComponent implements StatusCallba
 
 	@Override
 	public void initializationComplete() {
-
 		setStatus(WorkflowStatus.RUNNING);
 	}
 
 
-	@Override
-	public void resumed() {
 
-		System.out.println("resumed");
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	@Override

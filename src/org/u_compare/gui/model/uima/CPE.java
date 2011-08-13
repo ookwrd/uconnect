@@ -13,13 +13,10 @@ import org.apache.uima.resource.metadata.Import;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
-import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.uima.debugging.UIMAComponentTester;
 
 public class CPE extends Workflow {
 
-	//private ArrayList<CollectionReader> reader = new ArrayList<CollectionReader>();
-	
 	private CpeCollectionReader[] collectionReaders;
 	private CpeCasProcessors cpeCasProcessors;
 	private CpeConfiguration cpeConfiguration;
@@ -40,8 +37,6 @@ public class CPE extends Workflow {
 		cpeCasProcessors = desc.getCpeCasProcessors(); //<- this is where the subcomponents are
 		for(CpeCasProcessor processor : cpeCasProcessors.getAllCpeCasProcessors()){
 			Import imp = processor.getCpeComponentDescriptor().getImport();//TODO load these into memory
-			
-			//System.out.println(path.substring(0, path.lastIndexOf("/")+1));
 			Component comp = AbstractComponent.constructComponentFromXML(pathBase+imp.getLocation());
 			super.addSubComponent(comp);
 		}
@@ -73,6 +68,8 @@ public class CPE extends Workflow {
 				
 				setStatus(WorkflowStatus.INITIALIZING);
 				CpeDescription cpeDesc = getResourceCPEDescription(); 
+				//CpeConfiguration cpeConfiguration = cpeDesc.getCpeConfiguration();
+				//cpeConfiguration.setDeployment("interactive");
 				notifyWorkflowMessageListeners("Workflow Descriptor initialzed.");
 
 				try {
@@ -98,14 +95,20 @@ public class CPE extends Workflow {
 				
 				mCPE.pause();
 				
+				notifyWorkflowMessageListeners("It should be paused...");
+				
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
 				mCPE.resume();
+				
+
+				notifyWorkflowMessageListeners("It should have resumed...");
+				
 				
 				try {
 					Thread.sleep(1000);
@@ -123,7 +126,10 @@ public class CPE extends Workflow {
 				System.out.println("here "+e.getMessage() + "\n" + e.getCause().getMessage());
 				
 				e.printStackTrace();
-			}
+			}/* catch (CpeDescriptorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 			
 		}
 	}
@@ -157,10 +163,10 @@ public class CPE extends Workflow {
 	/**
 	 * CPE workflow's don't have editable titles or descriptions.
 	 */
-	@Override
-	public boolean getLockedStatus(){//TODO a more general way of doing this
+	/*@Override
+	public boolean getLockedStatus(){//TODO a more general way of doing this.... DAMN this doesnt work
 		return true;
-	}
+	}*/
 	
 	public static void main(String[] args){
 		System.out.println("test");

@@ -60,6 +60,9 @@ public class HighlightButton extends JButton {
 	public void setEnabled(boolean enabled){
 		super.setEnabled(enabled);
 		enableHighlighting(enabled);
+		if(!enabled){//Clear any existing highlighting
+			setBorder(unhighlighted);
+		}
 	}
 	
 	private void configure(){

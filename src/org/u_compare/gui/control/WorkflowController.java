@@ -28,7 +28,7 @@ public class WorkflowController extends ComponentController {
 	
 	public void workflowPlayRequest(){
 		assert(component.isWorkflow());
-		((Workflow)component).runWorkflow();
+		((Workflow)component).runResumeWorkflow();
 	}
 	
 	

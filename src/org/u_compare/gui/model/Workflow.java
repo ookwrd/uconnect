@@ -68,18 +68,11 @@ public class Workflow extends AbstractAggregateComponent  {
 	 * Should be used to start workflow processing.
 	 * 
 	 */
-	public void runWorkflow() {
+	public void runResumeWorkflow() {
 		assert(status == WorkflowStatus.READY || status == WorkflowStatus.FINISHED || status == WorkflowStatus.ERROR);//TODO
 
-	
+		setStatus(WorkflowStatus.INITIALIZING);
 	}
-	
-	private void afterRunning(){
-
-		setStatus(WorkflowStatus.READY);
-		
-	}
-	
 	
 	/**
 	 * used to pause the workflow processing
@@ -88,11 +81,12 @@ public class Workflow extends AbstractAggregateComponent  {
 	 */
 	public void pauseWorkflow(){
 		assert(status == WorkflowStatus.RUNNING);
-		
-		
-		//TODO make this do something
-		//TODO actually call this.
-		
+		setStatus(WorkflowStatus.PAUSED);
+	}
+	
+	public void resumeWorkflow(){
+		assert(status == WorkflowStatus.PAUSED);
+		setStatus(WorkflowStatus.RUNNING);
 	}
 	
 	/**
@@ -100,12 +94,16 @@ public class Workflow extends AbstractAggregateComponent  {
 	 */
 	public void stopWorkflow() {
 		assert(status == WorkflowStatus.RUNNING || status == WorkflowStatus.PAUSED);
-		
-		notifyWorkflowMessageListeners("Stopped??!?!?");
-		
-		
-		//TODO make this do something
-		
+		setStatus(WorkflowStatus.FINISHED);
+	}
+	
+	/**
+	 * Returns the current status of this workflow.
+	 * 
+	 * @return
+	 */
+	public WorkflowStatus getStatus(){
+		return status;
 	}
 	
 	/**
@@ -119,46 +117,6 @@ public class Workflow extends AbstractAggregateComponent  {
 		status = newStatus;
 		notifyWorkflowStatusListeners();
 	}
-	
-	/**
-	 * Returns the current status of this workflow.
-	 * 
-	 * @return
-	 */
-	public WorkflowStatus getStatus(){
-		
-		return status;
-	}
-	
-	
-	/**
-	 * Registers a new class to listen to workflowStatusListener changes.
-	 * 
-	 * @param listener
-	 */
-	public void registerWorkflowStatusListener(WorkflowStatusListener listener){
-		this.workflowStatusListeners.add(listener);
-	}
-	
-	/**
-	 * Should be called whenever the status of workflow processing is changed.
-	 */
-	protected void notifyWorkflowStatusListeners(){
-		for(WorkflowStatusListener listener : workflowStatusListeners){
-			listener.workflowStatusChanged(this);
-		}
-	}
-	
-	public void registerWorkflowMessageListener(WorkflowMessageListener listener){
-		this.workflowMessageListeners.add(listener);
-	}
-	
-	protected void notifyWorkflowMessageListeners(String message){
-		for(WorkflowMessageListener listener : workflowMessageListeners){
-			listener.workflowMessageSent(this, message);
-		}
-	}
-	
 	
 	public static Workflow constructWorkflowFromXML(String location){
 		try {
@@ -192,9 +150,33 @@ public class Workflow extends AbstractAggregateComponent  {
 			return null;
 		}
 	}
-
-
-
 	
+	/**
+	 * Registers a new class to listen to workflowStatusListener changes.
+	 * 
+	 * @param listener
+	 */
+	public void registerWorkflowStatusListener(WorkflowStatusListener listener){
+		this.workflowStatusListeners.add(listener);
+	}
+	
+	/**
+	 * Should be called whenever the status of workflow processing is changed.
+	 */
+	protected void notifyWorkflowStatusListeners(){
+		for(WorkflowStatusListener listener : workflowStatusListeners){
+			listener.workflowStatusChanged(this);
+		}
+	}
+	
+	public void registerWorkflowMessageListener(WorkflowMessageListener listener){
+		this.workflowMessageListeners.add(listener);
+	}
+	
+	protected void notifyWorkflowMessageListeners(String message){
+		for(WorkflowMessageListener listener : workflowMessageListeners){
+			listener.workflowMessageSent(this, message);
+		}
+	}
 }
 

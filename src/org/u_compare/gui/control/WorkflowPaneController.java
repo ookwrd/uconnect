@@ -13,7 +13,6 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.metadata.MetaDataObject;
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.WorkflowPane;
@@ -21,7 +20,6 @@ import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Workflow;
-import org.u_compare.user_tools.UIMA_Tester;
 import org.xml.sax.SAXException;
 
 public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
@@ -145,11 +143,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	}
 	
 	public JComponent initialize(ArrayList<Workflow> workflows){
-		
-		//TODO:
-//		if(!ALLOW_TABS && workflows.size() > 1){
-//			throw new IllegalArgumentException("As Workflow Tabs are currently disabled this method can handle at most a single workflow as input.");
-//		}
+		assert(!(workflows.size() > 1) || ALLOW_TABS);
 		
 		ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes = new ArrayList<WorkflowHorizontalSplitPane>();
 		
@@ -158,7 +152,6 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		}
 		
 		return init(workflowSplitPanes);
-		
 	}
 	
 	private WorkflowHorizontalSplitPane constructWorkflow(Workflow workflow){
@@ -255,15 +248,11 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	}
 	
 	private void closeWorkflow(Workflow workflow){
-		
 		tabbedPane.removeWorkflow(workflow);
-		
 	}
 	
 	private void saveWorkflow(Workflow workflow){
-		
-		//TODO this is going to depend on a few things... like if we have component library...
-		
+		saveAdaptor.saveWorkflow(workflow.getWorkflowDescription());
 	}
 
 	@Override
@@ -279,7 +268,6 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 			requestLoadWorkflow();
 		} else {
 			System.out.println("Error");
-			//TODO
 		}
 	}
 }

@@ -90,10 +90,10 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 	
 	protected void setupWorkflowSavePanel(JPanel target){
 			
-		JPanel savePanel = new JPanel();
-		savePanel.setLayout(new BorderLayout());
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		
-		savePanel.add(new JLabel("Save panel"));
+		buttonPanel.add(new JLabel("Save workflow? "));
 		
 		JButton saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
@@ -103,8 +103,8 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 			}
 		});
 		
-		target.add(savePanel);
-		target.add(saveButton);
+		buttonPanel.add(saveButton);
+		target.add(buttonPanel);
 	}
 
 }

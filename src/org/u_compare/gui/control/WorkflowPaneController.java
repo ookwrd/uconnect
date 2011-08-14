@@ -5,25 +5,33 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
+import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Workflow;
+import org.xml.sax.SAXException;
 
 public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
 
-	public interface WorkflowFactory{
+	public interface WorkflowFactory {
 		public Workflow constructWorkflow();
 	}
 	
 	public interface AnnotationTypeChooser {
 		public AnnotationTypeOrFeature getNewAnnotation();	
+	}
+	
+	public interface DescriptorSaveAdaptor {
+		public void saveDescriptor(ResourceCreationSpecifier descriptor);
 	}
 	
 	private static final boolean SHOW_CONSOLE = true;
@@ -35,6 +43,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	
 	private static final boolean showWorkflowControlPanel = true;
 	private static final boolean showWorkflowDetails = true;
+	private static final boolean showSavePanel = true;
 
 	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser(){
 		@Override
@@ -51,6 +60,24 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 			workflow.setName("Untitled Workflow (Double-Click to edit)");
 			workflow.setDescription("This is a new workflow. Double-Click here to edit its description. Duis quis arcu id enim elementum gravida quis sit amet justo. Cras non enim nec velit aliquet luctus sed faucibus arcu. Phasellus dolor quam, dapibus a consequat eget, fringilla vitae ipsum. Donec tristique elementum turpis, in pellentesque nulla viverra vitae. Curabitur eget turpis non quam auctor ornare. Aliquam tempus quam vitae lectus consectetur fringilla. Vivamus posuere pharetra elit ac interdum. Aenean vestibulum mattis justo et malesuada. Ut ultrices, nisl sit amet tempor porttitor, nulla ipsum feugiat purus, porta tincidunt sem sapien nec leo. Phasellus rhoncus elit sit amet lectus adipiscing vulputate. ");
 			return workflow;
+		}
+	};
+	
+	public static DescriptorSaveAdaptor saveAdaptor = new DescriptorSaveAdaptor() {
+		@Override
+		public void saveDescriptor(ResourceCreationSpecifier descriptor) {
+			try {
+				FileWriter writer = new FileWriter("/UIMA_test");
+				descriptor.toXML(writer);
+				writer.close();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 	};
 	
@@ -113,7 +140,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 			workflow.setLocked();
 		}
 		
-		WorkflowController workflowController = new WorkflowController(workflow, showWorkflowControlPanel, showWorkflowDetails, allowEditing);
+		WorkflowController workflowController = new WorkflowController(workflow, showWorkflowControlPanel, showWorkflowDetails, showSavePanel, allowEditing);
 		
 		// Construct the view
 		WorkflowPane workflowPane = new WorkflowPane(workflowController.getView());

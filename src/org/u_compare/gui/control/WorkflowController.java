@@ -7,13 +7,13 @@ public class WorkflowController extends ComponentController {
 
 	
 	public WorkflowController(Workflow component,
-			boolean showWorkflowControlPanel, boolean showWorkflowDetails,
-			boolean allowEditing) {
+			boolean showWorkflowControlPanel, boolean showWorkflowDetails, 
+			boolean showSavePanel, boolean allowEditing) {
 		super(allowEditing);
 		
 		this.component = component;
 		this.componentView = new WorkflowConstructionPanel(component, this,
-				showWorkflowControlPanel, showWorkflowDetails);
+				showWorkflowControlPanel, showWorkflowDetails, showSavePanel);
 		
 		
 	}

@@ -25,17 +25,20 @@ public class UIMA_Tester {
 		
 		JComponent tabbedPane = workflowPaneController.initialize(workflow);
 		
-		TestWindow testWindow = new TestWindow("UIMA Component Tester", tabbedPane);
+		TestWindow testWindow = new TestWindow("UIMA Workflow Tester", tabbedPane);
 		testWindow.setSize(new Dimension(600,800));
 		testWindow.setVisible(true);
 	}
 	
 	public static void main(String[] args){
-	
-		int result = fc.showOpenDialog(null);
-		if(result == JFileChooser.APPROVE_OPTION){
-			File file = fc.getSelectedFile();
-			new UIMA_Tester(file.getAbsolutePath());
+		if(args.length > 0){
+			new UIMA_Tester(args[0]);
+		}else{
+			int result = fc.showOpenDialog(null);
+			if(result == JFileChooser.APPROVE_OPTION){
+				File file = fc.getSelectedFile();
+				new UIMA_Tester(file.getAbsolutePath());
+			}
 		}
 	}
 	

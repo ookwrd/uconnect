@@ -199,7 +199,7 @@ public class UIMAComponentTester {
 		
 		CPE workflow = new CPE(desc);
 		
-		assertTrue(compare(descriptorToString(desc), descriptorToString(workflow.getResourceCPEDescription())));
+		assertTrue(compare(descriptorToString(desc), descriptorToString(workflow.getWorkflowDescription())));
 	}
 	
 	private static String descriptorToString(XMLizable in){

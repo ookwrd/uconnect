@@ -14,6 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.apache.uima.resource.ResourceCreationSpecifier;
+import org.apache.uima.resource.metadata.MetaDataObject;
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowHorizontalSplitPane;
@@ -34,20 +35,19 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	}
 	
 	public interface DescriptorSaveAdaptor {
-		public void saveDescriptor(ResourceCreationSpecifier descriptor);
+		public void saveDescriptor(MetaDataObject descriptor);
 		//TODO allow the setting of a customized save panel
 	}
 	
-	private static final boolean SHOW_CONSOLE = true;
-	private static boolean ALLOW_TABS = true;
+	public static boolean SHOW_CONSOLE = true;
+	public static boolean SHOW_WORKFLOW_CONTROL = true;
+	public static boolean SHOW_WORKFLOW_DETAILS = true;
+	public static boolean SHOW_SAVE_PANEL = false;
+	public static boolean ALLOW_TABS = true;
 //	private static final boolean SHOW_NEW_TAB = true; //TODO
 	
-	private static final boolean allowEditing = true;
+	public static boolean ALLOW_EDITING = true;
 //	private static final boolean allowReordering = true; //TODO
-	
-	private static final boolean showWorkflowControlPanel = true;
-	private static final boolean showWorkflowDetails = true;
-	private static final boolean showSavePanel = true;
 
 	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser(){
 		@Override
@@ -70,7 +70,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	public static DescriptorSaveAdaptor saveAdaptor = new DescriptorSaveAdaptor() {
 		private final JFileChooser fc = new JFileChooser();
 		@Override
-		public void saveDescriptor(ResourceCreationSpecifier descriptor) {
+		public void saveDescriptor(MetaDataObject descriptor) {
 			try {
 				int result = fc.showSaveDialog(null);
 				if(result == JFileChooser.APPROVE_OPTION){
@@ -145,11 +145,11 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	private WorkflowHorizontalSplitPane constructWorkflow(Workflow workflow){
 		workflow.setComponentSaved();//TODO should this be moved to workflow constructor?
 		
-		if(!allowEditing){
+		if(!ALLOW_EDITING){
 			workflow.setLocked();
 		}
 		
-		WorkflowController workflowController = new WorkflowController(workflow, showWorkflowControlPanel, showWorkflowDetails, showSavePanel, allowEditing);
+		WorkflowController workflowController = new WorkflowController(workflow, SHOW_WORKFLOW_CONTROL, SHOW_WORKFLOW_DETAILS, SHOW_SAVE_PANEL, ALLOW_EDITING);
 		
 		// Construct the view
 		WorkflowPane workflowPane = new WorkflowPane(workflowController.getView());
@@ -252,9 +252,4 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	public void actionPerformed(ActionEvent arg0) {
 		requestNewWorkflow();
 	}
-	
-	public void setAllowTabs(boolean allowTabs){
-		this.ALLOW_TABS = allowTabs;
-	}
-	
 }

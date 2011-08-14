@@ -11,6 +11,7 @@ import org.apache.uima.collection.EntityProcessStatus;
 import org.apache.uima.collection.StatusCallbackListener;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
+import org.apache.uima.resource.metadata.MetaDataObject;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.apache.uima.util.XMLizable;
@@ -136,6 +137,8 @@ public class Workflow extends AbstractAggregateComponent  {
 			if(desc instanceof CpeDescription){
 				return new CPE((CpeDescription)desc);
 			} else {
+				
+				System.out.println("Its in here " + desc.getClass());
 				//TODO error //TODO AS workflow
 				return null;
 			}
@@ -177,6 +180,11 @@ public class Workflow extends AbstractAggregateComponent  {
 		for(WorkflowMessageListener listener : workflowMessageListeners){
 			listener.workflowMessageSent(this, message);
 		}
+	}
+	
+	public MetaDataObject getWorkflowDescription(){
+		System.out.println("Abstract Workflow unable to produce description object.");
+		return null;
 	}
 }
 

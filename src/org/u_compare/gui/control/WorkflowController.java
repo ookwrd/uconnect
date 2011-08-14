@@ -15,7 +15,6 @@ public class WorkflowController extends ComponentController {
 		this.componentView = new WorkflowConstructionPanel(component, this,
 				showWorkflowControlPanel, showWorkflowDetails, showSavePanel);
 		
-		
 	}
 	
 	@Override

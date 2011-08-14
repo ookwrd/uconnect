@@ -5,10 +5,12 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.apache.uima.resource.ResourceCreationSpecifier;
@@ -18,6 +20,7 @@ import org.u_compare.gui.WorkflowHorizontalSplitPane;
 import org.u_compare.gui.WorkflowTabbedPane;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Workflow;
+import org.u_compare.user_tools.UIMA_Tester;
 import org.xml.sax.SAXException;
 
 public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
@@ -32,6 +35,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	
 	public interface DescriptorSaveAdaptor {
 		public void saveDescriptor(ResourceCreationSpecifier descriptor);
+		//TODO allow the setting of a customized save panel
 	}
 	
 	private static final boolean SHOW_CONSOLE = true;
@@ -64,12 +68,17 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	};
 	
 	public static DescriptorSaveAdaptor saveAdaptor = new DescriptorSaveAdaptor() {
+		private final JFileChooser fc = new JFileChooser();
 		@Override
 		public void saveDescriptor(ResourceCreationSpecifier descriptor) {
 			try {
-				FileWriter writer = new FileWriter("/UIMA_test");
-				descriptor.toXML(writer);
-				writer.close();
+				int result = fc.showSaveDialog(null);
+				if(result == JFileChooser.APPROVE_OPTION){
+					File file = fc.getSelectedFile();
+					FileWriter writer = new FileWriter(file.getAbsolutePath());
+					descriptor.toXML(writer);
+					writer.close();
+				}
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

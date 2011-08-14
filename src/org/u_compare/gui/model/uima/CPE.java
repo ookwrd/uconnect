@@ -11,7 +11,6 @@ import org.apache.uima.collection.impl.metadata.cpe.CpeDescriptorFactory;
 import org.apache.uima.collection.metadata.CpeCasProcessor;
 import org.apache.uima.collection.metadata.CpeCasProcessors;
 import org.apache.uima.collection.metadata.CpeCollectionReader;
-import org.apache.uima.collection.metadata.CpeComponentDescriptor;
 import org.apache.uima.collection.metadata.CpeConfiguration;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
@@ -20,8 +19,6 @@ import org.apache.uima.resource.metadata.Import;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
-import org.u_compare.gui.model.Workflow.WorkflowStatus;
-import org.u_compare.gui.model.uima.debugging.UIMAComponentTester;
 
 public class CPE extends Workflow implements StatusCallbackListener {
 

@@ -12,5 +12,9 @@
 	<classpathentry kind="lib" path="lib/uima-examples.jar"/>
 	<classpathentry kind="lib" path="lib/uima-tools.jar"/>
 	<classpathentry kind="lib" path="lib/uimaj-bootstrap.jar"/>
+	<classpathentry kind="lib" path="lib/uimaj-as-activemq.jar"/>
+	<classpathentry kind="lib" path="lib/uimaj-as-camel.jar"/>
+	<classpathentry kind="lib" path="lib/uimaj-as-core.jar"/>
+	<classpathentry kind="lib" path="lib/uimaj-as-jms.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

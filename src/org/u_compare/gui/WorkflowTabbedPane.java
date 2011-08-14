@@ -121,10 +121,11 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 				.getTopWorkflowComponent().getComponent();
 		
 		int inserted_index = numberOfNonButtonTabs();
+		
 		//TODO: Different mouse-over depending on if focused or not
 		// "Your current workflow" vs. "View this workflow"
 		splitPane.setName(cleanTitle(topComponent.getName()));
-		this.add( splitPane, inserted_index);
+		this.add(splitPane, inserted_index);
 		// Why does the API force a fully specified tab when using insert
 		// rather than add?
 		this.setToolTipTextAt(inserted_index, topComponent.getDescription());
@@ -177,7 +178,6 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index))
 		.setStatusIcon(icon, true);
 	}
-	
 
 	/**
 	 *  see if we need to clear a notification Icon.
@@ -222,12 +222,10 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 	// Use this instead of the internal one to conform with our selection
 	// policies.
 	private void safeRemove(int i) {
-		//TODO: Implement this by referring to the super class
-		System.err.println("WorkflowTabbedPane: safeRemove(int i) "
-				+ "called but not implemented");
+		//TODO Check with the control
+		super.remove(i);
 	}
 	
-
 	//TODO: We also need a safe add!
 
 	@Override

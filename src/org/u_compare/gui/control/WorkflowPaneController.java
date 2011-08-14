@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import org.apache.uima.resource.metadata.MetaDataObject;
 import org.u_compare.gui.ConsolePane;
@@ -105,7 +107,6 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 			return null;
 		}
 	};
-
 	
 	private WorkflowTabbedPane tabbedPane;
 	

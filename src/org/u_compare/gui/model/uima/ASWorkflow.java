@@ -1,14 +1,23 @@
 package org.u_compare.gui.model.uima;
 
 import org.apache.uima.aae.client.UimaASStatusCallbackListener;
-import org.apache.uima.aae.client.UimaAsBaseCallbackListener;
+import org.apache.uima.adapter.jms.client.BaseUIMAAsynchronousEngine_impl;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.EntityProcessStatus;
 import org.u_compare.gui.model.Workflow;
 
 public class ASWorkflow extends Workflow implements UimaASStatusCallbackListener {
 
-
+	public ASWorkflow(){
+		
+	}
+	
+	public void run(){
+		
+		BaseUIMAAsynchronousEngine_impl uimaAsEngine = new BaseUIMAAsynchronousEngine_impl();
+		uimaAsEngine.addStatusCallbackListener(this);
+		
+	}
 
 	@Override
 	public void collectionProcessComplete(EntityProcessStatus arg0) {

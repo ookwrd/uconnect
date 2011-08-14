@@ -2,14 +2,18 @@ package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.WorkflowController;
+import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.model.Workflow;
 
 @SuppressWarnings("serial")
@@ -19,7 +23,7 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 	
 	public WorkflowConstructionPanel(Workflow component,
 			ComponentController controller, boolean showWorkflowControlPanel,
-				boolean showWorkflowDetails){
+				boolean showWorkflowDetails, boolean showSavePanel){
 		super(controller);
 		
 		setOpaque(true);
@@ -57,7 +61,7 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 		this.add(innerPanel, BorderLayout.CENTER);
 		
 		
-		if(true){//TODO
+		if(showSavePanel){//TODO
 			
 			setupWorkflowSavePanel(lowerPanel);
 			
@@ -85,9 +89,22 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 	}
 	
 	protected void setupWorkflowSavePanel(JPanel target){
+			
+		JPanel savePanel = new JPanel();
+		savePanel.setLayout(new BorderLayout());
 		
-		target.add(new JLabel("Save panel"));
+		savePanel.add(new JLabel("Save panel"));
 		
+		JButton saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				WorkflowPaneController.saveAdaptor.saveDescriptor(component.getResourceCreationSpecifier());
+			}
+		});
+		
+		target.add(savePanel);
+		target.add(saveButton);
 	}
 
 }

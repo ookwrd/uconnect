@@ -9,6 +9,7 @@ import javax.swing.JFileChooser;
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
+import org.u_compare.gui.model.uima.CPE;
 
 public class UIMA_Tester {
 
@@ -16,9 +17,13 @@ public class UIMA_Tester {
 	
 	public UIMA_Tester(String file){
 		
+		WorkflowPaneController.ALLOW_TABS = false;
+		WorkflowPaneController.SHOW_SAVE_PANEL = true;
+		
 		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
-		workflowPaneController.setAllowTabs(false);
-		JComponent tabbedPane = workflowPaneController.initialize(new Workflow());
+		Workflow workflow = Workflow.constructWorkflowFromXML(file);
+		
+		JComponent tabbedPane = workflowPaneController.initialize(workflow);
 		
 		TestWindow testWindow = new TestWindow("UIMA Component Tester", tabbedPane);
 		testWindow.setSize(new Dimension(600,800));

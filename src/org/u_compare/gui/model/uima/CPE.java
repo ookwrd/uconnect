@@ -16,6 +16,7 @@ import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.Import;
+import org.apache.uima.resource.metadata.MetaDataObject;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
@@ -108,7 +109,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 			try {
 				CPE.super.runResumeWorkflow();
 				
-				CpeDescription cpeDesc = getResourceCPEDescription(); 
+				CpeDescription cpeDesc = (CpeDescription)getWorkflowDescription(); 
 				//CpeConfiguration cpeConfiguration = cpeDesc.getCpeConfiguration();
 				//cpeConfiguration.setDeployment("interactive");
 				notifyWorkflowMessageListeners("Workflow Descriptor initialzed.");
@@ -178,7 +179,8 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		super.pauseWorkflow();
 	}
 	
-	public CpeDescription getResourceCPEDescription(){
+	@Override
+	public MetaDataObject getWorkflowDescription(){
 		CpeDescription retVal = UIMAFramework.getResourceSpecifierFactory().createCpeDescription();
 		
 		try {

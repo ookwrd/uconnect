@@ -36,7 +36,7 @@ public class WorkflowSavePanel extends JPanel {
 	}
 	
 	private void saveButtonClicked(){
-		WorkflowPaneController.saveAdaptor.saveDescriptor(component.getResourceCreationSpecifier());
+		WorkflowPaneController.saveAdaptor.saveDescriptor(component.getWorkflowDescription());
 		
 	}
 }

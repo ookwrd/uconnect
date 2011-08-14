@@ -26,6 +26,9 @@ import org.xml.sax.SAXException;
 
 public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
 
+	public static final String NEW_ACTION_COMMAND = "NEW";
+	public static final String LOAD_ACTION_COMMAND = "LOAD";
+	
 	public interface WorkflowFactory {
 		public Workflow constructWorkflow();
 	}
@@ -34,9 +37,12 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		public AnnotationTypeOrFeature getNewAnnotation();	
 	}
 	
-	public interface DescriptorSaveAdaptor {
-		public void saveDescriptor(MetaDataObject descriptor);
-		//TODO allow the setting of a customized save panel
+	public interface WorkflowSaveAdaptor {
+		public void saveWorkflow(MetaDataObject descriptor);
+	}
+	
+	public interface WorkflowLoadAdaptor {
+		public Workflow loadWorkflow();
 	}
 	
 	public static boolean SHOW_CONSOLE = true;
@@ -44,7 +50,8 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	public static boolean SHOW_WORKFLOW_DETAILS = true;
 	public static boolean SHOW_SAVE_PANEL = false;
 	public static boolean ALLOW_TABS = true;
-//	private static final boolean SHOW_NEW_TAB = true; //TODO
+	public static boolean SHOW_NEW_TAB = true; //TODO
+	public static boolean SHOW_LOAD_TAB = false; //TODO
 	
 	public static boolean ALLOW_EDITING = true;
 //	private static final boolean allowReordering = true; //TODO
@@ -67,10 +74,10 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		}
 	};
 	
-	public static DescriptorSaveAdaptor saveAdaptor = new DescriptorSaveAdaptor() {
+	public static WorkflowSaveAdaptor saveAdaptor = new WorkflowSaveAdaptor() {
 		private final JFileChooser fc = new JFileChooser();
 		@Override
-		public void saveDescriptor(MetaDataObject descriptor) {
+		public void saveWorkflow(MetaDataObject descriptor) {
 			try {
 				int result = fc.showSaveDialog(null);
 				if(result == JFileChooser.APPROVE_OPTION){
@@ -80,15 +87,27 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 					writer.close();
 				}
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
 	};
+	
+	public static WorkflowLoadAdaptor loadAdaptor = new WorkflowLoadAdaptor() {
+		private final JFileChooser fc = new JFileChooser();
+		@Override
+		public Workflow loadWorkflow() {
+			int result = fc.showOpenDialog(null);
+			if(result == JFileChooser.APPROVE_OPTION){
+				File file = fc.getSelectedFile();
+				return Workflow.constructWorkflowFromXML(file.getAbsolutePath());
+			}
+			System.out.println("Failed to construct new workflow.");
+			return null;
+		}
+	};
+
 	
 	private WorkflowTabbedPane tabbedPane;
 	
@@ -189,9 +208,15 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	
 	public void requestNewWorkflow() {
 		assert(ALLOW_TABS);
-		
 		tabbedPane.addWorkflow(constructDefaultWorkflow());
-		
+	}
+	
+	public void requestLoadWorkflow() {
+		assert(ALLOW_TABS);
+		Workflow workflow = loadAdaptor.loadWorkflow();
+		if(workflow != null){
+			tabbedPane.addWorkflow(constructWorkflow(workflow));
+		}
 	}
 	
 	/**
@@ -199,9 +224,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	 */
 	public void requestNewWorkflowDragged(){
 		assert(ALLOW_TABS);
-		
 		tabbedPane.addWorkflow(constructDraggedWorkflow());
-		
 	}
 	
 
@@ -250,6 +273,13 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		requestNewWorkflow();
+		if(arg0.getActionCommand().equals(NEW_ACTION_COMMAND)){
+			requestNewWorkflow();
+		} else if (arg0.getActionCommand().equals(LOAD_ACTION_COMMAND)){
+			requestLoadWorkflow();
+		} else {
+			System.out.println("Error");
+			//TODO
+		}
 	}
 }

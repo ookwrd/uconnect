@@ -90,8 +90,13 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 	
 	private void initializeTabButtons(){
 		
-		ButtonTabFlap newWorkflowButton = addButtonTab("New Workflow", controller);
+		ButtonTabFlap newWorkflowButton = addButtonTab("New", controller);
+		newWorkflowButton.setActionCommand(WorkflowPaneController.NEW_ACTION_COMMAND);
 		newWorkflowButton.addActionListener(controller);	
+
+		ButtonTabFlap loadWorkflowButton = addButtonTab("Load", controller);
+		loadWorkflowButton.setActionCommand(WorkflowPaneController.LOAD_ACTION_COMMAND);
+		loadWorkflowButton.addActionListener(controller);
 		
 	}
 	

@@ -20,6 +20,7 @@ import org.u_compare.gui.model.Workflow;
 public class WorkflowConstructionPanel extends ComponentPanel {
 
 	private WorkflowControlPanel workflowControlPanel;
+	private WorkflowSavePanel workflowSavePanel;
 	
 	public WorkflowConstructionPanel(Workflow component,
 			ComponentController controller, boolean showWorkflowControlPanel,
@@ -51,8 +52,10 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 		}
 		 		
 		if(showWorkflowControlPanel){
-			setupWorkflowControlPanel(upperPanel);
+			setupBorderPanel(upperPanel,new WorkflowControlPanel((Workflow)component,
+					(WorkflowController)controller));
 		}
+		
 		setupSubComponentsPanel(innerPanel);
 
 		if(showWorkflowDetails || showWorkflowControlPanel){
@@ -60,51 +63,25 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 		}
 		this.add(innerPanel, BorderLayout.CENTER);
 		
-		
-		if(showSavePanel){//TODO
-			
-			setupWorkflowSavePanel(lowerPanel);
-			
+		if(showSavePanel){
+			setupBorderPanel(lowerPanel, new WorkflowSavePanel((Workflow)component));
 			this.add(lowerPanel, BorderLayout.SOUTH);
-		}
-		
+		}	
 	}
 	
-	protected void setupWorkflowControlPanel(JPanel target){
-		
+	protected void setupBorderPanel(JPanel target, JPanel inner){
+
 		//Necessary due to ComponentPanels LayoutManager 
-		JPanel spacer = new JPanel();//TODO is this needed?
+		JPanel spacer = new JPanel();
 		
 		JPanel etchedBorder = new JPanel();
 		etchedBorder.setLayout(new BorderLayout());
 		etchedBorder.setBorder(new EtchedBorder());
 		
-		workflowControlPanel = new WorkflowControlPanel((Workflow)component,
-				(WorkflowController)controller);
-		etchedBorder.add(workflowControlPanel);
-
+		etchedBorder.add(inner);
+		
 		spacer.add(etchedBorder);
 		
 		target.add(spacer);
 	}
-	
-	protected void setupWorkflowSavePanel(JPanel target){
-			
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-		
-		buttonPanel.add(new JLabel("Save workflow? "));
-		
-		JButton saveButton = new JButton("Save");
-		saveButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				WorkflowPaneController.saveAdaptor.saveDescriptor(component.getResourceCreationSpecifier());
-			}
-		});
-		
-		buttonPanel.add(saveButton);
-		target.add(buttonPanel);
-	}
-
 }

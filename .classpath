@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="lib/uimaj-as-camel.jar"/>
 	<classpathentry kind="lib" path="lib/uimaj-as-core.jar"/>
 	<classpathentry kind="lib" path="lib/uimaj-as-jms.jar"/>
+	<classpathentry kind="lib" path="lib/jms.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

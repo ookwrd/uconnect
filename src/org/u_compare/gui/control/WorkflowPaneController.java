@@ -50,8 +50,8 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	public static boolean SHOW_WORKFLOW_DETAILS = true;
 	public static boolean SHOW_SAVE_PANEL = false;
 	public static boolean ALLOW_TABS = true;
-	public static boolean SHOW_NEW_TAB = true; //TODO
-	public static boolean SHOW_LOAD_TAB = false; //TODO
+	public static boolean SHOW_NEW_TAB = true;
+	public static boolean SHOW_LOAD_TAB = false;
 	
 	public static boolean ALLOW_EDITING = true;
 //	private static final boolean allowReordering = true; //TODO

@@ -90,14 +90,17 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 	
 	private void initializeTabButtons(){
 		
-		ButtonTabFlap newWorkflowButton = addButtonTab("New", controller);
-		newWorkflowButton.setActionCommand(WorkflowPaneController.NEW_ACTION_COMMAND);
-		newWorkflowButton.addActionListener(controller);	
-
-		ButtonTabFlap loadWorkflowButton = addButtonTab("Load", controller);
-		loadWorkflowButton.setActionCommand(WorkflowPaneController.LOAD_ACTION_COMMAND);
-		loadWorkflowButton.addActionListener(controller);
-		
+		if(WorkflowPaneController.SHOW_NEW_TAB){
+			ButtonTabFlap newWorkflowButton = addButtonTab("New", controller);
+			newWorkflowButton.setActionCommand(WorkflowPaneController.NEW_ACTION_COMMAND);
+			newWorkflowButton.addActionListener(controller);	
+		}
+	
+		if(WorkflowPaneController.SHOW_LOAD_TAB){
+			ButtonTabFlap loadWorkflowButton = addButtonTab("Load", controller);
+			loadWorkflowButton.setActionCommand(WorkflowPaneController.LOAD_ACTION_COMMAND);
+			loadWorkflowButton.addActionListener(controller);
+		}
 	}
 	
 	//TODO should this really be public? and if so, should it be here? /luke

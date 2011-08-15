@@ -85,7 +85,7 @@ public class EditableTextField extends JTextField {
 		super.setBackground(null);
 		setBorder(null);
 		if(hasFocus()){
-			transferFocus();
+			transferFocus();//TODO transfer the focus somewhere where it won't do anything.
 		}
 		notifyActionListeners();
 	}

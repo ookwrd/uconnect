@@ -61,6 +61,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		
 		FocusListener listFocusListener = new FocusListener() {
 			public void focusGained(FocusEvent e) {
+				
 				if(!TypeListPanel.this.component.getLockedStatus()){
 					buttons.setVisible(true);
 					
@@ -74,7 +75,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 			public void focusLost(FocusEvent e) {
 				
 				Object source = e.getOppositeComponent();
-				
 				if(source==null
 						|| source.equals(list) 
 						|| source.equals(addButton) 

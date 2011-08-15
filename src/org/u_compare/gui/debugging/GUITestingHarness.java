@@ -10,6 +10,7 @@ import org.u_compare.gui.UConnectHorizontalSplitPane;
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.library.LibraryPane;
 import org.u_compare.gui.model.Workflow;
+import org.u_compare.gui.model.uima.CPE;
 
 /**
  * TODO: XXX:
@@ -35,8 +36,10 @@ public class GUITestingHarness {
 		//workflows.add(ExampleWorkflowFactory.cpeWorkflow());
 		workflows.add(ExampleWorkflowFactory.cpeWorkflow());
 		
-		WorkflowPaneController workflowPaneController = new WorkflowPaneController();	
+		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
+		WorkflowPaneController.defaultWorkflowFactory = CPE.emptyCPEFactory;
 		JComponent tabbedPane = workflowPaneController.initialize(workflows);
+		
 		
 		
 		// Library panel

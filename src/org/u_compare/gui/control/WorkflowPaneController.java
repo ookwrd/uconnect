@@ -52,6 +52,9 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	public static boolean ALLOW_EDITING = true;
 //	private static final boolean allowReordering = true; //TODO
 
+	public static String LOAD_TAB_NAME = "Load";
+	public static String NEW_TAB_NAME = "New";
+	
 	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser(){
 		@Override
 		public AnnotationTypeOrFeature getNewAnnotation() {

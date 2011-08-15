@@ -41,10 +41,6 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		public void saveWorkflow(MetaDataObject descriptor);
 	}
 	
-	public interface WorkflowLoadAdaptor {
-		public Workflow loadWorkflow();
-	}
-	
 	public static boolean SHOW_CONSOLE = true;
 	public static boolean SHOW_WORKFLOW_CONTROL = true;
 	public static boolean SHOW_WORKFLOW_DETAILS = true;
@@ -96,10 +92,10 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		}
 	};
 	
-	public static WorkflowLoadAdaptor loadAdaptor = new WorkflowLoadAdaptor() {
+	public static WorkflowFactory loadAdaptor = new WorkflowFactory() {
 		private final JFileChooser fc = new JFileChooser();
 		@Override
-		public Workflow loadWorkflow() {
+		public Workflow constructWorkflow() {
 			int result = fc.showOpenDialog(null);
 			if(result == JFileChooser.APPROVE_OPTION){
 				File file = fc.getSelectedFile();
@@ -114,7 +110,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	private JPanel zeroPanel = new JPanel(){
 		{
 			setName("      ");
-			add(new JLabel("THis is the new JLabel."));
+			add(new JLabel("This is the new JLabel."));
 		}
 	};
 	
@@ -216,9 +212,9 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		tabbedPane.addWorkflow(constructDefaultWorkflow());
 	}
 	
-	public void requestLoadWorkflow() {
+	public void requestLoadWorkflow(){
 		assert(ALLOW_TABS);
-		Workflow workflow = loadAdaptor.loadWorkflow();
+		Workflow workflow = loadAdaptor.constructWorkflow();
 		if(workflow != null){
 			tabbedPane.addWorkflow(constructWorkflow(workflow));
 		}

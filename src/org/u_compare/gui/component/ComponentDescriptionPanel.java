@@ -10,18 +10,15 @@ import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.guiElements.EditableTextPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
+import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
 @SuppressWarnings("serial")
 public class ComponentDescriptionPanel extends JPanel implements
-		DescriptionChangeListener {
-
-	// private static final int DESCRIPTION_PANEL_PADDING = 5;
-
-	// public final Color defaultColor = getBackground();
+		DescriptionChangeListener, LockedStatusChangeListener {
 
 	private final ComponentController controller;
 	private final Component component;
-	private EditableTextPanel innerPanel;
+	private final EditableTextPanel textPanel;
 
 	public ComponentDescriptionPanel(ComponentController controller, Component component) {
 		super();
@@ -29,40 +26,37 @@ public class ComponentDescriptionPanel extends JPanel implements
 		this.controller = controller;
 		this.component = component;
 
-		innerPanel = new EditableTextPanel(component);
-
-		innerPanel.registerActionListener(new ActionListener() {//TODO why is this never called /luke
+		textPanel = new EditableTextPanel(component.getDescription());
+		textPanel.registerActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setDescription(innerPanel.getDescription());
+				textChangeRequest(textPanel.getDescription());
 			}
 		});
 
-		// add a description panel under the top panel, and first set the layout
-		BorderLayout descriptionLayout = new BorderLayout();
-		setLayout(descriptionLayout);
+		setLayout(new BorderLayout());
 		setOpaque(false);
-		this.add(innerPanel);
+		this.add(textPanel);
 
 		// Register Listeners
-		component.registerComponentDescriptionChangeListener(this);
-
+		component.registerComponentDescriptionChangeListener(this);//TODO both of these should be moved to the control
+		component.registerLockedStatusChangeListener(this);
 	}
 
-	// TODO this might be set directly by the controller
-	protected void setDescription(String descriptionText) {
-
+	protected void textChangeRequest(String descriptionText) {
 		descriptionText = descriptionText.trim();
-		innerPanel.setContent(descriptionText);
+		textPanel.setDescription(component.getDescription());
 		this.controller.setDescription(descriptionText);
 	}
 
 	@Override
-	public void ComponentDescriptionChanged(Component component1) {
+	public void ComponentDescriptionChanged(Component component) {
+		textPanel.setDescription(component.getDescription());
+	}
 
-		System.out.println("Components name changed to: "
-				+ component.getName());
-		// TODO
+	@Override
+	public void lockStatusChanged(Component component) {
+		textPanel.setEnabled(!component.getLockedStatus());
 	}
 
 }

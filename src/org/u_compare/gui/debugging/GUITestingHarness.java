@@ -3,7 +3,6 @@ package org.u_compare.gui.debugging;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
 import org.u_compare.gui.UConnectHorizontalSplitPane;
 

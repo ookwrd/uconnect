@@ -110,6 +110,9 @@ public class EditableTextPanel extends JPanel {
 		content.setBackground(defaultColor);
 		content.setBorder(null);
 		endEditingButton.setVisible(false);
+		if(content.hasFocus()){
+			requestFocusInWindow();
+		}
 		notifyActionListeners();
 	}
 

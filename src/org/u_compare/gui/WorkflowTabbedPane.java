@@ -146,7 +146,7 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 		};
 		
 		IconizedCloseableTabFlapComponent tabFlapComponent = 
-			new IconizedCloseableTabFlapComponent(this, WorkflowTabbedPane.WORKFLOW_STOPPED, dropListener);
+			new IconizedCloseableTabFlapComponent(this, WorkflowTabbedPane.WORKFLOW_STOPPED, dropListener, WorkflowPaneController.ALLOW_TAB_CLOSE);
 		
 		splitPane.linkTabbedPane(this, tabFlapComponent);
 		

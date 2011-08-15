@@ -1,5 +1,7 @@
 package org.u_compare.gui;
 
+//TODO I think this class can be removed /luke
+
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
@@ -22,8 +24,8 @@ public class WorkflowTabFlap extends IconizedCloseableTabFlapComponent implement
 
 	JTabbedPane parentPane;
 	
-	public WorkflowTabFlap(JTabbedPane parentPane, Icon statusIcon) {
-		super(parentPane, statusIcon);
+	public WorkflowTabFlap(JTabbedPane parentPane, Icon statusIcon, boolean tabsCloseable) {
+		super(parentPane, statusIcon, tabsCloseable);
 		
 		this.parentPane = parentPane;
 		

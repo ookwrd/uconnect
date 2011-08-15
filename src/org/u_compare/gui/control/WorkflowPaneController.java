@@ -26,9 +26,6 @@ import org.xml.sax.SAXException;
 
 public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
 
-	public static final String NEW_ACTION_COMMAND = "NEW";
-	public static final String LOAD_ACTION_COMMAND = "LOAD";
-	
 	public interface WorkflowFactory {
 		public Workflow constructWorkflow();
 	}
@@ -41,6 +38,9 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		public void saveWorkflow(MetaDataObject descriptor);
 	}
 	
+	public static final String NEW_ACTION_COMMAND = "NEW";
+	public static final String LOAD_ACTION_COMMAND = "LOAD";
+	
 	public static boolean SHOW_CONSOLE = true;
 	public static boolean SHOW_WORKFLOW_CONTROL = true;
 	public static boolean SHOW_WORKFLOW_DETAILS = true;
@@ -48,9 +48,9 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	public static boolean ALLOW_TABS = true;
 	public static boolean SHOW_NEW_TAB = true;
 	public static boolean SHOW_LOAD_TAB = false;
-	
 	public static boolean ALLOW_EDITING = true;
 //	private static final boolean allowReordering = true; //TODO
+	public static boolean ALLOW_TAB_CLOSE = false;
 
 	public static String LOAD_TAB_NAME = "Load";
 	public static String NEW_TAB_NAME = "New";

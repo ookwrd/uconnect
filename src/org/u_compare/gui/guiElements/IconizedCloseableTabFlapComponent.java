@@ -47,8 +47,8 @@ public class IconizedCloseableTabFlapComponent
 		"Icon indicating closing a tab";
 	
 	public IconizedCloseableTabFlapComponent(
-			final JTabbedPane parentPane, Icon statusIcon, DropTargetListener dropListener){
-		this(parentPane, statusIcon);
+			final JTabbedPane parentPane, Icon statusIcon, DropTargetListener dropListener, boolean showCloseIcon){
+		this(parentPane, statusIcon, showCloseIcon);
 		
 		new DropTarget(this, dropListener);
 	}
@@ -56,7 +56,7 @@ public class IconizedCloseableTabFlapComponent
 	private boolean iconIsNotification = false;
 	
 	public IconizedCloseableTabFlapComponent(
-			final JTabbedPane parentPane, Icon statusIcon) {
+			final JTabbedPane parentPane, Icon statusIcon, boolean showCloseIcon) {
 		
 		// Disable the spacing usually implied by the FlowLayout
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -99,61 +99,63 @@ public class IconizedCloseableTabFlapComponent
 				BorderFactory.createEmptyBorder(0, 0, 0, 7));
 		this.add(title);
 		
-		// Last of all, we add the close button
-		close_button = new JButton(
-				IconizedCloseableTabFlapComponent.closeTabIcon);
-		// Force it to be a square
-		close_button.setPreferredSize(new Dimension(9, 9));
-		close_button.setToolTipText(
-				IconizedCloseableTabFlapComponent.CLOSE_BUTTON_TOOLTIP);
-		// Don't catch the user focus since this would be confusing
-		close_button.setFocusable(false);
-		
-		//let the close button appear only when mouseover on the tab  
-		//close_button.setVisible(false); //TODO fix the component resizing
-		/*tabListener = new MouseListener() {//TODO use what is it call? Mouse adaptor?
+		if(showCloseIcon){
+			// Last of all, we add the close button
+			close_button = new JButton(
+					IconizedCloseableTabFlapComponent.closeTabIcon);
+			// Force it to be a square
+			close_button.setPreferredSize(new Dimension(9, 9));
+			close_button.setToolTipText(
+					IconizedCloseableTabFlapComponent.CLOSE_BUTTON_TOOLTIP);
+			// Don't catch the user focus since this would be confusing
+			close_button.setFocusable(false);
 			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+			//let the close button appear only when mouseover on the tab  
+			//close_button.setVisible(false); //TODO fix the component resizing
+			/*tabListener = new MouseListener() {//TODO use what is it call? Mouse adaptor?
 				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
 				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				//setCloseButtonVisible(false); //TODO fix the component resizing
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				//setCloseButtonVisible(true); //TODO fix the component resizing
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
 				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					//setCloseButtonVisible(false); //TODO fix the component resizing
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					//setCloseButtonVisible(true); //TODO fix the component resizing
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			};
+			this.addMouseListener(tabListener);*/
+			
+			// Button looks
+			close_button.setUI(new BasicButtonUI());
+			close_button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			
+			close_button.addActionListener(this);
+			
+			// Roll-over is Java terminology for mouse over
+			close_button.setRolloverEnabled(true);
+			close_button.setRolloverIcon(
+					IconizedCloseableTabFlapComponent.closeTabMouseOverIcon);
+			this.add(close_button);
 			}
-		};
-		this.addMouseListener(tabListener);*/
-		
-		// Button looks
-		close_button.setUI(new BasicButtonUI());
-		close_button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		
-		close_button.addActionListener(this);
-		
-		// Roll-over is Java terminology for mouse over
-		close_button.setRolloverEnabled(true);
-		close_button.setRolloverIcon(
-				IconizedCloseableTabFlapComponent.closeTabMouseOverIcon);
-		this.add(close_button);
 		
 		// Create some distance between the edge and the close button
 		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 3));

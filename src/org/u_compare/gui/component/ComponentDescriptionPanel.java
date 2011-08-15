@@ -31,7 +31,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 
 		innerPanel = new EditableTextPanel(component);
 
-		innerPanel.registerActionListener(new ActionListener() {
+		innerPanel.registerActionListener(new ActionListener() {//TODO why is this never called /luke
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setDescription(innerPanel.getDescription());

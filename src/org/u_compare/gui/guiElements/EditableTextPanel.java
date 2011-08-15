@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
 import org.u_compare.gui.model.Component;
 
@@ -44,7 +45,7 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 
 		this.component = component;
 
-		new ActionListener() {
+		new ActionListener() {//TODO why is this here? /luke
 
 			public void actionPerformed(ActionEvent e) {
 				setContent(editableContent.getText());
@@ -55,10 +56,10 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 		};
 
 		descriptionFocusListener = new FocusListener() {
-
+			@Override
 			public void focusGained(FocusEvent e) {
 			}
-
+			@Override
 			public void focusLost(FocusEvent e) {
 				releaseFocusAction();
 			}
@@ -112,18 +113,14 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 		content.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					// JPanel target = (JPanel) e.getSource();
 					if (!EditableTextPanel.this.component.getLockedStatus()) {
-						// setDescription(content.getText());
+						
+						editableContent.setVisible(true);
+						//Must proceed setting content invisible to prevent focus being lost from this component
+						editableContent.requestFocusInWindow();	
 						content.setVisible(false);
-						editableContent.setVisible(true);
-
-						// editableContent.requestFocusInWindow();
-						editableContent.setVisible(false);
-						editableContent.setVisible(true);
-						editableContent.requestFocus();
-
-						endEditingButton.setVisible(true);
+						
+						endEditingButton.setVisible(true);	
 					}
 				}
 			}
@@ -136,7 +133,6 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 	}
 
 	protected void releaseFocusAction() {
-		
 		setContent(editableContent.getText());
 		editableContent.setVisible(false);
 		content.setVisible(true);

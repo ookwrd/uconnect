@@ -21,9 +21,7 @@ public class ComponentTitleBar extends JPanel {
 
 		this.controller = controller;
 		this.component = component;
-		// this.setFocusable(false);
-		BorderLayout topLayout = new BorderLayout();
-		setLayout(topLayout);
+		setLayout(new BorderLayout());
 		setOpaque(false);
 
 		if (!isWorkflow) {

@@ -44,8 +44,8 @@ public class EditableTextPanel extends JPanel {
 		content.setWrapStyleWord(true);
 		content.setEditable(false);
 
-		endEditingButton = new JButton("Save");
-		endEditingButton.setActionCommand("End content editing");
+		endEditingButton = new JButton("Done");
+		endEditingButton.setActionCommand("Finish editing");
 		endEditingButton.addActionListener(endEditingListener);
 		endEditingButton.setVisible(false);
 
@@ -101,7 +101,7 @@ public class EditableTextPanel extends JPanel {
 		//Fix java bug where Caret becomes invisible if JTextArea.setEditable(false);
 		content.setCaretPosition(content.getText().length());
 		content.getCaret().setVisible(true);
-
+		
 		endEditingButton.setVisible(true);
 	}
 	

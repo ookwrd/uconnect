@@ -61,7 +61,7 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				releaseFocusAction();
+				toFixedMode();
 			}
 		};
 
@@ -114,13 +114,7 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					if (!EditableTextPanel.this.component.getLockedStatus()) {
-						
-						editableContent.setVisible(true);
-						//Must proceed setting content invisible to prevent focus being lost from this component
-						editableContent.requestFocusInWindow();	
-						content.setVisible(false);
-						
-						endEditingButton.setVisible(true);	
+						toEditMode();
 					}
 				}
 			}
@@ -132,7 +126,22 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 
 	}
 
-	protected void releaseFocusAction() {
+	protected void toEditMode(){
+		/*
+		 * TODO AGH this entire class needs to be rewritten to use the following and just extend JTextPanel. /Luke
+		 * 
+		 * content.setEditable(true);
+		 * editableContent.setBackground(Color.WHITE);
+		*/
+		editableContent.setVisible(true);
+		//Must proceed setting content invisible to prevent focus being lost from this component
+		editableContent.requestFocusInWindow();	
+		content.setVisible(false);
+		
+		endEditingButton.setVisible(true);	
+	}
+	
+	protected void toFixedMode(){
 		setContent(editableContent.getText());
 		editableContent.setVisible(false);
 		content.setVisible(true);
@@ -140,14 +149,12 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 	}
 
 	public void setContent(String text) {
-
 		this.contentText = text;
 		content.setText(text);
 		editableContent.setText(text);
 	}
 
 	public void registerActionListener(ActionListener listener) {
-
 		this.changeListeners.add(listener);
 	}
 
@@ -177,7 +184,7 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 		if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_CAPS_LOCK) 
 		{ 
 			if (debug) System.out.println("ESC pressed.");
-			releaseFocusAction();
+			toFixedMode();
 		} 
 	}
 

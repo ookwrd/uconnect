@@ -17,12 +17,20 @@ import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
+import org.u_compare.gui.control.WorkflowPaneController.WorkflowFactory;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 
 public class CPE extends Workflow implements StatusCallbackListener {
 
+	public static WorkflowFactory emptyCPEFactory = new WorkflowFactory() {
+		@Override
+		public Workflow constructWorkflow() {
+			return Workflow.constructWorkflowFromXML("src/org/u_compare/gui/model/uima/descriptors/emptyCPE.xml");
+		}
+	};
+	
 	private CpeCollectionReader[] collectionReaders;
 	private CpeCasProcessors cpeCasProcessors;
 	private CpeConfiguration cpeConfiguration;

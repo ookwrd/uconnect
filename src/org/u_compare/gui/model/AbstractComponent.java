@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.TypeOrFeature;
-import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.collection.CasConsumerDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescription;
@@ -93,6 +92,7 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 	private ArrayList<ParameterConfigurationChangeListener> parameterConfigurationChangeListeners = new ArrayList<Component.ParameterConfigurationChangeListener>();
 	private ArrayList<ParameterGroupsChangeListener> parameterGroupsChangeListeners = new ArrayList<Component.ParameterGroupsChangeListener>();
+	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<Component.ParametersChangedListener>();
 	
 	public AbstractComponent(){
 
@@ -544,10 +544,14 @@ public abstract class AbstractComponent implements Component {
 	
 	@Override 
 	public void registerParametersChangedListener(ParametersChangedListener listener){
-		basicParameters.registerParametersChangedListener(listener);
-		//TODO common parameters
-		//TODO register for all subgroups
-		//hmm need to move this back in here, so that the set of listeners don't change if the component groups are changed.
+		parametersChangedListeners.add(listener);
+	}
+	
+	public void notifyParametersChangedListeners(){
+		for(ParametersChangedListener listener : parametersChangedListeners){
+			listener.parametersChanged(this);
+		}
+		setComponentChanged();
 	}
 	
 	@Override

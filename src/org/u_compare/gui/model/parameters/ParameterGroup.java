@@ -2,6 +2,7 @@ package org.u_compare.gui.model.parameters;
 
 import java.util.ArrayList;
 
+import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.ParametersChangedListener;
 
@@ -66,18 +67,10 @@ public class ParameterGroup {
 		public void parameterGroupConfigurationChanged(ParameterGroup group);
 	}
 	
-	public void registerParametersChangedListener(ParametersChangedListener listener){
-		assert(listener != null);
-		parametersChangedListeners.add(listener);
-	}
-	
 	/**
 	 * Not to be confused with ParameterSettingsChangeListener in the Parameter package.
 	 */
 	protected void notifyParametersChangedListeners(){
-		for(ParametersChangedListener listener : parametersChangedListeners){
-			listener.parametersChanged(parent);
-		}
-		parent.setComponentChanged();
+		((AbstractComponent)parent).notifyParametersChangedListeners();
 	}
 }

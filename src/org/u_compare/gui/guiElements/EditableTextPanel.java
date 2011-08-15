@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -19,74 +19,30 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import org.u_compare.gui.model.Component;
-
 @SuppressWarnings("serial")
-public class EditableTextPanel extends JPanel implements KeyListener {
+public class EditableTextPanel extends JPanel {
 
-	private static final boolean debug = true;
-	private static final int PANEL_PADDING = 5;
+	private static final int PANEL_PADDING = 8;
 	public final Color defaultColor = getBackground();
 
-	private final Component component;
-
-	private FocusListener descriptionFocusListener;
-
 	private JTextArea content;
-	private JTextArea editableContent;
-	private String contentText;
 	private JButton endEditingButton;
 
 	private ActionListener endEditingListener;
 
-	private ArrayList<ActionListener> changeListeners = new ArrayList<ActionListener>();
-
-	public EditableTextPanel(Component component) {
-
-		this.component = component;
-
-		new ActionListener() {//TODO why is this here? /luke
-
-			public void actionPerformed(ActionEvent e) {
-				setContent(editableContent.getText());
-				editableContent.setVisible(false);
-				content.setVisible(true);
-				endEditingButton.setVisible(true);
-			}
-		};
-
-		descriptionFocusListener = new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent e) {
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				toFixedMode();
-			}
-		};
-
-		// add a content panel under the top panel, and first set the layout
-		BorderLayout descriptionLayout = new BorderLayout();
-		setLayout(descriptionLayout);
+	public EditableTextPanel(String text) {
+		
+		setLayout(new BorderLayout());
 
 		setOpaque(false);
-		setBorder(new EmptyBorder(new Insets(PANEL_PADDING, PANEL_PADDING,
-				PANEL_PADDING, PANEL_PADDING)));
+		setBorder(new EmptyBorder(new Insets(PANEL_PADDING, PANEL_PADDING, 0,
+				PANEL_PADDING)));
 
-		contentText = component.getDescription();
-
-		content = new JTextArea(contentText);
+		content = new JTextArea(text);
 		content.setBackground(defaultColor);
 		content.setLineWrap(true);
 		content.setWrapStyleWord(true);
 		content.setEditable(false);
-
-		editableContent = new JTextArea(contentText);
-		editableContent.setBackground(Color.WHITE);
-		editableContent.setLineWrap(true);
-		editableContent.setWrapStyleWord(true);
-		editableContent.setEditable(true);
-		editableContent.setVisible(false);
 
 		endEditingButton = new JButton("Save");
 		endEditingButton.setActionCommand("End content editing");
@@ -94,11 +50,11 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 		endEditingButton.setVisible(false);
 
 		add(content, BorderLayout.PAGE_START);
-		add(editableContent, BorderLayout.CENTER);
 
 		JPanel saveButtonPanel = new JPanel();
 		JPanel saveButtonInnerPanel = new JPanel();
-
+		saveButtonInnerPanel.setLayout(new BorderLayout());
+		
 		saveButtonPanel.setLayout(new BorderLayout());
 		saveButtonPanel.add(saveButtonInnerPanel, BorderLayout.AFTER_LINE_ENDS);
 
@@ -108,90 +64,72 @@ public class EditableTextPanel extends JPanel implements KeyListener {
 		// TODO change the layout to cardlayout, creating the cards as on
 		// http://download.oracle.com/javase/tutorial/uiswing/layout/card.html
 
-		setBackground(Color.WHITE);
-
 		content.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					if (!EditableTextPanel.this.component.getLockedStatus()) {
+					if (isEnabled()) {
 						toEditMode();
 					}
 				}
 			}
 		});
+		
+		content.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int code = e.getKeyCode(); 
+				if(code == KeyEvent.VK_ESCAPE) { 
+					e.consume();
+					toFixedMode();
+				} 
+			}
+		});
 
-		// editableContent.addActionListener(descriptionListener); //
-		// useless: not a text field anymore
-		editableContent.addFocusListener(descriptionFocusListener);
-
+		content.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				toFixedMode();
+			}
+		});
 	}
 
 	protected void toEditMode(){
-		/*
-		 * TODO AGH this entire class needs to be rewritten to use the following and just extend JTextPanel. /Luke
-		 * 
-		 * content.setEditable(true);
-		 * editableContent.setBackground(Color.WHITE);
-		*/
-		editableContent.setVisible(true);
-		//Must proceed setting content invisible to prevent focus being lost from this component
-		editableContent.requestFocusInWindow();	
-		content.setVisible(false);
-		
-		endEditingButton.setVisible(true);	
+		content.setEditable(true);
+		content.setBackground(Color.WHITE);
+		content.setBorder(new EtchedBorder());
+
+		//Fix java bug where Caret becomes invisible if JTextArea.setEditable(false);
+		content.setCaretPosition(content.getText().length());
+		content.getCaret().setVisible(true);
+
+		endEditingButton.setVisible(true);
 	}
 	
 	protected void toFixedMode(){
-		setContent(editableContent.getText());
-		editableContent.setVisible(false);
-		content.setVisible(true);
+		content.setEditable(false);
+		content.setBackground(defaultColor);
+		content.setBorder(null);
 		endEditingButton.setVisible(false);
+		notifyActionListeners();
 	}
 
-	public void setContent(String text) {
-		this.contentText = text;
+	public void setDescription(String text) {
 		content.setText(text);
-		editableContent.setText(text);
-	}
-
-	public void registerActionListener(ActionListener listener) {
-		this.changeListeners.add(listener);
-	}
-
-	protected void notifyActionListeners() {
-
-		for (ActionListener listener : changeListeners) {
-
-			listener.actionPerformed(new ActionEvent(this,
-					ActionEvent.ACTION_PERFORMED, "Component Contents Changed"));
-		}
 	}
 
 	public String getDescription() {
-		return this.contentText;
+		return content.getText();
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		
+	private ArrayList<ActionListener> actionListeners = new ArrayList<ActionListener>();
+	
+	public void registerActionListener(ActionListener listener){
+		actionListeners.add(listener);
 	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO possibly http://www.devx.com/tips/Tip/13547
-		if (debug) System.out.println("Key pressed.");
-		int code = e.getKeyCode(); 
-		if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_CAPS_LOCK) 
-		{ 
-			if (debug) System.out.println("ESC pressed.");
-			toFixedMode();
-		} 
+	
+	protected void notifyActionListeners(){
+		for(ActionListener listener : actionListeners){
+			listener.actionPerformed(new ActionEvent(this, 1, getDescription()));
+		}
 	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

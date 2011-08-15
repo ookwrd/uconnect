@@ -487,6 +487,8 @@ public class ComponentController implements DragAndDropComponentController {
 	public void setDescription(String descriptionText) {
 		
 		assert(component.getLockedStatus()==false);
+		//TODO assertion will fail if the component is locked in the middle of editing the text.
+		
 		
 		component.setDescription(descriptionText);
 		

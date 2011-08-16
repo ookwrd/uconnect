@@ -21,7 +21,7 @@ import javax.swing.border.EtchedBorder;
 
 @SuppressWarnings("serial")
 public class EditableTextPanel extends JPanel {
-
+	
 	private static final int PANEL_PADDING = 8;
 	public final Color defaultColor = getBackground();
 

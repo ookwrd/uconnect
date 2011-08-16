@@ -22,11 +22,7 @@ public class EditableTextField extends JTextField {
 	private boolean fixed;
 	
 	public EditableTextField(String text){
-		this(text, 30);
-	}
-	
-	public EditableTextField(String text, int length){
-		super(text, length);
+		super(text, 500);
 		toFixedMode();
 		
 		addMouseListener(new MouseAdapter() {

@@ -185,10 +185,6 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public boolean canRemove(){
 		
-		if(component.getLockedStatus()){
-			return false;
-		}
-		
 		if(parent != null){
 			return parent.canRemoveSubComponent(this);
 		}else{

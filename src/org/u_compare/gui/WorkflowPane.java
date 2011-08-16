@@ -69,12 +69,6 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 
 		getVerticalScrollBar().setUnitIncrement(8);
 
-		//XXX: Removing these lines breaks the rendering?! /pontus
-		DnDVerticalScrollerPanel scrollerPanel = 
-			new DnDVerticalScrollerPanel();
-		this.viewport.addMouseListener(scrollerPanel);
-		//XXX: Whoever did the implementation needs to have a look at this
-
 		MouseMotionListener doScrollRectToVisible = new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
 				System.out.println("something happening");

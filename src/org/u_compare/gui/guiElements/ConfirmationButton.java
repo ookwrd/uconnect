@@ -21,6 +21,9 @@ public class ConfirmationButton extends JButton {
 	public ConfirmationButton(JButton mainButton, String confirmation){
 		super();
 		
+		// TODO change the layout to cardlayout, creating the cards as on
+		// http://download.oracle.com/javase/tutorial/uiswing/layout/card.html
+		
 		setOpaque(false);
 		
 		setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));

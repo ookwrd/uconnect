@@ -14,6 +14,7 @@ import javax.swing.text.DefaultCaret;
 import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.Workflow.WorkflowMessageListener;
+import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
@@ -162,7 +163,11 @@ public class ConsolePane extends JScrollPane
 
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
-		addConsoleMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus());
+		if(workflow.getStatus() == WorkflowStatus.ERROR){
+			addConsoleMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus(), true);
+		}else{
+			addConsoleMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus());
+			}
 	}
 	
 	@Override

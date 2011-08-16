@@ -61,9 +61,6 @@ public class EditableTextPanel extends JPanel {
 		add(saveButtonPanel, BorderLayout.AFTER_LAST_LINE);
 		saveButtonInnerPanel.add(endEditingButton);
 
-		// TODO change the layout to cardlayout, creating the cards as on
-		// http://download.oracle.com/javase/tutorial/uiswing/layout/card.html
-
 		content.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {

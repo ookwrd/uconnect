@@ -30,7 +30,6 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 @SuppressWarnings("serial")
 //TODO: Enable scrolling among tabs
 //TODO: Should have mnemonics
-//TODO: Should never be empty, we always have at least one tab
 public class WorkflowTabbedPane extends ButtonTabbedPane
 	implements WorkflowStatusListener, ChangeListener {
 	

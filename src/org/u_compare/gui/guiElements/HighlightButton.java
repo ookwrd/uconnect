@@ -15,6 +15,8 @@ import javax.swing.border.CompoundBorder;
 /**
  * An extension of the Standard JButton Class that allows mouseover highlighting.
  * 
+ * TODO can this be replaced with close_button.setRolloverEnabled(true/false);
+ * 
  * @author Luke Mccrohon
  *
  */

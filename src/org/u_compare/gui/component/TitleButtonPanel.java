@@ -1,14 +1,11 @@
 package org.u_compare.gui.component;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.control.ComponentController;
@@ -45,7 +42,6 @@ public class TitleButtonPanel extends JPanel implements
 
 		TitleButtonPanel.loadIcons(); // TODO figure out how to load the
 									// icons in a better way (xml ?)
-
 
 		// set the buttons
 		ActionListener removeListener = new ActionListener(){

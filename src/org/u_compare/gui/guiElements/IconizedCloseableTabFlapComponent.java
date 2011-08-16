@@ -21,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
@@ -133,14 +135,12 @@ public class IconizedCloseableTabFlapComponent
 ;			addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseExited(MouseEvent e) {
-					close_button.setIcon(null);
+					setCloseButtonVisible(false);
 				}
-				
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					close_button.setIcon(IconizedCloseableTabFlapComponent.closeTabIcon);
+					setCloseButtonVisible(true);
 				}
-				
 				@Override
 				public void mouseClicked(MouseEvent e){
 					//Fixes issue as described here: http://stackoverflow.com/questions/4348293/tab-component-consuming-mouse-so-tabs-wont-change
@@ -151,8 +151,16 @@ public class IconizedCloseableTabFlapComponent
 		
 		// Create some distance between the edge and the close button
 		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 0));
-		//setOpaque(true);
-		//setBackground(Color.red);
+		
+		setCloseButtonVisible(true);
+		parentPane.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				if(parentPane.indexOfTabComponent(IconizedCloseableTabFlapComponent.this) != parentPane.getSelectedIndex()){
+					setCloseButtonVisible(false);
+				}
+			}
+		});
 	}
 	
 	@Override
@@ -163,7 +171,11 @@ public class IconizedCloseableTabFlapComponent
 	}
 	
 	private void setCloseButtonVisible(boolean visible) {
-		close_button.setVisible(visible);
+		if(visible || parentPane.indexOfTabComponent(IconizedCloseableTabFlapComponent.this) == parentPane.getSelectedIndex()){
+			close_button.setIcon(IconizedCloseableTabFlapComponent.closeTabIcon);
+		}else{
+			close_button.setIcon(null);	
+		}
 	}
 	
 	private static synchronized void loadIcons() {

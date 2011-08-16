@@ -85,13 +85,7 @@ public class EditableTextPanel extends JPanel {
 		content.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				System.out.println("focus lost");
 				toFixedMode();
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e){
-				System.out.println("Focus gained");
 			}
 		});
 	}

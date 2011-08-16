@@ -1,11 +1,16 @@
 package org.u_compare.gui.guiElements;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.net.URL;
 
 import javax.swing.BorderFactory;
@@ -15,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EtchedBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
@@ -23,6 +29,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
  * 
  * @author pontus
  * @author olaf
+ * @author lukemccrohon
  * @version 2010-05-28
  */
 @SuppressWarnings("serial")
@@ -45,6 +52,8 @@ public class IconizedCloseableTabFlapComponent
 		"Close this workflow";
 	private final static String CLOSE_BUTTON_ICON_CAPTION =
 		"Icon indicating closing a tab";
+
+	private boolean iconIsNotification = false;
 	
 	public IconizedCloseableTabFlapComponent(
 			final JTabbedPane parentPane, Icon statusIcon, DropTargetListener dropListener, boolean showCloseIcon){
@@ -52,8 +61,6 @@ public class IconizedCloseableTabFlapComponent
 		
 		new DropTarget(this, dropListener);
 	}
-	
-	private boolean iconIsNotification = false;
 	
 	public IconizedCloseableTabFlapComponent(
 			final JTabbedPane parentPane, Icon statusIcon, boolean showCloseIcon) {
@@ -79,7 +86,7 @@ public class IconizedCloseableTabFlapComponent
 		this.statusIconLabel = new JLabel(statusIcon);
 		this.statusIconLabel.setSize(new Dimension(16, 16));
 		this.statusIconLabel.setBorder(
-				BorderFactory.createEmptyBorder(0, 0, 0, 5));
+				BorderFactory.createEmptyBorder(0, 0, 0, 3));
 		this.add(this.statusIconLabel);
 		
 		// Second, we add the title
@@ -96,7 +103,7 @@ public class IconizedCloseableTabFlapComponent
 			}
 		};
 		title.setBorder(
-				BorderFactory.createEmptyBorder(0, 0, 0, 7));
+				BorderFactory.createEmptyBorder(0, 0, 0, 3));
 		this.add(title);
 		
 		if(showCloseIcon){
@@ -110,44 +117,10 @@ public class IconizedCloseableTabFlapComponent
 			// Don't catch the user focus since this would be confusing
 			close_button.setFocusable(false);
 			
-			//let the close button appear only when mouseover on the tab  
-			//close_button.setVisible(false); //TODO fix the component resizing
-			/*tabListener = new MouseListener() {//TODO use what is it call? Mouse adaptor?
-				
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseExited(MouseEvent e) {
-					//setCloseButtonVisible(false); //TODO fix the component resizing
-				}
-				
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					//setCloseButtonVisible(true); //TODO fix the component resizing
-				}
-				
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-			};
-			this.addMouseListener(tabListener);*/
-			
 			// Button looks
 			close_button.setUI(new BasicButtonUI());
 			close_button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-			
+			close_button.setOpaque(false);
 			close_button.addActionListener(this);
 			
 			// Roll-over is Java terminology for mouse over
@@ -155,15 +128,43 @@ public class IconizedCloseableTabFlapComponent
 			close_button.setRolloverIcon(
 					IconizedCloseableTabFlapComponent.closeTabMouseOverIcon);
 			this.add(close_button);
+			
+			close_button.setIcon(null);
+;			addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseExited(MouseEvent e) {
+					close_button.setIcon(null);
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					close_button.setIcon(IconizedCloseableTabFlapComponent.closeTabIcon);
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e){
+					//Fixes issue as described here: http://stackoverflow.com/questions/4348293/tab-component-consuming-mouse-so-tabs-wont-change
+					parentPane.setSelectedIndex(parentPane.indexOfTabComponent(IconizedCloseableTabFlapComponent.this));
+				}
+			});
 			}
 		
 		// Create some distance between the edge and the close button
-		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 3));
+		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 0));
+		//setOpaque(true);
+		//setBackground(Color.red);
 	}
 	
-//	private void setCloseButtonVisible(boolean visible) {
-//		close_button.setVisible(visible);
-//	}
+	@Override
+	public void addMouseListener(MouseListener listener){
+		super.addMouseListener(listener);
+		close_button.addMouseListener(listener);
+		statusIconLabel.addMouseListener(listener);
+	}
+	
+	private void setCloseButtonVisible(boolean visible) {
+		close_button.setVisible(visible);
+	}
 	
 	private static synchronized void loadIcons() {
 		if (IconizedCloseableTabFlapComponent.iconsLoaded == false) {

@@ -151,9 +151,7 @@ public class IconizedCloseableTabFlapComponent
 			parentPane.addChangeListener(new ChangeListener() {
 				@Override
 				public void stateChanged(ChangeEvent arg0) {
-					if(parentPane.indexOfTabComponent(IconizedCloseableTabFlapComponent.this) != parentPane.getSelectedIndex()){
-						setCloseButtonVisible(false);
-					}
+					setCloseButtonVisible(false);//false unless its selected.
 				}
 			});
 		}

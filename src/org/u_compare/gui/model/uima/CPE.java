@@ -136,8 +136,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 				
 				mCPE.process();//Runs on a seperate thread.
 
-				
-				setStatus(WorkflowStatus.RUNNING);
+
 				
 			} catch (ResourceInitializationException e) {
 				// TODO Auto-generated catch block

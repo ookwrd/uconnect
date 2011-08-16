@@ -68,13 +68,11 @@ public class ConfirmationButton extends JButton {
 		
 		this.mainButton = mainButton;
 		mainButton.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
+				ConfirmationButton.this.requestFocusInWindow();//SO focus is passed
 				actionRequest();
 			}
-		}
-				
-		);
+		});
 		normalPanel.add(mainButton);
 		
 		add(normalPanel, NORMAL);
@@ -89,6 +87,7 @@ public class ConfirmationButton extends JButton {
 		
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				ConfirmationButton.this.requestFocusInWindow();//SO focus is passed
 				confirm(e);
 			}
 		});
@@ -97,6 +96,7 @@ public class ConfirmationButton extends JButton {
 		final HighlightButton cancel = new HighlightButton("No");
 		cancel.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				ConfirmationButton.this.requestFocusInWindow();//SO focus is passed
 				cancel();
 			}
 		});
@@ -125,7 +125,6 @@ public class ConfirmationButton extends JButton {
 	private void actionRequest(){
 		CardLayout cl = (CardLayout)(getLayout());
 	    cl.show(this, CONFIRM);
-		
 	}
 	
 	private void confirm(ActionEvent e){

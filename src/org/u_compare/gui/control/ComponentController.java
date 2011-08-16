@@ -184,7 +184,6 @@ public class ComponentController implements DragAndDropComponentController {
 	 * Check whether this component can be removed from its current position.
 	 */
 	public boolean canRemove(){
-		
 		if(parent != null){
 			return parent.canRemoveSubComponent(this);
 		}else{

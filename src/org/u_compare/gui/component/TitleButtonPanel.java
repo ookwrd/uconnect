@@ -83,10 +83,10 @@ public class TitleButtonPanel extends JPanel implements
 		}
 		
 		component.registerLockedStatusChangeListener(this);
+		component.registerParentLockedStatusChangeListener(this);
 		component.registerMinimizedStatusChangeListener(this);
 
 		setMinimizedStatus();
-
 	}
 
 	protected void removeComponent() {
@@ -121,13 +121,22 @@ public class TitleButtonPanel extends JPanel implements
 
 	@Override
 	public void lockStatusChanged(Component component) {
-
-		if (component.getLockedStatus()) {
-			this.lockButton.setIcon(lockedIcon);
-			this.removeButton.setEnabled(false);
-		} else {
-			this.lockButton.setIcon(unlockedIcon);
-			this.removeButton.setEnabled(true);
+		if(component.equals(this.component)){
+			if (component.getLockedStatus()) {
+				this.lockButton.setIcon(lockedIcon);
+			//	this.removeButton.setEnabled(false);
+			} else {
+				this.lockButton.setIcon(unlockedIcon);
+			//	this.removeButton.setEnabled(true);
+			}
+		}else{//Need to check its the parent
+			if (component.getLockedStatus()) {
+			//	this.lockButton.setIcon(lockedIcon);
+				this.removeButton.setEnabled(false);
+			} else {
+			//	this.lockButton.setIcon(unlockedIcon);
+				this.removeButton.setEnabled(true);
+			}
 		}
 	}
 

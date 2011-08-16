@@ -313,4 +313,12 @@ public abstract class AbstractAggregateComponent extends
 			System.out.println("it was null");
 		}
 	}
+	
+	@Override
+	protected void notifyLockedStatusChangeListeners(){
+		super.notifyLockedStatusChangeListeners();
+		for(Component component : subComponents){
+			component.notifyParentLockedStatusChangeListeners(this);
+		}
+	}
 }

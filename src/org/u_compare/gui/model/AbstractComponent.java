@@ -90,6 +90,7 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
 	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
 	private ArrayList<LockedStatusChangeListener> lockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
+	private ArrayList<LockedStatusChangeListener> parentLockedStatusChangeListeners = new ArrayList<LockedStatusChangeListener>();
 	private ArrayList<ParameterConfigurationChangeListener> parameterConfigurationChangeListeners = new ArrayList<Component.ParameterConfigurationChangeListener>();
 	private ArrayList<ParameterGroupsChangeListener> parameterGroupsChangeListeners = new ArrayList<Component.ParameterGroupsChangeListener>();
 	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<Component.ParametersChangedListener>();
@@ -590,6 +591,18 @@ public abstract class AbstractComponent implements Component {
 			listener.lockStatusChanged(this);
 		}
 		//This is only a display property so no need to notify saved change listeners.
+	}
+	
+	@Override
+	public void registerParentLockedStatusChangeListener(LockedStatusChangeListener listener){
+		parentLockedStatusChangeListeners.add(listener);
+	}
+	
+	@Override
+	public void notifyParentLockedStatusChangeListeners(Component parent){
+		for(LockedStatusChangeListener listener : parentLockedStatusChangeListeners){
+			listener.lockStatusChanged(parent);
+		}
 	}
 	
 	@Override

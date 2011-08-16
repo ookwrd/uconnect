@@ -381,7 +381,6 @@ public class ComponentController implements DragAndDropComponentController {
 	 */
 	public void setDragged(){
 		
-		//TODO make this Bubble up the tree instead of using a singleton.
 		
 		DragAndDropController.getController().setDragged(componentView);//TODO not the view, should pass the model
 		

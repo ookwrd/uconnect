@@ -133,7 +133,6 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	public void dragEnter(DropTargetDragEvent dtde) {
 		this.controller.setDragEnter();
 		this.setBackground(Color.LIGHT_GRAY);
-		System.out.println("DraggableJPanel: Drag enter");
 	}
 
 	/**
@@ -142,7 +141,6 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	public void dragExit(DropTargetEvent dte) {
 		this.controller.setDragExit();
 		this.setBackground(this.defaultColor);
-		System.out.println("DraggableJPanel: Drag enter");
 	}
 
 	public void dragGestureRecognized(DragGestureEvent evt) {

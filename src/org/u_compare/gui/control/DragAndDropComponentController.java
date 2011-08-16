@@ -9,7 +9,7 @@ package org.u_compare.gui.control;
 public interface DragAndDropComponentController {
 
 	/**
-	 * This component has been dragged. Should notify central component dragged location //TODO how to do this
+	 * This component has been dragged. Should notify central component dragged location //TODO is this common behaviour?
 	 */
 	public void setDragged();
 	

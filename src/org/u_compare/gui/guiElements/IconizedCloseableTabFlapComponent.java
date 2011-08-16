@@ -1,6 +1,5 @@
 package org.u_compare.gui.guiElements;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.dnd.DropTarget;
@@ -10,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.net.URL;
 
 import javax.swing.BorderFactory;
@@ -20,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -28,6 +25,8 @@ import javax.swing.plaf.basic.BasicButtonUI;
 /**
  * Component to be used as a tab flap that can display an icon as a status
  * indicator and is close-able using a button.
+ * 
+ * //TODO extract close button tab to its own class. 
  * 
  * @author pontus
  * @author olaf
@@ -147,20 +146,20 @@ public class IconizedCloseableTabFlapComponent
 					parentPane.setSelectedIndex(parentPane.indexOfTabComponent(IconizedCloseableTabFlapComponent.this));
 				}
 			});
-			}
+			
+			setCloseButtonVisible(true);
+			parentPane.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(ChangeEvent arg0) {
+					if(parentPane.indexOfTabComponent(IconizedCloseableTabFlapComponent.this) != parentPane.getSelectedIndex()){
+						setCloseButtonVisible(false);
+					}
+				}
+			});
+		}
 		
 		// Create some distance between the edge and the close button
 		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 0));
-		
-		setCloseButtonVisible(true);
-		parentPane.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				if(parentPane.indexOfTabComponent(IconizedCloseableTabFlapComponent.this) != parentPane.getSelectedIndex()){
-					setCloseButtonVisible(false);
-				}
-			}
-		});
 	}
 	
 	@Override

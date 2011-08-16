@@ -30,6 +30,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 		textPanel.registerActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(e.getSource());
 				textChangeRequest(textPanel.getDescription());
 			}
 		});

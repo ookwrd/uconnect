@@ -247,6 +247,10 @@ public interface Component{
 	}
 	
 	public void registerLockedStatusChangeListener(LockedStatusChangeListener listener);
+	public void registerParentLockedStatusChangeListener(LockedStatusChangeListener listener);
+	
+	//Only to be called by parents
+	void notifyParentLockedStatusChangeListeners(Component parent);
 	
 	public interface LockedStatusChangeListener {
 		public void lockStatusChanged(Component component);	
@@ -277,4 +281,5 @@ public interface Component{
 	
 	public void setFlowControllerIdentifier(String identifier);
 	public String getFlowControllerIdentifier();
+	
 }

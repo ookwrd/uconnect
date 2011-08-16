@@ -17,7 +17,7 @@ import javax.swing.border.CompoundBorder;
  * 
  * TODO can this be replaced with close_button.setRolloverEnabled(true/false);
  * 
- * @author Luke Mccrohon
+ * @author Luke McCrohon
  *
  */
 @SuppressWarnings("serial")

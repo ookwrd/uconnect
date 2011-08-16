@@ -44,9 +44,9 @@ public class IconizedCloseableTabFlapComponent
 	private static Icon closeTabIcon;
 	private static Icon closeTabMouseOverIcon;
 	private final static String closeTabIconPath =
-		"../gfx/close_tab.png";
+		"../gfx/close_icon.png";
 	private final static String closeTabMouseOverIconPath =
-		"../gfx/close_tab_mouseover.png";
+		"../gfx/close_icon_mouseover.png";
 	private static boolean iconsLoaded = false;
 	
 	private final static String CLOSE_BUTTON_TOOLTIP =

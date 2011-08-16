@@ -1,11 +1,14 @@
 package org.u_compare.gui.component;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.control.ComponentController;
@@ -132,7 +135,7 @@ public class TitleButtonPanel extends JPanel implements
 		}
 	}
 
-	private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";
+	private final static String ICON_CLOSE_PATH = "../gfx/close_icon_big.png";
 	private final static String ICON_MAX_PATH = "../gfx/icon_maximize1.png";
 	private final static String ICON_MIN_PATH = "../gfx/icon_minimize1.png";
 	private final static String ICON_LOCKED_PATH = "../gfx/icon_locked.png";

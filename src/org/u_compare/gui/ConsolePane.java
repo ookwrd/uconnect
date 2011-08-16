@@ -163,16 +163,20 @@ public class ConsolePane extends JScrollPane
 
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
-		if(workflow.getStatus() == WorkflowStatus.ERROR){
-			addConsoleMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus(), true);
+		if(workflow.getStatus()== WorkflowStatus.ERROR){
+			addConsoleErrorMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus());
 		}else{
 			addConsoleMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus());
-			}
+		}
 	}
 	
 	@Override
 	public void workflowMessageSent(Workflow workflow, String message){
-		addConsoleMessage(message);
+		if(workflow.getStatus()== WorkflowStatus.ERROR){
+			addConsoleErrorMessage(message);
+		}else{
+			addConsoleMessage(message);
+		}
 	}
 	
 	public Workflow getAssociatedWorkflow() {

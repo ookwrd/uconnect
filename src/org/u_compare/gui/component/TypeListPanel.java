@@ -23,6 +23,8 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 
 	public static enum LIST_TYPES {INPUTS, OUTPUTS};
 	
+	private static final String EMPTY_LIST_MESSAGE = "(Empty. Click to edit)";
+	
 	private JPanel buttons;
 	private HighlightButton deleteButton;
 	private HighlightButton addButton;
@@ -36,8 +38,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	private TypeListPanelController controller;
 	
 	private LIST_TYPES listType;
-	
-	private boolean isEmpty = false;
 	
 	public TypeListPanel(org.u_compare.gui.model.Component component,
 			LIST_TYPES listType, TypeListPanelController controller){
@@ -64,11 +64,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 				
 				if(!TypeListPanel.this.component.getLockedStatus()){
 					buttons.setVisible(true);
-					
-					//Empty list Case
-					if(isEmpty){
-						list.setVisible(false);
-					}
 				}
 			}
 
@@ -84,9 +79,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 				
 				list.clearSelection();
 				buttons.setVisible(false);
-				
-				//Empty list case
-				list.setVisible(true);
 			}
 		};
 		
@@ -183,7 +175,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		listModel.clear();
 		
 		//Clear
-		isEmpty = false;
 		deleteButton.setEnabled(true);
 		
 		switch(listType){
@@ -207,8 +198,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		}
 		
 		if(listModel.isEmpty()){
-			isEmpty = true;
-			listModel.addElement("(Click to add types)");
+			listModel.addElement(EMPTY_LIST_MESSAGE);
 			deleteButton.setEnabled(false);
 		}
 	}

@@ -3,7 +3,6 @@ package org.u_compare.gui.component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,6 +10,7 @@ import javax.swing.JPanel;
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.model.Workflow;
 
+@SuppressWarnings("serial")
 public class WorkflowSavePanel extends JPanel {
 
 	protected Workflow component;

@@ -1,5 +1,7 @@
 package org.u_compare.gui.component;
 
+import java.awt.GridLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
@@ -26,8 +28,7 @@ public class InputOutputPanel extends JPanel {
 		inputPanel.setOpaque(false);
 		inputPanel.setBorder(new TitledBorder(new EtchedBorder(),
 		"Inputs:"));
-		//inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));//TODO more lightweight layout manager
-		
+
 		inputsController = new TypeListPanelController(controller, component, TypeListPanel.LIST_TYPES.INPUTS);
 		TypeListPanel typeListPanel = new TypeListPanel(component, TypeListPanel.LIST_TYPES.INPUTS, inputsController);
 		
@@ -37,15 +38,13 @@ public class InputOutputPanel extends JPanel {
 		outputPanel.setOpaque(false);
 		outputPanel.setBorder(new TitledBorder(new EtchedBorder(),
 		"Outputs:"));
-		//outputPanel.setLayout(new BoxLayout(outputPanel,
-			//	BoxLayout.Y_AXIS));//TODO more lightweight layout manager
 		
 		outputsController = new TypeListPanelController(controller, component, TypeListPanel.LIST_TYPES.OUTPUTS);
 		typeListPanel = new TypeListPanel(component, TypeListPanel.LIST_TYPES.OUTPUTS, outputsController);
 		
 		outputPanel.add(typeListPanel);
 		
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setLayout(new GridLayout(1,2));
 		add(inputPanel);
 		add(outputPanel);
 		

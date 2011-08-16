@@ -93,6 +93,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		outerPanel.setOpaque(false);
 		outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.Y_AXIS));
 		
+		
 		setupTopPanel(outerPanel, false);
 		setupInnerPanel();
 		

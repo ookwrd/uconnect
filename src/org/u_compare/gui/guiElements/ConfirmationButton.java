@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +24,6 @@ public class ConfirmationButton extends JButton {
 
 	private static final String NORMAL = "Normal";
 	private static final String CONFIRM = "Confirm";
-	
 	
 	private JPanel normalPanel;
 	private JButton mainButton;

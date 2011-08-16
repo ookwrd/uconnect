@@ -3,6 +3,7 @@ package org.u_compare.gui.component;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.guiElements.RoundedBorder;
@@ -32,7 +33,8 @@ public class ComponentTitleBar extends JPanel {
 
 			setupButtonPanel(this, innerPanel);
 			setupTitlePanel(this, false);
-		} else {
+		} else {//Workflow
+			setBorder(new EmptyBorder(5, 5, 0, 0));
 			setupTitlePanel(this, true);
 		}
 
@@ -54,14 +56,14 @@ public class ComponentTitleBar extends JPanel {
 	protected void setupTitlePanel(JPanel target, boolean isWorkflow) {
 
 		titlePanel = new TitlePanel(controller, component, isWorkflow, this);
-		target.add(titlePanel, BorderLayout.LINE_START);
+		target.add(titlePanel, BorderLayout.CENTER);
 
 	}
 
 	protected void setupButtonPanel(JPanel target, JPanel minimizable) {
 
 		buttonPanel = new TitleButtonPanel(controller, component, minimizable);
-		target.add(buttonPanel, BorderLayout.LINE_END);
+		target.add(buttonPanel, BorderLayout.EAST);
 
 	}
 

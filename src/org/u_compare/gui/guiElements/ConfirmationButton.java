@@ -1,11 +1,19 @@
 package org.u_compare.gui.guiElements;
 
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +23,11 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class ConfirmationButton extends JButton {
 
+	private static final String NORMAL = "Normal";
+	private static final String CONFIRM = "Confirm";
+	
+	
+	private JPanel normalPanel;
 	private JButton mainButton;
 	private JPanel confirmPanel;
 
@@ -26,8 +39,34 @@ public class ConfirmationButton extends JButton {
 		
 		setOpaque(false);
 		
-		setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
 		setBorder(new EmptyBorder(0,0,0,0));
+		
+		setLayout(new CardLayout(){//TODO extract this to a new layout,cardlayout that dynamically changes size
+			@Override
+			public Dimension preferredLayoutSize(Container parent){
+				return cards.get(current).getPreferredSize();
+			}
+			
+			private Map<Object, Component> cards = new HashMap<Object, Component>();
+			private String current;
+			
+			@Override
+			public void addLayoutComponent(Component comp, Object constraints) {
+				cards.put(constraints, comp);
+				super.addLayoutComponent(comp, constraints);
+			}
+			
+			@Override
+			public void show(Container parent, String key){
+				current = key;
+				super.show(parent, key);
+			}
+		});
+		
+		normalPanel = new JPanel();
+		normalPanel.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
+		normalPanel.setBorder(new EmptyBorder(0,0,0,0));
+		normalPanel.setOpaque(false);
 		
 		this.mainButton = mainButton;
 		mainButton.addActionListener(new ActionListener() {
@@ -38,7 +77,9 @@ public class ConfirmationButton extends JButton {
 		}
 				
 		);
-		add(mainButton);
+		normalPanel.add(mainButton);
+		
+		add(normalPanel, NORMAL);
 		
 		confirmPanel = new JPanel();
 		confirmPanel.setOpaque(false);
@@ -63,7 +104,7 @@ public class ConfirmationButton extends JButton {
 		});
 		confirmPanel.add(cancel);
 		
-		add(confirmPanel);
+		add(confirmPanel, CONFIRM);
 		
 		//If mouse leaves the area, take that as a cancel event.
 		MouseListener listener = new MouseAdapter(){
@@ -79,27 +120,23 @@ public class ConfirmationButton extends JButton {
 		cancel.addMouseListener(listener);
 		confirm.addMouseListener(listener);
 		
-		
+		CardLayout cl = (CardLayout)(getLayout());
+	    cl.show(this, NORMAL);
 	}
 
 	private void actionRequest(){
-		
-		mainButton.setVisible(false);
-		confirmPanel.setVisible(true);
+		CardLayout cl = (CardLayout)(getLayout());
+	    cl.show(this, CONFIRM);
 		
 	}
 	
 	private void confirm(ActionEvent e){
-		
 		fireActionPerformed(e);
-		
 	}
 	
 	private void cancel(){
-		
-		mainButton.setVisible(true);
-		confirmPanel.setVisible(false);
-	
+		CardLayout cl = (CardLayout)(getLayout());
+	    cl.show(this, NORMAL);
 	}
 
 	@Override

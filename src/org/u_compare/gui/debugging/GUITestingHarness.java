@@ -27,7 +27,7 @@ public class GUITestingHarness {
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
 		//workflows.add(ExampleWorkflowFactory.simpleWithParameters());
 		//workflows.add(ExampleWorkflowFactory.aggregate());
-		//workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
+		workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
 		//workflows.add(ExampleWorkflowFactory.deepAggregate(5,2));
 		workflows.add(ExampleWorkflowFactory.realComponents());
 		//workflows.add(ExampleWorkflowFactory.realComponents1());

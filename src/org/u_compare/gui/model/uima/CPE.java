@@ -1,5 +1,8 @@
 package org.u_compare.gui.model.uima;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.uima.UIMAFramework;
@@ -11,16 +14,19 @@ import org.apache.uima.collection.impl.metadata.cpe.CpeDescriptorFactory;
 import org.apache.uima.collection.metadata.CpeCasProcessor;
 import org.apache.uima.collection.metadata.CpeCasProcessors;
 import org.apache.uima.collection.metadata.CpeCollectionReader;
+import org.apache.uima.collection.metadata.CpeComponentDescriptor;
 import org.apache.uima.collection.metadata.CpeConfiguration;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
+import org.apache.uima.util.XMLizable;
 import org.u_compare.gui.control.WorkflowPaneController.WorkflowFactory;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
+import org.xml.sax.SAXException;
 
 public class CPE extends Workflow implements StatusCallbackListener {
 
@@ -119,7 +125,6 @@ public class CPE extends Workflow implements StatusCallbackListener {
 				
 				CpeDescription cpeDesc = (CpeDescription)getWorkflowDescription(); 
 				//CpeConfiguration cpeConfiguration = cpeDesc.getCpeConfiguration();
-				//cpeConfiguration.setDeployment("interactive");
 				notifyWorkflowMessageListeners("Workflow Descriptor initialzed.");
 
 				try {
@@ -190,28 +195,21 @@ public class CPE extends Workflow implements StatusCallbackListener {
 	public MetaDataObject getWorkflowDescription(){
 		CpeDescription retVal = UIMAFramework.getResourceSpecifierFactory().createCpeDescription();
 		
+		System.out.println("Here on the outside");
+		
 		try {
 			retVal.setAllCollectionCollectionReaders(collectionReaders);
 			
-			//cpeCasProcessors.removeAllCpeCasProcessors();
+			cpeCasProcessors.removeAllCpeCasProcessors();
 			
-			for(Component comp : getSubComponents()){
+			for(int i = 0; i < getSubComponents().size(); i++){
+				Component comp = getSubComponents().get(i);
 				if(comp instanceof CollectionReader){
-					break; //TODO
+					continue; //TODO
 				}
 				
-				CpeCasProcessor processor = CpeDescriptorFactory.produceCasProcessor(comp.getName());
-				
-				//TODO investifate CpmPanel
-				
-			//	CpeComponentDescriptor desc = CpeDescriptorFactory.produceComponentDescriptor(null);//TODO
-				//I can only get it from the file system??? I have mine in memory!
-				//processor.setCpeComponentDescriptor(desc);
-				processor.setBatchSize(10000);
-			    processor.getErrorHandling().getErrorRateThreshold().setMaxErrorCount(0);
-
-				//cpeCasProcessors.addCpeCasProcessor(arg0);
-				
+				cpeCasProcessors.addCpeCasProcessor(constructCpeCasProcessor(comp, ""+i));
+				System.out.println("In the loop");
 			}
 		} catch (CpeDescriptorException e) {
 			// TODO Auto-generated catch block
@@ -221,11 +219,46 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		
 		retVal.setCpeCasProcessors(cpeCasProcessors);
 		
-		
 		retVal.setCpeConfiguration(cpeConfiguration);
 		
 		return retVal;
 	}
+	
+	private CpeCasProcessor constructCpeCasProcessor(Component comp, String name) throws CpeDescriptorException{
+		
+		CpeCasProcessor processor = CpeDescriptorFactory.produceCasProcessor(comp.getName());
+		
+		
+		String saved = toFile(comp.getResourceCreationSpecifier(), name);
+		System.out.println("SHould have a file");
+	
+		CpeComponentDescriptor desc = CpeDescriptorFactory.produceComponentDescriptor(saved);//TODO
+		//I can only get it from the file system??? I have mine in memory!
+		processor.setCpeComponentDescriptor(desc);
+		processor.setBatchSize(10000);
+	    processor.getErrorHandling().getErrorRateThreshold().setMaxErrorCount(0);
+
+		return processor;
+	}
+	
+	private String toFile(XMLizable xml, String suffix){
+		try {
+			String file = "/UIMATests/UIMAOuttest" + suffix + ".xml";
+			FileWriter writer = new FileWriter(file);
+			xml.toXML(writer);
+			writer.close();
+			return file;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	
 	/**
 	 * CPE Workflows don't have a name field so use the description field.

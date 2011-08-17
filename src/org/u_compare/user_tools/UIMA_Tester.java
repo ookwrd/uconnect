@@ -1,10 +1,13 @@
 package org.u_compare.user_tools;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.u_compare.gui.control.WorkflowPaneController;
 import org.u_compare.gui.control.WorkflowPaneController.WorkflowFactory;
@@ -15,6 +18,7 @@ public class UIMA_Tester {
 
 	private static final JFileChooser fc = new JFileChooser();
 	
+	@SuppressWarnings("serial")
 	public UIMA_Tester(String filename){
 		//TODO use input filename
 		
@@ -25,6 +29,14 @@ public class UIMA_Tester {
 		WorkflowPaneController.SHOW_LOAD_TAB = true;
 		WorkflowPaneController.SHOW_SAVE_PANEL = true;
 		WorkflowPaneController.loadAdaptor = factory;
+		WorkflowPaneController.emptyTabbedPanel = new JPanel(){
+			{
+				setName("      ");
+				setLayout(new BorderLayout());
+				add(new JLabel("Click the load tab to load a new workflow"), BorderLayout.CENTER);
+			}
+		};
+		
 		
 		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
 		JComponent tabbedPane = workflowPaneController.initialize(factory.constructWorkflow());

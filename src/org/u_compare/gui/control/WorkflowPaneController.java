@@ -110,7 +110,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	};
 	
 	@SuppressWarnings("serial")
-	private JPanel zeroPanel = new JPanel(){
+	public static JPanel emptyTabbedPanel = new JPanel(){
 		{
 			setName("      ");
 			add(new JLabel("This is the new JLabel."));
@@ -127,7 +127,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		
 		if(ALLOW_TABS){
 			tabbedPane = new WorkflowTabbedPane(this);
-			tabbedPane.setEmptyTab(zeroPanel);
+			tabbedPane.setEmptyTab(emptyTabbedPanel);
 			
 			for(WorkflowHorizontalSplitPane workflowSplitPane : workflowSplitPanes){
 				tabbedPane.addWorkflow(workflowSplitPane);
@@ -283,7 +283,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	}
 	
 	public  void setEmptyPanel(JPanel emptyPanel){
-		this.zeroPanel = emptyPanel;
+		this.emptyTabbedPanel = emptyPanel;
 		this.tabbedPane.setEmptyTab(emptyPanel);
 	}
 }

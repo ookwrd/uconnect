@@ -10,7 +10,7 @@
     <casProcessors casPoolSize="3" processingUnitThreadCount="1">
         <casProcessor deployment="integrated" name="AE">
             <descriptor>
-                <import location="BasicAE.xml"/>
+                <import location="BasicAEa.xml"/>
             </descriptor>
             <deploymentParameters/>
             <errorHandling>

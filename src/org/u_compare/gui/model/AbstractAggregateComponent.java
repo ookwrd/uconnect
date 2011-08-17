@@ -1,16 +1,20 @@
 package org.u_compare.gui.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
+import org.apache.uima.analysis_engine.metadata.FixedFlow;
 import org.apache.uima.analysis_engine.metadata.FlowConstraints;
 import org.apache.uima.analysis_engine.metadata.FlowControllerDeclaration;
 import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
 import org.u_compare.gui.debugging.Debug;
+
+import com.sun.tools.javac.code.Attribute.Array;
 
 /**
  * Abstract base class implementing functionality common to all aggregate components.
@@ -268,8 +272,43 @@ public abstract class AbstractAggregateComponent extends
 	@Override
 	public ResourceCreationSpecifier getResourceCreationSpecifier(){
 		AnalysisEngineDescription retVal = (AnalysisEngineDescription)super.getResourceCreationSpecifier();
+			
+		if(flowController!= null){//
+			System.err.println("Flow controller not null. Specifier type " + flowController.getSpecifier());
+			//TODO this needs to be addressed
+		}
+		
+		if(flowConstraints instanceof FixedFlow){
+			String[] flowStrings = new String[subComponents.size()];
+			for(int i = 0; i < subComponents.size(); i++){
+				
+				//Can we use the current identifier? Not strictly needed, but can't hurt
+				if(subComponents.get(i).getFlowControllerIdentifier()!=null){
+					String current = subComponents.get(i).getFlowControllerIdentifier();
+					
+					System.out.println("Current " + current);
+					
+					//Check it hasn't been used already
+					if(!Arrays.asList(flowStrings).contains(current)){
+						flowStrings[i] = current;
+						continue;
+					}
+					System.out.println("Duplicate!!");
+				}
+				
+				String id = ""+i;
+				flowStrings[i] = id;
+				subComponents.get(i).setFlowControllerIdentifier(id);
+			}
+			FixedFlow flow = (FixedFlow)flowConstraints;
+			flow.setFixedFlow(flowStrings);
+			retVal.getAnalysisEngineMetaData().setFlowConstraints(flow);
+		}else{
+			System.err.println("Unknown flow Constraints type");
+			retVal.getAnalysisEngineMetaData().setFlowConstraints(flowConstraints);
+		}
+		
 		retVal.setFlowControllerDeclaration(flowController);
-		retVal.getAnalysisEngineMetaData().setFlowConstraints(flowConstraints);
 		
 		Map<String, MetaDataObject> metaData;
 		metaData = retVal.getDelegateAnalysisEngineSpecifiersWithImports();

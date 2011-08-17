@@ -50,7 +50,7 @@ public abstract class AbstractComponent implements Component {
 
 	//private (rather than protected) to ensure use of proper set methods by extending classes
 	private String name = "Unnamed";
-	private String identifier = "Unidentified";
+	private String identifier = null;
 	private String implementationName = "Unknown";
 	private String description = "Undescribed";
 	private String vendor = "Unknown";

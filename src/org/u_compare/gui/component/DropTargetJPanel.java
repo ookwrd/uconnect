@@ -10,10 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.u_compare.gui.DroppableJPanel;
-import org.u_compare.gui.LukesDragAndDropImplementation;
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
+import org.u_compare.gui.guiElements.LukesDragAndDropImplementation;
 
 /**
  * TODO:

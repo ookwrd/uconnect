@@ -1,9 +1,5 @@
 package org.u_compare.gui.control;
 
-import java.awt.Component;
-
-import org.u_compare.gui.DraggableJPanel;
-
 /**
  * Singleton class for storing the most recently dragged Transferable object.
  * 

@@ -15,10 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import org.u_compare.gui.DraggableJPanel;
-import org.u_compare.gui.LukesDragAndDropImplementation;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.GUITestingHarness;
+import org.u_compare.gui.guiElements.LukesDragAndDropImplementation;
 import org.u_compare.gui.guiElements.RoundedBorder;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.AggregateComponent.SubComponentsChangedListener;
@@ -58,15 +57,12 @@ public class ComponentPanel extends JPanel implements
 	private SubComponentsPanel subComponentsPanel;
 	private JPanel subComponentsContainer;
 	
-	//Required for workflowPanel to pass controller to DraggableJPanel
-	protected ComponentPanel(ComponentController controller){
-		LukesDragAndDropImplementation.registerDragSource(this, controller);
+	protected ComponentPanel(){
 	}
 	
 	public ComponentPanel(Component component,
 			ComponentController controller) {
 		
-		LukesDragAndDropImplementation.registerDragSource(this, controller);
 		initialConfiguration(component, controller);
 		
 		// let the component have focus

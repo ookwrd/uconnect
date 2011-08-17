@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.guiElements;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -16,11 +16,9 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.io.IOException;
 
-import org.u_compare.gui.control.DragAndDropComponentController;
-
 public class LukesDragAndDropImplementation {
 	
-	public static void registerDropTarget(final Component target, final DragAndDropComponentController controller){
+	public static void registerDropTarget(final Component target, final DropController controller){
 		new DropTarget(target, new DropTargetAdapter(){
 			
 			@Override
@@ -41,6 +39,24 @@ public class LukesDragAndDropImplementation {
 				System.out.println("Drag enter Lukes target");				
 			}
 		});
+	}
+	
+	public interface DropController {
+		
+		/**
+		 * The current dragged component has been dropped on this component.
+		 */
+		public void somethingDroppedOnComponent();
+		
+		/**
+		 * The currently dragged component is now being dragged over this component.
+		 */
+		public void setDragEnter();
+		
+		/**
+		 * The currently dragged component is no longer being dragged over this component.
+		 */
+		public void setDragExit();
 	}
 	
 	public static void registerDragSource(final Component component, final DragController controller){

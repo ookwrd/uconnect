@@ -10,14 +10,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.GUITestingHarness;
-import org.u_compare.gui.guiElements.LukesDragAndDropImplementation;
 import org.u_compare.gui.guiElements.RoundedBorder;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.AggregateComponent.SubComponentsChangedListener;

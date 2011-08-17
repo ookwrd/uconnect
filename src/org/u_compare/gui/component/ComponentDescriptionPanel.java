@@ -36,6 +36,8 @@ public class ComponentDescriptionPanel extends JPanel implements
 			}
 		});
 		
+		LukesDragAndDropImplementation.registerDragSource(textPanel.getContent(),controller);
+		
 		setLayout(new BorderLayout());
 		setOpaque(false);
 		this.add(textPanel);

@@ -23,6 +23,10 @@ import javax.swing.border.EtchedBorder;
 @SuppressWarnings("serial")
 public class EditableTextPanel extends JPanel {
 	
+	/**
+	 * TODO can I make this extend JTextArea? While still having the button and everything?
+	 */
+	
 	private static final int PANEL_PADDING = 8;
 	public final Color defaultColor = getBackground();
 
@@ -45,6 +49,8 @@ public class EditableTextPanel extends JPanel {
 		content.setWrapStyleWord(true);
 		content.setEditable(false);
 
+		content.setDragEnabled(false);
+		
 		endEditingButton = new JButton("Done");
 		endEditingButton.setActionCommand("Finish editing");
 		endEditingButton.addActionListener(endEditingListener);
@@ -120,6 +126,10 @@ public class EditableTextPanel extends JPanel {
 
 	public String getDescription() {
 		return content.getText();
+	}
+	
+	public JTextArea getContent(){
+		return content;
 	}
 
 	private ArrayList<ActionListener> actionListeners = new ArrayList<ActionListener>();

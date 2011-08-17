@@ -47,7 +47,7 @@ public class DragAndDropController {
     		return null;
     		
     	} else{
-    		throw new ClassCastException("DragAndDropController can't convert input DraggableJPanel to a ComponentController");
+    		throw new ClassCastException("DragAndDropController can't convert input to a ComponentController: " + dragged.getClass());
     	}
     }
 }

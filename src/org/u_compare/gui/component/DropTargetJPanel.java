@@ -8,9 +8,10 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.u_compare.gui.DroppableJPanel;
-import org.u_compare.gui.LukesDropTarget;
+import org.u_compare.gui.LukesDragAndDropImplementation;
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 
@@ -22,7 +23,7 @@ import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
  * @version 2010-11-10
  */
 @SuppressWarnings("serial")
-public class DropTargetJPanel extends DroppableJPanel {
+public class DropTargetJPanel extends JPanel {
 
 	public static final int TARGET_BORDER = 10;
 
@@ -35,12 +36,12 @@ public class DropTargetJPanel extends DroppableJPanel {
 	private JLabel solitaryLabel = new JLabel("Drag and drop a component here.");
 
 	public DropTargetJPanel(DropTargetController controller) {
-		super(controller);
+		super();
 		DropTargetJPanel.loadIcons();
 		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
 		
-		LukesDropTarget.registerDropTarget(this,controller);
+		LukesDragAndDropImplementation.registerDropTarget(this,controller);
 	}
 
 	public DropTargetJPanel(DropTargetController controller, boolean setSolitary) {
@@ -49,7 +50,7 @@ public class DropTargetJPanel extends DroppableJPanel {
 			setSolitaryDropTarget();
 		}
 		
-		LukesDropTarget.registerDropTarget(this,controller);
+		LukesDragAndDropImplementation.registerDropTarget(this,controller);
 	}
 
 	public void highlightMouseDroppable() {

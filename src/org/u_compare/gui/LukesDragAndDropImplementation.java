@@ -18,7 +18,7 @@ import java.io.IOException;
 
 import org.u_compare.gui.control.DragAndDropComponentController;
 
-public class LukesDropTarget {
+public class LukesDragAndDropImplementation {
 	
 	public static void registerDropTarget(final Component target, final DragAndDropComponentController controller){
 		new DropTarget(target, new DropTargetAdapter(){
@@ -43,7 +43,7 @@ public class LukesDropTarget {
 		});
 	}
 	
-	public static void registerDragSource(final Component component, final DragAndDropComponentController controller){
+	public static void registerDragSource(final Component component, final DragController controller){
 		DragSource ds = DragSource.getDefaultDragSource();
 		ds.createDefaultDragGestureRecognizer(component, DnDConstants.ACTION_COPY,
 				new DragGestureListener(){
@@ -56,7 +56,7 @@ public class LukesDropTarget {
 						
 						dge.startDrag(DragSource.DefaultCopyDrop, new Transferable() {//TODO extract to fakeTransferable
 							protected /*static*/ DataFlavor componentFlavor = new DataFlavor(Color.class,
-							"A Color Object/wtf in DragSource??");
+							"A Color Object/wtf in DragSource??");//TODO is this needed?
 							@Override public boolean isDataFlavorSupported(DataFlavor flavor) {
 								return flavor.equals(componentFlavor);
 							}
@@ -71,6 +71,13 @@ public class LukesDropTarget {
 					}
 			
 		});
+	}
+	
+	public interface DragController{
+		/**
+		 * This component has been dragged. Should notify central component dragged location.
+		 */
+		public void setDragged();
 	}
 	
 }

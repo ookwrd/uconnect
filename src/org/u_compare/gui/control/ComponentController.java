@@ -3,6 +3,7 @@ package org.u_compare.gui.control;
 import java.awt.Container;
 import java.util.ArrayList;
 import org.u_compare.gui.DraggableJPanel;
+import org.u_compare.gui.LukesDragAndDropImplementation.DragController;
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.model.InvalidPositionException;
 import org.u_compare.gui.model.AggregateComponent;
@@ -17,7 +18,7 @@ import org.u_compare.gui.model.Component;
  * @author Luke McCrohon
  *
  */
-public class ComponentController implements DragAndDropComponentController {
+public class ComponentController implements DragController {
 
 	//The model corresponding to this class
 	protected Component component;
@@ -373,14 +374,10 @@ public class ComponentController implements DragAndDropComponentController {
 		return false;
 	}
 	
-	
-	
-	/**
-	 * Called by the 
-	 * 
-	 */
+	@Override
 	public void setDragged(){
-		DragAndDropController.getController().setDragged(componentView);//TODO show be using the model not the view to store
+		componentView.requestFocusInWindow();
+		DragAndDropController.getController().setDragged(this);//TODO show be using the model not the control to store
 	}
 	
 

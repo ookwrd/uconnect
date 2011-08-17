@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.DraggableJPanel;
-import org.u_compare.gui.LukesDropTarget;
+import org.u_compare.gui.LukesDragAndDropImplementation;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.guiElements.RoundedBorder;
@@ -32,7 +32,7 @@ import org.u_compare.gui.model.Workflow;
  * @version 2009-08-26
  */
 @SuppressWarnings("serial")
-public class ComponentPanel extends DraggableJPanel implements
+public class ComponentPanel extends JPanel implements
 		SubComponentsChangedListener, FocusListener, MouseListener {
 
 	public final static int PREFERRED_WIDTH = 300;
@@ -41,7 +41,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	public static final Color BORDER_COLOR = Color.DARK_GRAY;
 	public static Color HEADER_COLOR = Color.WHITE;
 	public final static Color SELECTED_HEADER_COLOR = new Color(16448250);
-	public static Color BODY_COLOR;
+	public final Color BODY_COLOR = getBackground();
 	public static Color HIGHLIGHT_COLOR = new Color(16748574);
 	public static Color HIGHLIGHT_COLOR_2 = new Color(15631900);
 
@@ -60,13 +60,13 @@ public class ComponentPanel extends DraggableJPanel implements
 	
 	//Required for workflowPanel to pass controller to DraggableJPanel
 	protected ComponentPanel(ComponentController controller){
-		super(controller);
+		LukesDragAndDropImplementation.registerDragSource(this, controller);
 	}
 	
 	public ComponentPanel(Component component,
 			ComponentController controller) {
 		
-		super(controller);
+		LukesDragAndDropImplementation.registerDragSource(this, controller);
 		initialConfiguration(component, controller);
 		
 		// let the component have focus
@@ -101,8 +101,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		setupDescriptionPanel(innerPanel);
 		setupInputOutputPanel(innerPanel);
 		
-		LukesDropTarget.registerDragSource(innerPanel, controller);
-		
 		if(component.isAggregate()){
 			
 			JPanel subComponentsBorder = new JPanel();
@@ -127,7 +125,6 @@ public class ComponentPanel extends DraggableJPanel implements
 		this.component = component;
 		
 		//Set display properties
-		BODY_COLOR = defaultColor;
 		this.setOpaque(false);
 		
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -146,7 +143,7 @@ public class ComponentPanel extends DraggableJPanel implements
 				BORDER_WIDTH, BORDER_WIDTH));
 	}
 	
-	private void setBorderColored(boolean colored) {
+	public void setBorderColored(boolean colored) {
 		if(colored) {
 			this.setBorder(new EtchedBorder(HIGHLIGHT_COLOR, HIGHLIGHT_COLOR_2));
 			//this.setBorder(new RoundedBorder(null, Color.BLUE, BODY_COLOR, BORDER_ROUNDING, BORDER_WIDTH, false));
@@ -246,7 +243,7 @@ public class ComponentPanel extends DraggableJPanel implements
 	}
 
 	public void clearDragOverHighlighting() {
-		setBackground(defaultColor);
+		setBackground(BODY_COLOR);
 	}
 
 	/**
@@ -290,7 +287,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		}
 	}
 
-	@Override
+	@Override//TODO move all of this to an inner class extending mouse adaptor... olaf you really know how to make a mess.
 	public void focusGained(FocusEvent e) {
 		setBorderColored(true);
 	}

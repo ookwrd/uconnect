@@ -337,9 +337,9 @@ public class ExampleWorkflowFactory {
 				"src/org/u_compare/gui/model/uima/debugging/CPEimport.xml");
 	}
 	
-	public static Workflow cpeWorkflowDirect(){
+	public static Workflow cpeWorkflowRecursive(){
 		return Workflow.constructWorkflowFromXML(
-				"src/org/u_compare/gui/model/uima/debugging/CPEdirect.xml");
+				"src/org/u_compare/gui/model/uima/debugging/CPEimportrecursive.xml");
 	}
 	
 }

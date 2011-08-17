@@ -19,7 +19,6 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import org.u_compare.gui.LukesDragAndDropImplementation;
 
 @SuppressWarnings("serial")
 public class EditableTextPanel extends JPanel {

@@ -57,8 +57,8 @@ public class ComponentControllerTester {
 	
 	@Test
 	public void simpleAdd1() throws InvalidSubComponentException, IllegalAccessException, NoSuchFieldException{
-		controllerAggregate.addSubComponent(control, 0);
-		assertTrue(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(controllerAggregate, "subControllers")).contains(control));
+		control.addSubComponent(controllerAggregate, 0);
+		assertTrue(((ArrayList<ComponentController>)PrivilegedAccessor.getValue(control, "subControllers")).contains(controllerAggregate));
 	}
 	
 	@Test

@@ -3,8 +3,8 @@ package org.u_compare.gui.control;
 import java.awt.Container;
 import java.util.ArrayList;
 import org.u_compare.gui.component.ComponentPanel;
-import org.u_compare.gui.guiElements.LukesDragAndDropImplementation;
-import org.u_compare.gui.guiElements.LukesDragAndDropImplementation.DragController;
+import org.u_compare.gui.guiElements.DragAndDrop;
+import org.u_compare.gui.guiElements.DragAndDrop.DragController;
 import org.u_compare.gui.model.InvalidPositionException;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
@@ -52,7 +52,7 @@ public class ComponentController implements DragController {
 		this.component = component;
 		this.componentView = new ComponentPanel(component, this);
 		
-		LukesDragAndDropImplementation.registerDragSource(componentView, this);//TODO only if editable
+		DragAndDrop.registerDragSource(componentView, this);//TODO only if editable
 	}
 	
 	private void setParent(ComponentController parent){

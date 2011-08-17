@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
-import org.u_compare.gui.guiElements.LukesDragAndDropImplementation;
+import org.u_compare.gui.guiElements.DragAndDrop;
 
 /**
  * TODO:
@@ -40,7 +40,7 @@ public class DropTargetJPanel extends JPanel {
 		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
 		
-		LukesDragAndDropImplementation.registerDropTarget(this,controller);
+		DragAndDrop.registerDropTarget(this,controller);
 	}
 
 	public DropTargetJPanel(DropTargetController controller, boolean setSolitary) {
@@ -49,7 +49,7 @@ public class DropTargetJPanel extends JPanel {
 			setSolitaryDropTarget();
 		}
 		
-		LukesDragAndDropImplementation.registerDropTarget(this,controller);
+		DragAndDrop.registerDropTarget(this,controller);
 	}
 
 	public void highlightMouseDroppable() {

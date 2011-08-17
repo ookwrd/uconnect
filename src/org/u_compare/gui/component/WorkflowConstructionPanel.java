@@ -14,7 +14,7 @@ import javax.swing.border.EtchedBorder;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.control.WorkflowPaneController;
-import org.u_compare.gui.guiElements.LukesDragAndDropImplementation;
+import org.u_compare.gui.guiElements.DragAndDrop;
 import org.u_compare.gui.model.Workflow;
 
 @SuppressWarnings("serial")
@@ -68,7 +68,7 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 			this.add(lowerPanel, BorderLayout.SOUTH);
 		}	
 		
-		LukesDragAndDropImplementation.registerDragSource(this, controller);
+		DragAndDrop.registerDragSource(this, controller);
 	}
 	
 	protected void setupBorderPanel(JPanel target, JPanel inner){

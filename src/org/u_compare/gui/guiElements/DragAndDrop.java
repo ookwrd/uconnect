@@ -15,7 +15,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.io.IOException;
 
-public class LukesDragAndDropImplementation {
+public class DragAndDrop {
 	
 	public static void registerDropTarget(final Component target, final DropController controller){
 		new DropTarget(target, new DropTargetAdapter(){		

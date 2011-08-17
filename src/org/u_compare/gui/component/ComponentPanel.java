@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.DraggableJPanel;
+import org.u_compare.gui.LukesDropTarget;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.guiElements.RoundedBorder;
@@ -100,6 +101,8 @@ public class ComponentPanel extends DraggableJPanel implements
 		setupDescriptionPanel(innerPanel);
 		setupInputOutputPanel(innerPanel);
 		
+		LukesDropTarget.registerDragSource(innerPanel, controller);
+		
 		if(component.isAggregate()){
 			
 			JPanel subComponentsBorder = new JPanel();
@@ -168,6 +171,7 @@ public class ComponentPanel extends DraggableJPanel implements
 		
 		descriptionPanel = new ComponentDescriptionPanel(controller, component);
 		target.add(descriptionPanel);
+		
 		
 	}
 

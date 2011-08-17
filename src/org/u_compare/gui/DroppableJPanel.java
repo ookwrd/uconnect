@@ -65,10 +65,7 @@ public abstract class DroppableJPanel extends JPanel {
 		 * Drag exits the component area
 		 */
 		public void dragExit(DropTargetEvent dte) {
-
-			System.out.println("DroppableJPanel: Drag exit");
 			this.panel.controller.setDragExit();
-			// this.panel.setBackground(this.panel.defaultColor);
 		}
 
 	}

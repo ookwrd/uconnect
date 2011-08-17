@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import org.u_compare.gui.LukesDropTarget;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.guiElements.EditableTextPanel;
 import org.u_compare.gui.model.Component;
@@ -34,7 +35,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 				textChangeRequest(textPanel.getDescription());
 			}
 		});
-
+		
 		setLayout(new BorderLayout());
 		setOpaque(false);
 		this.add(textPanel);

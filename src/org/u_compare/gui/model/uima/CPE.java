@@ -180,14 +180,19 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		try {
 			retVal.setAllCollectionCollectionReaders(collectionReaders);
 			
+			if(getSubComponents().get(0) instanceof CollectionReader){
+				CollectionReader comp = (CollectionReader)getSubComponents().get(0);
+				retVal.setAllCollectionCollectionReaders(new CpeCollectionReader[]{ constructCpeCollectionReader(comp)});
+			}
+			
 			//Cas processors
 			cpeCasProcessors.removeAllCpeCasProcessors();
 			for(int i = 0; i < getSubComponents().size(); i++){
 				Component comp = getSubComponents().get(i);
 				if(comp instanceof CollectionReader){
-					continue; //TODO
+					continue;
 				}
-				cpeCasProcessors.addCpeCasProcessor(constructCpeCasProcessor(comp, "ae"+i));
+				cpeCasProcessors.addCpeCasProcessor(constructCpeCasProcessor(comp));
 				
 				//TODO cleanup temp files
 			}
@@ -203,7 +208,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		return retVal;
 	}
 	
-	private CpeCasProcessor constructCpeCasProcessor(Component comp, String name) throws CpeDescriptorException{
+	private CpeCasProcessor constructCpeCasProcessor(Component comp) throws CpeDescriptorException{
 		CpeCasProcessor processor = CpeDescriptorFactory.produceCasProcessor(comp.getName());
 		String saved = toFile(comp.getResourceCreationSpecifier());
 	
@@ -216,11 +221,16 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		return processor;
 	}
 	
+	private CpeCollectionReader constructCpeCollectionReader(CollectionReader comp) throws CpeDescriptorException{
+		String saved = toFile(comp.getResourceCreationSpecifier());
+		CpeCollectionReader reader = CpeDescriptorFactory.produceCollectionReader(saved);
+		return reader;
+	}
+	
 	private String toFile(XMLizable xml){
 		try {
 			final File file = File.createTempFile("UConnect-temp", ".xml");
 			file.deleteOnExit();
-			System.out.println(file.getAbsolutePath());
 			FileWriter writer = new FileWriter(file);
 			xml.toXML(writer);
 			writer.close();

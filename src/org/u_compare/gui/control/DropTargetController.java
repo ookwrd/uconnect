@@ -33,15 +33,9 @@ public class DropTargetController implements DragAndDropComponentController {
 	}
 
 	@Override
-	public void setDragged() {
-	
-		System.err.println("Hasn't been implemented yet???");
-		// TODO throw an error	
-	}
-
-	@Override
 	public void somethingDroppedOnComponent() {
-		
+
+		view.clearDragOverHighlighting();
 		parent.somethingDroppedOnChild(this);
 		
 	}

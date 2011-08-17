@@ -1,5 +1,7 @@
 package org.u_compare.gui.control;
 
+import java.awt.Component;
+
 import org.u_compare.gui.DraggableJPanel;
 
 /**
@@ -10,7 +12,7 @@ public class DragAndDropController {
 
     static private final DragAndDropController thereCanOnlyBeOne = new DragAndDropController();
     
-    private DraggableJPanel dragged;
+    private ComponentController dragged;
     
     /**
      * Private to ensure singleton.
@@ -27,7 +29,7 @@ public class DragAndDropController {
         return thereCanOnlyBeOne;
     }
     
-    public void setDragged(DraggableJPanel dragged){
+    public void setDragged(ComponentController dragged){
         this.dragged = dragged;
     }
     
@@ -35,14 +37,14 @@ public class DragAndDropController {
         this.dragged = null;
     }
     
-    public DraggableJPanel getDragged(){
+    /*public ComponentCon getDragged(){
         return dragged;
-    }
+    }*/
  
     public ComponentController getDraggedComponent() throws ClassCastException{
     	
-    	if(dragged.getController() instanceof ComponentController){
-    		return (ComponentController)dragged.getController();
+    	if(dragged instanceof ComponentController){
+    		return (ComponentController)dragged;
     	} else if ( false /*dragged.getController() instance of Library Descriptor*/ ){
     		
     		//TODO build the component from the descriptor

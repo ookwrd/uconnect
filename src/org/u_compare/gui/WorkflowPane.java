@@ -71,7 +71,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 
 		MouseMotionListener doScrollRectToVisible = new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
-				System.out.println("something happening");
+				System.out.println("something happening");//TODO sort this out
 				Rectangle r = new Rectangle(e.getX(), e.getY(), 1, 1);
 				((JPanel) e.getSource()).scrollRectToVisible(r);
 			}

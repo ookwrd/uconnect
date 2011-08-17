@@ -190,7 +190,7 @@ public class ComponentController implements DragController {
 		if(parent != null){
 			return parent.canRemoveSubComponent(this);
 		}else{
-			return true;//Corresponds to not being in a postion
+			return false;//Corresponds to not being in a postion
 		}
 	}
 	

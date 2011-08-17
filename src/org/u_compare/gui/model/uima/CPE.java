@@ -205,7 +205,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 	
 	private CpeCasProcessor constructCpeCasProcessor(Component comp, String name) throws CpeDescriptorException{
 		CpeCasProcessor processor = CpeDescriptorFactory.produceCasProcessor(comp.getName());
-		String saved = toFile(comp.getResourceCreationSpecifier(), name);
+		String saved = toFile(comp.getResourceCreationSpecifier());
 	
 		CpeComponentDescriptor desc = CpeDescriptorFactory.produceComponentDescriptor(saved);
 		//Why can I only build it from the file system??? I have my specifiers in memory!
@@ -216,13 +216,15 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		return processor;
 	}
 	
-	private String toFile(XMLizable xml, String suffix){
+	private String toFile(XMLizable xml){
 		try {
-			String file = "/UIMATests/tempfile" + suffix + ".xml";//TODO ensure file exists //TODO put these somewhere sensible
+			final File file = File.createTempFile("UConnect-temp", ".xml");
+			file.deleteOnExit();
+			System.out.println(file.getAbsolutePath());
 			FileWriter writer = new FileWriter(file);
 			xml.toXML(writer);
 			writer.close();
-			return file;
+			return file.getAbsolutePath();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

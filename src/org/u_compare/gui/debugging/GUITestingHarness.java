@@ -43,8 +43,6 @@ public class GUITestingHarness {
 		WorkflowPaneController.SHOW_LOAD_TAB = true;
 		JComponent tabbedPane = workflowPaneController.initialize(workflows);
 		
-		
-		
 		// Library panel
 		LibraryPane libraryPane = new LibraryPane();
 		

@@ -124,15 +124,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 				CPE.super.runResumeWorkflow();
 				
 				CpeDescription cpeDesc = (CpeDescription)getWorkflowDescription(); 
-				//CpeConfiguration cpeConfiguration = cpeDesc.getCpeConfiguration();
 				notifyWorkflowMessageListeners("Workflow Descriptor initialzed.");
-
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				
 				setStatus(Workflow.WorkflowStatus.LOADING);
 				mCPE = UIMAFramework.produceCollectionProcessingEngine(cpeDesc);
@@ -140,19 +132,9 @@ public class CPE extends Workflow implements StatusCallbackListener {
 				notifyWorkflowMessageListeners("Workflow loaded Successfully.");	
 				
 				mCPE.process();//Runs on a seperate thread.
-
-
-				
 			} catch (ResourceInitializationException e) {
-				// TODO Auto-generated catch block
-
-				System.out.println("here "+e.getMessage() + "\n" + e.getCause().getMessage());
-				
 				e.printStackTrace();
-			}/* catch (CpeDescriptorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+			}
 			
 		}
 	}
@@ -195,45 +177,38 @@ public class CPE extends Workflow implements StatusCallbackListener {
 	public MetaDataObject getWorkflowDescription(){
 		CpeDescription retVal = UIMAFramework.getResourceSpecifierFactory().createCpeDescription();
 		
-		System.out.println("Here on the outside");
-		
 		try {
 			retVal.setAllCollectionCollectionReaders(collectionReaders);
 			
+			//Cas processors
 			cpeCasProcessors.removeAllCpeCasProcessors();
-			
 			for(int i = 0; i < getSubComponents().size(); i++){
 				Component comp = getSubComponents().get(i);
 				if(comp instanceof CollectionReader){
 					continue; //TODO
 				}
+				cpeCasProcessors.addCpeCasProcessor(constructCpeCasProcessor(comp, "ae"+i));
 				
-				cpeCasProcessors.addCpeCasProcessor(constructCpeCasProcessor(comp, ""+i));
-				System.out.println("In the loop");
+				//TODO cleanup temp files
 			}
+			
 		} catch (CpeDescriptorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
 		retVal.setCpeCasProcessors(cpeCasProcessors);
-		
 		retVal.setCpeConfiguration(cpeConfiguration);
 		
 		return retVal;
 	}
 	
 	private CpeCasProcessor constructCpeCasProcessor(Component comp, String name) throws CpeDescriptorException{
-		
 		CpeCasProcessor processor = CpeDescriptorFactory.produceCasProcessor(comp.getName());
-		
-		
 		String saved = toFile(comp.getResourceCreationSpecifier(), name);
-		System.out.println("SHould have a file");
 	
-		CpeComponentDescriptor desc = CpeDescriptorFactory.produceComponentDescriptor(saved);//TODO
-		//I can only get it from the file system??? I have mine in memory!
+		CpeComponentDescriptor desc = CpeDescriptorFactory.produceComponentDescriptor(saved);
+		//Why can I only build it from the file system??? I have my specifiers in memory!
 		processor.setCpeComponentDescriptor(desc);
 		processor.setBatchSize(10000);
 	    processor.getErrorHandling().getErrorRateThreshold().setMaxErrorCount(0);
@@ -243,7 +218,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 	
 	private String toFile(XMLizable xml, String suffix){
 		try {
-			String file = "/UIMATests/UIMAOuttest" + suffix + ".xml";
+			String file = "/UIMATests/tempfile" + suffix + ".xml";//TODO ensure file exists //TODO put these somewhere sensible
 			FileWriter writer = new FileWriter(file);
 			xml.toXML(writer);
 			writer.close();

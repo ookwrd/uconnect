@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import org.u_compare.gui.DroppableJPanel;
+import org.u_compare.gui.LukesDropTarget;
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 
@@ -38,6 +39,8 @@ public class DropTargetJPanel extends DroppableJPanel {
 		DropTargetJPanel.loadIcons();
 		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
+		
+		LukesDropTarget.registerDropTarget(this,controller);
 	}
 
 	public DropTargetJPanel(DropTargetController controller, boolean setSolitary) {
@@ -45,6 +48,8 @@ public class DropTargetJPanel extends DroppableJPanel {
 		if (setSolitary) {
 			setSolitaryDropTarget();
 		}
+		
+		LukesDropTarget.registerDropTarget(this,controller);
 	}
 
 	public void highlightMouseDroppable() {

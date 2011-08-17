@@ -229,8 +229,6 @@ public abstract class DraggableJPanel extends DroppableJPanel implements
 	 * }
 	 */
 
-	// Main Method
-
 	public DataFlavor[] getTransferDataFlavors() {
 		return supportedFlavors;
 	}

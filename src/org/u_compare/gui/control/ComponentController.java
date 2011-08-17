@@ -380,10 +380,7 @@ public class ComponentController implements DragAndDropComponentController {
 	 * 
 	 */
 	public void setDragged(){
-		
-		
-		DragAndDropController.getController().setDragged(componentView);//TODO not the view, should pass the model
-		
+		DragAndDropController.getController().setDragged(componentView);//TODO show be using the model not the view to store
 	}
 	
 

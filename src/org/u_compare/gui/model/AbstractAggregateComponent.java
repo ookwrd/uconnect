@@ -13,8 +13,6 @@ import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
 
-import com.sun.tools.javac.code.Attribute.Array;
-
 /**
  * Abstract base class implementing functionality common to all aggregate components.
  * 
@@ -23,6 +21,13 @@ import com.sun.tools.javac.code.Attribute.Array;
 public abstract class AbstractAggregateComponent extends
 		AbstractComponent implements AggregateComponent {
 
+	@SuppressWarnings("serial")
+	public class InvalidPositionException extends Exception {
+		public InvalidPositionException(int position, int maxPosition){
+			super("Tried to add component in position " + position + ", valid positions are 0<=x<=" + maxPosition);
+		}
+	}
+	
 	private ArrayList<SubComponentsChangedListener> subComponentsChangedListeners = new ArrayList<SubComponentsChangedListener>();
 	private ArrayList<Component> subComponents = new ArrayList<Component>();
 	
@@ -269,7 +274,7 @@ public abstract class AbstractAggregateComponent extends
 	public ResourceCreationSpecifier getResourceCreationSpecifier(){
 		AnalysisEngineDescription retVal = (AnalysisEngineDescription)super.getResourceCreationSpecifier();
 			
-		if(flowController!= null){//
+		if(flowController!= null){
 			System.err.println("Flow controller not null. Specifier type " + flowController.getSpecifier());
 			//TODO this needs to be addressed
 		}
@@ -282,14 +287,11 @@ public abstract class AbstractAggregateComponent extends
 				if(subComponents.get(i).getFlowControllerIdentifier()!=null){
 					String current = subComponents.get(i).getFlowControllerIdentifier();
 					
-					System.out.println("Current " + current);
-					
 					//Check it hasn't been used already
 					if(!Arrays.asList(flowStrings).contains(current)){
 						flowStrings[i] = current;
 						continue;
 					}
-					System.out.println("Duplicate!!");
 				}
 				
 				String id = ""+i;
@@ -309,7 +311,7 @@ public abstract class AbstractAggregateComponent extends
 		Map<String, MetaDataObject> metaData;
 		metaData = retVal.getDelegateAnalysisEngineSpecifiersWithImports();
 		
-		for(Import imp : imports){
+		/*for(Import imp : imports){
 			//UIMAFramework.getResourceSpecifierFactory().createMe
 			//metaData.put(comp.getName(),comp.getUIMADescription()); //TODO if I do it this way can I run??
 			//TODO obviously
@@ -322,8 +324,7 @@ public abstract class AbstractAggregateComponent extends
 			 *  
 			 *  Lets try.
 			 */
-		}
-	
+		//}
 		
 		for(Component comp : getSubComponents()){
 			metaData.put(comp.getFlowControllerIdentifier(),comp.getResourceCreationSpecifier());

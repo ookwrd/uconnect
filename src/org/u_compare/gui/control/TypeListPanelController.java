@@ -7,7 +7,6 @@ import org.u_compare.gui.model.Component;
 
 public class TypeListPanelController {
 	
-	private ComponentController parentComponentController;
 	private Component component;
 	private LIST_TYPES listType;
 	
@@ -15,7 +14,6 @@ public class TypeListPanelController {
 			ComponentController parentComponentController,
 			Component component, LIST_TYPES outputs){
 		
-		this.parentComponentController = parentComponentController;
 		this.component = component;
 		this.listType = outputs;
 		

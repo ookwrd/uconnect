@@ -2,6 +2,8 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 
+import org.u_compare.gui.model.AbstractAggregateComponent.InvalidPositionException;
+
 /**
  * Interface specifying common features of all aggregate components.
  * 

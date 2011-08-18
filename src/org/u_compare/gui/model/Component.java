@@ -2,7 +2,6 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;

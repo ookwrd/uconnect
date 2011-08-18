@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
-import org.u_compare.gui.model.MockAggregateComponent;
-import org.u_compare.gui.model.MockComponent;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;

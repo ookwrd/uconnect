@@ -2,13 +2,8 @@ package org.u_compare.gui.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TimerTask;
-import java.util.Timer;
 
 import org.apache.uima.UIMAFramework;
-import org.apache.uima.cas.CAS;
-import org.apache.uima.collection.EntityProcessStatus;
-import org.apache.uima.collection.StatusCallbackListener;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.resource.metadata.MetaDataObject;

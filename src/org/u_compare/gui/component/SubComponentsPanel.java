@@ -28,7 +28,7 @@ public class SubComponentsPanel extends JPanel {
 		//Setup initial drop target
 		DropTargetController initialDropTargetControl = new DropTargetController(
 			controller);
-		DropTargetJPanel initialDropTarget = new DropTargetJPanel(initialDropTargetControl,true);
+		SubComponentDropTarget initialDropTarget = new SubComponentDropTarget(initialDropTargetControl,true);
 		initialDropTargetControl.setView(initialDropTarget);
 		controller.addFirstDropTarget(initialDropTargetControl);
 		add(initialDropTarget);
@@ -47,7 +47,7 @@ public class SubComponentsPanel extends JPanel {
 			DropTargetController control = new DropTargetController(
 				controller);
 			
-			DropTargetJPanel following = new DropTargetJPanel(control);
+			SubComponentDropTarget following = new SubComponentDropTarget(control);
 			control.setView(following);
 			add(following);
 			

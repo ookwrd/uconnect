@@ -1,12 +1,12 @@
 package org.u_compare.gui.control;
 
-import org.u_compare.gui.component.DropTargetJPanel;
+import org.u_compare.gui.component.SubComponentDropTarget;
 import org.u_compare.gui.guiElements.DragAndDrop.DropController;
 
 public class DropTargetController implements DropController {
 
 	private ComponentController parent;
-	public DropTargetJPanel view;
+	public SubComponentDropTarget view;
 	
 	/**
 	 * Must also call the set view method.
@@ -17,11 +17,11 @@ public class DropTargetController implements DropController {
 		this.parent = parent;
 	}
 	
-	public void setView(DropTargetJPanel view) {
+	public void setView(SubComponentDropTarget view) {
 		this.view = view;
 	}
 	
-	public DropTargetController(ComponentController parent, DropTargetJPanel view){
+	public DropTargetController(ComponentController parent, SubComponentDropTarget view){
 		this.parent = parent;
 		this.view = view;
 	}

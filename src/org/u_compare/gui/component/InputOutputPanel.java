@@ -2,7 +2,6 @@ package org.u_compare.gui.component;
 
 import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -11,6 +10,11 @@ import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.model.Component;
 
+/**
+ * GUI Class responsible for holding both the input and output panels and drawing their borders.
+ * 
+ * @author Luke McCrohon
+ */
 @SuppressWarnings("serial")
 public class InputOutputPanel extends JPanel {
 	

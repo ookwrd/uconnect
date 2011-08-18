@@ -19,12 +19,12 @@ import org.apache.uima.resource.metadata.MetaDataObject;
 import org.u_compare.gui.ConsolePane;
 import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.WorkflowHorizontalSplitPane;
-import org.u_compare.gui.WorkflowTabbedPane;
+import org.u_compare.gui.WorkflowViewer;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Workflow;
 import org.xml.sax.SAXException;
 
-public class WorkflowPaneController extends DropTargetAdapter implements DropTargetListener, ActionListener {
+public class WorkflowViewerController extends DropTargetAdapter implements DropTargetListener, ActionListener {
 
 	public interface WorkflowFactory {
 		public Workflow constructWorkflow();
@@ -117,7 +117,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		}
 	};
 	
-	private WorkflowTabbedPane tabbedPane;
+	private WorkflowViewer tabbedPane;
 	
 	private JComponent init(ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes){
 		
@@ -126,7 +126,7 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 		}
 		
 		if(ALLOW_TABS){
-			tabbedPane = new WorkflowTabbedPane(this);
+			tabbedPane = new WorkflowViewer(this);
 			tabbedPane.setEmptyTab(emptyTabbedPanel);
 			
 			for(WorkflowHorizontalSplitPane workflowSplitPane : workflowSplitPanes){
@@ -192,11 +192,11 @@ public class WorkflowPaneController extends DropTargetAdapter implements DropTar
 	}
 	
 	private WorkflowHorizontalSplitPane constructDraggedWorkflow(){
-		return constructWorkflow(WorkflowPaneController.draggedWorkflow());
+		return constructWorkflow(WorkflowViewerController.draggedWorkflow());
 	}
 	
 	public static void setTypeChooser(AnnotationTypeChooser typeChooser){
-		WorkflowPaneController.typeChooser = typeChooser;
+		WorkflowViewerController.typeChooser = typeChooser;
 	}
 	
 	private static Workflow draggedWorkflow() {

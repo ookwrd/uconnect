@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.guiElements;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -8,14 +8,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.u_compare.gui.guiElements.ButtonTabFlap;
-
 @SuppressWarnings("serial")
 public class ButtonTabbedPane extends JTabbedPane {
 
 	private final ArrayList<ButtonTabFlap> buttons = new ArrayList<ButtonTabFlap>();
 	
-	private JPanel panelZero = new JPanel(){
+	private JPanel placeholderPanel = new JPanel(){
 		{
 			add(new JLabel("There are no Tabbed panes to display."));
 			setName("      ");
@@ -23,7 +21,6 @@ public class ButtonTabbedPane extends JTabbedPane {
 	};
 	
 	public ButtonTabFlap addButtonTab(String title, DropTargetListener dropListener){
-		
 		ButtonTabFlap tabFlap = new ButtonTabFlap(title, dropListener);
 		
 		//Create a component that whenever it is displayed switches the tab to a previous one.
@@ -38,14 +35,12 @@ public class ButtonTabbedPane extends JTabbedPane {
 		buttons.add(tabFlap);
 		
 		return tabFlap;
-			
 	}
 	
 	@Override
 	public Component add(Component comp, int i){
-		
-		if(zeroInUse()){
-			remove(panelZero);
+		if(zeroInUse()){//Do we have to clear the placeholder tab?
+			remove(placeholderPanel);
 			Component compent = super.add(comp, i);
 			return compent;
 		}else{
@@ -64,7 +59,7 @@ public class ButtonTabbedPane extends JTabbedPane {
 	
 	public boolean zeroInUse(){
 		for(Component comp :getComponents()){
-			if(comp.equals(panelZero)){
+			if(comp.equals(placeholderPanel)){
 				return true;
 			}
 		}
@@ -82,12 +77,12 @@ public class ButtonTabbedPane extends JTabbedPane {
 		if(numberOfNonButtonTabs()>0){
 			setSelectedIndex(numberOfNonButtonTabs()-1);
 		}else{
-			add(panelZero, 0);
+			add(placeholderPanel, 0);
 			setSelectedIndex(0);
 		}
 	}
 	
 	public void setEmptyTab(JPanel panelZero){
-		this.panelZero = panelZero;
+		this.placeholderPanel = panelZero;
 	}
 }

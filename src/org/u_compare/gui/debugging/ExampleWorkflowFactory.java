@@ -15,7 +15,6 @@ import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 import org.u_compare.gui.model.parameters.constraints.StringConstraint;
-import org.u_compare.gui.model.uima.PrimitiveAnalysisEngine;
 
 /**
  * THIS CLASS IS FOR TESTING PURPOSES ONLY

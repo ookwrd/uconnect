@@ -9,7 +9,7 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 /**
- * XXX: TODO:
+ * GUI Component containing the WorkflowHorizontalSplitPane on the left and the Library on the right separated by a splitPane.
  * 
  * @author 	luke
  * @author 	pontus
@@ -17,7 +17,7 @@ import javax.swing.plaf.basic.BasicSplitPaneUI;
  *
  */
 @SuppressWarnings("serial")
-public class UConnectHorizontalSplitPane extends JSplitPane {
+public class UConnectVerticalSplitPane extends JSplitPane {
 	
 	// Configuration
 	private static final boolean ONE_TOUCH_EXPANDABLE = false;
@@ -26,13 +26,13 @@ public class UConnectHorizontalSplitPane extends JSplitPane {
 	private static final double DIVIDER_START_POSITION = 0.5D;
 	private static final int SPLIT_ORIENTATION = JSplitPane.HORIZONTAL_SPLIT;
 	
-	public UConnectHorizontalSplitPane(JComponent workflowPane,
+	public UConnectVerticalSplitPane(JComponent workflowPane,
 			JComponent libraryPane) {
 		
 		this.setLeftComponent(workflowPane);
 		this.setRightComponent(libraryPane);
 		
-		this.setOneTouchExpandable(UConnectHorizontalSplitPane.ONE_TOUCH_EXPANDABLE);
+		this.setOneTouchExpandable(UConnectVerticalSplitPane.ONE_TOUCH_EXPANDABLE);
 		
 		this.setUI(new BasicSplitPaneUI() {
 		    public BasicSplitPaneDivider createDefaultDivider() {
@@ -46,8 +46,8 @@ public class UConnectHorizontalSplitPane extends JSplitPane {
 		// Carry out all the divider configurations here
 		this.setDividerSize(5);
 		// Space distribution between components when we grow
-		this.setResizeWeight(UConnectHorizontalSplitPane.DEFAULT_RE_SIZE_WEIGHT);
-		this.setOrientation(UConnectHorizontalSplitPane.SPLIT_ORIENTATION);
+		this.setResizeWeight(UConnectVerticalSplitPane.DEFAULT_RE_SIZE_WEIGHT);
+		this.setOrientation(UConnectVerticalSplitPane.SPLIT_ORIENTATION);
 
 		this.setContinuousLayout(true);
 	}
@@ -57,7 +57,7 @@ public class UConnectHorizontalSplitPane extends JSplitPane {
 		super.setSize(d);
 		
 		setDividerLocation(
-				UConnectHorizontalSplitPane.DIVIDER_START_POSITION);
+				UConnectVerticalSplitPane.DIVIDER_START_POSITION);
 	}
 	
 }

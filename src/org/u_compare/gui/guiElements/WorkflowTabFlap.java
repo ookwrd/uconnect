@@ -1,4 +1,4 @@
-package org.u_compare.gui;
+package org.u_compare.gui.guiElements;
 
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
@@ -8,7 +8,6 @@ import java.awt.dnd.DropTargetDropEvent;
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
-import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 
 /**
  * Component to be used as a tab in a JTabbedPane which switches tab when dragging.

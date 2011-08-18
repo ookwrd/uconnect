@@ -11,7 +11,6 @@ import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.DefaultCaret;
-import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
@@ -86,24 +85,16 @@ public class ConsolePane extends JScrollPane
 		this.setOpaque(false);
 	}
 	
-	private class ConsoleMessage {
-		public String text;
-		public Date timestamp;
-		public boolean isError;
+	public class ConsoleMessage {
+		String text;
+		Date timestamp;
+		boolean isError;
 		
 		public ConsoleMessage(String text, boolean isError) {
 			this.text = text;
 			this.timestamp = new Date();
 			this.isError = isError;
 		}
-	}
-	
-	public void addConsoleErrorMessage(String message) {
-		this.addConsoleMessage(message, true);
-	}
-	
-	public void addConsoleMessage(String message) {
-		this.addConsoleMessage(message, false);
 	}
 	
 	private void addConsoleMessage(String messageIn, boolean isError) {
@@ -144,6 +135,14 @@ public class ConsolePane extends JScrollPane
 		}else{
 			addConsoleMessage(WORKFLOW_STATUS_MSG_BASE + workflow.getStatus());
 		}
+	}
+	
+	public void addConsoleErrorMessage(String message) {
+		this.addConsoleMessage(message, true);
+	}
+	
+	public void addConsoleMessage(String message) {
+		this.addConsoleMessage(message, false);
 	}
 	
 	@Override

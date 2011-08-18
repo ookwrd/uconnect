@@ -1,10 +1,7 @@
 package org.u_compare.gui;
 
-import java.awt.Dimension;
-
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.model.Component;
@@ -12,7 +9,7 @@ import org.u_compare.gui.model.Component.DescriptionChangeListener;
 import org.u_compare.gui.model.Component.SavedStatusChangeListener;
 
 /**
- * Holds the workflow pane and the console pane.
+ * Holds the WorkflowPane and the ConsolePane .
  * 
  * @author pontus
  * @author luke
@@ -29,7 +26,6 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 	private static final boolean ONE_TOUCH_EXPANDABLE = true;
 	/* By default, distribute the new size evenly between our components */
 	private static final double DEFAULT_RE_SIZE_WEIGHT = 0.85D;
-	private static final double DIVIDER_START_POSITION = 0.85D;
 	private static final int SPLIT_ORIENTATION = JSplitPane.VERTICAL_SPLIT;
 	protected static final boolean DEBUG = false;
 	
@@ -77,7 +73,7 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 		if(tab != null) {
 			tabPane.setTitleAt(tabPane.indexOfComponent(this),
 					(component.checkUnsavedChanges() ? "*" : "")
-					+ WorkflowTabbedPane.cleanTitle(component.getName()));
+					+ WorkflowViewer.cleanTitle(component.getName()));
 		}
 	}
 
@@ -90,10 +86,10 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 			if(component.checkUnsavedChanges()) {
 				tabPane.setTitleAt(tabPane.indexOfComponent(this),
 						"*" +
-						WorkflowTabbedPane.cleanTitle(component.getName()));
+						WorkflowViewer.cleanTitle(component.getName()));
 			} else {
 				tabPane.setTitleAt(tabPane.indexOfComponent(this),
-						WorkflowTabbedPane.cleanTitle(component.getName()));
+						WorkflowViewer.cleanTitle(component.getName()));
 			}
 		}
 	}

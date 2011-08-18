@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-import org.u_compare.gui.UConnectHorizontalSplitPane;
+import org.u_compare.gui.UConnectVerticalSplitPane;
 
-import org.u_compare.gui.control.WorkflowPaneController;
+import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.library.LibraryPane;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.uima.CPE;
@@ -37,17 +37,17 @@ public class GUITestingHarness {
 		workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		
-		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
-		WorkflowPaneController.defaultWorkflowFactory = CPE.emptyCPEFactory;
+		WorkflowViewerController workflowPaneController = new WorkflowViewerController();
+		WorkflowViewerController.defaultWorkflowFactory = CPE.emptyCPEFactory;
 		//WorkflowPaneController.SHOW_SAVE_PANEL = true;
-		WorkflowPaneController.SHOW_LOAD_TAB = true;
+		WorkflowViewerController.SHOW_LOAD_TAB = true;
 		JComponent tabbedPane = workflowPaneController.initialize(workflows);
 		
 		// Library panel
 		LibraryPane libraryPane = new LibraryPane();
 		
 		// Combining
-		UConnectHorizontalSplitPane uConnectSplit = new UConnectHorizontalSplitPane(tabbedPane,
+		UConnectVerticalSplitPane uConnectSplit = new UConnectVerticalSplitPane(tabbedPane,
 				libraryPane);
 		TestWindow testWindow = new TestWindow("GUITestingHarness", uConnectSplit);
 		

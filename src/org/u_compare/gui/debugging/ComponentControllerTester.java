@@ -1,14 +1,12 @@
-package org.u_compare.gui.control;
+package org.u_compare.gui.debugging;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
 import org.junit.*;
-import org.u_compare.gui.debugging.ExampleWorkflowFactory;
-import org.u_compare.gui.debugging.MockAggregateComponent;
-import org.u_compare.gui.debugging.MockComponent;
-import org.u_compare.gui.debugging.PrivilegedAccessor;
+import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.InvalidSubComponentException;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;

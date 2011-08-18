@@ -1,7 +1,6 @@
 package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -20,7 +19,6 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 				boolean showWorkflowDetails, boolean showSavePanel){
 	
 		setOpaque(true);
-		setBackground(Color.GREEN);
 		setLayout(new BorderLayout());
 		
 		initialConfiguration(component, controller);

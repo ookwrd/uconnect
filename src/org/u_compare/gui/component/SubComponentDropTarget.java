@@ -22,7 +22,7 @@ import org.u_compare.gui.guiElements.DragAndDrop;
  * @version 2010-11-10
  */
 @SuppressWarnings("serial")
-public class DropTargetJPanel extends JPanel {
+public class SubComponentDropTarget extends JPanel {
 
 	public static final int TARGET_BORDER = 10;
 
@@ -34,16 +34,16 @@ public class DropTargetJPanel extends JPanel {
 
 	private JLabel solitaryLabel = new JLabel("Drag and drop a component here.");
 
-	public DropTargetJPanel(DropTargetController controller) {
+	public SubComponentDropTarget(DropTargetController controller) {
 		super();
-		DropTargetJPanel.loadIcons();
+		SubComponentDropTarget.loadIcons();
 		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
 		
 		DragAndDrop.registerDropTarget(this,controller);
 	}
 
-	public DropTargetJPanel(DropTargetController controller, boolean setSolitary) {
+	public SubComponentDropTarget(DropTargetController controller, boolean setSolitary) {
 		this(controller);
 		if (setSolitary) {
 			setSolitaryDropTarget();
@@ -117,17 +117,17 @@ public class DropTargetJPanel extends JPanel {
 	}
 
 	private static synchronized void loadIcons() {
-		if (DropTargetJPanel.iconsLoaded == true) {
+		if (SubComponentDropTarget.iconsLoaded == true) {
 			return;
 		}
 		URL image_url;
 
 		image_url = IconizedCloseableTabFlapComponent.class
-				.getResource(DropTargetJPanel.intermediateDropTargetIconPath);
+				.getResource(SubComponentDropTarget.intermediateDropTargetIconPath);
 		
 		assert image_url != null;
-		DropTargetJPanel.intermediateDropTargetIcon = new ImageIcon(image_url,
-				DropTargetJPanel.intermediateDropTargetIconCaption);
+		SubComponentDropTarget.intermediateDropTargetIcon = new ImageIcon(image_url,
+				SubComponentDropTarget.intermediateDropTargetIconCaption);
 
 		return;
 	}

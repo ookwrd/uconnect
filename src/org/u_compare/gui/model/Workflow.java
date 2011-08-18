@@ -133,7 +133,7 @@ public class Workflow extends AbstractAggregateComponent  {
 				return new CPE((CpeDescription)desc);
 			} else {
 				
-				System.out.println("Its in here " + desc.getClass());
+				System.out.println("Workflow.constructWorkflowFromXML: Its in here " + desc.getClass());
 				//TODO error //TODO AS workflow
 				return null;
 			}

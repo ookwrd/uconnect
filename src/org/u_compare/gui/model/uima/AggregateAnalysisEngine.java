@@ -1,12 +1,9 @@
 package org.u_compare.gui.model.uima;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceSpecifier;
-import org.apache.uima.resource.metadata.Import;
-import org.apache.uima.resource.metadata.MetaDataObject;
 import org.apache.uima.util.InvalidXMLException;
 import org.u_compare.gui.model.AbstractAggregateComponent;
 import org.u_compare.gui.model.AbstractComponent;
@@ -21,17 +18,6 @@ public class AggregateAnalysisEngine extends AbstractAggregateComponent {
 		setImplementationName(desc.getImplementationName());
 		flowController = desc.getFlowControllerDeclaration();
 		
-		Map<String, MetaDataObject> values = desc.getDelegateAnalysisEngineSpecifiersWithImports();
-		for(MetaDataObject spec : values.values()){
-			System.out.println("Class " + spec.getClass());
-			
-			Import imp = (Import)spec;
-			System.out.println(imp.getName() + "  " + imp.getLocation());
-			
-			//Component comp = AbstractComponent.constructComponentFromXML((ResourceSpecifier)spec);
-			//addSubComponent(comp);
-		}
-		
 		try {
 			for(Entry<String, ResourceSpecifier> pair : desc.getDelegateAnalysisEngineSpecifiers().entrySet()){
 				Component subComponent = AbstractComponent.constructComponentFromXML(pair.getValue());
@@ -39,7 +25,6 @@ public class AggregateAnalysisEngine extends AbstractAggregateComponent {
 				addSubComponent(subComponent);
 			}
 		} catch (InvalidXMLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

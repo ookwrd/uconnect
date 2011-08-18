@@ -14,6 +14,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.u_compare.gui.control.WorkflowPaneController;
+import org.u_compare.gui.guiElements.ButtonTabFlap;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;

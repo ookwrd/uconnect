@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.u_compare.gui.guiElements.ButtonTabFlap;
+
 @SuppressWarnings("serial")
 public class ButtonTabbedPane extends JTabbedPane {
 
@@ -87,6 +89,5 @@ public class ButtonTabbedPane extends JTabbedPane {
 	
 	public void setEmptyTab(JPanel panelZero){
 		this.panelZero = panelZero;
-		//TODO check if the old zero tab is in use and replace it
 	}
 }

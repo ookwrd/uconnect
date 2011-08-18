@@ -1,7 +1,7 @@
 package org.u_compare.gui.control;
 
-import org.u_compare.gui.component.FloatParameterPanel;
-import org.u_compare.gui.component.ParameterPanel;
+import org.u_compare.gui.component.parameters.FloatParameterPanel;
+import org.u_compare.gui.component.parameters.ParameterPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;

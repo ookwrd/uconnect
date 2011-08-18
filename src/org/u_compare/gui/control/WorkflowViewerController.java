@@ -281,9 +281,4 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 			System.out.println("Error");
 		}
 	}
-	
-	public  void setEmptyPanel(JPanel emptyPanel){
-		this.emptyTabbedPanel = emptyPanel;
-		this.tabbedPane.setEmptyTab(emptyPanel);
-	}
 }

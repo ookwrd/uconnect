@@ -32,16 +32,12 @@ public class DragAndDropController {
     public void resetDragged(){
         this.dragged = null;
     }
-    
-    /*public ComponentCon getDragged(){
-        return dragged;
-    }*/
  
     public ComponentController getDraggedComponent() throws ClassCastException{
     	
     	if(dragged instanceof ComponentController){
     		return (ComponentController)dragged;
-    	} else if ( false /*dragged.getController() instance of Library Descriptor*/ ){
+    	} else if ( false /*dragged instance of Library Descriptor*/ ){
     		
     		//TODO build the component from the descriptor
     		return null;

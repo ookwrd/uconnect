@@ -12,7 +12,6 @@ import org.apache.uima.analysis_engine.metadata.FlowControllerDeclaration;
 import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
-import org.u_compare.gui.debugging.Debug;
 
 import com.sun.tools.javac.code.Attribute.Array;
 
@@ -88,9 +87,6 @@ public abstract class AbstractAggregateComponent extends
 		
 		//Check subComponents contains component
 		if(!subComponents.contains(component)){
-			if(Debug.DEBUGLEVEL >= Debug.ERROR){
-				Debug.out.println("Warning: Abstract reorderSubComponent method called on " + getName() + " when component to be added is not in subComponents list.");
-			}
 			return;
 		}
 		

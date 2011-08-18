@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.u_compare.gui.control.WorkflowPaneController;
+import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.model.Workflow;
 
 @SuppressWarnings("serial")
@@ -36,7 +36,7 @@ public class WorkflowSavePanel extends JPanel {
 	}
 	
 	private void saveButtonClicked(){
-		WorkflowPaneController.saveAdaptor.saveWorkflow(component.getWorkflowDescription());
+		WorkflowViewerController.saveAdaptor.saveWorkflow(component.getWorkflowDescription());
 		
 	}
 }

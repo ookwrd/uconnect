@@ -23,9 +23,10 @@ public class TypeListPanelController {
 	
 	public void addAnnotation(){
 		
-		AnnotationTypeOrFeature newType = WorkflowPaneController.typeChooser.getNewAnnotation();
+		AnnotationTypeOrFeature newType = WorkflowViewerController.typeChooser.getNewAnnotation();
 		
 		if(newType == null || newType.getTypeName().equals("")){
+			assert(false);
 			System.out.println("Invalid Type returned by type chooser.");
 			return;
 		}
@@ -35,27 +36,22 @@ public class TypeListPanelController {
 		}else if (listType == TypeListPanel.LIST_TYPES.OUTPUTS){
 			component.addOutputType(newType);
 		}else{
-			//TODO this state shouldnt occur
+			assert(false);
+			//This state should never occur
 		}
 		
 	}
 	
 	public void removeAnnotation(String selected){
-		
-		System.out.println("Removing");
-		
 		AnnotationTypeOrFeature type = new AnnotationTypeOrFeature(selected);
 		
 		if(listType == TypeListPanel.LIST_TYPES.INPUTS){
 			component.removeInputType(type);
 		}else if (listType == TypeListPanel.LIST_TYPES.OUTPUTS){
-
-			System.out.println("here, tyring to remove outptu type");
 			component.removeOutputType(type);
 		}else{
-			//TODO this state shouldnt occur
+			assert(false);
+			//this state shouldnt occur
 		}
-		
 	}
-	
 }

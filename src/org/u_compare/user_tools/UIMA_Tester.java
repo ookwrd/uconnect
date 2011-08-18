@@ -9,8 +9,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.u_compare.gui.control.WorkflowPaneController;
-import org.u_compare.gui.control.WorkflowPaneController.WorkflowFactory;
+import org.u_compare.gui.control.WorkflowViewerController;
+import org.u_compare.gui.control.WorkflowViewerController.WorkflowFactory;
 import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
 
@@ -24,12 +24,12 @@ public class UIMA_Tester {
 		
 		WorkflowFactory factory = new LoadFactory();
 		
-		WorkflowPaneController.ALLOW_TABS = true;
-		WorkflowPaneController.SHOW_NEW_TAB = false;
-		WorkflowPaneController.SHOW_LOAD_TAB = true;
-		WorkflowPaneController.SHOW_SAVE_PANEL = true;
-		WorkflowPaneController.loadAdaptor = factory;
-		WorkflowPaneController.emptyTabbedPanel = new JPanel(){
+		WorkflowViewerController.ALLOW_TABS = true;
+		WorkflowViewerController.SHOW_NEW_TAB = false;
+		WorkflowViewerController.SHOW_LOAD_TAB = true;
+		WorkflowViewerController.SHOW_SAVE_PANEL = true;
+		WorkflowViewerController.loadAdaptor = factory;
+		WorkflowViewerController.emptyTabbedPanel = new JPanel(){
 			{
 				setName("      ");
 				setLayout(new BorderLayout());
@@ -38,7 +38,7 @@ public class UIMA_Tester {
 		};
 		
 		
-		WorkflowPaneController workflowPaneController = new WorkflowPaneController();
+		WorkflowViewerController workflowPaneController = new WorkflowViewerController();
 		JComponent tabbedPane = workflowPaneController.initialize(factory.constructWorkflow());
 		
 		TestWindow testWindow = new TestWindow("UIMA Workflow Tester", tabbedPane);

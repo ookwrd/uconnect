@@ -13,7 +13,7 @@ import javax.swing.border.EtchedBorder;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.WorkflowController;
-import org.u_compare.gui.control.WorkflowPaneController;
+import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.guiElements.DragAndDrop;
 import org.u_compare.gui.model.Workflow;
 

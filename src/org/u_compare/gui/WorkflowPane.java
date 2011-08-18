@@ -42,7 +42,6 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 	private static final String TOOLTIP_TEXT =
 		"Drag components from the component library here";
 
-	// TODO: LayoutManager
 	// TODO: WorkflowTransferManager
 	// For dragging, observe the mouse and keep states for it here.
 	// Then observe the events and draw accordingly.

@@ -13,8 +13,9 @@ import javax.swing.ImageIcon;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.u_compare.gui.control.WorkflowPaneController;
+import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.guiElements.ButtonTabFlap;
+import org.u_compare.gui.guiElements.ButtonTabbedPane;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
@@ -31,8 +32,22 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 @SuppressWarnings("serial")
 //TODO: Enable scrolling among tabs
 //TODO: Should have mnemonics
-public class WorkflowTabbedPane extends ButtonTabbedPane
+public class WorkflowViewer extends ButtonTabbedPane
 	implements WorkflowStatusListener, ChangeListener {
+	
+	private static final Icon EMPTY_ICON = new Icon() {//An empty icon.
+		@Override
+		public void paintIcon(java.awt.Component c, Graphics g, int x, int y) {
+		}
+		@Override
+		public int getIconWidth() {
+			return 16;
+		}
+		@Override
+		public int getIconHeight() {
+			return 16;
+		}
+	};
 	
 	// Configuration
 	private static final String TOOLTIP_TEXT =
@@ -71,17 +86,17 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 		"The workflow is currently paused";
 	private final static String WORKFLOW_ERROR_DESCRIPTION =
 		"An error has occured with this workflow";
-	private WorkflowPaneController controller;
+	private WorkflowViewerController controller;
 	
-	public WorkflowTabbedPane(WorkflowPaneController controller) {
+	public WorkflowViewer(WorkflowViewerController controller) {
 		super();
 		
-		WorkflowTabbedPane.load_icons();
-		assert WorkflowTabbedPane.icons_loaded == true;
+		WorkflowViewer.load_icons();
+		assert WorkflowViewer.icons_loaded == true;
 		
 		this.controller = controller;
 		
-		this.setToolTipText(WorkflowTabbedPane.TOOLTIP_TEXT);
+		this.setToolTipText(WorkflowViewer.TOOLTIP_TEXT);
 		
 		this.initializeTabButtons();
 		
@@ -90,15 +105,15 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 	
 	private void initializeTabButtons(){
 		
-		if(WorkflowPaneController.SHOW_NEW_TAB){
-			ButtonTabFlap newWorkflowButton = addButtonTab(WorkflowPaneController.NEW_TAB_NAME, controller);
-			newWorkflowButton.setActionCommand(WorkflowPaneController.NEW_ACTION_COMMAND);
+		if(WorkflowViewerController.SHOW_NEW_TAB){
+			ButtonTabFlap newWorkflowButton = addButtonTab(WorkflowViewerController.NEW_TAB_NAME, controller);
+			newWorkflowButton.setActionCommand(WorkflowViewerController.NEW_ACTION_COMMAND);
 			newWorkflowButton.addActionListener(controller);	
 		}
 	
-		if(WorkflowPaneController.SHOW_LOAD_TAB){
-			ButtonTabFlap loadWorkflowButton = addButtonTab(WorkflowPaneController.LOAD_TAB_NAME, controller);
-			loadWorkflowButton.setActionCommand(WorkflowPaneController.LOAD_ACTION_COMMAND);
+		if(WorkflowViewerController.SHOW_LOAD_TAB){
+			ButtonTabFlap loadWorkflowButton = addButtonTab(WorkflowViewerController.LOAD_TAB_NAME, controller);
+			loadWorkflowButton.setActionCommand(WorkflowViewerController.LOAD_ACTION_COMMAND);
 			loadWorkflowButton.addActionListener(controller);
 		}
 	}
@@ -122,20 +137,17 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 		
 		int inserted_index = numberOfNonButtonTabs();
 		
-		//TODO: Different mouse-over depending on if focused or not
-		// "Your current workflow" vs. "View this workflow"
 		splitPane.setName(cleanTitle(topComponent.getName()));
 		this.add(splitPane, inserted_index);
 		// Why does the API force a fully specified tab when using insert
 		// rather than add?
 		this.setToolTipTextAt(inserted_index, topComponent.getDescription());
 		
-		
-		//Listener for switching between tabs on component drag.
+		//Setup switching between tabs on component drag.
 		DropTargetListener dropListener = new DropTargetAdapter() {
 			@Override
 			public void drop(DropTargetDropEvent dtde) {
-				//Nothing
+				//Do Nothing
 			}
 			
 			@Override
@@ -146,7 +158,7 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 		};
 		
 		IconizedCloseableTabFlapComponent tabFlapComponent = 
-			new IconizedCloseableTabFlapComponent(this, WorkflowTabbedPane.WORKFLOW_STOPPED, dropListener, WorkflowPaneController.ALLOW_TAB_CLOSE);
+			new IconizedCloseableTabFlapComponent(this, WorkflowViewer.WORKFLOW_STOPPED, dropListener, WorkflowViewerController.ALLOW_TAB_CLOSE);
 		
 		splitPane.linkTabbedPane(this, tabFlapComponent);
 		
@@ -154,7 +166,6 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 				tabFlapComponent);
 		
 		this.setSelectedIndex(inserted_index);
-		
 	}
 	
 	@Override
@@ -197,19 +208,7 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 	}
 	
 	public void clearIconAt(int index){
-		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index)).setStatusIcon(new Icon() {//An empty icon.
-			@Override
-			public void paintIcon(java.awt.Component c, Graphics g, int x, int y) {
-			}
-			@Override
-			public int getIconWidth() {
-				return 16;
-			}
-			@Override
-			public int getIconHeight() {
-				return 16;
-			}
-		}, false);
+		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index)).setStatusIcon(EMPTY_ICON, false);
 	}
 	
 	@Override
@@ -240,19 +239,19 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 					case RUNNING:
 					case LOADING:
 					case INITIALIZING:
-						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_RUNNING);
+						this.setIconAt(i, WorkflowViewer.WORKFLOW_RUNNING);
 						break;
 					case READY:
-						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_STOPPED);
+						this.setIconAt(i, WorkflowViewer.WORKFLOW_STOPPED);
 						break;
 					case ERROR:
-						this.setNotifactionIconAt(i, WorkflowTabbedPane.WORKFLOW_ERROR);	
+						this.setNotifactionIconAt(i, WorkflowViewer.WORKFLOW_ERROR);	
 						break;
 					case PAUSED:
-						this.setIconAt(i, WorkflowTabbedPane.WORKFLOW_PAUSED);
+						this.setIconAt(i, WorkflowViewer.WORKFLOW_PAUSED);
 						break;
 					case FINISHED:
-						this.setNotifactionIconAt(i, WorkflowTabbedPane.WORKFLOW_FINISHED);	
+						this.setNotifactionIconAt(i, WorkflowViewer.WORKFLOW_FINISHED);	
 						break;
 					default:
 						assert false: "Unimplemented WorkflowStatus received";
@@ -276,40 +275,40 @@ public class WorkflowTabbedPane extends ButtonTabbedPane
 	
 
 	private static synchronized void load_icons() {
-		if (WorkflowTabbedPane.icons_loaded == false) {
+		if (WorkflowViewer.icons_loaded == false) {
 			URL image_url;
 			
-			image_url = WorkflowTabbedPane.class.getResource(
-					WorkflowTabbedPane.WORKFLOW_STOPPED_PATH);
+			image_url = WorkflowViewer.class.getResource(
+					WorkflowViewer.WORKFLOW_STOPPED_PATH);
 			assert image_url != null;
-			WorkflowTabbedPane.WORKFLOW_STOPPED = new ImageIcon(image_url,
-					WorkflowTabbedPane.WORKFLOW_STOPPED_DESCRIPTION);
+			WorkflowViewer.WORKFLOW_STOPPED = new ImageIcon(image_url,
+					WorkflowViewer.WORKFLOW_STOPPED_DESCRIPTION);
 			
-			image_url = WorkflowTabbedPane.class.getResource(
-					WorkflowTabbedPane.WORKFLOW_RUNNING_PATH);
+			image_url = WorkflowViewer.class.getResource(
+					WorkflowViewer.WORKFLOW_RUNNING_PATH);
 			assert image_url != null;
-			WorkflowTabbedPane.WORKFLOW_RUNNING = new ImageIcon(image_url,
-					WorkflowTabbedPane.WORKFLOW_RUNNING_DESCRIPTION);
+			WorkflowViewer.WORKFLOW_RUNNING = new ImageIcon(image_url,
+					WorkflowViewer.WORKFLOW_RUNNING_DESCRIPTION);
 			
-			image_url = WorkflowTabbedPane.class.getResource(
-					WorkflowTabbedPane.WORKFLOW_FINISHED_PATH);
+			image_url = WorkflowViewer.class.getResource(
+					WorkflowViewer.WORKFLOW_FINISHED_PATH);
 			assert image_url != null;
-			WorkflowTabbedPane.WORKFLOW_FINISHED = new ImageIcon(image_url,
-					WorkflowTabbedPane.WORKFLOW_FINISHED_DESCRIPTION);
+			WorkflowViewer.WORKFLOW_FINISHED = new ImageIcon(image_url,
+					WorkflowViewer.WORKFLOW_FINISHED_DESCRIPTION);
 			
-			image_url = WorkflowTabbedPane.class.getResource(
-					WorkflowTabbedPane.WORKFLOW_PAUSED_PATH);
+			image_url = WorkflowViewer.class.getResource(
+					WorkflowViewer.WORKFLOW_PAUSED_PATH);
 			assert image_url != null;
-			WorkflowTabbedPane.WORKFLOW_PAUSED = new ImageIcon(image_url,
-					WorkflowTabbedPane.WORKFLOW_PAUSED_DESCRIPTION);
+			WorkflowViewer.WORKFLOW_PAUSED = new ImageIcon(image_url,
+					WorkflowViewer.WORKFLOW_PAUSED_DESCRIPTION);
 			
-			image_url = WorkflowTabbedPane.class.getResource(
-					WorkflowTabbedPane.WORKFLOW_ERROR_PATH);
+			image_url = WorkflowViewer.class.getResource(
+					WorkflowViewer.WORKFLOW_ERROR_PATH);
 			assert image_url != null;
-			WorkflowTabbedPane.WORKFLOW_ERROR = new ImageIcon(image_url,
-					WorkflowTabbedPane.WORKFLOW_ERROR_DESCRIPTION);
+			WorkflowViewer.WORKFLOW_ERROR = new ImageIcon(image_url,
+					WorkflowViewer.WORKFLOW_ERROR_DESCRIPTION);
 			
-			WorkflowTabbedPane.icons_loaded = true;
+			WorkflowViewer.icons_loaded = true;
 			return;
 		}
 		else {

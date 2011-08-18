@@ -22,7 +22,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
 import org.apache.uima.util.XMLizable;
-import org.u_compare.gui.control.WorkflowPaneController.WorkflowFactory;
+import org.u_compare.gui.control.WorkflowViewerController.WorkflowFactory;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;

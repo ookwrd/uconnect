@@ -1,4 +1,4 @@
-package org.u_compare.gui.component;
+package org.u_compare.gui.component.parameters;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.Component.ParametersChangedListener;
 
 public class ParameterGroup {
 
 	private ArrayList<ParameterGroupConfigurationChangeListener> parameterGroupConfigurationChangeListeners = new ArrayList<ParameterGroupConfigurationChangeListener>();
-	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<Component.ParametersChangedListener>();
 	
 	private String[] names = new String[0];
 	private ArrayList<Parameter> configurationParameters = new ArrayList<Parameter>();

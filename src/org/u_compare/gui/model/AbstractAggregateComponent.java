@@ -341,16 +341,6 @@ public abstract class AbstractAggregateComponent extends
 		super.extractFromProcessingResouceMetaData(metaData);
 		
 		flowConstraints = metaData.getFlowConstraints();
-		
-		
-		//TODO remove this
-		if(metaData.getDelegateAnalysisEngineMetaData()!= null){
-			for(AnalysisEngineMetaData subComponent: metaData.getDelegateAnalysisEngineMetaData()){
-				System.out.println(subComponent.getName());
-			}
-		}else{
-			System.out.println("it was null");
-		}
 	}
 	
 	@Override

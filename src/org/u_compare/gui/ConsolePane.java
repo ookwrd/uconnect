@@ -6,10 +6,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.DefaultCaret;
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
 import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
@@ -40,10 +45,8 @@ public class ConsolePane extends JScrollPane
 	private final String WORKFLOW_STATUS_MSG_BASE =
 		"Workflow status change to: ";
 	
-	private Workflow workflow;
-	
-	private JEditorPane console;
-	private ArrayList<ConsoleMessage> messages;
+	private JTextPane console;
+	private ArrayList<ConsoleMessage> messages = new ArrayList<ConsoleMessage>();
 	
 	// Configuration
 	private static final int HORIZONTAL_SCROLLBAR_POLICY =
@@ -56,37 +59,21 @@ public class ConsolePane extends JScrollPane
 	private static final String CONSOLE_CONTENTTYPE = "text/html";
 	private static final DateFormat CONSOLE_DATEFORMAT =
 		new SimpleDateFormat("HH:mm:ss");
-	private static final String CONSOLE_ERROR_COLOUR = "#FF0000";
-	private static final String CONSOLE_DEFAULT_TEXT_COLOUR = "#000000";
-	private static final Color CONSOLE_BACKGROUND_COLOR =
-		Color.getColor("#FFFFFF");
-	private static final boolean CONSOLE_EDITABLE = false;
-	
-	//TODO: How do we limit the size and minimization possibilites?
-	//The code below won't do it.
-	//this.setMinimumSize(new Dimension(0, 50));
+	private static final Color CONSOLE_ERROR_COLOUR = Color.red;
+	private static final Color CONSOLE_DEFAULT_TEXT_COLOUR = Color.black;
+	private static final Color CONSOLE_BACKGROUND_COLOR = Color.white;
 	
 	public ConsolePane(Workflow workflow) {
-
-		this.workflow = workflow;
 		workflow.registerWorkflowStatusListener(this);
 		workflow.registerWorkflowMessageListener(this);
 		
-		this.console = new JEditorPane();
+		this.console = new JTextPane();
 		
-		// Required for Auto-Scroll behaviour on console update
 		DefaultCaret caret = (DefaultCaret)console.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		/**
-		 * TODO: Move caret on user scroll so it doesn't force the scroll to
-		 * the bottom.
-		 */
 		
 		this.console.setContentType(ConsolePane.CONSOLE_CONTENTTYPE);
-		this.console.setEditable(ConsolePane.CONSOLE_EDITABLE);
 		this.console.setBackground(ConsolePane.CONSOLE_BACKGROUND_COLOR);
-		
-		this.messages = new ArrayList<ConsoleMessage>();
 		
 		this.setViewportView(this.console);
 		this.setHorizontalScrollBarPolicy(
@@ -95,7 +82,7 @@ public class ConsolePane extends JScrollPane
 				ConsolePane.VERTICAL_SCROLLBAR_POLICY);
 		this.setToolTipText(
 				ConsolePane.TOOLTIP_TEXT);
-		// Required for correct display in MacOS X
+	
 		this.setOpaque(false);
 	}
 	
@@ -110,11 +97,6 @@ public class ConsolePane extends JScrollPane
 			this.isError = isError;
 		}
 	}
-
-	public void clearConsole() {
-		this.messages.clear();
-		this.updateConsoleText(); // Use a listener?
-	}
 	
 	public void addConsoleErrorMessage(String message) {
 		this.addConsoleMessage(message, true);
@@ -124,41 +106,35 @@ public class ConsolePane extends JScrollPane
 		this.addConsoleMessage(message, false);
 	}
 	
-	private void addConsoleMessage(String message, boolean isError) {
-		this.messages.add(new ConsoleMessage(message, isError));
-		this.updateConsoleText(); // Use a listener?
-	}
-	
-	private void updateConsoleText() {
-		//TODO: Reuse previous text? So that we don't need a full update.
-		String text = "";
-		for (ConsoleMessage message: this.messages) {
-			String messageText = ConsolePane.CONSOLE_DATEFORMAT.format(
-					message.timestamp) + "<b>:</b> " + message.text + "<br/>";
-			if (message.isError) {
-				messageText = "<font color=" + ConsolePane.CONSOLE_ERROR_COLOUR
-						+ ">" + messageText + "</font>";
-			} else {
-				messageText = "<font color="
-					+ ConsolePane.CONSOLE_DEFAULT_TEXT_COLOUR + ">"
-					+ messageText + "</font>";
-			}
-			text += messageText;
-		}
+	private void addConsoleMessage(String messageIn, boolean isError) {
+		ConsoleMessage message = new ConsoleMessage(messageIn, isError);
+		this.messages.add(message);
 		
-		this.console.setText(text);
+		console.setCaretPosition(console.getDocument().getLength());
+		
+		StyleContext sc = StyleContext.getDefaultStyleContext();//TODO move to constructor
+		AttributeSet aset = console.getCharacterAttributes();
+		if(isError){
+			aset = sc.addAttribute(aset,StyleConstants.Foreground,ConsolePane.CONSOLE_ERROR_COLOUR);
+		}else{
+			aset = sc.addAttribute(aset,StyleConstants.Foreground,ConsolePane.CONSOLE_DEFAULT_TEXT_COLOUR);
+		}
+		AttributeSet asetBold = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Bold, true);
+		
+		console.setCharacterAttributes(aset, true);
+		console.replaceSelection(ConsolePane.CONSOLE_DATEFORMAT.format(
+				message.timestamp));
+		
+		console.setCharacterAttributes(asetBold, false);
+		console.replaceSelection(": ");
+		
+		console.setCharacterAttributes(aset, true);
+		console.replaceSelection(messageIn+"\n");
 	}
-	
-	public static void main(String[] argv) {
-        ConsolePane consolePane = new ConsolePane(new Workflow());
 
-        consolePane.addConsoleMessage("Testing the ConsolePane...");
-        for (int i = 0; i < 100; i++) {
-        	consolePane.addConsoleMessage("Message number:" + i + "!");
-        }
-        consolePane.addConsoleErrorMessage("Error!");
-        
-        new TestWindow("WorkflowConsolePane Test", consolePane);
+	public void clearConsole() {
+		this.messages.clear();
+		this.console.setText("");
 	}
 
 	@Override
@@ -179,7 +155,18 @@ public class ConsolePane extends JScrollPane
 		}
 	}
 	
-	public Workflow getAssociatedWorkflow() {
-		return this.workflow;
+	public static void main(String[] argv) {
+		ConsolePane consolePane = new ConsolePane(new Workflow());
+        consolePane.addConsoleMessage("Testing the ConsolePane...");
+        
+        TestWindow testWindow = new TestWindow("WorkflowConsolePane Test", consolePane);
+        testWindow.setVisible(true);
+        
+        for (int i = 0; i < 1000; i++) {
+        	consolePane.addConsoleMessage("Message number:" + i + "!");
+        }
+        consolePane.addConsoleErrorMessage("Error!");
+        
+        consolePane.clearConsole();   
 	}
 }

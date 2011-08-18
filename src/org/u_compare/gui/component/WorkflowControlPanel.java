@@ -40,7 +40,6 @@ public class WorkflowControlPanel extends JPanel implements
 	private static ImageIcon stopIcon;
 	private static ImageIcon pauseIcon;
 
-	private Workflow component;
 	private WorkflowController controller;
 
 	private JLabel statusLabel;
@@ -54,7 +53,6 @@ public class WorkflowControlPanel extends JPanel implements
 			WorkflowController controller) {
 		super();
 
-		this.component = component;
 		this.controller = controller;
 
 		ActionListener playListener = new ActionListener() {
@@ -122,12 +120,10 @@ public class WorkflowControlPanel extends JPanel implements
 	}
 
 	private void stopButtonClicked() {
-		//TODO assertion about workflow status
 		controller.workflowStopRequest();
 	}
 
 	private void playButtonClicked() {
-		//TODO assertion about workflow status
 		if(pauseMode){
 			controller.workflowPauseRequest();
 		}else{

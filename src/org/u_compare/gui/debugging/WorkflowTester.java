@@ -1,4 +1,4 @@
-package org.u_compare.gui.model;
+package org.u_compare.gui.debugging;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.u_compare.gui.model.AggregateComponent;
+import org.u_compare.gui.model.AnnotationTypeOrFeature;
+import org.u_compare.gui.model.Component;
+import org.u_compare.gui.model.Workflow;
+import org.u_compare.gui.model.AbstractAggregateComponent.InvalidPositionException;
 import org.u_compare.gui.model.AggregateComponent.SubComponentsChangedListener;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
 import org.u_compare.gui.model.Component.InputOutputChangeListener;
@@ -15,13 +20,11 @@ import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
 import org.u_compare.gui.model.Component.SavedStatusChangeListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
-import org.u_compare.gui.debugging.PrivilegedAccessor;
-
 
 /**
  * JUnit Tests for UIMAWorkflow and associated abstract classes.
  * 
- * @author lukemccrohon1
+ * @author Luke McCrohon
  *
  */
 public class WorkflowTester{

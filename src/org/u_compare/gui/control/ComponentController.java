@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.guiElements.DragAndDrop;
 import org.u_compare.gui.guiElements.DragAndDrop.DragController;
-import org.u_compare.gui.model.InvalidPositionException;
+import org.u_compare.gui.model.AbstractAggregateComponent.InvalidPositionException;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 

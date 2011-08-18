@@ -1,7 +1,9 @@
-package org.u_compare.gui.model;
+package org.u_compare.gui.debugging;
 
 import java.util.ArrayList;
 
+import org.u_compare.gui.model.AbstractComponent;
+import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 
@@ -12,7 +14,7 @@ import org.u_compare.gui.model.parameters.Parameter;
  * 
  * A stub class for use when testing the model.
  * 
- * @author lukemccrohon
+ * @author Luke McCrohon
  *
  */
 public class MockComponent extends AbstractComponent implements Component {

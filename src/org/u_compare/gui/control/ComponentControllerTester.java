@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.*;
 import org.u_compare.gui.debugging.ExampleWorkflowFactory;
+import org.u_compare.gui.debugging.MockAggregateComponent;
+import org.u_compare.gui.debugging.MockComponent;
 import org.u_compare.gui.debugging.PrivilegedAccessor;
-import org.u_compare.gui.model.MockAggregateComponent;
-import org.u_compare.gui.model.MockComponent;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>org.u_compare.gui.model.uima.debugging.BasicAE</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>TESTERRed</name>
+    <description>Adds a true Truth annotation to the document.</description>
+    <version>1.0</version>
+    <vendor>Luke McCrohon - Tsujii Lab</vendor>
+    <configurationParameters defaultGroup="Group1" searchStrategy="language_fallback">
+      <configurationParameter>
+        <name>string</name>
+        <description>THis is a string param</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>int</name>
+        <description>This is an integer</description>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>boolean</name>
+        <description>This is a boolean</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>float</name>
+        <description>this is a float parameter.</description>
+        <type>Float</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationGroup names="Group1">
+        <configurationParameter>
+          <name>Group1Param</name>
+          <description>a parm in group1</description>
+          <type>String</type>
+          <multiValued>false</multiValued>
+          <mandatory>false</mandatory>
+        </configurationParameter>
+        <configurationParameter>
+          <name>Group1param2</name>
+          <description>another param in group1</description>
+          <type>Integer</type>
+          <multiValued>false</multiValued>
+          <mandatory>false</mandatory>
+        </configurationParameter>
+      </configurationGroup>
+      <configurationGroup names="group2">
+        <configurationParameter>
+          <name>Group2param1</name>
+          <type>Boolean</type>
+          <multiValued>false</multiValued>
+          <mandatory>false</mandatory>
+        </configurationParameter>
+        <configurationParameter>
+          <name>group2param2</name>
+          <description>Yeah, this is a parameter.</description>
+          <type>Float</type>
+          <multiValued>false</multiValued>
+          <mandatory>false</mandatory>
+        </configurationParameter>
+      </configurationGroup>
+    </configurationParameters>
+    <configurationParameterSettings/>
+    <typeSystemDescription/>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

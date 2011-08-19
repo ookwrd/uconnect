@@ -59,7 +59,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		}
 		cpeCasProcessors = desc.getCpeCasProcessors(); //<- this is where the subcomponents are
 		for(CpeCasProcessor processor : cpeCasProcessors.getAllCpeCasProcessors()){
-			Import imp = processor.getCpeComponentDescriptor().getImport();//TODO load these into memory
+			Import imp = processor.getCpeComponentDescriptor().getImport();
 			Component comp = AbstractComponent.constructComponentFromXML(pathBase+imp.getLocation());
 			super.addSubComponent(comp);
 		}
@@ -193,12 +193,9 @@ public class CPE extends Workflow implements StatusCallbackListener {
 					continue;
 				}
 				cpeCasProcessors.addCpeCasProcessor(constructCpeCasProcessor(comp));
-				
-				//TODO cleanup temp files
 			}
 			
 		} catch (CpeDescriptorException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -236,13 +233,11 @@ public class CPE extends Workflow implements StatusCallbackListener {
 			writer.close();
 			return file.getAbsolutePath();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		assert(false);
 		return null;
 	}
 	
@@ -268,11 +263,6 @@ public class CPE extends Workflow implements StatusCallbackListener {
 	public boolean getLockedStatus(){//TODO a more general way of doing this.... DAMN this doesnt work
 		return true;
 	}*/
-	
-	protected void addStatusCallBackListeners() {
-		//TODO incase other people want to add their own
-	}
-	
 
 	@Override
 	public void aborted() {
@@ -280,7 +270,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 	
 	/**
 	 * paused and resumed are never called. I checked the UIMA CPM panel and RunAE and these don't
-	 * seem to be called either. I think this may be a bug in UIMA. TODO Look this up.
+	 * seem to be called either. I think this may be a bug in UIMA.
 	 */
 	@Override
 	public void paused() {
@@ -314,8 +304,10 @@ public class CPE extends Workflow implements StatusCallbackListener {
 
 	@Override
 	public void entityProcessComplete(CAS arg0, EntityProcessStatus arg1) {
-		//TODO don't report if mCPE is set to null as removeStatusCallbackListener doesn't work
-		notifyWorkflowMessageListeners("Entity processing complete with status: " + arg1.getStatusMessage());
+		//doesn't report if mCPE is set to null as removeStatusCallbackListener doesn't work
+		if(mCPE!=null){
+			notifyWorkflowMessageListeners("Entity processing complete with status: " + arg1.getStatusMessage());
+		}
 	}
 	
 }

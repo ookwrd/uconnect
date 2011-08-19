@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>org.u_compare.gui.model.uima.debugging.BasicAE</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>TESTERRed</name>
+    <description>Adds a true Truth annotation to the document.</description>
+    <version>1.0</version>
+    <vendor>Luke McCrohon - Tsujii Lab</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>string</name>
+        <description>THis is a string param</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>int</name>
+        <description>This is an integer</description>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>boolean</name>
+        <description>This is a boolean</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>float</name>
+        <description>this is a float parameter.</description>
+        <type>Float</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>MandatoryString</name>
+        <description>sdfasdf</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>string</name>
+        <value>
+          <string>Strings Value</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>int</name>
+        <value>
+          <integer>12345</integer>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>boolean</name>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>float</name>
+        <value>
+          <float>0.12345</float>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>MandatoryString</name>
+        <value>
+          <string>Mandatory Value</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription/>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

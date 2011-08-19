@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>org.u_compare.gui.model.uima.debugging.BasicAE</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>TESTERRed</name>
+    <description>Adds a true Truth annotation to the document.</description>
+    <version>1.0</version>
+    <vendor>Luke McCrohon - Tsujii Lab</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>newParam1</name>
+        <description>This is the best string.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>ints</name>
+        <description>Some ints.</description>
+        <type>Integer</type>
+        <multiValued>true</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>ImporantBoolean</name>
+        <description>This is mandatory.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>ThelastFloat</name>
+        <description>....</description>
+        <type>Float</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>newParam1</name>
+        <value>
+          <string>adfasdfasdf</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>ints</name>
+        <value>
+          <array>
+            <integer>1</integer>
+            <integer>2</integer>
+            <integer>4</integer>
+            <integer>8</integer>
+          </array>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>ImporantBoolean</name>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <types>
+        <typeDescription>
+          <name>some.typename.you.ChooseYouSay</name>
+          <description>A random type.</description>
+          <supertypeName>uima.tcas.Annotation</supertypeName>
+        </typeDescription>
+      </types>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type>uima.tcas.DocumentAnnotation</type>
+          <type>uima.cas.AnnotationBase</type>
+          <feature>uima.cas.AnnotationBase:sofa</feature>
+          <feature>uima.tcas.DocumentAnnotation:end</feature>
+          <feature>uima.tcas.DocumentAnnotation:begin</feature>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">some.typename.you.ChooseYouSay</type>
+          <type allAnnotatorFeatures="true">uima.tcas.Annotation</type>
+        </outputs>
+        <outputSofas>
+          <sofaName>Thisisarandomsofa</sofaName>
+        </outputSofas>
+        <languagesSupported>
+          <language>en</language>
+        </languagesSupported>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

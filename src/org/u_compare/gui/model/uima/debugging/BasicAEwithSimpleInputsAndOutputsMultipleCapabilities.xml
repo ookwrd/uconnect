@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>org.u_compare.gui.model.uima.debugging.BasicAE</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>TESTERRed</name>
+    <description>Adds a true Truth annotation to the document.</description>
+    <version>1.0</version>
+    <vendor>Luke McCrohon - Tsujii Lab</vendor>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription/>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type>uima.tcas.Annotation</type>
+          <type allAnnotatorFeatures="true">uima.tcas.DocumentAnnotation</type>
+        </inputs>
+        <outputs>
+          <type>uima.tcas.Annotation</type>
+          <type allAnnotatorFeatures="true">uima.cas.AnnotationBase</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">uima.cas.AnnotationBase</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">uima.tcas.Annotation</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

@@ -12,11 +12,9 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 import org.u_compare.gui.model.parameters.StringParameter;
 
-@SuppressWarnings("serial")
 public class StringParameterPanel extends ParameterPanel implements ActionListener, FocusListener, LockedStatusChangeListener, ParameterValueChangedListener {
 
 	private StringParamaterController controller;
-	private StringParameter parameter;
 	private JTextField textField;
 	
 	public StringParameterPanel(StringParameter param, StringParamaterController control,
@@ -24,15 +22,11 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 		super(param, component);
 		
 		this.controller = control;
-		this.parameter = param;
 		
 		textField = new JTextField(param.getParameterString());
 		textField.addActionListener(this);
 		textField.addFocusListener(this);
 		
-		this.add(textField);
-		
-		component.registerLockedStatusChangeListener(this);
 		param.registerParameterValueChangedListener(this);
 		
 		field = textField;
@@ -42,12 +36,12 @@ public class StringParameterPanel extends ParameterPanel implements ActionListen
 
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
-		textField.setText(parameter.getParameterString());
+		textField.setText(param.getParameterString());
 	}
 	
 	private void textFieldChanged(){
 		String value = textField.getText();
-		textField.setText(parameter.getParameter());
+		textField.setText(param.getParameterString());
 		controller.setValue(value);
 	}
 

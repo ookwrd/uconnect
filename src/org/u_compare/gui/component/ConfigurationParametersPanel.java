@@ -59,7 +59,7 @@ public class ConfigurationParametersPanel extends JPanel {
 			for (ParameterPanel parameterPanel : paramPanels) {
 				
 				//Parameter Description Label
-				JLabel description = parameterPanel.getDescriptionLabel();
+				JLabel description = parameterPanel.getLabel();
 				innerPanel.add(description);
 				
 				//Parameter Mandatory Status Label

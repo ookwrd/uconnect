@@ -3,6 +3,9 @@ package org.u_compare.gui.component;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.net.URL;
 
 import javax.swing.Icon;
@@ -31,12 +34,20 @@ public class SubComponentDropTarget extends JPanel {
 	private static String intermediateDropTargetIconCaption = "XXX"; // TODO:
 
 	private final static String intermediateDropTargetIconPath = "../gfx/intermediate_drop_target_icon.png";
+	private final static String droppableCursorImagePath = //System.getProperty("user.dir")+"/src/org/u_compare/gui"+
+		"../gfx/droppable.gif";
+	
+	private JLabel solitaryLabel = new JLabel("(Drag and drop a component here)");
 
-	private JLabel solitaryLabel = new JLabel("Drag and drop a component here.");
+	private static Toolkit toolkit;
+	private static Image image;
+	private static Point hotSpot;
+	private static Cursor droppableCursor;
 
 	public SubComponentDropTarget(DropTargetController controller) {
 		super();
 		SubComponentDropTarget.loadIcons();
+		
 		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
 		
@@ -58,8 +69,9 @@ public class SubComponentDropTarget extends JPanel {
 		this.repaint();
 
 		// also change the cursor
-		Cursor cursor = new Cursor(Cursor.MOVE_CURSOR);
-		setCursor(cursor);
+		//Cursor cursor = new Cursor(Cursor.CROSSHAIR_CURSOR);
+		setCursor(droppableCursor);
+		System.out.println("Cursor is droppableCursor");
 	}
 
 	public void highlightLocationsDroppable() {
@@ -129,6 +141,22 @@ public class SubComponentDropTarget extends JPanel {
 		SubComponentDropTarget.intermediateDropTargetIcon = new ImageIcon(image_url,
 				SubComponentDropTarget.intermediateDropTargetIconCaption);
 
+		//mouse cursor
+		image_url = IconizedCloseableTabFlapComponent.class
+		.getResource(SubComponentDropTarget.droppableCursorImagePath);
+		
+		toolkit = Toolkit.getDefaultToolkit();    
+		ImageIcon imageIcon = new ImageIcon("droppable.gif");//TODO check path ??
+		image = imageIcon.getImage();//toolkit.getImage("droppableCursorImagePath");
+		hotSpot = new Point(0,0);
+		droppableCursor = toolkit.createCustomCursor(image, hotSpot, "droppable");
+		System.out.println("Cursor created from "+droppableCursorImagePath);
+		
+		//assert image_url != null;
+		//SubComponentDropTarget.droppableCursorImage = new ImageIcon(image_url,
+		//		SubComponentDropTarget.droppableCursorImageCaption);
+		
+		iconsLoaded = true;
 		return;
 	}
 }

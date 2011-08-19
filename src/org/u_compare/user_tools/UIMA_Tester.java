@@ -9,9 +9,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.u_compare.gui.UCompareWindow;
 import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.control.WorkflowViewerController.WorkflowFactory;
-import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
 
 public class UIMA_Tester {
@@ -41,7 +41,7 @@ public class UIMA_Tester {
 		WorkflowViewerController workflowPaneController = new WorkflowViewerController();
 		JComponent tabbedPane = workflowPaneController.initialize(factory.constructWorkflow());
 		
-		TestWindow testWindow = new TestWindow("UIMA Workflow Tester", tabbedPane);
+		UCompareWindow testWindow = new UCompareWindow("UIMA Workflow Tester", tabbedPane);
 		testWindow.setSize(new Dimension(600,800));
 		testWindow.setVisible(true);
 	}

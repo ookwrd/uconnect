@@ -1,4 +1,4 @@
-package org.u_compare.gui.debugging;
+package org.u_compare.gui;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -6,21 +6,28 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- * Used as a shorthand to test GUI components in small steps.
+ * Used as a the top level application JFrame.
  * 
  * @author pontus
+ * @author Luke McCrohon
  * @version 2009-08-27
  */
 @SuppressWarnings("serial")
-public class TestWindow extends JFrame {
+public class UCompareWindow extends JFrame {
 
 	/* It is pretty safe to assume that HD 720 is okay in todays world */
 	private static final Dimension PREFERRED_SIZE = new Dimension(1280, 720);
+	private static final String PREF_WIDTH = "pref width";
+	private static final String PREF_HEIGHT = "pref height";
+	
 	/* 
 	 * No modern computer won't support VGA resolution, so this is a safe
 	 * minimum and saves us from absurdities.
@@ -30,29 +37,36 @@ public class TestWindow extends JFrame {
 	private static final boolean DEBUG = false;
 	
 	/**
-	 * @param testTitle Title of the test window
+	 * @param windowTitle Title of the test window
 	 * @param toDisplay Container to display in the test window 
 	 */
-	public TestWindow(String testTitle, Container toDisplay) {
+	public UCompareWindow(String windowTitle, Container toDisplay) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.setPreferredSize(TestWindow.PREFERRED_SIZE);
-        this.setMinimumSize(TestWindow.MINIMUM_SIZE);
+        this.setTitle(windowTitle);
         
-        this.setTitle(testTitle);
-        toDisplay.setPreferredSize(TestWindow.PREFERRED_SIZE);
-        toDisplay.setMinimumSize(TestWindow.MINIMUM_SIZE);
+        final Preferences prefs = Preferences.userNodeForPackage(this.getClass());
+        addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				prefs.putInt(PREF_WIDTH, getSize().width);
+				prefs.putInt(PREF_HEIGHT, getSize().height);
+			}
+		});
+        
+        int prefHeight = prefs.getInt(UCompareWindow.PREF_HEIGHT, UCompareWindow.PREFERRED_SIZE.height);
+        int prefWidth = prefs.getInt(UCompareWindow.PREF_WIDTH, UCompareWindow.PREFERRED_SIZE.width);
+        
+        Dimension prefSize = new Dimension(prefWidth, prefHeight);
+
+        this.setPreferredSize(prefSize);
+        this.setMinimumSize(UCompareWindow.MINIMUM_SIZE);
+        
+        toDisplay.setPreferredSize(getPreferredSize());
+        toDisplay.setMinimumSize(getMaximumSize());
         this.setContentPane(toDisplay);
         this.pack();
-        
-        //TODO: Do copy this into our non-test window class when it comes around
-        
-        /* Centre the window on screen, this is hell if you have multiple
-         * monitors since the standard setLocationRelativeTo(null) won't work.
-         */
-        
-        //TODO: We could use a full-screen if we wanted to, just to show off
-        
+   
         GraphicsEnvironment graphicsEnvironment =
         	GraphicsEnvironment.getLocalGraphicsEnvironment();
         
@@ -65,7 +79,7 @@ public class TestWindow extends JFrame {
         
         GraphicsDevice graphicsDevice =
         	graphicsEnvironment.getDefaultScreenDevice();
-        if (TestWindow.DEBUG) {
+        if (UCompareWindow.DEBUG) {
         	System.err.println(this.getClass().getName() +
         			": Will center window on device: "
         			+ graphicsDevice.getIDstring());
@@ -74,7 +88,7 @@ public class TestWindow extends JFrame {
         GraphicsConfiguration graphicsConfiguration =
         	graphicsDevice.getDefaultConfiguration();
         Rectangle bounds = graphicsConfiguration.getBounds();
-        if (TestWindow.DEBUG) {
+        if (UCompareWindow.DEBUG) {
         	System.err.println(this.getClass().getName() +
         			": Device default configuration bounds: " + bounds);
         }
@@ -98,7 +112,7 @@ public class TestWindow extends JFrame {
         int yPos = (int) Math.max(0,
         		(bounds.getHeight() - this.getHeight()) / 2); 
         
-        if (TestWindow.DEBUG) {
+        if (UCompareWindow.DEBUG) {
         	System.err.println(this.getClass().getName()
         			+ ": Will center on co-ordinates x: " + xPos
         			+ " y: " + yPos);

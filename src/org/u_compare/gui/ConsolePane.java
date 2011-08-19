@@ -15,7 +15,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
-import org.u_compare.gui.debugging.TestWindow;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.Workflow.WorkflowMessageListener;
 import org.u_compare.gui.model.Workflow.WorkflowStatus;
@@ -158,7 +157,7 @@ public class ConsolePane extends JScrollPane
 		ConsolePane consolePane = new ConsolePane(new Workflow());
         consolePane.addConsoleMessage("Testing the ConsolePane...");
         
-        TestWindow testWindow = new TestWindow("WorkflowConsolePane Test", consolePane);
+        UCompareWindow testWindow = new UCompareWindow("WorkflowConsolePane Test", consolePane);
         testWindow.setVisible(true);
         
         for (int i = 0; i < 1000; i++) {

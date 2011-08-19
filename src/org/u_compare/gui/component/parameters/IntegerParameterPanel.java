@@ -12,11 +12,9 @@ import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 
-@SuppressWarnings("serial")
 public class IntegerParameterPanel extends ParameterPanel implements  ActionListener, FocusListener, LockedStatusChangeListener, ParameterValueChangedListener  {
 
 	private IntegerParameterController controller;
-	private IntegerParameter parameter;
 	private JTextField textField;
 	
 	public IntegerParameterPanel(IntegerParameter parameter, IntegerParameterController control,
@@ -24,15 +22,11 @@ public class IntegerParameterPanel extends ParameterPanel implements  ActionList
 		super(parameter, component);
 		
 		this.controller = control;
-		this.parameter = parameter;
 		
 		textField = new JTextField(parameter.getParameterString());
 		textField.addActionListener(this);
 		textField.addFocusListener(this);
 		
-		this.add(textField);
-		
-		component.registerLockedStatusChangeListener(this);
 		parameter.registerParameterValueChangedListener(this);
 		
 		field = textField;
@@ -42,14 +36,13 @@ public class IntegerParameterPanel extends ParameterPanel implements  ActionList
 
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
-		
-		textField.setText(parameter.getParameterString());
+		textField.setText(param.getParameterString());
 	}
 
 	private void textFieldChanged(){
 		//Change should not be reflected in view unless the underlying model changes
 		String value = textField.getText();
-		textField.setText(parameter.getParameterString());
+		textField.setText(param.getParameterString());
 		controller.setValue(value);
 	}
 	

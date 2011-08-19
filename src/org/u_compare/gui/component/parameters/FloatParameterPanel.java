@@ -16,7 +16,6 @@ import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 public class FloatParameterPanel extends ParameterPanel implements  ActionListener, FocusListener, LockedStatusChangeListener, ParameterValueChangedListener  {
 
 	private FloatParameterController controller;
-	private FloatParameter parameter;
 	private JTextField textField;
 	
 	public FloatParameterPanel(FloatParameter parameter, FloatParameterController control,
@@ -24,15 +23,11 @@ public class FloatParameterPanel extends ParameterPanel implements  ActionListen
 		super(parameter, component);
 		
 		this.controller = control;
-		this.parameter = parameter;
 		
 		textField = new JTextField(parameter.getParameterString());
 		textField.addActionListener(this);
 		textField.addFocusListener(this);
 		
-		this.add(textField);
-		
-		component.registerLockedStatusChangeListener(this);
 		parameter.registerParameterValueChangedListener(this);
 		
 		field = textField;
@@ -42,8 +37,7 @@ public class FloatParameterPanel extends ParameterPanel implements  ActionListen
 	
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
-		
-		textField.setText(parameter.getParameterString());
+		textField.setText(param.getParameterString());
 	}
 
 	private void textFieldChanged(){
@@ -51,7 +45,7 @@ public class FloatParameterPanel extends ParameterPanel implements  ActionListen
 		 * model changes
 		 */
 		String value = textField.getText();
-		textField.setText(parameter.getParameterString());
+		textField.setText(param.getParameterString());
 		controller.setValue(value);
 	}
 	

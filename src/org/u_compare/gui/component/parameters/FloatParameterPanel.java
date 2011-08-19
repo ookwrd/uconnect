@@ -12,7 +12,6 @@ import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 
-@SuppressWarnings("serial")
 public class FloatParameterPanel extends ParameterPanel implements  ActionListener, FocusListener, LockedStatusChangeListener, ParameterValueChangedListener  {
 
 	private FloatParameterController controller;

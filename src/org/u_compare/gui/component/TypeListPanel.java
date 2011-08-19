@@ -39,7 +39,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	
 	private LIST_TYPES listType;
 	
-	public TypeListPanel(org.u_compare.gui.model.Component component,
+	public TypeListPanel(final org.u_compare.gui.model.Component component,
 			LIST_TYPES listType, TypeListPanelController controller){
 		
 		this.component = component;
@@ -60,15 +60,14 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		};
 		
 		FocusListener listFocusListener = new FocusListener() {
+			@Override
 			public void focusGained(FocusEvent e) {
-				
-				if(!TypeListPanel.this.component.getLockedStatus()){
+				if(!component.getLockedStatus()){
 					buttons.setVisible(true);
 				}
 			}
-
+			@Override
 			public void focusLost(FocusEvent e) {
-				
 				Object source = e.getOppositeComponent();
 				if(source==null
 						|| source.equals(list) 
@@ -76,7 +75,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 						|| source.equals(deleteButton)){
 					return;
 				}
-				
 				list.clearSelection();
 				buttons.setVisible(false);
 			}

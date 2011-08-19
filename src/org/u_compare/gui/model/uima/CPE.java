@@ -187,11 +187,28 @@ public class CPE extends Workflow implements StatusCallbackListener {
 			
 			//Cas processors
 			cpeCasProcessors.removeAllCpeCasProcessors();
+			ArrayList<String> names = new ArrayList<String>();
 			for(int i = 0; i < getSubComponents().size(); i++){
 				Component comp = getSubComponents().get(i);
 				if(comp instanceof CollectionReader){
+					assert(i==0);
 					continue;
 				}
+				
+				//CPE requires unique component names
+				if(names.contains(comp.getName())){
+					int suffix = 1;
+					while(true){
+						String newName = comp.getName() + suffix;
+						if(!names.contains(newName)){
+							notifyWorkflowMessageListeners("Duplicate component names prohibited in CPE descriptors; Component " + comp.getName() + " renamed to " + newName); 
+							comp.setName(newName);
+							break;
+						}		
+						suffix++;
+					}
+				}
+				names.add(comp.getName());
 				cpeCasProcessors.addCpeCasProcessor(constructCpeCasProcessor(comp));
 			}
 			

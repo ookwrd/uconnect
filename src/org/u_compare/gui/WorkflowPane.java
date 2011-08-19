@@ -5,6 +5,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.dnd.Autoscroll;
+import java.awt.dnd.DropTarget;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
@@ -12,6 +13,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Scrollable;
 
@@ -68,18 +70,17 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 
 		getVerticalScrollBar().setUnitIncrement(8);
 
-		MouseMotionListener doScrollRectToVisible = new MouseMotionAdapter() {
-			public void mouseDragged(MouseEvent e) {
-				System.out.println("something happening");//TODO sort this out
-				Rectangle r = new Rectangle(e.getX(), e.getY(), 1, 1);
-				((JPanel) e.getSource()).scrollRectToVisible(r);
-			}
-		};
+		System.out.println(this.getAutoscrollInsets());
 
+		/*new DropTarget(this, null);//TODO yeah this...
+		
 		topComponent.setAutoscrolls(true);
 		innerJPanel.setAutoscrolls(true);
-		topComponent.addMouseMotionListener(doScrollRectToVisible);
-
+		 */
+		
+		//Costs extra memory but dramatically improves scroll performance
+		this.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE); 
+		
 		// Let the user scroll by dragging to outside the window.
 		this.setAutoscrolls(true); // enable synthetic drag events
 		addMouseMotionListener(this); // handle mouse drags
@@ -93,12 +94,16 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 	@Override
 	public Insets getAutoscrollInsets() {
 
-		return new Insets(50, 0, 50, 0);
+		return new Insets(100, 0, 100, 0);
 	}
 
 	@Override
 	public void autoscroll(Point cursorLocn) {
 
+		Rectangle vis = topComponent.getVisibleRect();
+		
+		topComponent.scrollRectToVisible(new Rectangle(vis.x, vis.y-20, 1, 1));
+		
 		System.out.println(cursorLocn.x + "," + cursorLocn.y);
 		// TODO why is this here?
 	}

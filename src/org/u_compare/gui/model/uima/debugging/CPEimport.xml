@@ -3,7 +3,7 @@
     <collectionReader>
         <collectionIterator>
             <descriptor>
-                <import location="../../../../../../../../../../ParttimeWork/U-Compare/apache-uima/examples/descriptors/collection_reader/FileSystemCollectionReader.xml"/>
+                <import location="FileSystemCollectionReader.xml"/>
             </descriptor>
         </collectionIterator>
     </collectionReader>

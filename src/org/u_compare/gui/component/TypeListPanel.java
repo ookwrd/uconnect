@@ -9,8 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.guiElements.HighlightButton;
@@ -31,16 +29,13 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	private JList list;
 	private DefaultListModel listModel;
 	
-	private ActionListener addListener;
-	private ActionListener removeListener;
-	
 	private org.u_compare.gui.model.Component component;
 	private TypeListPanelController controller;
 	
 	private LIST_TYPES listType;
 	
 	public TypeListPanel(final org.u_compare.gui.model.Component component,
-			LIST_TYPES listType, TypeListPanelController controller){
+			LIST_TYPES listType, final TypeListPanelController controller){
 		
 		this.component = component;
 		this.listType = listType;
@@ -49,15 +44,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		setOpaque(false);
 		setLayout(new BoxLayout(this,
 				BoxLayout.Y_AXIS));
-
-		ListSelectionListener listSelectionListener =
-			new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent evt) {
-				if (evt.getValueIsAdjusting()){
-					return; //TODO why?
-				}
-			}
-		};
 		
 		FocusListener listFocusListener = new FocusListener() {
 			@Override
@@ -85,21 +71,19 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		list.setFixedCellWidth(150);
 		list.setBackground(getBackground());
 		
-		list.addListSelectionListener(listSelectionListener);
 		list.addFocusListener(listFocusListener);
 		
 		buttons = new JPanel();
 		buttons.setLayout(new FlowLayout(FlowLayout.TRAILING));
  
-		addListener = new ActionListener() {
+		ActionListener addListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TypeListPanel.this.controller.addAnnotation();
+				controller.addAnnotation();
 				list.requestFocusInWindow(); //To reopen the button panel.
 			}
 		};
 		
-		removeListener = new ActionListener() {
-			
+		ActionListener removeListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -127,7 +111,6 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		
 		buttons.add(deleteButton);
 		buttons.add(addButton);
-		
 		buttons.setVisible(false);
 		
 		rebuildListContents();
@@ -139,33 +122,10 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 
 		component.registerLockedStatusChangeListener(this);
 		component.registerInputOutputChangeListener(this);
-
 	}
 	
-
-	
 	private void configureLockStatus(){
-		
-		if(component.getLockedStatus()){
-			list.setEnabled(false);
-			//Sets the list items unselect-able, without changing appearance
-		    /*list.setCellRenderer(new DefaultListCellRenderer() {
-		        public Component getListCellRendererComponent(
-		            JList list,
-		            Object value,
-		            int index,
-		            boolean isSelected,
-		            boolean cellHasFocus) {
-
-		            super.getListCellRendererComponent(list, value, index,
-		            		isSelected, cellHasFocus);
-		            this.setEnabled(true);
-		            return this;
-		        }
-		    });*/
-		}else{
-			list.setEnabled(true);
-		}
+		list.setEnabled(!component.getLockedStatus());
 	}
 
 	private void rebuildListContents(){
@@ -178,16 +138,12 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		switch(listType){
 		case INPUTS:
 			for(AnnotationTypeOrFeature annotation : component.getInputTypes()){
-				
 				listModel.addElement(annotation.getTypeName());
-
 			}
 			break;
 		case OUTPUTS:
 			for(AnnotationTypeOrFeature annotation : component.getOutputTypes()){
-				
 				listModel.addElement(annotation.getTypeName());
-				
 			}
 			break;
 		default:

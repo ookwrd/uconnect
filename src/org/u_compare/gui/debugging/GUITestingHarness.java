@@ -33,9 +33,11 @@ public class GUITestingHarness {
 		//workflows.add(ExampleWorkflowFactory.realComponents1());
 		//workflows.add(ExampleWorkflowFactory.realComponents2());
 		//workflows.add(ExampleWorkflowFactory.cpeWorkflow());
-		workflows.add(ExampleWorkflowFactory.cpeWorkflow());
-		workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
-		workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
+		
+		//TODO add back these wf when the path is correct 
+		//workflows.add(ExampleWorkflowFactory.cpeWorkflow());
+		//workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
+		//workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		
 		WorkflowViewerController workflowPaneController = new WorkflowViewerController();
 		WorkflowViewerController.defaultWorkflowFactory = CPE.emptyCPEFactory;

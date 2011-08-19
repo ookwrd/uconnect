@@ -1,8 +1,16 @@
 package org.u_compare.gui.component.parameters;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
 
+import org.u_compare.gui.component.TypeListPanel;
+import org.u_compare.gui.guiElements.HighlightButton;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
@@ -11,7 +19,7 @@ import org.u_compare.gui.model.parameters.Parameter;
  * 
  * Abstract base class for common functionality of all ParameterPanel types.
  * 
- * @author Luke Mccrohon
+ * @author Luke McCrohon
  *
  */
 public abstract class ParameterPanel implements
@@ -65,5 +73,43 @@ public abstract class ParameterPanel implements
 	
 	protected void updateLockedStatus(){
 		field.setEnabled(!component.getLockedStatus());
+	}
+	
+	protected class MultivaluedParameterPanel extends JPanel{
+		
+		private JPanel buttons;
+		private HighlightButton deleteButton;
+		private HighlightButton addButton;
+		private JList list;
+		
+		public MultivaluedParameterPanel(final Component component){
+
+			setOpaque(false);
+			setLayout(new BoxLayout(this,
+					BoxLayout.Y_AXIS));
+			
+			FocusListener listFocusListener = new FocusListener() {
+				@Override
+				public void focusGained(FocusEvent e) {
+					if(!component.getLockedStatus()){
+						buttons.setVisible(true);
+					}
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					Object source = e.getOppositeComponent();
+					if(source==null
+							|| source.equals(list) 
+							|| source.equals(addButton) 
+							|| source.equals(deleteButton)){
+						return;
+					}
+					list.clearSelection();
+					buttons.setVisible(false);
+				}
+			};
+		}
+		
+		
 	}
 }

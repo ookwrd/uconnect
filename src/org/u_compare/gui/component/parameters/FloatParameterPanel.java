@@ -31,7 +31,7 @@ public class FloatParameterPanel extends ParameterPanel implements  ActionListen
 		
 		field = textField;
 
-		updateLockedStatus();
+		updateLockedStatus(component);
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class FloatParameterPanel extends ParameterPanel implements  ActionListen
 		textField.setText(param.getParameterString());
 	}
 
-	private void textFieldChanged(){
+	protected void textFieldChanged(){
 		/* Change should not be reflected in view unless the underlying
 		 * model changes
 		 */

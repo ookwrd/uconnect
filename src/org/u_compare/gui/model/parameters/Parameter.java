@@ -26,7 +26,6 @@ public interface Parameter {
 	public ArrayList<Constraint> getConstraints();
 	
 	public void setValue(String value) throws ConstraintFailedException;//String, float, integer
-	public void setValue(Boolean value) throws ConstraintFailedException;
 	
 	public void registerParameterValueChangedListener(ParameterValueChangedListener listener);
 	public void registerParameterNameDescriptionChangedListener(ParameterNameDescriptionChangedListener listener);

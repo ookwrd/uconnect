@@ -31,7 +31,7 @@ public class IntegerParameterPanel extends ParameterPanel implements  ActionList
 		
 		field = textField;
 		
-		updateLockedStatus();
+		updateLockedStatus(component);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class IntegerParameterPanel extends ParameterPanel implements  ActionList
 		textField.setText(param.getParameterString());
 	}
 
-	private void textFieldChanged(){
+	public void textFieldChanged(){
 		//Change should not be reflected in view unless the underlying model changes
 		String value = textField.getText();
 		textField.setText(param.getParameterString());

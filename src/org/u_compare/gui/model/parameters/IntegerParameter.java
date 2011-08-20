@@ -19,6 +19,7 @@ public class IntegerParameter extends AbstractParameter<Integer>{
 	
 	@Override
 	public void setValue(String input) throws ConstraintFailedException {
+		assert(!owner.getLockedStatus());
 		validateConstraints(input);
 		Integer inputInt = Integer.parseInt(input);
 		simpleSet(inputInt);

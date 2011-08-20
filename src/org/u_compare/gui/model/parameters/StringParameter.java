@@ -16,12 +16,8 @@ public class StringParameter extends AbstractParameter<String>{
 
 	@Override
 	public void setValue(String input) throws ConstraintFailedException {
+		assert(!owner.getLockedStatus());
 		validateConstraints(input);
 		simpleSet(input);
-	}
-	
-	public static void main(String[] args){
-		StringParameter param = new StringParameter("Name", "Desc", true, (String)null);
-		System.out.println(param.getParameter());
 	}
 }

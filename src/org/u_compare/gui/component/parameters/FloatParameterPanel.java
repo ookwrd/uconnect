@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JTextField;
-import org.u_compare.gui.control.FloatParameterController;
+import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.FloatParameter;
@@ -14,12 +14,13 @@ import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 
 public class FloatParameterPanel extends ParameterPanel implements  ActionListener, FocusListener, LockedStatusChangeListener, ParameterValueChangedListener  {
 
-	private FloatParameterController controller;
+	private ParameterController controller;
 	private JTextField textField;
 	
-	public FloatParameterPanel(FloatParameter parameter, FloatParameterController control,
+	public FloatParameterPanel(Parameter parameter, ParameterController control,
 			 Component component){
 		super(parameter, component);
+		assert(parameter instanceof FloatParameter);
 		
 		this.controller = control;
 		

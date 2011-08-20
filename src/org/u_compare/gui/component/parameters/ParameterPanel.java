@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
+import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 
@@ -27,18 +28,14 @@ public abstract class ParameterPanel implements
 	private static final int DESCRIPTION_LENGTH = 43;
 	
 	protected JComponent field;
-
 	protected Parameter param;
-	//protected Component component;
-
-	public ParameterPanel(Parameter param){
-
-		
-		
-	}
 	
 	public ParameterPanel(Parameter param, Component component){
 		this.param = param;
+		
+		if(param instanceof BooleanParameter){
+			System.out.println("In super");
+		}
 		
 		//Setup default field
 		JTextField textField = new JTextField(param.getParameterString());
@@ -84,6 +81,7 @@ public abstract class ParameterPanel implements
 	}
 	
 	public JComponent getField() {
+		System.out.println(field.getClass());
 		return field;
 	}
 	
@@ -101,6 +99,6 @@ public abstract class ParameterPanel implements
 		((JTextField)field).setText(param.getParameterString());
 	}
 	
-	protected abstract void textFieldChanged();
+	protected abstract void textFieldChanged();//TODO move it down here
 
 }

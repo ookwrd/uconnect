@@ -13,7 +13,15 @@ public class BasicAE1 extends JCasAnnotator_ImplBase {
 		
 		String[] names = aContext.getConfigParameterNames();
 		for(String name : names){
-			System.out.println("Parameter " + name + " has value: " +aContext.getConfigParameterValue(name));
+			if(aContext.getConfigParameterValue(name) instanceof Object[]){
+				Object[] objects = (Object[])aContext.getConfigParameterValue(name);
+				System.out.println("Parameter " + name + " has value: ");
+				for(Object object : objects){
+					System.out.println(object);
+				}
+			}else{
+				System.out.println("Parameter " + name + " has value: " +aContext.getConfigParameterValue(name));
+			}
 		}
 	}
 	

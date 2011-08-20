@@ -1,24 +1,19 @@
 package org.u_compare.gui.component;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import org.u_compare.gui.component.parameters.ParameterPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.ParameterController;
-import org.u_compare.gui.guiElements.SpringUtilities;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
@@ -48,9 +43,6 @@ public class ConfigurationParametersPanel extends JPanel {
 		if(component.getConfigurationParameters().size() > 0){
 			setBorder(new TitledBorder(new EtchedBorder(),
 					"Configuration Parameters:"));
-			
-			
-			
 			setupPanel(component.getConfigurationParameters(), this);
 		}
 		
@@ -62,7 +54,6 @@ public class ConfigurationParametersPanel extends JPanel {
 			target.setBorder(new TitledBorder(names[0]));
 			setupPanel(group.getConfigurationParameters(), target);
 			this.add(target);
-			//add(new JLabel("Can I see this?"));
 		}
 	}
 	

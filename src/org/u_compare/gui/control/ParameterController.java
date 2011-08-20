@@ -3,10 +3,7 @@ package org.u_compare.gui.control;
 import javax.swing.JOptionPane;
 
 import org.u_compare.gui.component.parameters.BooleanParameterPanel;
-import org.u_compare.gui.component.parameters.FloatParameterPanel;
-import org.u_compare.gui.component.parameters.IntegerParameterPanel;
 import org.u_compare.gui.component.parameters.ParameterPanel;
-import org.u_compare.gui.component.parameters.StringParameterPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.FloatParameter;
@@ -25,13 +22,12 @@ public class ParameterController {
 		
 		if(param instanceof BooleanParameter){
 			this.view = new BooleanParameterPanel(param, this, component);
-		}else if (param instanceof StringParameter){
-			this.view = new StringParameterPanel(param, this, component);
-		}else if (param instanceof IntegerParameter){
-			this.view = new IntegerParameterPanel(param, this, component);
-		} else if (param instanceof FloatParameter){
-			this.view = new FloatParameterPanel(param, this, component);
-		} else{
+		}else if (param instanceof StringParameter 
+				|| param instanceof IntegerParameter
+				|| param instanceof FloatParameter
+				){
+			this.view = new ParameterPanel(param, this, component);
+		}else{
 			assert(false);
 		}
 		

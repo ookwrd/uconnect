@@ -25,10 +25,8 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 	
 	public BooleanParameterPanel(
 			Parameter parameter, ParameterController controller, Component component) {
-			super(parameter, component);
+			super(parameter, controller, component);
 			assert(parameter instanceof BooleanParameter);
-			
-			System.out.println("In boolean constructor");
 			
 			this.controller = controller;
 			this.param = (BooleanParameter)parameter;
@@ -45,8 +43,6 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			field = checkBox;
 			
 			updateLockedStatus(component);
-			
-			System.out.println("End of construction");
 	}
 	
 	@Override
@@ -57,11 +53,5 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		controller.setValue(checkBox.isSelected()?"true":"false");
-	}
-
-	@Override
-	protected void textFieldChanged() {
-		// TODO Auto-generated method stub
-		
 	}
 }

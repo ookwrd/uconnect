@@ -20,6 +20,7 @@ public class FloatParameter extends AbstractParameter<Float> {
 
 	@Override
 	public void setValue(String input) throws ConstraintFailedException {
+		assert(!owner.getLockedStatus());
 		validateConstraints(input);
 		Float inputFloat = Float.parseFloat(input);
 		simpleSet(inputFloat);

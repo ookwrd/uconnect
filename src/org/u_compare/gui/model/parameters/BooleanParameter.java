@@ -1,5 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
+import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
+
 public class BooleanParameter extends
 		AbstractParameter<Boolean> {
 
@@ -13,8 +15,15 @@ public class BooleanParameter extends
 		setInitials(values);
 	}
 	
-	@Override
 	public void setValue(Boolean value){
 		simpleSet(value);
+	}
+	
+	@Override
+	public void setValue(String input) throws ConstraintFailedException {
+		assert(!owner.getLockedStatus());
+		validateConstraints(input);
+		Boolean in = Boolean.parseBoolean(input);
+		simpleSet(in);
 	}
 }

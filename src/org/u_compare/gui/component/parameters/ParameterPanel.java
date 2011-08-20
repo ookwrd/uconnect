@@ -1,19 +1,18 @@
 package org.u_compare.gui.component.parameters;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import org.u_compare.gui.component.TypeListPanel;
-import org.u_compare.gui.guiElements.HighlightButton;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
+import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 
 /**
  * 
@@ -23,20 +22,42 @@ import org.u_compare.gui.model.parameters.Parameter;
  *
  */
 public abstract class ParameterPanel implements
-		LockedStatusChangeListener {
+		LockedStatusChangeListener, ParameterValueChangedListener {
 
 	private static final int DESCRIPTION_LENGTH = 43;
 	
 	protected JComponent field;
 
 	protected Parameter param;
-	protected Component component;
+	//protected Component component;
 
+	public ParameterPanel(Parameter param){
+
+		
+		
+	}
+	
 	public ParameterPanel(Parameter param, Component component){
 		this.param = param;
-		this.component = component;
+		
+		//Setup default field
+		JTextField textField = new JTextField(param.getParameterString());
+		textField.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				textFieldChanged();
+			}
+		});
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				textFieldChanged();		
+			}
+		});
+		field = textField;
 		
 		component.registerLockedStatusChangeListener(this);
+		param.registerParameterValueChangedListener(this);
 	}
 	
 	public JLabel getLabel() {
@@ -68,48 +89,18 @@ public abstract class ParameterPanel implements
 	
 	@Override
 	public void lockStatusChanged(Component component) {
-		updateLockedStatus();
+		updateLockedStatus(component);
 	}
 	
-	protected void updateLockedStatus(){
+	protected void updateLockedStatus(Component component){
 		field.setEnabled(!component.getLockedStatus());
 	}
 	
-	protected class MultivaluedParameterPanel extends JPanel{
-		
-		private JPanel buttons;
-		private HighlightButton deleteButton;
-		private HighlightButton addButton;
-		private JList list;
-		
-		public MultivaluedParameterPanel(final Component component){
-
-			setOpaque(false);
-			setLayout(new BoxLayout(this,
-					BoxLayout.Y_AXIS));
-			
-			FocusListener listFocusListener = new FocusListener() {
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(!component.getLockedStatus()){
-						buttons.setVisible(true);
-					}
-				}
-				@Override
-				public void focusLost(FocusEvent e) {
-					Object source = e.getOppositeComponent();
-					if(source==null
-							|| source.equals(list) 
-							|| source.equals(addButton) 
-							|| source.equals(deleteButton)){
-						return;
-					}
-					list.clearSelection();
-					buttons.setVisible(false);
-				}
-			};
-		}
-		
-		
+	@Override
+	public void parameterSettingsChanged(Parameter param) {
+		((JTextField)field).setText(param.getParameterString());
 	}
+	
+	protected abstract void textFieldChanged();
+
 }

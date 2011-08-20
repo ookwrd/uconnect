@@ -101,18 +101,6 @@ public abstract class AbstractParameter<T>
 	public ArrayList<Constraint> getConstraints(){
 		return constraints;
 	}
-	
-	@Override
-	public void setValue(String value) throws ConstraintFailedException{
-		throw new IllegalArgumentException("The parameter: "+ description
-				+ ", is not an String.");
-	}
-	
-	@Override
-	public void setValue(Boolean value) throws ConstraintFailedException{
-		throw new IllegalArgumentException("The parameter: "+ description
-				+ ", is not a boolean.");
-	}
 
 	public T getParameter(){
 		if(parametersArrayList.size()>0){
@@ -144,6 +132,7 @@ public abstract class AbstractParameter<T>
 	}
 	
 	public void simpleSet(T input) { //TODO remove constraints failed exception
+		assert(!owner.getLockedStatus());
 		if(parametersArrayList.size()==0){
 			setInitial(input);
 			notifyParameterValueChangedListeners();

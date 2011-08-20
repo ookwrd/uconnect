@@ -40,7 +40,7 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			
 			field = checkBox;
 			
-			updateLockedStatus();
+			updateLockedStatus(component);
 	}
 	
 	@Override
@@ -51,5 +51,11 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		controller.setValue(checkBox.isSelected());
+	}
+
+	@Override
+	protected void textFieldChanged() {
+		// TODO Auto-generated method stub
+		
 	}
 }

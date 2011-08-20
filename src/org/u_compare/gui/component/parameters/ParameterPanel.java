@@ -35,21 +35,25 @@ public class ParameterPanel implements
 		this.param = param;
 		this.controller = controller;
 		
-		//Setup default field
-		JTextField textField = new JTextField(param.getParameterString());
-		textField.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				textFieldChanged();
-			}
-		});
-		textField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				textFieldChanged();		
-			}
-		});
-		field = textField;
+		if(!param.isMultivalued()){
+			//Setup default field
+			JTextField textField = new JTextField(param.getParameterString());
+			textField.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					textFieldChanged();
+				}
+			});
+			textField.addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(FocusEvent e) {
+					textFieldChanged();		
+				}
+			});
+			field = textField;
+		}else{
+			//TODO
+		}
 		
 		component.registerLockedStatusChangeListener(this);
 		param.registerParameterValueChangedListener(this);

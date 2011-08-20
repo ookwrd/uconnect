@@ -12,7 +12,6 @@ import javax.swing.border.TitledBorder;
 import org.u_compare.gui.component.parameters.ParameterPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.ParameterController;
-import org.u_compare.gui.control.ParameterControllerFactory;
 import org.u_compare.gui.guiElements.SpringUtilities;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.Parameter;
@@ -33,9 +32,7 @@ public class ConfigurationParametersPanel extends JPanel {
 		//Collect the descendent parameter panels.
 		ArrayList<ParameterPanel> paramPanels = new ArrayList<ParameterPanel>();
 		for (Parameter param : component.getConfigurationParameters()){
-			ParameterController paramController =
-				ParameterControllerFactory.getController(controller,
-						param, component);
+			ParameterController paramController = new ParameterController(controller, param, component);
 			paramPanels.add(paramController.getView());
 			controller.addParamaterController(paramController);
 		}

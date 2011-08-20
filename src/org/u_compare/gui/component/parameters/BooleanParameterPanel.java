@@ -3,7 +3,7 @@ package org.u_compare.gui.component.parameters;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
-import org.u_compare.gui.control.BooleanParameterController;
+import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.BooleanParameter;
@@ -20,15 +20,19 @@ import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
 public class BooleanParameterPanel extends ParameterPanel implements ActionListener, LockedStatusChangeListener, ParameterValueChangedListener {
 
 	private JCheckBox checkBox;
-	private BooleanParameterController controller;
+	private ParameterController controller;
 	private BooleanParameter param;
 	
 	public BooleanParameterPanel(
-			BooleanParameter param, BooleanParameterController controller, Component component) {
-			super(param, component);
-		
+			Parameter parameter, ParameterController controller, Component component) {
+			super(parameter, component);
+			assert(parameter instanceof BooleanParameter);
+			
+			System.out.println("In boolean constructor");
+			
 			this.controller = controller;
-			this.param = param;
+			this.param = (BooleanParameter)parameter;
+			
 			
 			checkBox = new JCheckBox();
 			if(param.getParameter()!=null){//Needed because multivalued may be null
@@ -41,6 +45,8 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			field = checkBox;
 			
 			updateLockedStatus(component);
+			
+			System.out.println("End of construction");
 	}
 	
 	@Override
@@ -50,7 +56,7 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.setValue(checkBox.isSelected());
+		controller.setValue(checkBox.isSelected()?"true":"false");
 	}
 
 	@Override

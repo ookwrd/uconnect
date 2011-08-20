@@ -1,17 +1,18 @@
 package org.u_compare.gui.component.parameters;
 
 import javax.swing.JTextField;
-import org.u_compare.gui.control.StringParamaterController;
+
+import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
+import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
-import org.u_compare.gui.model.parameters.StringParameter;
 
 public class StringParameterPanel extends ParameterPanel implements LockedStatusChangeListener, ParameterValueChangedListener {
 
-	private StringParamaterController controller;
+	private ParameterController controller;
 	
-	public StringParameterPanel(StringParameter param, StringParamaterController control,
+	public StringParameterPanel(Parameter param, ParameterController control,
 			Component component){
 		super(param, component);
 		

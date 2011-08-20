@@ -1,5 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
+import java.util.ArrayList;
+
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public class BooleanParameter extends
@@ -25,5 +27,16 @@ public class BooleanParameter extends
 		validateConstraints(input);
 		Boolean in = Boolean.parseBoolean(input);
 		simpleSet(in);
+	}
+	
+	@Override
+	public void setValues(String[] input) throws ConstraintFailedException{
+		assert(!owner.getLockedStatus());
+		validateConstraints(input);
+		ArrayList<Boolean> values = new ArrayList<Boolean>();
+		for(String string : input){
+			values.add(Boolean.parseBoolean(string));
+		}
+		simpleSet((Boolean[])values.toArray());
 	}
 }

@@ -17,7 +17,9 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class ControlList extends JPanel {
 
-	public static final String EMPTY_LIST_MESSAGE = "(Empty. Click to edit)";
+	private static final String EMPTY_LIST_MESSAGE = "(Empty. Click to edit)";
+	private static final String DELETE_MSG = "Delete";
+	private static final String ADD_MSG = "Add";
 	
 	private JPanel buttons;
 	private HighlightButton deleteButton;
@@ -30,7 +32,6 @@ public class ControlList extends JPanel {
 		listModel = new DefaultListModel();
 		list = new JList(listModel);
 		
-		setOpaque(false);
 		setLayout(new BoxLayout(this,
 				BoxLayout.Y_AXIS));
 		
@@ -38,11 +39,12 @@ public class ControlList extends JPanel {
 		list.setFixedCellWidth(150);
 		
 		buttons = new JPanel();
-		buttons.setLayout(new FlowLayout(FlowLayout.TRAILING));
+		buttons.setOpaque(false);
+		buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
 
-		deleteButton = new HighlightButton("Delete Type");
-		addButton = new HighlightButton("Add Type");
+		deleteButton = new HighlightButton(DELETE_MSG);
+		addButton = new HighlightButton(ADD_MSG);
 		
 		FocusListener listFocusListener = new FocusAdapter() {
 			@Override
@@ -82,6 +84,8 @@ public class ControlList extends JPanel {
 		
 		add(list);
 		add(buttons);
+		
+		rebuildListContents(new ArrayList<String>());
 	}
 	
 	public Object[] getSelectedValues(){

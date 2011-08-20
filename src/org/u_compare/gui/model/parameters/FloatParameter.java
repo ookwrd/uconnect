@@ -1,5 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
+import java.util.ArrayList;
+
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 import org.u_compare.gui.model.parameters.constraints.FloatConstraint;
 
@@ -24,5 +26,16 @@ public class FloatParameter extends AbstractParameter<Float> {
 		validateConstraints(input);
 		Float inputFloat = Float.parseFloat(input);
 		simpleSet(inputFloat);
+	}
+	
+	@Override
+	public void setValues(String[] input) throws ConstraintFailedException{
+		assert(!owner.getLockedStatus());
+		validateConstraints(input);
+		ArrayList<Float> values = new ArrayList<Float>();
+		for(String string : input){
+			values.add(Float.parseFloat(string));
+		}
+		simpleSet((Float[])values.toArray());
 	}
 }

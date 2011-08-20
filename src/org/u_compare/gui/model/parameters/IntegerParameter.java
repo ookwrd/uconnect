@@ -1,5 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
+import java.util.ArrayList;
+
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 
@@ -23,5 +25,16 @@ public class IntegerParameter extends AbstractParameter<Integer>{
 		validateConstraints(input);
 		Integer inputInt = Integer.parseInt(input);
 		simpleSet(inputInt);
+	}
+	
+	@Override
+	public void setValues(String[] input) throws ConstraintFailedException{
+		assert(!owner.getLockedStatus());
+		validateConstraints(input);
+		ArrayList<Integer> values = new ArrayList<Integer>();
+		for(String string : input){
+			values.add(Integer.parseInt(string));
+		}
+		simpleSet((Integer[])values.toArray());
 	}
 }

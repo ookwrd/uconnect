@@ -1,6 +1,9 @@
 package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -45,39 +48,39 @@ public class ConfigurationParametersPanel extends JPanel {
 			setLayout(new BorderLayout());
 			setOpaque(false);
 			
-			/*
-			 * Needed so that the Parameter Panel can expand horizontally even if 
-			 * none of the subcomponents can, which is not permitted by the spring
-			 * layout.
-			 */
 			JPanel innerPanel = new JPanel();
+			innerPanel.setLayout(new GridBagLayout());
+			GridBagConstraints constraints = new GridBagConstraints();
+			constraints.fill = GridBagConstraints.HORIZONTAL;
 			
-			innerPanel.setLayout(new SpringLayout());
-			for (ParameterPanel parameterPanel : paramPanels) {
+			for (int i = 0; i < paramPanels.size(); i++) {
+				ParameterPanel parameterPanel = paramPanels.get(i);
 				
 				//Parameter Description Label
+				constraints.gridx=0;
+				constraints.gridy=i;
+				constraints.weightx = 0;
+				//constraints.anchor = GridBagConstraints.FIRST_LINE_END;
 				JLabel description = parameterPanel.getLabel();
-				innerPanel.add(description);
+				innerPanel.add(description, constraints);
 				
 				//Parameter Mandatory Status Label
+				constraints.gridx=1;
+				constraints.gridy=i;
+				constraints.weightx = 0;
 				JLabel mandatory = parameterPanel.getMandatoryLabel();
-				innerPanel.add(mandatory);
+				innerPanel.add(mandatory,constraints);
 				
 				//Parameter Setting Field
+				constraints.gridx=2;
+				constraints.gridy=i;
+				constraints.weightx=1;
 				JComponent selectionComponent = parameterPanel.getField();
 				description.setLabelFor(selectionComponent);
 				
-				innerPanel.add(selectionComponent);
+				innerPanel.add(selectionComponent,constraints);
 			}
-			
-			SpringUtilities.makeCompactGrid(innerPanel,
-                    paramPanels.size(), 3, 	//rows, cols
-                    6, 6,        			//initX, initY
-                    6, 0);      			 //xPad, yPad
-
-			add(innerPanel);
-		
+			add(innerPanel,BorderLayout.NORTH);
 		}
 	}
-	
 }

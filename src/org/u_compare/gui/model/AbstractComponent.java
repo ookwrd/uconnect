@@ -10,7 +10,9 @@ import org.apache.uima.collection.CasConsumerDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.resource.ResourceCreationSpecifier;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
+import org.apache.uima.resource.URISpecifier;
 import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.resource.metadata.ConfigurationGroup;
 import org.apache.uima.resource.metadata.ConfigurationParameter;
@@ -948,9 +950,24 @@ public abstract class AbstractComponent implements Component {
 				
 				return null;
 				
-			} else {
+			} else if ( resourceSpecifier instanceof URISpecifier){
+
+				System.out.println("URISpecifier");
+				URISpecifier spec = (URISpecifier)resourceSpecifier;
+				
+				System.out.println(spec.getSourceUrl());
+				
+				try {
+					UIMAFramework.produceAnalysisEngine(resourceSpecifier);
+				} catch (ResourceInitializationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				return null;
-				//TODO
+			} else {
+
+				System.out.println("Unrecognized " + resourceSpecifier.getClass());
+				return null;
 			}
 	}
 }

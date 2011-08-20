@@ -1,7 +1,6 @@
 package org.u_compare.gui.component.parameters;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -11,7 +10,6 @@ import java.util.Arrays;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
@@ -144,7 +142,7 @@ public class ParameterPanel implements
 		}else if(field instanceof ControlList){
 			rebuildListContents();
 		}else{
-			System.err.println("If a class overriding parameter panel changes the field it also needs to override the parameterSettingsChanged method");
+			System.err.println("If a class overriding parameter panel, changes the 'field' it also needs to override the parameterSettingsChanged method");
 		}
 	}
 	

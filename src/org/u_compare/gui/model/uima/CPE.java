@@ -54,13 +54,23 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		collectionReaders = desc.getAllCollectionCollectionReaders();
 		for(CpeCollectionReader reader : collectionReaders){
 			Import imp = reader.getDescriptor().getImport();
-			Component comp = AbstractComponent.constructComponentFromXML(pathBase+imp.getLocation());
+			String location = imp.getLocation();
+			if(location == null){
+				//TODO why this offset?
+				location = "../../" + convertNameToLocation(imp.getName());
+			}
+			Component comp = AbstractComponent.constructComponentFromXML(pathBase+location);
 			super.addSubComponent(comp);
 		}
 		cpeCasProcessors = desc.getCpeCasProcessors(); //<- this is where the subcomponents are
 		for(CpeCasProcessor processor : cpeCasProcessors.getAllCpeCasProcessors()){
 			Import imp = processor.getCpeComponentDescriptor().getImport();
-			Component comp = AbstractComponent.constructComponentFromXML(pathBase+imp.getLocation());
+			String location = imp.getLocation();
+			if(location == null){
+				//TODO why this offset?
+				location = "../../" + convertNameToLocation(imp.getName());
+			}
+			Component comp = AbstractComponent.constructComponentFromXML(pathBase+location);
 			super.addSubComponent(comp);
 		}
 		cpeConfiguration = desc.getCpeConfiguration();
@@ -69,6 +79,12 @@ public class CPE extends Workflow implements StatusCallbackListener {
 			String urlString = desc.getSourceUrlString();
 			sourceFileName = urlString.substring(urlString.lastIndexOf("/")+1,urlString.length()-4);
 		}
+	}
+	
+
+	public static String convertNameToLocation(String name) {
+		String location = name.replace('.', '/');
+	  	return location + ".xml";
 	}
 	
 	/**

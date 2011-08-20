@@ -36,6 +36,6 @@ public class FloatParameter extends AbstractParameter<Float> {
 		for(String string : input){
 			values.add(Float.parseFloat(string));
 		}
-		simpleSet((Float[])values.toArray());
+		simpleSet(values.toArray(new Float[values.size()]));
 	}
 }

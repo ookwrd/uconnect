@@ -35,6 +35,6 @@ public class IntegerParameter extends AbstractParameter<Integer>{
 		for(String string : input){
 			values.add(Integer.parseInt(string));
 		}
-		simpleSet((Integer[])values.toArray());
+		simpleSet(values.toArray(new Integer[values.size()]));
 	}
 }

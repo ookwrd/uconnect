@@ -35,8 +35,10 @@ public class BooleanParameter extends
 		validateConstraints(input);
 		ArrayList<Boolean> values = new ArrayList<Boolean>();
 		for(String string : input){
+			//TODO add a constraint of type isBoolean to the inputs... parseBoolean parses any string as false.
 			values.add(Boolean.parseBoolean(string));
+			
 		}
-		simpleSet((Boolean[])values.toArray());
+		simpleSet(values.toArray(new Boolean[values.size()]));
 	}
 }

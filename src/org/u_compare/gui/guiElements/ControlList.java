@@ -13,6 +13,8 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 @SuppressWarnings("serial")
 public class ControlList extends JPanel {
@@ -36,7 +38,7 @@ public class ControlList extends JPanel {
 				BoxLayout.Y_AXIS));
 		
 		list.setBackground(background);
-		list.setFixedCellWidth(150);
+		list.setFixedCellWidth(200);//TODO make this expand and contract
 		
 		buttons = new JPanel();
 		buttons.setOpaque(false);
@@ -115,4 +117,11 @@ public class ControlList extends JPanel {
 			deleteButton.setEnabled(false);
 		}
 	}
+	
+	@Override
+	public void setBorder(Border bord){
+		if(list != null){
+			list.setBorder(bord);
+		}
+	} 
 }

@@ -48,7 +48,11 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 	
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
-		checkBox.setSelected(this.param.getParameter());
+		if(field instanceof JCheckBox){
+			checkBox.setSelected(this.param.getParameter());
+		}else{
+			super.parameterSettingsChanged(param);
+		}
 	}
 
 	@Override

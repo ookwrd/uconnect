@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 
 import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.guiElements.ControlList;
@@ -56,10 +57,10 @@ public class ParameterPanel implements
 					textFieldChanged();		
 				}
 			});
-			//textField.setMaximumSize(new Dimension(1000, textField.getPreferredSize().height));
 			field = textField;
 		}else{
-			final ControlList list = new ControlList(new JPanel().getBackground());
+			final ControlList list = new ControlList(Color.white);
+			list.setBorder(new EtchedBorder());
 			
 			ActionListener addListener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -98,9 +99,13 @@ public class ParameterPanel implements
 	
 	public JLabel getLabel() {
 		String description = param.getDescription();
+		if(description == null || description.length() == 0){
+			description = param.getName();
+		}
 		if(description.length() > DESCRIPTION_LENGTH){
 			description = description.substring(0,DESCRIPTION_LENGTH-3) + "...";
 		}
+		description += ":";
 		JLabel descriptionLabel = new JLabel(description);
 		descriptionLabel.setToolTipText(param.getDescription());//Unabridged description
 		descriptionLabel.setHorizontalAlignment(JLabel.TRAILING);
@@ -114,7 +119,7 @@ public class ParameterPanel implements
 			mandatory = new JLabel("*");
 			mandatory.setToolTipText("Mandatory Parameter");
 		}else{
-			mandatory = new JLabel("");
+			mandatory = new JLabel(" ");
 		}
 		return mandatory;
 	}

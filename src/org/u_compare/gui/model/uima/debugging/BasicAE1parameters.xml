@@ -8,7 +8,7 @@
     <description/>
     <version>1.0</version>
     <vendor/>
-    <configurationParameters>
+    <configurationParameters searchStrategy="language_fallback">
       <configurationParameter>
         <name>String</name>
         <description>A string.</description>
@@ -44,6 +44,49 @@
         <multiValued>true</multiValued>
         <mandatory>false</mandatory>
       </configurationParameter>
+      <configurationParameter>
+        <name>multibool</name>
+        <type>Boolean</type>
+        <multiValued>true</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>ints</name>
+        <description>asdfasfdasfd</description>
+        <type>Integer</type>
+        <multiValued>true</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>floats</name>
+        <description>A bunch of floats.</description>
+        <type>Float</type>
+        <multiValued>true</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationGroup names="group1">
+        <configurationParameter>
+          <name>groupedparam</name>
+          <description>asdfasdf</description>
+          <type>String</type>
+          <multiValued>false</multiValued>
+          <mandatory>false</mandatory>
+        </configurationParameter>
+      </configurationGroup>
+      <configurationGroup names="group2">
+        <configurationParameter>
+          <name>int</name>
+          <type>Integer</type>
+          <multiValued>false</multiValued>
+          <mandatory>false</mandatory>
+        </configurationParameter>
+        <configurationParameter>
+          <name>SpecialInt</name>
+          <type>Integer</type>
+          <multiValued>true</multiValued>
+          <mandatory>true</mandatory>
+        </configurationParameter>
+      </configurationGroup>
     </configurationParameters>
     <configurationParameterSettings/>
     <typeSystemDescription/>

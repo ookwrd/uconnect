@@ -8,6 +8,8 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
+import com.sun.tools.javac.code.Attribute.Array;
+
 public abstract class AbstractParameter<T>
 		implements Parameter {
 
@@ -131,7 +133,7 @@ public abstract class AbstractParameter<T>
 		}
 	}
 	
-	public void simpleSet(T input) { //TODO remove constraints failed exception
+	protected void simpleSet(T input) {
 		assert(!owner.getLockedStatus());
 		if(parametersArrayList.size()==0){
 			setInitial(input);
@@ -142,15 +144,35 @@ public abstract class AbstractParameter<T>
 		}
 	}
 	
-	
+	protected void simpleSet(T[] inputs){
+		assert(!owner.getLockedStatus());
+		parametersArrayList = new ArrayList<T>(Arrays.asList(inputs));
+		notifyParameterValueChangedListeners();
+	}
 	
 	@Override
 	public String getParameterString() {
+		assert(!isMultivalued());
 		T value = getParameter();
 		if(value!=null){
 			return value.toString();
 		}else{
 			return "";
+		}
+	}
+	
+	@Override
+	public String[] getParameterStrings(){
+		assert(isMultivalued());
+		T[] values = getParameters();
+		if(values != null){
+			String[] retVals = new String[values.length];
+			for(int i =0; i<values.length; i++){
+				retVals[i] = values[i].toString();//TODO nulls?
+			}
+			return retVals;
+		}else{
+			return new String[0];
 		}
 	}
 	
@@ -203,6 +225,12 @@ public abstract class AbstractParameter<T>
 		throws ConstraintFailedException {
 		for(Constraint con : constraints) {
 			con.validate(parameter);	
+		}
+	}
+	
+	protected void validateConstraints(String[] parameters) throws ConstraintFailedException{
+		for(String string : parameters){
+			validateConstraints(string);
 		}
 	}
 	

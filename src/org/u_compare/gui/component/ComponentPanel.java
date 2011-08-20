@@ -255,7 +255,7 @@ public class ComponentPanel extends JPanel implements
 
 	/**
 	 * Dynamically sets the maximum height to the current preferred height of
-	 * the component to prevent stretching.
+	 * the component to prevent stretching. //TODO use a layout manager
 	 */
 	@Override
 	public Dimension getMaximumSize() {
@@ -263,10 +263,6 @@ public class ComponentPanel extends JPanel implements
 		Dimension max = super.getMaximumSize();
 		ret.width = max != null ? max.width : 2000;
 		return ret;
-	}
-	
-	public static void main(String[] argv) {
-		GUITestingHarness.main(argv);
 	}
 	
 	public Workflow getWorkflow() {
@@ -296,7 +292,6 @@ public class ComponentPanel extends JPanel implements
 		//setVisible(false);
 		//setVisible(true);
 		requestFocusInWindow();
-		System.out.println("focus detected on the component");
 	}
 
 	@Override

@@ -1,9 +1,13 @@
 package org.u_compare.gui.control;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.JOptionPane;
 
 import org.u_compare.gui.component.parameters.BooleanParameterPanel;
 import org.u_compare.gui.component.parameters.ParameterPanel;
+import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.FloatParameter;
@@ -52,6 +56,37 @@ public class ParameterController {
 			param.setValue(parameterValue);
 		}catch(ConstraintFailedException ex) {
 			processConstraintFailure(ex);
+		}
+	}
+	
+	public void addValue(){
+		String value =  JOptionPane.showInputDialog("Please enter the value to add:");
+		
+		if(value == null){
+			assert(false);
+			System.out.println("Invalid value returned by string chooser.");
+			return;
+		}
+		
+		ArrayList<String> strings = new ArrayList<String>(Arrays.asList(param.getParameterStrings()));
+		strings.add(value);
+		
+		try {
+			param.setValues(strings.toArray(new String[strings.size()]));
+		} catch (ConstraintFailedException e) {
+			processConstraintFailure(e);
+		}
+		
+	}
+	
+	public void removeValue(String value){
+		ArrayList<String> strings = new ArrayList<String>(Arrays.asList(param.getParameterStrings()));
+		strings.remove(value);
+		
+		try {
+			param.setValues(strings.toArray(new String[strings.size()]));
+		} catch (ConstraintFailedException e) {
+			processConstraintFailure(e);
 		}
 	}
 }

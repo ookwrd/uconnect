@@ -31,16 +31,17 @@ public class BooleanParameterPanel extends ParameterPanel implements ActionListe
 			this.controller = controller;
 			this.param = (BooleanParameter)parameter;
 			
-			
-			checkBox = new JCheckBox();
-			if(param.getParameter()!=null){//Needed because multivalued may be null
-				checkBox.setSelected(param.getParameter());
+			if(!param.isMultivalued()){
+				checkBox = new JCheckBox();
+				if(param.getParameter()!=null){//Needed because multivalued may be null
+					checkBox.setSelected(param.getParameter());
+				}
+				checkBox.addActionListener(this);
+				
+				param.registerParameterValueChangedListener(this);
+				
+				field = checkBox;
 			}
-			checkBox.addActionListener(this);
-			
-			param.registerParameterValueChangedListener(this);
-			
-			field = checkBox;
 			
 			updateLockedStatus(component);
 	}

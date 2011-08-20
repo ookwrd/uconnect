@@ -21,11 +21,13 @@ public interface Parameter {
 	public void setMultivalued(boolean multivalued);
 	
 	public String getParameterString();
+	public String[] getParameterStrings();
 	
 	public void addConstraint(Constraint constraint);
 	public ArrayList<Constraint> getConstraints();
 	
-	public void setValue(String value) throws ConstraintFailedException;//String, float, integer
+	public void setValue(String value) throws ConstraintFailedException;
+	public void setValues(String[] values) throws ConstraintFailedException;
 	
 	public void registerParameterValueChangedListener(ParameterValueChangedListener listener);
 	public void registerParameterNameDescriptionChangedListener(ParameterNameDescriptionChangedListener listener);

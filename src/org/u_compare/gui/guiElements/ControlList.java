@@ -14,7 +14,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 
 @SuppressWarnings("serial")
 public class ControlList extends JPanel {

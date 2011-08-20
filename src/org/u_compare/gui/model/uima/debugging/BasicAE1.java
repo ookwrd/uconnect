@@ -7,9 +7,14 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 public class BasicAE1 extends JCasAnnotator_ImplBase {
-	
+
 	public void initialize(UimaContext aContext) throws ResourceInitializationException {
 		super.initialize(aContext);
+		
+		String[] names = aContext.getConfigParameterNames();
+		for(String name : names){
+			System.out.println("Parameter " + name + " has value: " +aContext.getConfigParameterValue(name));
+		}
 	}
 	
 	@Override

@@ -56,6 +56,8 @@ public class UIMA_Tester {
 				filename = file.getAbsolutePath();
 			}
 			
+			System.out.println("Loading: " + filename);
+			
 			return  Workflow.constructWorkflowFromXML(filename);
 		}
 	}

@@ -273,11 +273,6 @@ public abstract class AbstractAggregateComponent extends
 	@Override
 	public ResourceCreationSpecifier getResourceCreationSpecifier(){
 		AnalysisEngineDescription retVal = (AnalysisEngineDescription)super.getResourceCreationSpecifier();
-			
-		if(flowController!= null){
-			System.err.println("Flow controller not null. Specifier type " + flowController.getSpecifier());
-			//TODO this needs to be addressed
-		}
 		
 		if(flowConstraints instanceof FixedFlow){
 			String[] flowStrings = new String[subComponents.size()];
@@ -307,6 +302,10 @@ public abstract class AbstractAggregateComponent extends
 		}
 		
 		retVal.setFlowControllerDeclaration(flowController);
+		if(flowController!= null){
+			System.err.println("Flow controller not null. Specifier type " + flowController.getSpecifier());
+			//TODO How do we handle the constraints in this case?
+		}
 		
 		Map<String, MetaDataObject> metaData;
 		metaData = retVal.getDelegateAnalysisEngineSpecifiersWithImports();

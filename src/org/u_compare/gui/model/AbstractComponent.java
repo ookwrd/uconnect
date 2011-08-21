@@ -67,7 +67,7 @@ public abstract class AbstractComponent implements Component {
 	private String parameterSearchStratergy = null;
 	private String parameterDefaultGroup = null;
 	private boolean unsavedChanges = false;
-	private boolean minimized = false;
+	private MinimizedStatusEnum minimized = MinimizedStatusEnum.MAXIMIZED;
 	protected LockStatusEnum lockStatus = LockStatusEnum.UNLOCKED;
 	
 	//Base UIMA Metadata Objects
@@ -84,7 +84,15 @@ public abstract class AbstractComponent implements Component {
 	 * DIRECTLOCK a lock was directly placed on this component
 	 * INDIRECTLOCK component is locked due to a lock being placed on a parent component
 	 */
-	public static enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK};
+	public static enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK}
+	
+	/**
+	 * Possible values of the components minimized status
+	 * MINIMIZED - Only the title bar showing
+	 * PARTIAL - TODO
+	 * MAXIMIZED - All parameters and settings displayed. 
+	 */
+	public static enum MinimizedStatusEnum {MINIMIZED,PARTIAL,MAXIMIZED}
 	
 	//Change listeners
 	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
@@ -324,12 +332,12 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public boolean getMinimizedStatus(){
+	public MinimizedStatusEnum getMinimizedStatus(){
 		return minimized;
 	}
 	
 	@Override
-	public void setMinimizedStatus(boolean minimized){
+	public void setMinimizedStatus(MinimizedStatusEnum minimized){
 		
 		if(this.minimized != minimized){
 			this.minimized = minimized;

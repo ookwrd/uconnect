@@ -25,8 +25,8 @@ public class SOAPComponent extends AbstractComponent {
 	}
 	
 	@Override
-	public boolean getMinimizedStatus(){
-		return true;
+	public MinimizedStatusEnum getMinimizedStatus(){
+		return MinimizedStatusEnum.MINIMIZED;
 	}
 	
 	@Override

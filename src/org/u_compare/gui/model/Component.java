@@ -2,8 +2,8 @@ package org.u_compare.gui.model;
 
 import java.util.ArrayList;
 
-import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.ResourceSpecifier;
+import org.u_compare.gui.model.AbstractComponent.MinimizedStatusEnum;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
 
@@ -74,7 +74,7 @@ public interface Component{
 	 */
 	public void setName(String name);
 	
-	//TODO documentation
+	//TODO
 	public String getImplementationName();
 	public void setImplementationName(String implementationName);
 	
@@ -186,9 +186,10 @@ public interface Component{
 	 */
 	public boolean checkUnsavedChanges();
 	
-	public boolean getMinimizedStatus();
 	
-	public void setMinimizedStatus(boolean minimized);
+	public MinimizedStatusEnum getMinimizedStatus();
+	
+	public void setMinimizedStatus(MinimizedStatusEnum minimized);
 	
 	
 	public boolean getLockedStatus();

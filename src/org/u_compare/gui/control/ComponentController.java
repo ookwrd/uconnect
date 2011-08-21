@@ -6,6 +6,7 @@ import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.guiElements.DragAndDrop;
 import org.u_compare.gui.guiElements.DragAndDrop.DragController;
 import org.u_compare.gui.model.AbstractAggregateComponent.InvalidPositionException;
+import org.u_compare.gui.model.AbstractComponent.MinimizedStatusEnum;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 
@@ -134,11 +135,17 @@ public class ComponentController implements DragController {
 	}
 	
 	public void toggleMinimized(){
-		component.setMinimizedStatus(!component.getMinimizedStatus());
-	}
-	
-	public void setMinimized(boolean minStatus){
-		component.setMinimizedStatus(minStatus);
+		switch (component.getMinimizedStatus()) {
+		case MINIMIZED:
+			component.setMinimizedStatus(MinimizedStatusEnum.PARTIAL);
+			break;
+		case PARTIAL:
+			component.setMinimizedStatus(MinimizedStatusEnum.MAXIMIZED);
+			break;
+		case MAXIMIZED:
+			component.setMinimizedStatus(MinimizedStatusEnum.MINIMIZED);
+			break;
+		}
 	}
 	
 	/**

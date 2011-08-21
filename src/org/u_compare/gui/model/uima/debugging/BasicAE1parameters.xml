@@ -105,7 +105,11 @@
       <capability>
         <inputs/>
         <outputs/>
-        <languagesSupported/>
+        <languagesSupported>
+          <language>en</language>
+          <language>en-nz</language>
+          <language>fr</language>
+        </languagesSupported>
       </capability>
     </capabilities>
     <operationalProperties>

@@ -33,12 +33,12 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 		lowerPanel.setBorder(new EtchedBorder());
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
 		
-		JPanel innerPanel = setupCardPanel();
+		innerPanel = setupCardPanel();
 		
 		setupSubComponentsPanel(innerPanel);
 		
 		if(showWorkflowDetails){
-			upperPanel.add(getTitlePanel(true, innerPanel),BorderLayout.NORTH);
+			upperPanel.add(getTitlePanel(true),BorderLayout.NORTH);
 			upperPanel.add(getDescriptionPanel());
 		}
 		 		

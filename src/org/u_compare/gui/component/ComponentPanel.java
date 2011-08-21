@@ -1,6 +1,7 @@
 package org.u_compare.gui.component;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -9,6 +10,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -17,7 +19,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.guiElements.DynamicCardLayout;
 import org.u_compare.gui.guiElements.RoundedBorder;
+import org.u_compare.gui.model.AbstractComponent;
+import org.u_compare.gui.model.AbstractComponent.MinimizedStatusEnum;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.AggregateComponent.SubComponentsChangedListener;
 import org.u_compare.gui.model.Component;
@@ -31,7 +36,7 @@ import org.u_compare.gui.model.Workflow;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends JPanel implements
-		SubComponentsChangedListener {
+		SubComponentsChangedListener, Minimizable {
 
 	public final static int PREFERRED_WIDTH = 300;
 	public static final int BORDER_ROUNDING = 5;
@@ -51,6 +56,8 @@ public class ComponentPanel extends JPanel implements
 	
 	private SubComponentsPanel subComponentsPanel;
 	private JPanel subComponentsContainer;
+	
+	JPanel innerPanel;
 	
 	protected ComponentPanel(){
 	}
@@ -93,46 +100,46 @@ public class ComponentPanel extends JPanel implements
 		outerPanel.setOpaque(false);
 		outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.Y_AXIS));
 		
-		JPanel innerPanel = setupCardPanel();
+		innerPanel = new JPanel();
+		innerPanel.setLayout(new DynamicCardLayout());
+		innerPanel.setOpaque(false);
+	/*	innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
+				BORDER_WIDTH, BORDER_WIDTH));
+		*/
+		
+		outerPanel.add(getTitlePanel(false),BorderLayout.NORTH);
+		
 		JPanel card0 = setupCardPanel();
+		innerPanel.add(card0,MinimizedStatusEnum.MINIMIZED.name());
 		JPanel card1 = setupCardPanel();
+		innerPanel.add(card1,MinimizedStatusEnum.PARTIAL.name());
 		JPanel card2 = setupCardPanel();
+		innerPanel.add(card2,MinimizedStatusEnum.MAXIMIZED.name());
 		
-		outerPanel.add(getTitlePanel(false, innerPanel),BorderLayout.NORTH);
+		card0.setVisible(false);
 		
+		card1.add(getDescriptionPanel());
+		card1.add(getInputOutputPanel());
 		
-		JPanel descPanel = getDescriptionPanel();
-
-		JLabel test = new JLabel("boing");
-		
-		card2.add(descPanel);
-		innerPanel.add(descPanel);
-		card1.add(descPanel);
-		
-
-		card1.add(test);
-		innerPanel.add(test);
-		innerPanel.add(test);
-		
-		/*innerPanel.add(getInputOutputPanel());
-		
+		card2.add(getDescriptionPanel());
+		card2.add(getInputOutputPanel());
+				
 		if(component.isAggregate()){
 			JPanel subComponentsBorder = new JPanel();
 			subComponentsBorder.setLayout(new GridLayout());
 			subComponentsBorder.setOpaque(false);
 			subComponentsBorder.setBorder(new TitledBorder("Subcomponents:"));
 			setupSubComponentsPanel(subComponentsBorder);
-			innerPanel.add(subComponentsBorder);
+			card2.add(subComponentsBorder);
 			
 		}
 
-		innerPanel.add(getParametersPanel());
-		*/
+		card2.add(getParametersPanel());
+		
 		outerPanel.add(innerPanel);
-		//card0.setVisible(false); //Works
-		//outerPanel.add(card0);
-		//outerPanel.add(card1);
 		this.add(outerPanel);
+		
+		setMinimizeStatus(component.getMinimizedStatus());
 	}
 	
 	protected void initialConfiguration(Component component,
@@ -170,8 +177,8 @@ public class ComponentPanel extends JPanel implements
 		}				
 	}
 	
-	protected JPanel getTitlePanel(boolean isWorkflow, JPanel minimizable){		
-		return new ComponentTitleBar(controller, component, minimizable, isWorkflow);
+	protected JPanel getTitlePanel(boolean isWorkflow){		
+		return new ComponentTitleBar(controller, component, this, isWorkflow);
 	}
 	
 	protected JPanel getDescriptionPanel(){	
@@ -279,5 +286,11 @@ public class ComponentPanel extends JPanel implements
 		else {
 			return (Workflow) this.component;
 		}
+	}
+	
+	@Override
+	public void setMinimizeStatus(MinimizedStatusEnum status){
+		CardLayout cl = (CardLayout)innerPanel.getLayout();
+		cl.show(innerPanel, status.name());
 	}
 }

@@ -2,6 +2,7 @@ package org.u_compare.gui.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -48,6 +49,22 @@ import org.u_compare.gui.model.uima.SOAPComponent;
  */
 public abstract class AbstractComponent implements Component {
 
+	/**
+	 * Possible values of the components internal locked status
+	 * UNLOCKED 
+	 * DIRECTLOCK a lock was directly placed on this component
+	 * INDIRECTLOCK component is locked due to a lock being placed on a parent component
+	 */
+	public static enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK}
+	
+	/**
+	 * Possible values of the components minimized status
+	 * MINIMIZED - Only the title bar showing
+	 * PARTIAL - Title, Description and Signature
+	 * MAXIMIZED - All parameters and settings displayed. 
+	 */
+	public static enum MinimizedStatusEnum {MINIMIZED,PARTIAL,MAXIMIZED}
+	
 	private Component parentComponent;
 
 	//private (rather than protected) to ensure use of proper set methods by extending classes
@@ -58,6 +75,7 @@ public abstract class AbstractComponent implements Component {
 	private String vendor = "Unknown";
 	private String version = "Unspecified";
 	private String copyright = "Copyright information unknown";
+	private ArrayList<String> languages = new ArrayList<String>();
 	private ArrayList<AnnotationTypeOrFeature> inputTypes = new ArrayList<AnnotationTypeOrFeature>();
 	private ArrayList<AnnotationTypeOrFeature> outputTypes = new ArrayList<AnnotationTypeOrFeature>();
 	private ParameterGroup basicParameters = new ParameterGroup(this);
@@ -77,25 +95,10 @@ public abstract class AbstractComponent implements Component {
 	protected OperationalProperties operationalProperties;
 	protected ResourceManagerConfiguration resourceManagerConfiguration;
 	
-	/**
-	 * Possible values of the components internal locked status
-	 * UNLOCKED 
-	 * DIRECTLOCK a lock was directly placed on this component
-	 * INDIRECTLOCK component is locked due to a lock being placed on a parent component
-	 */
-	public static enum LockStatusEnum {UNLOCKED,DIRECTLOCK,INDIRECTLOCK}
-	
-	/**
-	 * Possible values of the components minimized status
-	 * MINIMIZED - Only the title bar showing
-	 * PARTIAL - TODO
-	 * MAXIMIZED - All parameters and settings displayed. 
-	 */
-	public static enum MinimizedStatusEnum {MINIMIZED,PARTIAL,MAXIMIZED}
-	
 	//Change listeners
 	private ArrayList<DescriptionChangeListener> componentDescriptionChangeListeners = new ArrayList<DescriptionChangeListener>();
 	private ArrayList<DistributionInformationChangeListener> distributionInformationChangeListeners = new ArrayList<DistributionInformationChangeListener>();
+	private ArrayList<LanguageChangeListener> languageChangeListeners = new ArrayList<Component.LanguageChangeListener>();
 	private ArrayList<InputOutputChangeListener> inputOutputChangeListeners = new ArrayList<InputOutputChangeListener>();
 	private ArrayList<SavedStatusChangeListener> savedStatusChangeListeners = new ArrayList<SavedStatusChangeListener>();
 	private ArrayList<MinimizedStatusChangeListener> minimizedStatusChangeListeners = new ArrayList<MinimizedStatusChangeListener>();
@@ -246,6 +249,48 @@ public abstract class AbstractComponent implements Component {
 	public void setSuperComponent(Component superComp){
 		this.parentComponent = superComp;
 	}
+	
+	@Override
+	public ArrayList<String> getLanguageTypes(){
+		return languages;
+	}
+	
+	@Override
+	public void addLanguageType(String language){
+		
+		if(languages.contains(language)){
+			return;
+		}
+		
+		languages.add(language);
+		notifyLanguagesChangeListener();
+		
+	}
+	
+	@Override
+	public void removeLanguageType(String language){
+		
+		if(!languages.contains(language)){
+			return;
+		}
+		
+		languages.remove(language);
+		notifyLanguagesChangeListener();
+	}
+	
+	@Override
+	public void setLanguageTypes(ArrayList<String> languagesIn){
+		
+		if(languages.containsAll(languagesIn) && languagesIn.size() == languages.size()){
+			return;
+		}
+		
+		languages = languagesIn;
+		notifyLanguagesChangeListener();
+		
+	}
+	
+	
 	
 	@Override
 	public ArrayList<AnnotationTypeOrFeature> getInputTypes(){
@@ -524,6 +569,19 @@ public abstract class AbstractComponent implements Component {
 	protected void notifyDistributionInformationChangedListeners(){
 		for(DistributionInformationChangeListener listener : distributionInformationChangeListeners){
 			listener.distributionInformationChanged(this);
+		}
+		setComponentChanged();
+	}
+	
+	@Override
+	public void registerLanguagesChangeListener(LanguageChangeListener listener){
+		assert(listener != null);
+		languageChangeListeners.add(listener);
+	}
+	
+	protected void notifyLanguagesChangeListener(){
+		for(LanguageChangeListener listener :languageChangeListeners){
+			listener.languagesChanged(this);
 		}
 		setComponentChanged();
 	}
@@ -848,7 +906,8 @@ public abstract class AbstractComponent implements Component {
 			setInputTypes(inputs);
 			ArrayList<AnnotationTypeOrFeature> outputs = extractAnnotationTypeOrFeatureList(capabilityOne.getOutputs());
 			setOutputTypes(outputs);
-			//capabilityOne.getLanguagesSupported() TODO
+			String[] languages = capabilityOne.getLanguagesSupported();
+			setLanguageTypes(new ArrayList<String>(Arrays.asList(languages)));
 		}else{
 			setInputTypes(new ArrayList<AnnotationTypeOrFeature>());
 			setOutputTypes(new ArrayList<AnnotationTypeOrFeature>());

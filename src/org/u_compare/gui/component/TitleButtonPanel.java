@@ -103,12 +103,21 @@ public class TitleButtonPanel extends JPanel implements
 
 	protected void setMinimizedStatus() {
 
-		if (component.getMinimizedStatus()) {
+		switch (component.getMinimizedStatus()) {
+		case MINIMIZED:
 			this.minButton.setIcon(maxIcon);
 			minimizeTarget.setVisible(false);
-		} else {
+			break;
+			
+		case PARTIAL:
+			System.out.println("Partial view?");
+			//TODO
+			break;
+
+		case MAXIMIZED:
 			this.minButton.setIcon(minIcon);
 			minimizeTarget.setVisible(true);
+			break;
 		}
 	}
 

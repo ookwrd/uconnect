@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.u_compare.gui.model.AbstractComponent.MinimizedStatusEnum;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component;
@@ -167,7 +168,7 @@ public class WorkflowTester{
 		
 		private ArrayList<ArrayList<Component>> subComponents = new ArrayList<ArrayList<Component>>();
 		
-		ArrayList<Boolean> minimizeds = new ArrayList<Boolean>();
+		ArrayList<MinimizedStatusEnum> minimizeds = new ArrayList<MinimizedStatusEnum>();
 		ArrayList<Boolean> lockeds = new ArrayList<Boolean>();
 		
 		private AggregateComponent component;
@@ -429,18 +430,18 @@ public class WorkflowTester{
 		TestListener1 listener = new TestListener1();
 		testWorkflow.registerMinimizedStatusChangeListener(listener);
 		
-		assertTrue(testWorkflow.getMinimizedStatus() == false);
+		assertTrue(testWorkflow.getMinimizedStatus() == MinimizedStatusEnum.MAXIMIZED);
 		
-		testWorkflow.setMinimizedStatus(false);
+		testWorkflow.setMinimizedStatus(MinimizedStatusEnum.MAXIMIZED);
 
-		assertTrue(testWorkflow.getMinimizedStatus() == false);
+		assertTrue(testWorkflow.getMinimizedStatus() == MinimizedStatusEnum.MAXIMIZED);
 		assertTrue(listener.minimizeds.size()== 0);
 		
-		testWorkflow.setMinimizedStatus(true);
+		testWorkflow.setMinimizedStatus(MinimizedStatusEnum.MINIMIZED);
 		
-		assertTrue(testWorkflow.getMinimizedStatus() == true);
+		assertTrue(testWorkflow.getMinimizedStatus() == MinimizedStatusEnum.MINIMIZED);
 		assertTrue(listener.minimizeds.size() == 1);
-		assertTrue(listener.minimizeds.get(0)==true);
+		assertTrue(listener.minimizeds.get(0)==MinimizedStatusEnum.MINIMIZED);
 		
 	}
 	

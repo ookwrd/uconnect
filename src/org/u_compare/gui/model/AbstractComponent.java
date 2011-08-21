@@ -726,12 +726,14 @@ public abstract class AbstractComponent implements Component {
 			Capability capabilityOne = capabilities[0];
 			capabilityOne.setInputs(convertTypeOrFeatureList(getInputTypes()));
 			capabilityOne.setOutputs(convertTypeOrFeatureList(getOutputTypes()));
+			capabilityOne.setLanguagesSupported(getLanguageTypes().toArray(new String[getLanguageTypes().size()]));
 			capabilities[0] = capabilityOne;
 			metaData.setCapabilities(capabilities);
 		}else{
 			Capability capabilityOne = UIMAFramework.getResourceSpecifierFactory().createCapability();
 			capabilityOne.setInputs(convertTypeOrFeatureList(getInputTypes()));
 			capabilityOne.setOutputs(convertTypeOrFeatureList(getOutputTypes()));
+			capabilityOne.setLanguagesSupported(getLanguageTypes().toArray(new String[getLanguageTypes().size()]));
 			Capability[] newCapabilities = new Capability[1];
 			newCapabilities[0] = capabilityOne;
 			metaData.setCapabilities(capabilities);
@@ -911,6 +913,7 @@ public abstract class AbstractComponent implements Component {
 		}else{
 			setInputTypes(new ArrayList<AnnotationTypeOrFeature>());
 			setOutputTypes(new ArrayList<AnnotationTypeOrFeature>());
+			setLanguageTypes(new ArrayList<String>());
 		}
 	}
 	

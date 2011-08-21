@@ -20,6 +20,14 @@ public class AnnotationTypeOrFeature {
 		this.typeName = typeName;
 	}
 
+	public String getDisplayName(){
+		if(typeName.contains(".")){
+			return typeName.substring(typeName.lastIndexOf('.')+1);
+		}else{
+			return typeName;
+		}
+	}
+	
 	public String getTypeName() {
 		return typeName;
 	}

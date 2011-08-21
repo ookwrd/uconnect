@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import org.u_compare.gui.component.parameters.ParameterPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.ParameterController;
 import org.u_compare.gui.model.Component;
@@ -46,6 +45,14 @@ public class ConfigurationParametersPanel extends JPanel {
 			setupPanel(component.getConfigurationParameters(), this);
 		}
 		
+		if(component.getCommonParameters().size() > 0){
+			JPanel target = new JPanel();
+			target.setLayout(new BoxLayout(target,BoxLayout.Y_AXIS));
+			target.setBorder(new TitledBorder("Common Parameters:"));
+			setupPanel(component.getCommonParameters(), target);
+			this.add(target);
+		}
+		
 		ArrayList<ParameterGroup> groups = component.getParameterGroups();
 		for(ParameterGroup group : groups){
 			String[] names = group.getNames();
@@ -68,15 +75,12 @@ public class ConfigurationParametersPanel extends JPanel {
 		}
 		
 		if (paramPanels.size() > 0) {
-
 			target.setOpaque(false);
 			
 			JPanel innerPanel = new JPanel();
 			innerPanel.setLayout(new GridBagLayout());
 			GridBagConstraints constraints = new GridBagConstraints();
 			constraints.fill = GridBagConstraints.HORIZONTAL;
-			
-
 			
 			for (int i = 0; i < paramPanels.size(); i++) {
 				ParameterPanel parameterPanel = paramPanels.get(i);

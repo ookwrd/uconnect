@@ -848,6 +848,7 @@ public abstract class AbstractComponent implements Component {
 			setInputTypes(inputs);
 			ArrayList<AnnotationTypeOrFeature> outputs = extractAnnotationTypeOrFeatureList(capabilityOne.getOutputs());
 			setOutputTypes(outputs);
+			//capabilityOne.getLanguagesSupported() TODO
 		}else{
 			setInputTypes(new ArrayList<AnnotationTypeOrFeature>());
 			setOutputTypes(new ArrayList<AnnotationTypeOrFeature>());

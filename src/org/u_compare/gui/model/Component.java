@@ -121,46 +121,32 @@ public interface Component{
 		public void distributionInformationChanged(Component component);
 	}
 	
+	public void setLanguageTypes(ArrayList<String> languages);
+	public void addLanguageType(String language);
+	public void removeLanguageType(String language);
+	public ArrayList<String> getLanguageTypes();
+	
+	public void registerLanguagesChangeListener(LanguageChangeListener listener);
+	
+	public interface LanguageChangeListener {
+		public void languagesChanged(Component component);	
+	}
+	
 	/**
 	 * Adds an input type to this component.
 	 * 
 	 * @param inputType	Type to be added.
 	 */
 	public void addInputType(AnnotationTypeOrFeature inputType);
-	
 	public void removeInputType(AnnotationTypeOrFeature inputType);
-	
 	public void setInputTypes(ArrayList<AnnotationTypeOrFeature> inputTypes);
-	
-	public void addOutputType(AnnotationTypeOrFeature outputType);
-	
-	public void removeOutputType(AnnotationTypeOrFeature outputType);
-	
-	public void setOutputTypes(ArrayList<AnnotationTypeOrFeature> outputTypes);
-	
-	/**
-	 * Gets list of this components output types.
-	 * 
-	 * Changes can be followed via {@link #registerInputOutputChangeListener(InputOutputChangeListener)}
-	 * 
-	 * @return	List of output types.
-	 */
-	public ArrayList<AnnotationTypeOrFeature> getOutputTypes();
-
-	/**
-	 * Gets list of this components input types.
-	 * 
-	 * Changes can be followed via {@link #registerInputOutputChangeListener(InputOutputChangeListener)}
-	 * 
-	 * @return	List of this components input types.
-	 */
 	public ArrayList<AnnotationTypeOrFeature> getInputTypes();
 	
-	/**
-	 * Register listener to be notified of changes to Input and Output lists.
-	 * 
-	 * @param listener	Listener to be added.
-	 */
+	public void addOutputType(AnnotationTypeOrFeature outputType);
+	public void removeOutputType(AnnotationTypeOrFeature outputType);
+	public void setOutputTypes(ArrayList<AnnotationTypeOrFeature> outputTypes);
+	public ArrayList<AnnotationTypeOrFeature> getOutputTypes();
+	
 	public void registerInputOutputChangeListener(InputOutputChangeListener listener);
 	
 	public interface InputOutputChangeListener {

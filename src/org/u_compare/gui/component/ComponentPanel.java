@@ -103,9 +103,6 @@ public class ComponentPanel extends JPanel implements
 		innerPanel = new JPanel();
 		innerPanel.setLayout(new DynamicCardLayout());
 		innerPanel.setOpaque(false);
-	/*	innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
-				BORDER_WIDTH, BORDER_WIDTH));
-		*/
 		
 		outerPanel.add(getTitlePanel(false),BorderLayout.NORTH);
 		
@@ -117,6 +114,7 @@ public class ComponentPanel extends JPanel implements
 		innerPanel.add(card2,MinimizedStatusEnum.MAXIMIZED.name());
 		
 		card0.setVisible(false);
+		card0.setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		card1.add(getDescriptionPanel());
 		card1.add(getInputOutputPanel());

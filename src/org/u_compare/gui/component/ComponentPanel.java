@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -15,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import org.u_compare.gui.control.ComponentController;
-import org.u_compare.gui.debugging.GUITestingHarness;
 import org.u_compare.gui.guiElements.RoundedBorder;
 import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.AggregateComponent.SubComponentsChangedListener;
@@ -30,7 +30,7 @@ import org.u_compare.gui.model.Workflow;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends JPanel implements
-		SubComponentsChangedListener, FocusListener, MouseListener {
+		SubComponentsChangedListener {
 
 	public final static int PREFERRED_WIDTH = 300;
 	public static final int BORDER_ROUNDING = 5;
@@ -49,9 +49,6 @@ public class ComponentPanel extends JPanel implements
 	protected Component component;
 	protected ComponentController controller;
 	
-	private ComponentDescriptionPanel descriptionPanel;
-	private InputOutputPanel inputOutputPanel;
-	private ConfigurationParametersPanel parametersPanel;
 	private SubComponentsPanel subComponentsPanel;
 	private JPanel subComponentsContainer;
 	
@@ -65,8 +62,23 @@ public class ComponentPanel extends JPanel implements
 		
 		// let the component have focus
 		this.setFocusable(true);
-		addFocusListener(this);
-		addMouseListener(this);
+		addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				setBorderColored(true);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				setBorderColored(false);
+			}
+		});
+		
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				requestFocusInWindow();
+			}
+		});
 		
 		if (component.isAggregate()) {
 			((AggregateComponent) component)
@@ -89,11 +101,11 @@ public class ComponentPanel extends JPanel implements
 		outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.Y_AXIS));
 		
 		
-		setupTopPanel(outerPanel, false);
+		outerPanel.add(getTitlePanel(false),BorderLayout.NORTH);
 		setupInnerPanel();
 		
-		setupDescriptionPanel(innerPanel);
-		setupInputOutputPanel(innerPanel);
+		innerPanel.add(getDescriptionPanel());
+		innerPanel.add(getInputOutputPanel());
 		
 		if(component.isAggregate()){
 			
@@ -106,7 +118,7 @@ public class ComponentPanel extends JPanel implements
 			
 		}
 
-		setupParametersPanel(innerPanel);
+		innerPanel.add(getParametersPanel());
 		
 		outerPanel.add(innerPanel);
 		this.add(outerPanel);
@@ -140,44 +152,26 @@ public class ComponentPanel extends JPanel implements
 	public void setBorderColored(boolean colored) {
 		if(colored) {
 			this.setBorder(new EtchedBorder(HIGHLIGHT_COLOR, HIGHLIGHT_COLOR_2));
-			//this.setBorder(new RoundedBorder(null, Color.BLUE, BODY_COLOR, BORDER_ROUNDING, BORDER_WIDTH, false));
-			//topPanel.setBorderColored(true);
 		}
 		else {
 			this.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-			//this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR, BORDER_ROUNDING, BORDER_WIDTH, false));
-			//topPanel.setBorderColored(false);
-		}
-					
+		}				
 	}
 	
-	protected void setupTopPanel(JPanel target, boolean isWorkflow){
-		
-		topPanel = new ComponentTitleBar(controller, component, innerPanel, isWorkflow);
-		target.add(topPanel, BorderLayout.NORTH);
-		
+	protected JPanel getTitlePanel(boolean isWorkflow){		
+		return new ComponentTitleBar(controller, component, innerPanel, isWorkflow);
 	}
 	
-	protected void setupDescriptionPanel(JPanel target){
-		
-		descriptionPanel = new ComponentDescriptionPanel(controller, component);
-		target.add(descriptionPanel);
-		
-		
+	protected JPanel getDescriptionPanel(){	
+		return new ComponentDescriptionPanel(controller, component);
 	}
 
-	protected void setupInputOutputPanel(JPanel target){
-		
-		inputOutputPanel = new InputOutputPanel(component, controller);
-		target.add(inputOutputPanel);
-
+	protected JPanel getInputOutputPanel(){
+		return new InputOutputPanel(component, controller);
 	}
 	
-	protected void setupParametersPanel(JPanel target){
-		
-		parametersPanel = new ConfigurationParametersPanel(component, controller);
-		target.add(parametersPanel);
-	
+	protected JPanel getParametersPanel(){
+		return new ConfigurationParametersPanel(component, controller);
 	}
 	
 	protected void setupSubComponentsPanel(JPanel target) {
@@ -210,12 +204,10 @@ public class ComponentPanel extends JPanel implements
 	//TODO this shouldn't be here. move to SubComponentsPanel
 	@Override
 	public void subComponentsChanged() {
-
 		controller.resetSubComponents();
 		resetSubComponents();
 		controller.validateWorkflow();// TODO this needs to validate at a higher
 										// level
-		
 	}
 
 	public Component getComponent() {
@@ -275,46 +267,5 @@ public class ComponentPanel extends JPanel implements
 		else {
 			return (Workflow) this.component;
 		}
-	}
-
-	@Override//TODO move all of this to an inner class extending mouse adaptor... olaf you really know how to make a mess.
-	public void focusGained(FocusEvent e) {
-		setBorderColored(true);
-	}
-
-	@Override
-	public void focusLost(FocusEvent e) {
-		setBorderColored(false);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		//setVisible(false);
-		//setVisible(true);
-		requestFocusInWindow();
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

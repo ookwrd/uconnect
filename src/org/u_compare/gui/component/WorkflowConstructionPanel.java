@@ -36,8 +36,8 @@ public class WorkflowConstructionPanel extends ComponentPanel {
 		setupInnerPanel();
 		
 		if(showWorkflowDetails){
-			setupTopPanel(upperPanel, true);
-			setupDescriptionPanel(upperPanel);
+			upperPanel.add(getTitlePanel(true),BorderLayout.NORTH);
+			upperPanel.add(getDescriptionPanel());
 		}
 		 		
 		if(showWorkflowControlPanel){

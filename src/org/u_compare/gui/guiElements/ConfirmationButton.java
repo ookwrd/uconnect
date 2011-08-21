@@ -31,35 +31,12 @@ public class ConfirmationButton extends JButton {
 
 	public ConfirmationButton(JButton mainButton, String confirmation){
 		super();
-		
-		// TODO change the layout to cardlayout, creating the cards as on
-		// http://download.oracle.com/javase/tutorial/uiswing/layout/card.html
-		
+
 		setOpaque(false);
 		
 		setBorder(new EmptyBorder(0,0,0,0));
 		
-		setLayout(new CardLayout(){//TODO extract this to a new layout,cardlayout that dynamically changes size
-			@Override
-			public Dimension preferredLayoutSize(Container parent){
-				return cards.get(current).getPreferredSize();
-			}
-			
-			private Map<Object, Component> cards = new HashMap<Object, Component>();
-			private String current;
-			
-			@Override
-			public void addLayoutComponent(Component comp, Object constraints) {
-				cards.put(constraints, comp);
-				super.addLayoutComponent(comp, constraints);
-			}
-			
-			@Override
-			public void show(Container parent, String key){
-				current = key;
-				super.show(parent, key);
-			}
-		});
+		setLayout(new DynamicCardLayout());
 		
 		normalPanel = new JPanel();
 		normalPanel.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));

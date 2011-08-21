@@ -2,7 +2,6 @@ package org.u_compare.gui.model.uima;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.resource.Parameter;
-import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.URISpecifier;
 import org.u_compare.gui.model.AbstractComponent;
@@ -23,6 +22,21 @@ public class SOAPComponent extends AbstractComponent {
 		this.timeoutInteger = spec.getTimeout();
 		this.uriString = spec.getUri();
 		
+	}
+	
+	@Override
+	public boolean getMinimizedStatus(){
+		return true;
+	}
+	
+	@Override
+	public boolean getLockedStatus(){
+		return true;
+	}
+	
+	@Override
+	public String getName(){
+		return uriString;
 	}
 	
 	@Override

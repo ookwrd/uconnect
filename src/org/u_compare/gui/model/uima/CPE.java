@@ -11,6 +11,7 @@ import org.apache.uima.collection.CollectionProcessingEngine;
 import org.apache.uima.collection.EntityProcessStatus;
 import org.apache.uima.collection.StatusCallbackListener;
 import org.apache.uima.collection.impl.metadata.cpe.CpeDescriptorFactory;
+import org.apache.uima.collection.metadata.CasProcessorConfigurationParameterSettings;
 import org.apache.uima.collection.metadata.CpeCasProcessor;
 import org.apache.uima.collection.metadata.CpeCasProcessors;
 import org.apache.uima.collection.metadata.CpeCollectionReader;
@@ -18,6 +19,8 @@ import org.apache.uima.collection.metadata.CpeComponentDescriptor;
 import org.apache.uima.collection.metadata.CpeConfiguration;
 import org.apache.uima.collection.metadata.CpeDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
+import org.apache.uima.collection.metadata.CpeInclude;
+import org.apache.uima.collection.metadata.NameValuePair;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
@@ -53,24 +56,69 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		
 		collectionReaders = desc.getAllCollectionCollectionReaders();
 		for(CpeCollectionReader reader : collectionReaders){
-			Import imp = reader.getDescriptor().getImport();
-			String location = imp.getLocation();
-			if(location == null){
-				//TODO why this offset?
-				location = "../../" + convertNameToLocation(imp.getName());
+			Component comp;
+			if(reader.getDescriptor().getImport() != null){
+				Import imp = reader.getDescriptor().getImport();
+				String location = imp.getLocation();
+				if(location == null){
+					//TODO why this offset?
+					location = "../../" + convertNameToLocation(imp.getName());
+				}
+				comp = AbstractComponent.constructComponentFromXML(pathBase+location);
+			} else if (reader.getDescriptor().getInclude() != null){
+				CpeInclude include = reader.getDescriptor().getInclude();
+				String pathname = include.get();
+
+				pathname = pathname.replace('\\', '/');//TODO
+				String pathFinal = pathBase+"../../" +pathname;
+				System.out.println("final" + pathFinal);
+				comp = AbstractComponent.constructComponentFromXML(pathFinal);
+			} else {
+				assert(false);
+				comp = null;
 			}
-			Component comp = AbstractComponent.constructComponentFromXML(pathBase+location);
+
+			System.out.println("Here I am ");
+		//TODO	NameValuePair[] pairs = reader.getConfigurationParameterSettings().getParameterSettings();
+		/*	for(NameValuePair pair : pairs){
+				System.out.println("Pair" + pair.getName() + " " + pair.getValue());//TODO overrides
+			}*/
+			
 			super.addSubComponent(comp);
 		}
+		
 		cpeCasProcessors = desc.getCpeCasProcessors(); //<- this is where the subcomponents are
 		for(CpeCasProcessor processor : cpeCasProcessors.getAllCpeCasProcessors()){
-			Import imp = processor.getCpeComponentDescriptor().getImport();
-			String location = imp.getLocation();
-			if(location == null){
-				//TODO why this offset?
-				location = "../../" + convertNameToLocation(imp.getName());
+			Component comp;
+			if(processor.getCpeComponentDescriptor().getImport()!=null){
+				Import imp = processor.getCpeComponentDescriptor().getImport();
+				String location = imp.getLocation();
+				if(location == null){
+					//TODO why this offset?
+					location = "../../" + convertNameToLocation(imp.getName());
+				}
+				comp = AbstractComponent.constructComponentFromXML(pathBase+location);
+			} else if (processor.getCpeComponentDescriptor().getInclude() != null){
+				CpeInclude include = processor.getCpeComponentDescriptor().getInclude();
+				String pathname = include.get();
+
+				System.out.println("include" + include);
+				System.out.println("URL " + include.getSourceUrlString());
+				//System.out.println(include.);
+				
+				pathname = pathname.replace('\\', '/');//TODO
+				System.out.println("finalComp" + pathBase+"../../" +pathname);
+				comp = AbstractComponent.constructComponentFromXML(pathBase+"../../" +pathname);
+			} else {
+				assert(false);
+				comp = null;
 			}
-			Component comp = AbstractComponent.constructComponentFromXML(pathBase+location);
+			
+			/*NameValuePair[] pairs = processor.getConfigurationParameterSettings().getParameterSettings();
+			for(NameValuePair pair : pairs){//TODO extract to method
+				System.out.println("Pair" + pair.getName() + " " + pair.getValue());//TODO overrides
+			}*/ //TODO
+			
 			super.addSubComponent(comp);
 		}
 		cpeConfiguration = desc.getCpeConfiguration();
@@ -80,7 +128,6 @@ public class CPE extends Workflow implements StatusCallbackListener {
 			sourceFileName = urlString.substring(urlString.lastIndexOf("/")+1,urlString.length()-4);
 		}
 	}
-	
 
 	public static String convertNameToLocation(String name) {
 		String location = name.replace('.', '/');

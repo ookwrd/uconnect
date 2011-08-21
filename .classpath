@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="lib/saaj.jar"/>
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
+	<classpathentry kind="lib" path="/Users/lukemccrohon/ParttimeWork/U-Compare/apache-uima"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

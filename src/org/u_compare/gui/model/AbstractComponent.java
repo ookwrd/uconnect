@@ -38,6 +38,7 @@ import org.u_compare.gui.model.uima.AggregateAnalysisEngine;
 import org.u_compare.gui.model.uima.CasConsumer;
 import org.u_compare.gui.model.uima.CollectionReader;
 import org.u_compare.gui.model.uima.PrimitiveAnalysisEngine;
+import org.u_compare.gui.model.uima.SOAPComponent;
 
 /**
  * Abstract base class implementing much of the functionality common to all components.
@@ -620,7 +621,7 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public ResourceCreationSpecifier getResourceCreationSpecifier(){
+	public ResourceSpecifier getResourceCreationSpecifier(){
 		//TODO move this to somewhere Analysis engine specific?
 		AnalysisEngineDescription description =
 			UIMAFramework.getResourceSpecifierFactory()
@@ -656,13 +657,20 @@ public abstract class AbstractComponent implements Component {
 		metaData.setOperationalProperties(operationalProperties);
 		
 		//Use capabilities from the model to override base capabilities
-		if(capabilities != null){
+		if(capabilities != null && capabilities.length > 0){
 			Capability capabilityOne = capabilities[0];
 			capabilityOne.setInputs(convertTypeOrFeatureList(getInputTypes()));
 			capabilityOne.setOutputs(convertTypeOrFeatureList(getOutputTypes()));
 			capabilities[0] = capabilityOne;
 			metaData.setCapabilities(capabilities);
-			}
+		}else{
+			Capability capabilityOne = UIMAFramework.getResourceSpecifierFactory().createCapability();
+			capabilityOne.setInputs(convertTypeOrFeatureList(getInputTypes()));
+			capabilityOne.setOutputs(convertTypeOrFeatureList(getOutputTypes()));
+			Capability[] newCapabilities = new Capability[1];
+			newCapabilities[0] = capabilityOne;
+			metaData.setCapabilities(capabilities);
+		}
 	}
 	
 	private TypeOrFeature[] convertTypeOrFeatureList(ArrayList<AnnotationTypeOrFeature> list){
@@ -827,11 +835,16 @@ public abstract class AbstractComponent implements Component {
 		operationalProperties = metaData.getOperationalProperties();
 		
 		capabilities = metaData.getCapabilities();
-		Capability capabilityOne = capabilities[0];
-		ArrayList<AnnotationTypeOrFeature> inputs = extractAnnotationTypeOrFeatureList(capabilityOne.getInputs());
-		setInputTypes(inputs);
-		ArrayList<AnnotationTypeOrFeature> outputs = extractAnnotationTypeOrFeatureList(capabilityOne.getOutputs());
-		setOutputTypes(outputs);
+		if(capabilities.length > 0){
+			Capability capabilityOne = capabilities[0];
+			ArrayList<AnnotationTypeOrFeature> inputs = extractAnnotationTypeOrFeatureList(capabilityOne.getInputs());
+			setInputTypes(inputs);
+			ArrayList<AnnotationTypeOrFeature> outputs = extractAnnotationTypeOrFeatureList(capabilityOne.getOutputs());
+			setOutputTypes(outputs);
+		}else{
+			setInputTypes(new ArrayList<AnnotationTypeOrFeature>());
+			setOutputTypes(new ArrayList<AnnotationTypeOrFeature>());
+		}
 	}
 	
 	private ArrayList<AnnotationTypeOrFeature> extractAnnotationTypeOrFeatureList(TypeOrFeature[] list){
@@ -944,18 +957,13 @@ public abstract class AbstractComponent implements Component {
 				CollectionReaderDescription description = (CollectionReaderDescription)resourceSpecifier;
 				return new CollectionReader(description);
 				
-			} else if (resourceSpecifier instanceof CpeDescription){
-				
-				System.out.println("yep its a cpedescription");
-				
-				return null;
-				
 			} else if ( resourceSpecifier instanceof URISpecifier){
 
 				System.out.println("URISpecifier");
 				URISpecifier spec = (URISpecifier)resourceSpecifier;
+				return new SOAPComponent(spec);
 				
-				System.out.println(spec.getSourceUrl());
+				/*System.out.println(spec.getSourceUrl());
 				
 				try {
 					UIMAFramework.produceAnalysisEngine(resourceSpecifier);
@@ -963,7 +971,14 @@ public abstract class AbstractComponent implements Component {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				return null;*/
+				
+			}  else if (resourceSpecifier instanceof CpeDescription){
+				
+				System.out.println("yep its a cpedescription");
+				
 				return null;
+				
 			} else {
 
 				System.out.println("Unrecognized " + resourceSpecifier.getClass());

@@ -15,11 +15,8 @@ import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
 
 	public static enum LIST_TYPES {INPUTS, OUTPUTS};
-	
 	private org.u_compare.gui.model.Component component;
-	
 	private LIST_TYPES listType;
-	
 	private ControlList list;
 	
 	public TypeListPanel(final org.u_compare.gui.model.Component component,

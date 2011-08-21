@@ -7,6 +7,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.LanguageListPanelController;
 import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.model.Component;
 
@@ -16,7 +17,7 @@ import org.u_compare.gui.model.Component;
  * @author Luke McCrohon
  */
 @SuppressWarnings("serial")
-public class InputOutputPanel extends JPanel {
+public class LanguageInputOutputPanel extends JPanel {
 	
 	private JPanel inputPanel;
 	private JPanel outputPanel;
@@ -24,8 +25,9 @@ public class InputOutputPanel extends JPanel {
 	
 	private TypeListPanelController inputsController;
 	private TypeListPanelController outputsController;
+	private LanguageListPanelController languageController;
 	
-	public InputOutputPanel(Component component,
+	public LanguageInputOutputPanel(Component component,
 			ComponentController controller) {
 		super();
 		
@@ -53,10 +55,16 @@ public class InputOutputPanel extends JPanel {
 		languagePanel.setOpaque(false);
 		languagePanel.setBorder(new TitledBorder("Languages:"));
 		
+		languageController = new LanguageListPanelController(component);
+		LanguageListPanel languageListPanel = new LanguageListPanel(component, languageController);
+		
+		languagePanel.add(languageListPanel);
+		
 		setLayout(new GridLayout(1,3));
+
+		add(languagePanel);
 		add(inputPanel);
 		add(outputPanel);
-		add(languagePanel);
 		
 	}
 }

@@ -9,13 +9,19 @@ import java.util.Map;
 
 @SuppressWarnings("serial")
 public class DynamicCardLayout extends CardLayout {
-	@Override
-	public Dimension preferredLayoutSize(Container parent){
-		return cards.get(current).getPreferredSize();
-	}
-	
+
 	private Map<Object, Component> cards = new HashMap<Object, Component>();
 	private String current;
+	
+	@Override
+	public Dimension preferredLayoutSize(Container parent){
+		Component currentComponent = cards.get(current);
+		if(currentComponent.isVisible()){
+			return currentComponent.getPreferredSize();
+		}else{
+			return new Dimension(0,0);
+		}
+	}
 	
 	@Override
 	public void addLayoutComponent(Component comp, Object constraints) {

@@ -86,7 +86,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		
 		ArrayList<String> strings = new ArrayList<String>();
 		for(AnnotationTypeOrFeature toF : inList){
-			strings.add(toF.getTypeName());
+			strings.add(toF.getDisplayName());
 		}
 		list.rebuildListContents(strings);
 	}

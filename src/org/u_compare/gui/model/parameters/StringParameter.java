@@ -1,7 +1,5 @@
 package org.u_compare.gui.model.parameters;
 
-import java.util.ArrayList;
-
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
 public class StringParameter extends AbstractParameter<String>{

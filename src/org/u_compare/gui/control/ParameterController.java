@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 
 import org.u_compare.gui.component.parameters.BooleanParameterPanel;
 import org.u_compare.gui.component.parameters.ParameterPanel;
-import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.FloatParameter;

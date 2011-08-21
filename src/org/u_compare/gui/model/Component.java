@@ -3,6 +3,7 @@ package org.u_compare.gui.model;
 import java.util.ArrayList;
 
 import org.apache.uima.resource.ResourceCreationSpecifier;
+import org.apache.uima.resource.ResourceSpecifier;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.ParameterGroup;
 
@@ -276,7 +277,7 @@ public interface Component{
 		public void parameterGroupsChanged(Component component);
 	}
 	
-	public ResourceCreationSpecifier getResourceCreationSpecifier();
+	public ResourceSpecifier getResourceCreationSpecifier();
 	
 	public void setFlowControllerIdentifier(String identifier);
 	public String getFlowControllerIdentifier();

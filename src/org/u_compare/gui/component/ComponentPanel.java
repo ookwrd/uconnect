@@ -180,7 +180,7 @@ public class ComponentPanel extends JPanel implements
 	}
 
 	protected JPanel getInputOutputPanel(){
-		return new InputOutputPanel(component, controller);
+		return new LanguageInputOutputPanel(component, controller);
 	}
 	
 	protected JPanel getParametersPanel(){

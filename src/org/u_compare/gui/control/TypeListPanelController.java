@@ -20,7 +20,6 @@ public class TypeListPanelController {
 	}
 	
 	public void addAnnotation(){
-		
 		AnnotationTypeOrFeature newType = WorkflowViewerController.typeChooser.getNewAnnotation();
 		
 		if(newType == null || newType.getTypeName().equals("")){

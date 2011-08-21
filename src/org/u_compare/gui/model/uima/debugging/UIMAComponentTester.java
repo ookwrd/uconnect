@@ -164,6 +164,11 @@ public class UIMAComponentTester {
 	}
 	
 	@Test
+	public void inOutTestlanguages() throws InvalidXMLException, IOException {
+		inOutTest("src/org/u_compare/gui/model/uima/debugging/languages.xml");
+	}
+	
+	@Test
 	public void inOutTestCPEimport() throws InvalidXMLException, IOException, CpeDescriptorException {
 		inOutTestCPE("src/org/u_compare/gui/model/uima/debugging/CPEimport.xml");
 	}

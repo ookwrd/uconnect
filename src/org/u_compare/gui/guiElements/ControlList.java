@@ -37,7 +37,7 @@ public class ControlList extends JPanel {
 				BoxLayout.Y_AXIS));
 		
 		list.setBackground(background);
-		list.setFixedCellWidth(200);//TODO make this expand and contract
+		list.setFixedCellWidth(140);//TODO make this expand and contract
 		
 		buttons = new JPanel();
 		buttons.setOpaque(false);

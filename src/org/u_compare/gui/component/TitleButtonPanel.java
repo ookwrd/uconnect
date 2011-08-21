@@ -105,11 +105,12 @@ public class TitleButtonPanel extends JPanel implements
 
 		switch (component.getMinimizedStatus()) {
 		case MINIMIZED:
-			this.minButton.setIcon(maxIcon);
+			this.minButton.setIcon(expIcon);
 			minimizeTarget.setVisible(false);
 			break;
 			
 		case PARTIAL:
+			this.minButton.setIcon(maxIcon);
 			System.out.println("Partial view?");
 			//TODO
 			break;
@@ -150,13 +151,15 @@ public class TitleButtonPanel extends JPanel implements
 	}
 
 	private final static String ICON_CLOSE_PATH = "../gfx/close_icon_big.png";
-	private final static String ICON_MAX_PATH = "../gfx/icon_maximize1.png";
+	private final static String ICON_MAX_PATH = "../gfx/icon_plus.gif";
+	private final static String ICON_EXP_PATH = "../gfx/icon_maximize1.png";
 	private final static String ICON_MIN_PATH = "../gfx/icon_minimize1.png";
 	private final static String ICON_LOCKED_PATH = "../gfx/icon_locked.png";
 	private final static String ICON_UNLOCKED_PATH = "../gfx/icon_unlocked.png";
 
 	private static boolean iconsLoaded = false;
 	private static ImageIcon minIcon;
+	private static ImageIcon expIcon;
 	private static ImageIcon maxIcon;
 	private static ImageIcon lockedIcon;
 	private static ImageIcon unlockedIcon;
@@ -175,6 +178,10 @@ public class TitleButtonPanel extends JPanel implements
 		image_url = ComponentPanel.class.getResource(TitleButtonPanel.ICON_MAX_PATH);
 		assert image_url != null;
 		TitleButtonPanel.maxIcon = new ImageIcon(image_url, "Maximize");
+		
+		image_url = ComponentPanel.class.getResource(TitleButtonPanel.ICON_EXP_PATH);
+		assert image_url != null;
+		TitleButtonPanel.expIcon = new ImageIcon(image_url, "Expand");
 
 		image_url = TitleButtonPanel.class.getResource(TitleButtonPanel.ICON_LOCKED_PATH);
 		assert image_url != null;

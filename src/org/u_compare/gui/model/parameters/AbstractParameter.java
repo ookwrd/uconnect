@@ -8,8 +8,6 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
 
-import com.sun.tools.javac.code.Attribute.Array;
-
 public abstract class AbstractParameter<T>
 		implements Parameter {
 

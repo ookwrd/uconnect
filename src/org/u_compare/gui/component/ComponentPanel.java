@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -42,7 +43,6 @@ public class ComponentPanel extends JPanel implements
 	public static Color HIGHLIGHT_COLOR = new Color(16748574);
 	public static Color HIGHLIGHT_COLOR_2 = new Color(15631900);
 
-	protected JPanel innerPanel;
 	protected ComponentTitleBar topPanel;
 	protected JPanel outerPanel; // contains innerPanel et topPanel
 	
@@ -57,8 +57,6 @@ public class ComponentPanel extends JPanel implements
 	
 	public ComponentPanel(Component component,
 			ComponentController controller) {
-		
-		initialConfiguration(component, controller);
 		
 		// let the component have focus
 		this.setFocusable(true);
@@ -85,30 +83,40 @@ public class ComponentPanel extends JPanel implements
 					.registerSubComponentsChangedListener(this);
 		}
 		
-		//this.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR, BORDER_ROUNDING, BORDER_WIDTH, false));
-		this.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-
+		initialConfiguration(component, controller);
 		
-		innerPanel.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
-				BORDER_ROUNDING, BORDER_WIDTH, false));
-		
-		// TODO the outerPanel was supposed to implement the colored borders, but it turns out to ruin the layout 
 		outerPanel = new JPanel();
 		outerPanel.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
 				BORDER_ROUNDING, BORDER_WIDTH, false));
 		this.add(outerPanel);
+		
 		outerPanel.setOpaque(false);
 		outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.Y_AXIS));
 		
+		JPanel innerPanel = setupCardPanel();
+		JPanel card0 = setupCardPanel();
+		JPanel card1 = setupCardPanel();
+		JPanel card2 = setupCardPanel();
 		
-		outerPanel.add(getTitlePanel(false),BorderLayout.NORTH);
-		setupInnerPanel();
+		outerPanel.add(getTitlePanel(false, innerPanel),BorderLayout.NORTH);
 		
-		innerPanel.add(getDescriptionPanel());
-		innerPanel.add(getInputOutputPanel());
+		
+		JPanel descPanel = getDescriptionPanel();
+
+		JLabel test = new JLabel("boing");
+		
+		card2.add(descPanel);
+		innerPanel.add(descPanel);
+		card1.add(descPanel);
+		
+
+		card1.add(test);
+		innerPanel.add(test);
+		innerPanel.add(test);
+		
+		/*innerPanel.add(getInputOutputPanel());
 		
 		if(component.isAggregate()){
-			
 			JPanel subComponentsBorder = new JPanel();
 			subComponentsBorder.setLayout(new GridLayout());
 			subComponentsBorder.setOpaque(false);
@@ -119,8 +127,11 @@ public class ComponentPanel extends JPanel implements
 		}
 
 		innerPanel.add(getParametersPanel());
-		
+		*/
 		outerPanel.add(innerPanel);
+		//card0.setVisible(false); //Works
+		//outerPanel.add(card0);
+		//outerPanel.add(card1);
 		this.add(outerPanel);
 	}
 	
@@ -136,17 +147,18 @@ public class ComponentPanel extends JPanel implements
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layout);
 		
-		innerPanel = new JPanel();
+		if(!component.isWorkflow()){
+			this.setBorderColored(false);
+		}
 	}
 
-	//TODO can this be integrated into the initialConfiguration Method?
-	protected void setupInnerPanel(){
-		// set up an inner panel and its layout
-		BoxLayout innerLayout = new BoxLayout(innerPanel, BoxLayout.Y_AXIS);
-		innerPanel.setLayout(innerLayout);
-		innerPanel.setOpaque(false);
-		innerPanel.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
+	protected JPanel setupCardPanel(){
+		JPanel card = new JPanel();
+		card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+		card.setOpaque(false);
+		card.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
 				BORDER_WIDTH, BORDER_WIDTH));
+		return card;
 	}
 	
 	public void setBorderColored(boolean colored) {
@@ -158,8 +170,8 @@ public class ComponentPanel extends JPanel implements
 		}				
 	}
 	
-	protected JPanel getTitlePanel(boolean isWorkflow){		
-		return new ComponentTitleBar(controller, component, innerPanel, isWorkflow);
+	protected JPanel getTitlePanel(boolean isWorkflow, JPanel minimizable){		
+		return new ComponentTitleBar(controller, component, minimizable, isWorkflow);
 	}
 	
 	protected JPanel getDescriptionPanel(){	

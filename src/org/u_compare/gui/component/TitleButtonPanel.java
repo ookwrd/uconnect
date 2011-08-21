@@ -40,8 +40,7 @@ public class TitleButtonPanel extends JPanel implements
 		FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
 		setLayout(buttonLayout);
 
-		TitleButtonPanel.loadIcons(); // TODO figure out how to load the
-									// icons in a better way (xml ?)
+		TitleButtonPanel.loadIcons();
 
 		// set the buttons
 		ActionListener removeListener = new ActionListener(){

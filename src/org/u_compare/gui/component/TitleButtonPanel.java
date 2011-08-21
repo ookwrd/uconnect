@@ -1,5 +1,6 @@
 package org.u_compare.gui.component;
 
+import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.guiElements.ConfirmationButton;
 import org.u_compare.gui.guiElements.HighlightButton;
+import org.u_compare.gui.model.AbstractComponent.MinimizedStatusEnum;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
@@ -19,7 +21,7 @@ import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
 public class TitleButtonPanel extends JPanel implements
 		MinimizedStatusChangeListener, LockedStatusChangeListener {
 
-	private JPanel minimizeTarget;
+	private Minimizable minimizeTarget;
 	private ComponentController controller;
 	private Component component;
 
@@ -28,7 +30,7 @@ public class TitleButtonPanel extends JPanel implements
 	private ConfirmationButton removeButton;
 
 	public TitleButtonPanel(ComponentController controller, Component component,
-			JPanel minimizeTarget) {
+			Minimizable minimizeTarget ) {
 		super();
 
 		this.minimizeTarget = minimizeTarget;
@@ -105,18 +107,17 @@ public class TitleButtonPanel extends JPanel implements
 		switch (component.getMinimizedStatus()) {
 		case MINIMIZED:
 			this.minButton.setIcon(expIcon);
-			minimizeTarget.setVisible(false);
+			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.MINIMIZED);
 			break;
 			
 		case PARTIAL:
 			this.minButton.setIcon(maxIcon);
-			System.out.println("Partial view?");
-			//TODO
+			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.PARTIAL);
 			break;
 
 		case MAXIMIZED:
 			this.minButton.setIcon(minIcon);
-			minimizeTarget.setVisible(true);
+			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.MAXIMIZED);
 			break;
 		}
 	}

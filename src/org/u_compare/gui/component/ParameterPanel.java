@@ -1,4 +1,4 @@
-package org.u_compare.gui.component.parameters;
+package org.u_compare.gui.component;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

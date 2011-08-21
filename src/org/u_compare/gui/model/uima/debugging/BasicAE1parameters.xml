@@ -64,6 +64,15 @@
         <multiValued>true</multiValued>
         <mandatory>false</mandatory>
       </configurationParameter>
+      <commonParameters>
+        <configurationParameter>
+          <name>CommonInt</name>
+          <description>Integer</description>
+          <type>Integer</type>
+          <multiValued>false</multiValued>
+          <mandatory>false</mandatory>
+        </configurationParameter>
+      </commonParameters>
       <configurationGroup names="group1">
         <configurationParameter>
           <name>groupedparam</name>

@@ -20,6 +20,7 @@ public class InputOutputPanel extends JPanel {
 	
 	private JPanel inputPanel;
 	private JPanel outputPanel;
+	private JPanel languagePanel;
 	
 	private TypeListPanelController inputsController;
 	private TypeListPanelController outputsController;
@@ -48,9 +49,14 @@ public class InputOutputPanel extends JPanel {
 		
 		outputPanel.add(typeListPanel);
 		
-		setLayout(new GridLayout(1,2));
+		languagePanel = new JPanel();
+		languagePanel.setOpaque(false);
+		languagePanel.setBorder(new TitledBorder("Languages:"));
+		
+		setLayout(new GridLayout(1,3));
 		add(inputPanel);
 		add(outputPanel);
+		add(languagePanel);
 		
 	}
 }

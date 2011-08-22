@@ -123,4 +123,11 @@ public class ControlList extends JPanel {
 			list.setBorder(bord);
 		}
 	} 
+	
+	@Override
+	public void setEnabled(boolean enabled){
+		list.setEnabled(enabled);
+		//TODO Make sure the buttons are removed
+		//TODO Change the empty message to remove "click to edit"
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
 public class ConstraintTester {
 

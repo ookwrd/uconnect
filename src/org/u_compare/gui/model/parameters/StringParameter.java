@@ -1,6 +1,7 @@
 package org.u_compare.gui.model.parameters;
 
-import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
+import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
+
 
 public class StringParameter extends AbstractParameter<String>{
 

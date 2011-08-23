@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
-import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
+import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
 public interface Parameter {
 
@@ -30,8 +30,22 @@ public interface Parameter {
 	public void setValues(String[] values) throws ConstraintFailedException;
 	
 	public void registerParameterValueChangedListener(ParameterValueChangedListener listener);
+	
+	public interface ParameterValueChangedListener {
+		public void parameterSettingsChanged(Parameter param);
+	}
+	
 	public void registerParameterNameDescriptionChangedListener(ParameterNameDescriptionChangedListener listener);
+	
+	public interface ParameterNameDescriptionChangedListener {
+		public void parameterNameDescriptionChanged(Parameter param);
+	}
+	
 	public void registerParameterConfigurationChangedListener(ParameterConfigurationChangedListener listener);
+	
+	public interface ParameterConfigurationChangedListener {
+		public void parameterConfigurationChanged(Parameter param);
+	}
 	
 	/**
 	 * Must be called following construction.

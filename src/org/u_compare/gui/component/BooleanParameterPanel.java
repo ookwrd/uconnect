@@ -8,7 +8,7 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.BooleanParameter;
 import org.u_compare.gui.model.parameters.Parameter;
-import org.u_compare.gui.model.parameters.ParameterValueChangedListener;
+import org.u_compare.gui.model.parameters.Parameter.ParameterValueChangedListener;
 
 /**
  * TODO

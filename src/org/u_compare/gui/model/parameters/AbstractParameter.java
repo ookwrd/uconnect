@@ -6,7 +6,7 @@ import java.util.Arrays;
 import org.apache.uima.resource.metadata.ConfigurationParameter;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
-import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
+import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
 public abstract class AbstractParameter<T>
 		implements Parameter {

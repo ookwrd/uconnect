@@ -10,7 +10,6 @@ import org.apache.uima.analysis_engine.metadata.FixedFlow;
 import org.apache.uima.analysis_engine.metadata.FlowConstraints;
 import org.apache.uima.analysis_engine.metadata.FlowControllerDeclaration;
 import org.apache.uima.resource.ResourceCreationSpecifier;
-import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
 
 /**
@@ -268,17 +267,17 @@ public abstract class AbstractAggregateComponent extends
 		}
 	}
 	
-	protected ArrayList<Import> imports = new ArrayList<Import>();
-	
 	@Override
 	public ResourceCreationSpecifier getResourceCreationSpecifier(){
 		AnalysisEngineDescription retVal = (AnalysisEngineDescription)super.getResourceCreationSpecifier();
 		
 		if(flowConstraints instanceof FixedFlow){
 			String[] flowStrings = new String[subComponents.size()];
+			
+			//Every Component needs a unique identifier
 			for(int i = 0; i < subComponents.size(); i++){
 				
-				//Can we use the current identifier? Not strictly needed, but can't hurt
+				//Can we use the current identifier? Preserve it if possible
 				if(subComponents.get(i).getFlowControllerIdentifier()!=null){
 					String current = subComponents.get(i).getFlowControllerIdentifier();
 					
@@ -289,6 +288,7 @@ public abstract class AbstractAggregateComponent extends
 					}
 				}
 				
+				//Otherwise assign new identifier
 				String id = ""+i;
 				flowStrings[i] = id;
 				subComponents.get(i).setFlowControllerIdentifier(id);
@@ -296,6 +296,7 @@ public abstract class AbstractAggregateComponent extends
 			FixedFlow flow = (FixedFlow)flowConstraints;
 			flow.setFixedFlow(flowStrings);
 			retVal.getAnalysisEngineMetaData().setFlowConstraints(flow);
+			
 		}else{
 			System.err.println("Unknown flow Constraints type");
 			retVal.getAnalysisEngineMetaData().setFlowConstraints(flowConstraints);

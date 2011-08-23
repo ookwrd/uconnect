@@ -2,13 +2,11 @@ package org.u_compare.gui.component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import org.u_compare.gui.control.LanguageListPanelController;
 import org.u_compare.gui.guiElements.ControlList;
-import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LanguageChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;

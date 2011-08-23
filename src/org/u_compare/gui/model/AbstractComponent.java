@@ -264,7 +264,6 @@ public abstract class AbstractComponent implements Component {
 		
 		languages.add(language);
 		notifyLanguagesChangeListener();
-		
 	}
 	
 	@Override
@@ -287,10 +286,7 @@ public abstract class AbstractComponent implements Component {
 		
 		languages = languagesIn;
 		notifyLanguagesChangeListener();
-		
 	}
-	
-	
 	
 	@Override
 	public ArrayList<AnnotationTypeOrFeature> getInputTypes(){
@@ -317,8 +313,7 @@ public abstract class AbstractComponent implements Component {
 		}
 		
 		inputTypes.remove(inputType);
-		notifyInputOutputChangeListeners();
-		
+		notifyInputOutputChangeListeners();	
 	}
 	
 	@Override
@@ -347,8 +342,7 @@ public abstract class AbstractComponent implements Component {
 		}
 		
 		outputTypes.add(outputType);
-		notifyInputOutputChangeListeners();
-		
+		notifyInputOutputChangeListeners();	
 	}
 	
 	@Override

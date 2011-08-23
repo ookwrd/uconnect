@@ -11,7 +11,6 @@ import org.apache.uima.collection.CollectionProcessingEngine;
 import org.apache.uima.collection.EntityProcessStatus;
 import org.apache.uima.collection.StatusCallbackListener;
 import org.apache.uima.collection.impl.metadata.cpe.CpeDescriptorFactory;
-import org.apache.uima.collection.metadata.CasProcessorConfigurationParameterSettings;
 import org.apache.uima.collection.metadata.CpeCasProcessor;
 import org.apache.uima.collection.metadata.CpeCasProcessors;
 import org.apache.uima.collection.metadata.CpeCollectionReader;

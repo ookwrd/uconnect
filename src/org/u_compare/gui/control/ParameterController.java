@@ -13,7 +13,7 @@ import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.StringParameter;
-import org.u_compare.gui.model.parameters.constraints.ConstraintFailedException;
+import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
 public class ParameterController {
 

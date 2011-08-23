@@ -2,8 +2,6 @@ package org.u_compare.gui.model.parameters.constraints;
 
 import java.util.ArrayList;
 
-import org.u_compare.gui.model.parameters.InvalidInputException;
-
 /**
  * Abstract base class to extend when implementing parameter constraints.
  * 
@@ -12,6 +10,26 @@ import org.u_compare.gui.model.parameters.InvalidInputException;
  */
 public abstract class Constraint {
 
+	@SuppressWarnings("serial")
+	public class ConstraintFailedException extends Exception {
+
+		private String msgString;
+		
+		public ConstraintFailedException(String msgString){
+			this.msgString = msgString;
+		}
+		
+		public ConstraintFailedException(String msgString, Throwable cause){
+			super(cause);
+			this.msgString = msgString;
+		}
+		
+		public String getUserReadableError(){
+			return msgString;
+		}
+		
+	}
+	
 	/**
 	 * Everything fails by default.
 	 * 

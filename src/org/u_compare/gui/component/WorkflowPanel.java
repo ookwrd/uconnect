@@ -12,9 +12,9 @@ import org.u_compare.gui.guiElements.DragAndDrop;
 import org.u_compare.gui.model.Workflow;
 
 @SuppressWarnings("serial")
-public class WorkflowConstructionPanel extends ComponentPanel {
+public class WorkflowPanel extends ComponentPanel {
 	
-	public WorkflowConstructionPanel(Workflow component,
+	public WorkflowPanel(Workflow component,
 			ComponentController controller, boolean showWorkflowControlPanel,
 				boolean showWorkflowDetails, boolean showSavePanel){
 	

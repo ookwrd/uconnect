@@ -16,7 +16,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.Scrollable;
 
 import org.u_compare.gui.component.ComponentPanel;
-import org.u_compare.gui.component.WorkflowConstructionPanel;
+import org.u_compare.gui.component.WorkflowPanel;
 import org.u_compare.gui.model.Workflow;
 
 //TODO is this really needed as a seperate class? Isn't it just to add a scroll pane?
@@ -26,13 +26,14 @@ import org.u_compare.gui.model.Workflow;
  * 
  * @author pontus
  * @author olaf
+ * @author Luke 
  * @version 2009-08-26
  */
 
 @SuppressWarnings("serial")
 public class WorkflowPane extends JScrollPane implements Autoscroll,
 		Scrollable, MouseMotionListener {
-	private WorkflowConstructionPanel topComponent;
+	private WorkflowPanel topComponent;
 
 	// Configuration
 	private static final int HORIZONTAL_SCROLLBAR_POLICY =
@@ -46,7 +47,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 	// For dragging, observe the mouse and keep states for it here.
 	// Then observe the events and draw accordingly.
 
-	public WorkflowPane(WorkflowConstructionPanel topComponent) {
+	public WorkflowPane(WorkflowPanel topComponent) {
 		this.topComponent = topComponent;
 
 		this.setHorizontalScrollBarPolicy(

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Abstract base class to extend when implementing parameter constraints.
  * 
- * @author Luke Mccrohon
+ * @author Luke McCrohon
  *
  */
 public abstract class Constraint {

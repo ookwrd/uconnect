@@ -3,10 +3,10 @@ package org.u_compare.gui.component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
+import static org.u_compare.gui.component.IconFactory.*;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.guiElements.ConfirmationButton;
@@ -41,7 +41,7 @@ public class TitleButtonPanel extends JPanel implements
 		FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
 		setLayout(buttonLayout);
 
-		TitleButtonPanel.loadIcons();
+		IconFactory.loadIcons();
 
 		// set the buttons
 		ActionListener removeListener = new ActionListener(){
@@ -62,20 +62,20 @@ public class TitleButtonPanel extends JPanel implements
 			}
 		};
 		
-		minButton = new HighlightButton(minIcon);
+		minButton = new HighlightButton(getIcon(MIN_ICON));
 		minButton.setActionCommand("hide component");
 		minButton.addActionListener(minListener);
 		add(minButton);		
 				
-		lockButton = new HighlightButton(component.getLockedStatus() ? lockedIcon
-				: unlockedIcon);
+		lockButton = new HighlightButton(component.getLockedStatus() ? getIcon(LOCKED_ICON)
+				: getIcon(UNLOCKED_ICON));
 		lockButton.setActionCommand("show component");//needed <- olaf why?
 		lockButton.addActionListener(lockListener);
 		if (controller.allowEditing()) {
 			add(lockButton);
 		}
 		
-		removeButton = new ConfirmationButton(new HighlightButton(closeIcon), "Remove?");
+		removeButton = new ConfirmationButton(new HighlightButton(getIcon(CLOSE_ICON)), "Remove?");
 		removeButton.setActionCommand("remove component"); //needed <- olaf why?
 		removeButton.addActionListener(removeListener);
 		if(controller.allowEditing()){
@@ -105,17 +105,17 @@ public class TitleButtonPanel extends JPanel implements
 
 		switch (component.getMinimizedStatus()) {
 		case MINIMIZED:
-			this.minButton.setIcon(expIcon);
+			this.minButton.setIcon(getIcon(EXP_ICON));
 			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.MINIMIZED);
 			break;
 			
 		case PARTIAL:
-			this.minButton.setIcon(maxIcon);
+			this.minButton.setIcon(getIcon(MAX_ICON));
 			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.PARTIAL);
 			break;
 
 		case MAXIMIZED:
-			this.minButton.setIcon(minIcon);
+			this.minButton.setIcon(getIcon(MIN_ICON));
 			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.MAXIMIZED);
 			break;
 		}
@@ -132,70 +132,16 @@ public class TitleButtonPanel extends JPanel implements
 	public void lockStatusChanged(Component component) {
 		if(component.equals(this.component)){
 			if (component.getLockedStatus()) {
-				this.lockButton.setIcon(lockedIcon);
-			//	this.removeButton.setEnabled(false);
+				this.lockButton.setIcon(getIcon(LOCKED_ICON));
 			} else {
-				this.lockButton.setIcon(unlockedIcon);
-			//	this.removeButton.setEnabled(true);
+				this.lockButton.setIcon(getIcon(UNLOCKED_ICON));
 			}
 		}else{//Need to check its the parent
 			if (component.getLockedStatus()) {
-			//	this.lockButton.setIcon(lockedIcon);
 				this.removeButton.setEnabled(false);
 			} else {
-			//	this.lockButton.setIcon(unlockedIcon);
 				this.removeButton.setEnabled(true);
 			}
 		}
-	}
-
-	private final static String ICON_CLOSE_PATH = "../gfx/close_icon_big.png";
-	private final static String ICON_MAX_PATH = "../gfx/icon_plus.gif";
-	private final static String ICON_EXP_PATH = "../gfx/icon_maximize1.png";
-	private final static String ICON_MIN_PATH = "../gfx/icon_minimize1.png";
-	private final static String ICON_LOCKED_PATH = "../gfx/icon_locked.png";
-	private final static String ICON_UNLOCKED_PATH = "../gfx/icon_unlocked.png";
-
-	private static boolean iconsLoaded = false;
-	private static ImageIcon minIcon;
-	private static ImageIcon expIcon;
-	private static ImageIcon maxIcon;
-	private static ImageIcon lockedIcon;
-	private static ImageIcon unlockedIcon;
-	private static ImageIcon closeIcon;
-
-	protected static synchronized void loadIcons() {
-		if (TitleButtonPanel.iconsLoaded == true) {
-			return;
-		}
-
-		URL image_url;//TODO remove references to ComponentPanel
-		image_url = ComponentPanel.class.getResource(TitleButtonPanel.ICON_MIN_PATH);
-		assert image_url != null;
-		TitleButtonPanel.minIcon = new ImageIcon(image_url, "Minimize");
-
-		image_url = ComponentPanel.class.getResource(TitleButtonPanel.ICON_MAX_PATH);
-		assert image_url != null;
-		TitleButtonPanel.maxIcon = new ImageIcon(image_url, "Maximize");
-		
-		image_url = ComponentPanel.class.getResource(TitleButtonPanel.ICON_EXP_PATH);
-		assert image_url != null;
-		TitleButtonPanel.expIcon = new ImageIcon(image_url, "Expand");
-
-		image_url = TitleButtonPanel.class.getResource(TitleButtonPanel.ICON_LOCKED_PATH);
-		assert image_url != null;
-		TitleButtonPanel.lockedIcon = new ImageIcon(image_url, "Lock");
-
-		image_url = ComponentPanel.class
-				.getResource(TitleButtonPanel.ICON_UNLOCKED_PATH);
-		assert image_url != null;
-		TitleButtonPanel.unlockedIcon = new ImageIcon(image_url, "Unlock");
-
-		image_url = TitleButtonPanel.class.getResource(TitleButtonPanel.ICON_CLOSE_PATH);
-		assert image_url != null;
-		TitleButtonPanel.closeIcon = new ImageIcon(image_url, "Remove");
-
-		TitleButtonPanel.iconsLoaded = true;
-		return;
 	}
 }

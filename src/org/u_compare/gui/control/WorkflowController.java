@@ -1,6 +1,6 @@
 package org.u_compare.gui.control;
 
-import org.u_compare.gui.component.WorkflowConstructionPanel;
+import org.u_compare.gui.component.WorkflowPanel;
 import org.u_compare.gui.model.Workflow;
 
 public class WorkflowController extends ComponentController {
@@ -12,14 +12,14 @@ public class WorkflowController extends ComponentController {
 		super(allowEditing);
 		
 		this.component = component;
-		this.componentView = new WorkflowConstructionPanel(component, this,
+		this.componentView = new WorkflowPanel(component, this,
 				showWorkflowControlPanel, showWorkflowDetails, showSavePanel);
 	}
 	
 	@Override
-	public WorkflowConstructionPanel getView(){
+	public WorkflowPanel getView(){
 		
-		return (WorkflowConstructionPanel)this.componentView;
+		return (WorkflowPanel)this.componentView;
 		
 	}
 	

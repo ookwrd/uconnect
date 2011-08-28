@@ -43,7 +43,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 		this.add(textPanel);
 
 		// Register Listeners
-		component.registerComponentDescriptionChangeListener(this);//TODO both of these should be moved to the control
+		component.registerComponentDescriptionChangeListener(this);
 		component.registerLockedStatusChangeListener(this);
 	}
 

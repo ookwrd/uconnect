@@ -1,10 +1,10 @@
 package org.u_compare.gui.component;
 
+import static org.u_compare.gui.component.IconFactory.*;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,22 +24,13 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 public class WorkflowControlPanel extends JPanel implements
 		WorkflowStatusListener {
 
-	public static final String ICON_RUN_PATH = "../gfx/icon_start.png";
-	public static final String ICON_STOP_PATH = "../gfx/icon_stop.png";
-	public static final String ICON_PAUSE_PATH = "../gfx/icon_pause.png";
-
 	private final static String STATUS_PREFIX = "Workflow Status: ";
+
 	private static final String RUN_TOOLTIPTEXT = "Run workflow";
 	private static final String PAUSED_TOOLTIPTEXT = "Resume Processing";
 	private static final String PAUSE_TOOLTIPTEXT = "Pause Processing";
 	private static final String STOP_TOOLTIPTEXT = "Stop workflow";
 	
-	private static boolean iconsLoaded = false;
-
-	private static ImageIcon runIcon;
-	private static ImageIcon stopIcon;
-	private static ImageIcon pauseIcon;
-
 	private WorkflowController controller;
 
 	private JLabel statusLabel;
@@ -76,15 +67,15 @@ public class WorkflowControlPanel extends JPanel implements
 		statusLabel.setPreferredSize(new Dimension(labelSize.width+40,labelSize.height));
 		this.add(statusLabel);
 
-		WorkflowControlPanel.loadIcons();
+		IconFactory.loadIcons();
 
 		// run button
-		runButton = new HighlightButton(runIcon);
+		runButton = new HighlightButton(getIcon(RUN_ICON));
 		runButton.addActionListener(playListener);
 		this.add(runButton);
 		
 		// stop button
-		stopButton = new HighlightButton(stopIcon);
+		stopButton = new HighlightButton(getIcon(STOP_ICON));
 		stopButton.addActionListener(stopListener);
 		this.add(stopButton);
 
@@ -94,30 +85,7 @@ public class WorkflowControlPanel extends JPanel implements
 		component.registerWorkflowStatusListener(this);
 	}
 	
-	protected static synchronized void loadIcons() {
-		if (WorkflowControlPanel.iconsLoaded == true) {
-			return;
-		}
 
-		URL image_url;
-		image_url = ComponentPanel.class
-				.getResource(WorkflowControlPanel.ICON_RUN_PATH);
-		assert image_url != null;
-		WorkflowControlPanel.runIcon = new ImageIcon(image_url, "Run");
-
-		image_url = ComponentPanel.class
-				.getResource(WorkflowControlPanel.ICON_STOP_PATH);
-		assert image_url != null;
-		WorkflowControlPanel.stopIcon = new ImageIcon(image_url, "Stop");
-
-		image_url = ComponentPanel.class
-				.getResource(WorkflowControlPanel.ICON_PAUSE_PATH);
-		assert image_url != null;
-		WorkflowControlPanel.pauseIcon = new ImageIcon(image_url, "Pause");
-
-		WorkflowControlPanel.iconsLoaded = true;
-		return;
-	}
 
 	private void stopButtonClicked() {
 		controller.workflowStopRequest();
@@ -139,14 +107,14 @@ public class WorkflowControlPanel extends JPanel implements
 		case FINISHED:
 			pauseMode = false;
 			runButton.setEnabled(true);
-			runButton.setIcon(runIcon);
+			runButton.setIcon(getIcon(RUN_ICON));
 			runButton.setToolTipText(RUN_TOOLTIPTEXT);
 			break;
 			
 		case PAUSED:
 			pauseMode = false;
 			runButton.setEnabled(true);
-			runButton.setIcon(runIcon);
+			runButton.setIcon(getIcon(RUN_ICON));
 			runButton.setToolTipText(PAUSED_TOOLTIPTEXT);
 			break;
 			
@@ -159,7 +127,7 @@ public class WorkflowControlPanel extends JPanel implements
 		case RUNNING:
 			pauseMode = true;
 			runButton.setEnabled(true);
-			runButton.setIcon(pauseIcon);
+			runButton.setIcon(getIcon(PAUSE_ICON));
 			runButton.setToolTipText(PAUSE_TOOLTIPTEXT);
 			break;
 		}

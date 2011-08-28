@@ -6,13 +6,14 @@ import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
-import java.net.URL;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import static org.u_compare.gui.component.IconFactory.*;
+
+import org.u_compare.gui.component.IconFactory;
 import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.guiElements.ButtonTabFlap;
 import org.u_compare.gui.guiElements.ButtonTabbedPane;
@@ -57,42 +58,14 @@ public class WorkflowViewer extends ButtonTabbedPane
 	
 	//XXX: We will conflict with the "Change tab" key shortcuts, override!
 	
-	private static boolean icons_loaded = false;
-
-	private static Icon WORKFLOW_STOPPED;
-	private static Icon WORKFLOW_RUNNING;
-	private static Icon WORKFLOW_FINISHED;
-	private static Icon WORKFLOW_PAUSED;
-	private static Icon WORKFLOW_ERROR;
-
-	private final static String WORKFLOW_STOPPED_PATH = 
-		"gfx/workflow_stopped.png";
-	private final static String WORKFLOW_RUNNING_PATH =
-		"gfx/workflow_running.gif";
-	private final static String WORKFLOW_FINISHED_PATH =
-		"gfx/workflow_finished.png";
-	private final static String WORKFLOW_PAUSED_PATH =
-		"gfx/workflow_paused.png";
-	private final static String WORKFLOW_ERROR_PATH =
-		"gfx/workflow_error.png";
-	
-	private final static String WORKFLOW_STOPPED_DESCRIPTION =
-		"The workflow is currently stopped";
-	private final static String WORKFLOW_RUNNING_DESCRIPTION =
-		"The workflow is currently running";
-	private final static String WORKFLOW_FINISHED_DESCRIPTION =
-		"The workflow has finished executioning";
-	private final static String WORKFLOW_PAUSED_DESCRIPTION =
-		"The workflow is currently paused";
-	private final static String WORKFLOW_ERROR_DESCRIPTION =
-		"An error has occured with this workflow";
 	private WorkflowViewerController controller;
 	
 	public WorkflowViewer(WorkflowViewerController controller) {
 		super();
 		
-		WorkflowViewer.load_icons();
-		assert WorkflowViewer.icons_loaded == true;
+		IconFactory.loadIcons();
+		
+		assert IconFactory.iconsLoaded == true;
 		
 		this.controller = controller;
 		
@@ -158,7 +131,7 @@ public class WorkflowViewer extends ButtonTabbedPane
 		};
 		
 		IconizedCloseableTabFlapComponent tabFlapComponent = 
-			new IconizedCloseableTabFlapComponent(this, WorkflowViewer.WORKFLOW_STOPPED, dropListener, WorkflowViewerController.ALLOW_TAB_CLOSE);
+			new IconizedCloseableTabFlapComponent(this, getIcon(STOPPED_ICON), dropListener, WorkflowViewerController.ALLOW_TAB_CLOSE);
 		
 		splitPane.linkTabbedPane(this, tabFlapComponent);
 		
@@ -239,19 +212,19 @@ public class WorkflowViewer extends ButtonTabbedPane
 					case RUNNING:
 					case LOADING:
 					case INITIALIZING:
-						this.setIconAt(i, WorkflowViewer.WORKFLOW_RUNNING);
+						this.setIconAt(i, getIcon(RUNNING_ICON));
 						break;
 					case READY:
-						this.setIconAt(i, WorkflowViewer.WORKFLOW_STOPPED);
+						this.setIconAt(i, getIcon(STOPPED_ICON));
 						break;
 					case ERROR:
-						this.setNotifactionIconAt(i, WorkflowViewer.WORKFLOW_ERROR);	
+						this.setNotifactionIconAt(i, getIcon(ERROR_ICON));	
 						break;
 					case PAUSED:
-						this.setIconAt(i, WorkflowViewer.WORKFLOW_PAUSED);
+						this.setIconAt(i, getIcon(PAUSED_ICON));
 						break;
 					case FINISHED:
-						this.setNotifactionIconAt(i, WorkflowViewer.WORKFLOW_FINISHED);	
+						this.setNotifactionIconAt(i, getIcon(FINISHED_ICON));	
 						break;
 					default:
 						assert false: "Unimplemented WorkflowStatus received";
@@ -272,48 +245,4 @@ public class WorkflowViewer extends ButtonTabbedPane
 		
 		}
 	}
-	
-
-	private static synchronized void load_icons() {
-		if (WorkflowViewer.icons_loaded == false) {
-			URL image_url;
-			
-			image_url = WorkflowViewer.class.getResource(
-					WorkflowViewer.WORKFLOW_STOPPED_PATH);
-			assert image_url != null;
-			WorkflowViewer.WORKFLOW_STOPPED = new ImageIcon(image_url,
-					WorkflowViewer.WORKFLOW_STOPPED_DESCRIPTION);
-			
-			image_url = WorkflowViewer.class.getResource(
-					WorkflowViewer.WORKFLOW_RUNNING_PATH);
-			assert image_url != null;
-			WorkflowViewer.WORKFLOW_RUNNING = new ImageIcon(image_url,
-					WorkflowViewer.WORKFLOW_RUNNING_DESCRIPTION);
-			
-			image_url = WorkflowViewer.class.getResource(
-					WorkflowViewer.WORKFLOW_FINISHED_PATH);
-			assert image_url != null;
-			WorkflowViewer.WORKFLOW_FINISHED = new ImageIcon(image_url,
-					WorkflowViewer.WORKFLOW_FINISHED_DESCRIPTION);
-			
-			image_url = WorkflowViewer.class.getResource(
-					WorkflowViewer.WORKFLOW_PAUSED_PATH);
-			assert image_url != null;
-			WorkflowViewer.WORKFLOW_PAUSED = new ImageIcon(image_url,
-					WorkflowViewer.WORKFLOW_PAUSED_DESCRIPTION);
-			
-			image_url = WorkflowViewer.class.getResource(
-					WorkflowViewer.WORKFLOW_ERROR_PATH);
-			assert image_url != null;
-			WorkflowViewer.WORKFLOW_ERROR = new ImageIcon(image_url,
-					WorkflowViewer.WORKFLOW_ERROR_DESCRIPTION);
-			
-			WorkflowViewer.icons_loaded = true;
-			return;
-		}
-		else {
-			return;
-		}
-	}
-
 }

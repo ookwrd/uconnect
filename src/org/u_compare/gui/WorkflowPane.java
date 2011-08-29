@@ -1,10 +1,14 @@
 package org.u_compare.gui;
 
+import java.awt.AWTEvent;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.dnd.Autoscroll;
+import java.awt.event.AWTEventListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
@@ -14,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Scrollable;
+import javax.swing.SwingUtilities;
 
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.component.WorkflowPanel;
@@ -76,6 +81,24 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 		topComponent.setAutoscrolls(true);
 		innerJPanel.setAutoscrolls(true);
 		 */
+		
+		 Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+             @Override
+             public void eventDispatched(AWTEvent event) {
+                     if(event instanceof MouseEvent){
+                             MouseEvent ev = (MouseEvent)event;
+                             MouseEvent out =
+                            	 SwingUtilities.convertMouseEvent((Component)(ev.getSource()), ev,
+                            			 WorkflowPane.this);
+
+                             System.out.println("Output " + out.getX() + " " + out.getY());
+                             if(!getBounds().contains(out.getPoint())){//TODO check this
+                                     return;
+                             }
+                     }
+
+             }
+		 }, AWTEvent.MOUSE_MOTION_EVENT_MASK);
 		
 		//Costs extra memory but dramatically improves scroll performance
 		this.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE); 

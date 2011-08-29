@@ -89,7 +89,6 @@ public class ConfigurationParametersPanel extends JPanel {
 				constraints.gridx=0;
 				constraints.gridy=i;
 				constraints.weightx = 0;
-				//constraints.anchor = GridBagConstraints.FIRST_LINE_END;
 				JLabel description = parameterPanel.getLabel();
 				innerPanel.add(description, constraints);
 				

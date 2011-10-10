@@ -984,6 +984,8 @@ public abstract class AbstractComponent implements Component {
 	
 	public static Component constructComponentFromXML(CpeInclude include){
 
+		//TODO this method is not guranteed to work
+		
         String path = include.getSourceUrlString();
         String pathBase = path.substring(0, path.lastIndexOf("/")+1);
 		
@@ -1007,8 +1009,13 @@ public abstract class AbstractComponent implements Component {
 			String classPathBasedLocation = name.replace('.', '/') + ".xml";
 
 			// TODO for kano replaced by actual class loader for each workflow
-			ClassLoader classLoader = AggregateAnalysisEngine.class.getClassLoader();
+			ClassLoader classLoader = AbstractComponent.class.getClassLoader();
 			URL resource = classLoader.getResource(classPathBasedLocation);
+			
+			System.out.println("location: " + classPathBasedLocation);
+			//System.out.println("classPath "+ System.getProperties().getProperty("java.class.path"));
+			System.out.println("Is resource null? " + resource);
+			
 			try {
 				XMLInputSource xmlInputSource = new XMLInputSource(resource);
 				Component subComponent = AbstractComponent.constructComponentFromXML(xmlInputSource);
@@ -1020,7 +1027,7 @@ public abstract class AbstractComponent implements Component {
 				return null;
 			}
 		} else {
-			//Assuming location contains a relative path TODO check its really relative
+			//This assumes location contains a relative path TODO check if its really relative
 			String path = imp.getSourceUrlString();
 			String pathBase = path.substring(0, path.lastIndexOf("/")+1);
 			return AbstractComponent.constructComponentFromXML(pathBase+imp.getLocation());

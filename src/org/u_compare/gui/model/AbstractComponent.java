@@ -1,6 +1,7 @@
 package org.u_compare.gui.model;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,6 +11,7 @@ import org.apache.uima.analysis_engine.TypeOrFeature;
 import org.apache.uima.collection.CasConsumerDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescription;
+import org.apache.uima.collection.metadata.CpeInclude;
 import org.apache.uima.resource.ResourceCreationSpecifier;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.URISpecifier;
@@ -19,6 +21,7 @@ import org.apache.uima.resource.metadata.ConfigurationParameter;
 import org.apache.uima.resource.metadata.ConfigurationParameterDeclarations;
 import org.apache.uima.resource.metadata.ConfigurationParameterSettings;
 import org.apache.uima.resource.metadata.FsIndexCollection;
+import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.OperationalProperties;
 import org.apache.uima.resource.metadata.ProcessingResourceMetaData;
 import org.apache.uima.resource.metadata.ResourceManagerConfiguration;
@@ -979,6 +982,99 @@ public abstract class AbstractComponent implements Component {
 		setParameterGroups(groups);	
 	}
 	
+	public static Component constructComponentFromXML(CpeInclude include){
+
+        String path = include.getSourceUrlString();
+        String pathBase = path.substring(0, path.lastIndexOf("/")+1);
+		
+		String pathname = include.get();
+
+		System.out.println("include" + include);
+		System.out.println("URL " + include.getSourceUrlString());
+		
+		pathname = pathname.replace('\\', '/');//TODO
+		System.out.println("finalComp" + pathBase+"../../" +pathname);
+		return AbstractComponent.constructComponentFromXML(pathBase+"../../" +pathname);
+		
+	}
+	
+	public static Component constructComponentFromXML(Import imp){
+		String name = imp.getName();
+
+		if(name != null){
+			// example: <import name="some.classpath.based.path.without.extension.and.dot.delimted">
+			// <import name> field is without .xml, and separated with dot but not slash
+			String classPathBasedLocation = name.replace('.', '/') + ".xml";
+
+			// TODO for kano replaced by actual class loader for each workflow
+			ClassLoader classLoader = AggregateAnalysisEngine.class.getClassLoader();
+			URL resource = classLoader.getResource(classPathBasedLocation);
+			try {
+				XMLInputSource xmlInputSource = new XMLInputSource(resource);
+				Component subComponent = AbstractComponent.constructComponentFromXML(xmlInputSource);
+				return subComponent;
+			} catch (IOException e) {
+				System.err.println("IOException in " + AbstractComponent.class.getName() + 
+						" due to reading import name field : " + resource );
+				e.printStackTrace();
+				return null;
+			}
+		} else {
+			//Assuming location contains a relative path TODO check its really relative
+			String path = imp.getSourceUrlString();
+			String pathBase = path.substring(0, path.lastIndexOf("/")+1);
+			return AbstractComponent.constructComponentFromXML(pathBase+imp.getLocation());
+		}
+		
+		/*System.out.println();
+		System.out.println("Name" + imp.getName());
+		System.out.println("Location" + imp.getLocation());
+		System.out.println("Source URL" + imp.getSourceUrlString());
+		
+        String location = imp.getLocation();
+        if(location == null){
+                //TODO why this offset?
+                location = "../../" + imp.getName().replace('.', '/') + ".xml";
+
+            	System.out.println("Was null");
+        } else{
+        	System.out.println("Not null");
+        }
+        
+        String path = imp.getSourceUrlString();
+        String pathBase = path.substring(0, path.lastIndexOf("/")+1);
+        
+        return constructComponentFromXML(pathBase+location);*/
+        
+		/*System.out.println("SourceURL" + reader.getSourceUrl());
+		
+		Import imp = reader.getDescriptor().getImport();
+		String classPathBasedLocation = imp.getLocation();
+		
+		
+		if(classPathBasedLocation == null){//TODO check this should be null and not an empty string
+			String name = imp.getName();
+			classPathBasedLocation = name.replace('.', '/') + ".xml";
+		}
+		
+		System.out.println("location" + classPathBasedLocation);
+		
+	    ClassLoader classLoader = CPE.class.getClassLoader();
+	    URL resource = classLoader.getResource(classPathBasedLocation);
+		
+	    System.out.println("Resource " + resource);
+	    
+        try {
+			XMLInputSource xmlInputSource = new XMLInputSource(resource);
+			comp = AbstractComponent.constructComponentFromXML(xmlInputSource);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			comp = null;
+			e.printStackTrace();
+		}*/
+		
+	}
+	
 	public static Component constructComponentFromXML(String descriptorLocation){ 
 		try {
 			return constructComponentFromXML(new XMLInputSource(descriptorLocation));
@@ -1039,13 +1135,14 @@ public abstract class AbstractComponent implements Component {
 				
 			}  else if (resourceSpecifier instanceof CpeDescription){
 				
+				//TODO
 				System.out.println("yep its a cpedescription");
 				
 				return null;
 				
 			} else {
 
-				System.out.println("Unrecognized " + resourceSpecifier.getClass());
+				System.err.println("In " + AbstractComponent.class.getName() + " unrecognized " + resourceSpecifier.getClass());
 				return null;
 			}
 	}

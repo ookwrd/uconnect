@@ -1,5 +1,7 @@
 package org.u_compare.gui.model;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.apache.uima.util.XMLizable;
 import org.u_compare.gui.model.uima.CPE;
+import org.xml.sax.SAXException;
 
 /**
  * Model class representing a UIMA Workflow. The workflow is modelled as a
@@ -114,41 +117,6 @@ public class Workflow extends AbstractAggregateComponent  {
 		notifyWorkflowStatusListeners();
 	}
 	
-	public static Workflow constructWorkflowFromXML(String location){
-		try {
-			return constructWorkflowFromXML(new XMLInputSource(location));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static Workflow constructWorkflowFromXML(XMLInputSource inputSource){
-		
-		try {
-			XMLizable desc = UIMAFramework.getXMLParser().parse(inputSource);
-		
-			if(desc instanceof CpeDescription){
-				return new CPE((CpeDescription)desc);
-			} else {
-				
-				System.out.println("Workflow.constructWorkflowFromXML: Its in here " + desc.getClass());
-				//TODO error //TODO AS workflow
-				return null;
-			}
-			
-		} catch (InvalidXMLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (CpeDescriptorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
 	/**
 	 * Registers a new class to listen to workflowStatusListener changes.
 	 * 
@@ -180,6 +148,58 @@ public class Workflow extends AbstractAggregateComponent  {
 	public MetaDataObject getWorkflowDescription(){
 		System.out.println("Abstract Workflow unable to produce description object.");
 		return null;
+	}
+	
+	protected String toFile(XMLizable xml){
+		try {
+			final File file = File.createTempFile("UConnect-temp", ".xml");
+			file.deleteOnExit();
+			FileWriter writer = new FileWriter(file);
+			xml.toXML(writer);
+			writer.close();
+			return file.getAbsolutePath();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+		assert(false);
+		return null;
+	}
+	
+	public static Workflow constructWorkflowFromXML(String location){
+		try {
+			return constructWorkflowFromXML(new XMLInputSource(location));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Workflow constructWorkflowFromXML(XMLInputSource inputSource){
+		
+		try {
+			XMLizable desc = UIMAFramework.getXMLParser().parse(inputSource);
+		
+			if(desc instanceof CpeDescription){
+				return new CPE((CpeDescription)desc);
+			} else {
+				
+				System.out.println("Workflow.constructWorkflowFromXML(): Its in here TODO should be consructing AS Workflow" + desc.getClass());
+				//TODO error //TODO AS workflow
+				return null;
+			}
+			
+		} catch (InvalidXMLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (CpeDescriptorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
 

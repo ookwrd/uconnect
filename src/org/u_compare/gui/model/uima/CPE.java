@@ -42,20 +42,16 @@ public class CPE extends Workflow implements StatusCallbackListener {
 	
 	public CPE(CpeDescription desc) throws CpeDescriptorException{
 		
-		System.out.println("CPE Constructor");
-		
 		collectionReaders = desc.getAllCollectionCollectionReaders();
 		for(CpeCollectionReader reader : collectionReaders){
 			
 			Component comp;
 			if(reader.getDescriptor().getImport() != null){
 				
-				System.out.println("Import reader");
 				comp = AbstractComponent.constructComponentFromXML(reader.getDescriptor().getImport());
 				
 			} else if (reader.getDescriptor().getInclude() != null){
 
-				System.out.println("Include reader");
 				comp = AbstractComponent.constructComponentFromXML(reader.getDescriptor().getInclude());
 				
 			} else {
@@ -72,12 +68,10 @@ public class CPE extends Workflow implements StatusCallbackListener {
 			Component comp;
 			if(processor.getCpeComponentDescriptor().getImport()!=null){
 				
-				System.out.println("Import component");
 				comp = AbstractComponent.constructComponentFromXML(processor.getCpeComponentDescriptor().getImport());
 				
 			} else if (processor.getCpeComponentDescriptor().getInclude() != null){
 
-				System.out.println("Include component");
 				comp = AbstractComponent.constructComponentFromXML(processor.getCpeComponentDescriptor().getInclude());
 
 			} else {

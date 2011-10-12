@@ -1012,10 +1012,6 @@ public abstract class AbstractComponent implements Component {
 			ClassLoader classLoader = AbstractComponent.class.getClassLoader();
 			URL resource = classLoader.getResource(classPathBasedLocation);
 			
-			System.out.println("location: " + classPathBasedLocation);
-			//System.out.println("classPath "+ System.getProperties().getProperty("java.class.path"));
-			System.out.println("Is resource null? " + resource);
-			
 			try {
 				XMLInputSource xmlInputSource = new XMLInputSource(resource);
 				Component subComponent = AbstractComponent.constructComponentFromXML(xmlInputSource);
@@ -1032,54 +1028,6 @@ public abstract class AbstractComponent implements Component {
 			String pathBase = path.substring(0, path.lastIndexOf("/")+1);
 			return AbstractComponent.constructComponentFromXML(pathBase+imp.getLocation());
 		}
-		
-		/*System.out.println();
-		System.out.println("Name" + imp.getName());
-		System.out.println("Location" + imp.getLocation());
-		System.out.println("Source URL" + imp.getSourceUrlString());
-		
-        String location = imp.getLocation();
-        if(location == null){
-                //TODO why this offset?
-                location = "../../" + imp.getName().replace('.', '/') + ".xml";
-
-            	System.out.println("Was null");
-        } else{
-        	System.out.println("Not null");
-        }
-        
-        String path = imp.getSourceUrlString();
-        String pathBase = path.substring(0, path.lastIndexOf("/")+1);
-        
-        return constructComponentFromXML(pathBase+location);*/
-        
-		/*System.out.println("SourceURL" + reader.getSourceUrl());
-		
-		Import imp = reader.getDescriptor().getImport();
-		String classPathBasedLocation = imp.getLocation();
-		
-		
-		if(classPathBasedLocation == null){//TODO check this should be null and not an empty string
-			String name = imp.getName();
-			classPathBasedLocation = name.replace('.', '/') + ".xml";
-		}
-		
-		System.out.println("location" + classPathBasedLocation);
-		
-	    ClassLoader classLoader = CPE.class.getClassLoader();
-	    URL resource = classLoader.getResource(classPathBasedLocation);
-		
-	    System.out.println("Resource " + resource);
-	    
-        try {
-			XMLInputSource xmlInputSource = new XMLInputSource(resource);
-			comp = AbstractComponent.constructComponentFromXML(xmlInputSource);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			comp = null;
-			e.printStackTrace();
-		}*/
-		
 	}
 	
 	public static Component constructComponentFromXML(String descriptorLocation){ 

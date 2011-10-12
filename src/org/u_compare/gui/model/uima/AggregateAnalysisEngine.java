@@ -1,13 +1,10 @@
 package org.u_compare.gui.model.uima;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Map;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.metadata.Import;
 import org.apache.uima.resource.metadata.MetaDataObject;
-import org.apache.uima.util.XMLInputSource;
 import org.u_compare.gui.model.AbstractAggregateComponent;
 import org.u_compare.gui.model.AbstractComponent;
 import org.u_compare.gui.model.Component;
@@ -32,5 +29,4 @@ public class AggregateAnalysisEngine extends AbstractAggregateComponent {
 		resourceManagerConfiguration =
 			desc.getResourceManagerConfiguration();
 	}
-
 }

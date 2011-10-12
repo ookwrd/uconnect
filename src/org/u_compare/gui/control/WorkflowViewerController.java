@@ -66,7 +66,7 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 	public static WorkflowFactory defaultWorkflowFactory = new WorkflowFactory(){
 		@Override
 		public Workflow constructWorkflow() {
-			Workflow workflow = new Workflow();
+			Workflow workflow = new Workflow();//TODO should be set with a CPE 
 			workflow.setName("Untitled Workflow (Double-Click to edit)");
 			workflow.setDescription("This is not a real UIMA Workflow. Set WorkflowPaneController's defaultWorkflowFactory." +
 					"" +

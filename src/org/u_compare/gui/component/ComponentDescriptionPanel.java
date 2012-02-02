@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.DragAndDropController;
 import org.u_compare.gui.guiElements.EditableTextPanel;
-import org.u_compare.gui.guiElements.DragAndDrop;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
@@ -36,7 +36,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 			}
 		});
 		
-		DragAndDrop.registerDragSource(textPanel.getContent(),controller);
+		DragAndDropController.registerDragSource(textPanel.getContent(),controller);
 		
 		setLayout(new BorderLayout());
 		setOpaque(false);

@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.control.ComponentController;
+import org.u_compare.gui.control.DragAndDropController;
 import org.u_compare.gui.guiElements.EditableTextField;
-import org.u_compare.gui.guiElements.DragAndDrop;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
 
@@ -36,7 +36,7 @@ public class TitlePanel extends JPanel implements DescriptionChangeListener {
 		
 		titleField = new EditableTextField(component.getName());
 	
-		DragAndDrop.registerDragSource(titleField, controller);
+		DragAndDropController.registerDragSource(titleField, controller);
 		
 		if (isWorkflow) {
 			titleField.setFont(titleFont);

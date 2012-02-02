@@ -3,8 +3,7 @@ package org.u_compare.gui.control;
 import java.awt.Container;
 import java.util.ArrayList;
 import org.u_compare.gui.component.ComponentPanel;
-import org.u_compare.gui.guiElements.DragAndDrop;
-import org.u_compare.gui.guiElements.DragAndDrop.DragController;
+import org.u_compare.gui.control.DragAndDropController.DragController;
 import org.u_compare.gui.model.AbstractAggregateComponent.InvalidPositionException;
 import org.u_compare.gui.model.AbstractComponent.MinimizedStatusEnum;
 import org.u_compare.gui.model.AggregateComponent;
@@ -19,7 +18,7 @@ import org.u_compare.gui.model.Component;
  * @author Luke McCrohon
  *
  */
-public class ComponentController implements DragController {
+public class ComponentController implements DragAndDropController.DragController {
 
 	//The model corresponding to this class
 	protected Component component;
@@ -53,7 +52,7 @@ public class ComponentController implements DragController {
 		this.component = component;
 		this.componentView = new ComponentPanel(component, this);
 		
-		DragAndDrop.registerDragSource(componentView, this);//TODO only if editable
+		DragAndDropController.registerDragSource(componentView, this);//TODO only if editable
 	}
 	
 	private void setParent(ComponentController parent){
@@ -386,7 +385,7 @@ public class ComponentController implements DragController {
 	@Override
 	public void setDragged(){
 		componentView.requestFocusInWindow();
-		DragAndDropController.getController().setDragged(this);//TODO show be using the model not the control to store
+		DragAndDropController.getController().setDragged(this);//TODO should be using the model not the control to store
 	}
 	
 

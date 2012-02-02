@@ -12,8 +12,6 @@ import org.u_compare.gui.library.LibraryPane;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.uima.CPE;
 
-import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor.Work;
-
 /**
  * TODO: XXX:
  * 

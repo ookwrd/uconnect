@@ -3,7 +3,6 @@ package org.u_compare.gui.control;
 import java.awt.Container;
 import java.util.ArrayList;
 import org.u_compare.gui.component.ComponentPanel;
-import org.u_compare.gui.control.DragAndDropController.DragController;
 import org.u_compare.gui.model.AbstractAggregateComponent.InvalidPositionException;
 import org.u_compare.gui.model.AbstractComponent.MinimizedStatusEnum;
 import org.u_compare.gui.model.AggregateComponent;

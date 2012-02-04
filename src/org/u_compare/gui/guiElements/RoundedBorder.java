@@ -13,12 +13,9 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO can this be replaced by a line border with rounded edges?
-
 /**
- * A border with cute rounded edges.
+ * A border with rounded edges. Used in place of LineBorder with rounded corners as it gives more flexibility in setting the degree of corner rounding.
  * 
- * @author <a href="mailto:jesse@swank.ca">Jesse Wilson</a>
  */
 public class RoundedBorder implements Border {
 

@@ -272,8 +272,7 @@ public class ComponentPanel extends JPanel implements
 	
 	public Workflow getWorkflow() {
 		if (this.component.isWorkflow() == false) {
-			//TODO: The proper exception here
-			throw new IllegalArgumentException(
+			throw new UnsupportedOperationException(
 					"Can't get the workflow "
 					+ "from a non-workflow ComponentPanel");
 		}

@@ -98,7 +98,7 @@ public class TitleButtonPanel extends JPanel implements
 	}
 
 	protected void toggleLock() {
-		controller.setLocked(!controller.isLocked());//TODO add toggleLocked to the controller
+		controller.toggleLocked();
 	}
 
 	protected void setMinimizedStatus() {

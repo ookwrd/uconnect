@@ -386,14 +386,12 @@ public class ComponentController implements DragAndDropController.DragController
 	@Override
 	public void setDragged(){
 		componentView.requestFocusInWindow();
-		DragAndDropController.getController().setDragged(this);//TODO should be using the model not the control to store
+		DragAndDropController.getController().setDragged(this);
 	}
 	
-
-	
-	public void setDragEnter(){
+	public void setDragEnter(){//TODO I don't think this is ever reached.
 		
-		System.out.println("ComponentDragEnter");
+		System.out.println("In setDragEnter");
 		
 		if(droppableOnComponent()){
 			componentView.setDragOverHighlightingDroppableLight();

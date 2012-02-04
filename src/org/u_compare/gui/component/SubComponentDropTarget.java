@@ -3,9 +3,7 @@ package org.u_compare.gui.component;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
+import java.awt.dnd.DragSource;
 import java.net.URL;
 
 import javax.swing.Icon;
@@ -34,15 +32,8 @@ public class SubComponentDropTarget extends JPanel {
 	private static String intermediateDropTargetIconCaption = "XXX"; // TODO:
 
 	private final static String intermediateDropTargetIconPath = "../gfx/intermediate_drop_target_icon.png";
-	private final static String droppableCursorImagePath = //System.getProperty("user.dir")+"/src/org/u_compare/gui"+
-		"../gfx/droppable.gif";
 	
 	private JLabel solitaryLabel = new JLabel("(Drag and drop a component here)");
-
-	private static Toolkit toolkit;
-	private static Image image;
-	private static Point hotSpot;
-	private static Cursor droppableCursor;
 
 	public SubComponentDropTarget(DropTargetController controller) {
 		super();
@@ -67,14 +58,10 @@ public class SubComponentDropTarget extends JPanel {
 		setBackground(Color.LIGHT_GRAY);
 		setOpaque(true);
 		this.repaint();
-
-		// also change the cursor
-		//Cursor cursor = new Cursor(Cursor.CROSSHAIR_CURSOR);
-		setCursor(droppableCursor);
-		System.out.println("Cursor is droppableCursor");
+		setCursor(DragSource.DefaultMoveDrop);
 	}
 
-	public void highlightLocationsDroppable() {
+	public void highlightLocationsDroppable() {//TODO I don't think this is ever reached
 		setBackground(Color.CYAN);
 		setOpaque(true);
 		this.repaint();
@@ -88,19 +75,13 @@ public class SubComponentDropTarget extends JPanel {
 		setBackground(Color.RED);
 		setOpaque(true);
 		this.repaint();
-
-		// also change the cursor
-		Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
-		setCursor(cursor);
+		setCursor(DragSource.DefaultMoveNoDrop);
 	}
 
 	public void clearDragOverHighlighting() {
 		this.setOpaque(false);
 		this.repaint();
-
-		// also change the cursor
-		Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
-		setCursor(cursor);
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	/**
@@ -141,21 +122,6 @@ public class SubComponentDropTarget extends JPanel {
 		SubComponentDropTarget.intermediateDropTargetIcon = new ImageIcon(image_url,
 				SubComponentDropTarget.intermediateDropTargetIconCaption);
 
-		//mouse cursor
-		image_url = IconizedCloseableTabFlapComponent.class
-		.getResource(SubComponentDropTarget.droppableCursorImagePath);
-		
-		toolkit = Toolkit.getDefaultToolkit();    
-		ImageIcon imageIcon = new ImageIcon("droppable.gif");//TODO check path ??
-		image = imageIcon.getImage();//toolkit.getImage("droppableCursorImagePath");
-		hotSpot = new Point(0,0);
-		droppableCursor = toolkit.createCustomCursor(image, hotSpot, "droppable");
-		System.out.println("Cursor created from "+droppableCursorImagePath);
-		
-		//assert image_url != null;
-		//SubComponentDropTarget.droppableCursorImage = new ImageIcon(image_url,
-		//		SubComponentDropTarget.droppableCursorImageCaption);
-		
 		iconsLoaded = true;
 		return;
 	}

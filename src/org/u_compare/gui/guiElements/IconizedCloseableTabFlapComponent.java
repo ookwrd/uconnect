@@ -2,6 +2,7 @@ package org.u_compare.gui.guiElements;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
@@ -36,6 +37,23 @@ import javax.swing.plaf.basic.BasicButtonUI;
 @SuppressWarnings("serial")
 public class IconizedCloseableTabFlapComponent
 		extends JPanel implements ActionListener {
+	
+	private static final Icon EMPTY_ICON = new Icon() {//An empty icon.
+		@Override
+		public void paintIcon(java.awt.Component c, Graphics g, int x, int y) {
+		}
+		@Override
+		public int getIconWidth() {
+			return 16;
+		}
+		@Override
+		public int getIconHeight() {
+			return 16;
+		}
+	};
+	
+	
+	
 	/* The pane that holds this tab */
 	private final JTabbedPane parentPane;
 	private JLabel statusIconLabel;
@@ -73,7 +91,7 @@ public class IconizedCloseableTabFlapComponent
 		
 		IconizedCloseableTabFlapComponent.loadIcons();
 		assert IconizedCloseableTabFlapComponent.iconsLoaded == true:
-			"Failed to lab tab icons";
+			"Failed to load tab icons";
 		
 		if(parentPane == null) {
 			throw new IllegalArgumentException(
@@ -240,5 +258,21 @@ public class IconizedCloseableTabFlapComponent
 	 */
 	public boolean iconIsNotification(){
 		return iconIsNotification;
+	}
+	
+	/**
+	 * If the icon is a notification icon, clear it.
+	 */
+	public void clearNotification(){
+		if(iconIsNotification){
+			clearIcon();
+		}
+	}
+	
+	/**
+	 * Clear the current icon.
+	 */
+	public void clearIcon(){
+		setStatusIcon(EMPTY_ICON, false);
 	}
 }

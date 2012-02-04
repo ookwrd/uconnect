@@ -259,7 +259,7 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 	}
 	
 	private void closeWorkflow(Workflow workflow){
-		tabbedPane.removeWorkflow(workflow);
+		tabbedPane.confirmedRemoveWorkflow(workflow);
 	}
 	
 	private void saveWorkflow(Workflow workflow){

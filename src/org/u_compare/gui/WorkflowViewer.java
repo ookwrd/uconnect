@@ -1,6 +1,5 @@
 package org.u_compare.gui;
 
-import java.awt.Graphics;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
@@ -23,7 +22,7 @@ import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
- * Handles workflow tabs.
+ * Handles tabbing for multiple workflows.
  * 
  * @author pontus
  * @author luke
@@ -31,24 +30,9 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
  */
 
 @SuppressWarnings("serial")
-//TODO: Enable scrolling among tabs
 //TODO: Should have mnemonics
 public class WorkflowViewer extends ButtonTabbedPane
 	implements WorkflowStatusListener, ChangeListener {
-	
-	private static final Icon EMPTY_ICON = new Icon() {//An empty icon.
-		@Override
-		public void paintIcon(java.awt.Component c, Graphics g, int x, int y) {
-		}
-		@Override
-		public int getIconWidth() {
-			return 16;
-		}
-		@Override
-		public int getIconHeight() {
-			return 16;
-		}
-	};
 	
 	// Configuration
 	private static final String TOOLTIP_TEXT =
@@ -155,7 +139,7 @@ public class WorkflowViewer extends ButtonTabbedPane
 	 */
 	public void setNotifactionIconAt(int index, Icon icon){
 		if(index == getSelectedIndex()){
-			clearIconAt(index);
+			((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index)).clearIcon();//Clear anything preexisting
 			return;
 		}
 		
@@ -174,16 +158,13 @@ public class WorkflowViewer extends ButtonTabbedPane
 	public void clearNotificationIconAt(int index){
 		if(this.getTabComponentAt(index) instanceof IconizedCloseableTabFlapComponent){
 			IconizedCloseableTabFlapComponent tab = ((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index));
-			if(tab.iconIsNotification()){
-				clearIconAt(index);
-			}
+			tab.clearNotification();
 		}
 	}
 	
-	public void clearIconAt(int index){
-		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index)).setStatusIcon(EMPTY_ICON, false);
-	}
-	
+	/**
+	 * Handles user request to close tab i. Checks with associated controller.
+	 */
 	@Override
 	public void remove(int i) {
 		controller.requestWorkflowClose(
@@ -191,15 +172,6 @@ public class WorkflowViewer extends ButtonTabbedPane
 				.getWorkflowPane().getAssociatedWorkflow());
 	}
 	
-	// Use this instead of the internal one to conform with our selection
-	// policies.
-	private void safeRemove(int i) {
-		//TODO Check with the control
-		super.remove(i);
-	}
-	
-	//TODO: We also need a safe add!
-
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
 		for (int i = 0; i < numberOfNonButtonTabs(); i++) {
@@ -233,13 +205,18 @@ public class WorkflowViewer extends ButtonTabbedPane
 		}
 	}
 	
-	public void removeWorkflow(Workflow workflow) {
+	/**
+	 * Should only be called from the control.
+	 * 
+	 * @param workflow
+	 */
+	public void confirmedRemoveWorkflow(Workflow workflow) {
 		for (int i = 0; i < numberOfNonButtonTabs(); i++) {
 			WorkflowHorizontalSplitPane currentComponent =
 				(WorkflowHorizontalSplitPane) this.getComponentAt(i); 
 			if (currentComponent.getWorkflowPane()
 					.getAssociatedWorkflow().equals(workflow)) {
-				this.safeRemove(i);
+				super.remove(i);
 				break;
 			}
 		

@@ -24,8 +24,6 @@ import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.component.WorkflowPanel;
 import org.u_compare.gui.model.Workflow;
 
-//TODO is this really needed as a seperate class? Isn't it just to add a scroll pane?
-
 /**
  * Contains all workflow related components.
  * 

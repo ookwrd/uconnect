@@ -36,7 +36,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
  */
 @SuppressWarnings("serial")
 public class IconizedCloseableTabFlapComponent
-		extends JPanel implements ActionListener {
+		extends JPanel {
 	
 	private static final Icon EMPTY_ICON = new Icon() {//An empty icon.
 		@Override
@@ -51,8 +51,6 @@ public class IconizedCloseableTabFlapComponent
 			return 16;
 		}
 	};
-	
-	
 	
 	/* The pane that holds this tab */
 	private final JTabbedPane parentPane;
@@ -140,7 +138,14 @@ public class IconizedCloseableTabFlapComponent
 			close_button.setUI(new BasicButtonUI());
 			close_button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 			close_button.setOpaque(false);
-			close_button.addActionListener(this);
+			close_button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int i = parentPane.indexOfTabComponent(IconizedCloseableTabFlapComponent.this);
+					if (i != -1) {
+						parentPane.remove(i);
+					}
+				}
+			});
 			
 			// Roll-over is Java terminology for mouse over
 			close_button.setRolloverEnabled(true);
@@ -178,6 +183,9 @@ public class IconizedCloseableTabFlapComponent
 		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 0, 0));
 	}
 	
+	/**
+	 * Adds mouse listener to all subcomponents.
+	 */
 	@Override
 	public void addMouseListener(MouseListener listener){
 		super.addMouseListener(listener);
@@ -190,53 +198,6 @@ public class IconizedCloseableTabFlapComponent
 			close_button.setIcon(IconizedCloseableTabFlapComponent.closeTabIcon);
 		}else{
 			close_button.setIcon(null);	
-		}
-	}
-	
-	private static synchronized void loadIcons() {
-		if (IconizedCloseableTabFlapComponent.iconsLoaded == false) {
-			URL image_url;
-			
-			image_url = IconizedCloseableTabFlapComponent.class.getResource(
-					IconizedCloseableTabFlapComponent.closeTabIconPath);
-			assert image_url != null;
-			IconizedCloseableTabFlapComponent.closeTabIcon =
-				new ImageIcon(image_url, IconizedCloseableTabFlapComponent
-						.CLOSE_BUTTON_ICON_CAPTION);
-			
-			image_url = IconizedCloseableTabFlapComponent.class.getResource(
-					IconizedCloseableTabFlapComponent
-							.closeTabMouseOverIconPath);
-			assert image_url != null;
-			IconizedCloseableTabFlapComponent.closeTabMouseOverIcon =
-				new ImageIcon(image_url, IconizedCloseableTabFlapComponent
-						.CLOSE_BUTTON_ICON_CAPTION);
-			
-			IconizedCloseableTabFlapComponent.iconsLoaded = true;
-			return;
-		}
-		else {
-			return;
-		}
-	}
-
-//TODO: Is never activated, investigate as to why.
-//	@Override
-//	public String getToolTipText() {
-//		if(parentPane.indexOfTabComponent(this)
-//				== parentPane.getSelectedIndex()) {
-//			return "Your current workflow";
-//		}
-//		else {
-//			return "Click to view workflow";
-//		}
-//	}
-
-	//TODO: Where does this really stem from?
-	public void actionPerformed(ActionEvent e) {
-		int i = parentPane.indexOfTabComponent(this);
-		if (i != -1) {
-			parentPane.remove(i);
 		}
 	}
 	
@@ -274,5 +235,32 @@ public class IconizedCloseableTabFlapComponent
 	 */
 	public void clearIcon(){
 		setStatusIcon(EMPTY_ICON, false);
+	}
+	
+	private static synchronized void loadIcons() {
+		if (IconizedCloseableTabFlapComponent.iconsLoaded == false) {
+			URL image_url;
+			
+			image_url = IconizedCloseableTabFlapComponent.class.getResource(
+					IconizedCloseableTabFlapComponent.closeTabIconPath);
+			assert image_url != null;
+			IconizedCloseableTabFlapComponent.closeTabIcon =
+				new ImageIcon(image_url, IconizedCloseableTabFlapComponent
+						.CLOSE_BUTTON_ICON_CAPTION);
+			
+			image_url = IconizedCloseableTabFlapComponent.class.getResource(
+					IconizedCloseableTabFlapComponent
+							.closeTabMouseOverIconPath);
+			assert image_url != null;
+			IconizedCloseableTabFlapComponent.closeTabMouseOverIcon =
+				new ImageIcon(image_url, IconizedCloseableTabFlapComponent
+						.CLOSE_BUTTON_ICON_CAPTION);
+			
+			IconizedCloseableTabFlapComponent.iconsLoaded = true;
+			return;
+		}
+		else {
+			return;
+		}
 	}
 }

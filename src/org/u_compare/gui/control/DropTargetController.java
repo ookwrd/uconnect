@@ -1,7 +1,6 @@
 package org.u_compare.gui.control;
 
 import org.u_compare.gui.component.SubComponentDropTarget;
-import org.u_compare.gui.control.DragAndDropController.DropController;
 
 public class DropTargetController implements DragAndDropController.DropController {
 

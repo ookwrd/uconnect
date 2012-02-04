@@ -533,7 +533,7 @@ public abstract class AbstractComponent implements Component {
 	
 	@Override
 	public void setFlowControllerIdentifier(String identifier){
-		if(!this.identifier.equals(identifier)){
+		if(this.identifier==null || !this.identifier.equals(identifier)){
 			this.identifier = identifier;
 			notifyFlowControlChangeListeners();
 		}

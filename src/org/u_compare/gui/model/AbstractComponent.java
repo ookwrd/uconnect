@@ -162,22 +162,6 @@ public abstract class AbstractComponent implements Component {
 		notifyComponentDescriptionChangeListeners();
 	}
 	
-	@Override
-	public String getImplementationName(){
-		return implementationName;
-	}
-	
-	@Override
-	public void setImplementationName(String implementationName){
-		
-		if(this.implementationName != null && this.implementationName.equals(implementationName)){
-			return;
-		}
-		
-		this.implementationName = implementationName;
-		notifyComponentDescriptionChangeListeners(); //TODO should be a more appropriate listener here.
-	}
-	
 	/**
 	 * Returns the Description of the Component.
 	 */
@@ -198,6 +182,22 @@ public abstract class AbstractComponent implements Component {
 		
 		this.description = description;
 		notifyComponentDescriptionChangeListeners();
+	}
+	
+	@Override
+	public String getImplementationName(){
+		return implementationName;
+	}
+	
+	@Override
+	public void setImplementationName(String implementationName){
+		
+		if(this.implementationName != null && this.implementationName.equals(implementationName)){
+			return;
+		}
+		
+		this.implementationName = implementationName;
+		notifyDistributionInformationChangedListeners();
 	}
 	
 	@Override

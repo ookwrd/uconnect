@@ -15,17 +15,17 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
 
 @SuppressWarnings("serial")
-public class TitlePanel extends JPanel implements DescriptionChangeListener {
+public class ComponentNamePanel extends JPanel implements DescriptionChangeListener {
 
 	private static final Font font = new Font("sansserif", Font.BOLD, 12);
-	private static final Font titleFont = new Font("sansserif", Font.BOLD, 20);
+	private static final Font workflowFont = new Font("sansserif", Font.BOLD, 20);
 
 	private final ComponentController controller;
 	private final Component component;
 
-	EditableTextField titleField;
+	EditableTextField nameField;
 
-	public TitlePanel(ComponentController controller, Component component,
+	public ComponentNamePanel(ComponentController controller, Component component,
 			boolean isWorkflow, ComponentTitleBar topPanel) {
 		super();
 
@@ -34,40 +34,40 @@ public class TitlePanel extends JPanel implements DescriptionChangeListener {
 
 		setLayout(new BorderLayout());
 		
-		titleField = new EditableTextField(component.getName());
+		nameField = new EditableTextField(component.getName());
 	
-		DragAndDropController.registerDragSource(titleField, controller);
+		DragAndDropController.registerDragSource(nameField, controller);
 		
 		if (isWorkflow) {
-			titleField.setFont(titleFont);
+			nameField.setFont(workflowFont);
 		} else {
-			titleField.setFont(font);
+			nameField.setFont(font);
 		}
 
-		add(titleField, BorderLayout.CENTER);
+		add(nameField, BorderLayout.CENTER);
 
 		if (!isWorkflow) {
 			setBackground(Color.WHITE);
 		}
 		
-		titleField.addActionListener(new ActionListener() {
+		nameField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				titleChangeRequest(titleField.getText());
+				nameChangeRequest(nameField.getText());
 			}
 		});
 		
 		component.registerComponentDescriptionChangeListener(this);
 	}
 
-	protected void titleChangeRequest(String title) {
-		titleField.setText(component.getName());//TODO refactor Name/Title
-		this.controller.setTitle(title);
+	protected void nameChangeRequest(String name) {
+		nameField.setText(component.getName());
+		this.controller.setName(name);
 	}
 
 	@Override
 	public void ComponentDescriptionChanged(Component component) {
-		titleField.setText(component.getName());
+		nameField.setText(component.getName());
 	}
 
 }

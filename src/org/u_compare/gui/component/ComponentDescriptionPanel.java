@@ -13,6 +13,11 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
+/**
+ * Panel for displaying/editing a components description.
+ * 
+ * @author Luke McCrohon
+ */
 @SuppressWarnings("serial")
 public class ComponentDescriptionPanel extends JPanel implements
 		DescriptionChangeListener, LockedStatusChangeListener {
@@ -31,7 +36,6 @@ public class ComponentDescriptionPanel extends JPanel implements
 		textPanel.registerActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(e.getSource());
 				textChangeRequest(textPanel.getDescription());
 			}
 		});

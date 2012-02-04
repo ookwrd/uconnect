@@ -11,7 +11,7 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.Parameter.ParameterValueChangedListener;
 
 /**
- * TODO
+ * Panel for setting a Boolean Parameter
  * 
  * @author Luke McCrohon
  *

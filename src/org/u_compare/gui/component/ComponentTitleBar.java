@@ -14,7 +14,7 @@ public class ComponentTitleBar extends JPanel {
 
 	private ComponentController controller;
 	private Component component;
-	private TitlePanel titlePanel;
+	private ComponentNamePanel titlePanel;
 	private TitleButtonPanel buttonPanel;
 
 	public ComponentTitleBar(ComponentController controller, Component component,
@@ -55,7 +55,7 @@ public class ComponentTitleBar extends JPanel {
 
 	protected void setupTitlePanel(JPanel target, boolean isWorkflow) {
 
-		titlePanel = new TitlePanel(controller, component, isWorkflow, this);
+		titlePanel = new ComponentNamePanel(controller, component, isWorkflow, this);
 		target.add(titlePanel, BorderLayout.CENTER);
 
 	}

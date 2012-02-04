@@ -133,6 +133,10 @@ public class ComponentController implements DragAndDropController.DragController
 		}
 	}
 	
+	public void toggleLocked(){
+		setLocked(!isLocked());
+	}
+	
 	public void toggleMinimized(){
 		switch (component.getMinimizedStatus()) {
 		case MINIMIZED:
@@ -304,11 +308,9 @@ public class ComponentController implements DragAndDropController.DragController
 	}
 	
 	
-	/* Do I need this?
+	/* TODO Do I need this?
 	 */
 	public void dropTargetRemoved(DropTargetController dropTargetController){
-		
-		System.out.println();
 		
 		for(int i = 0; i < dropTargets.size(); i++){
 			if(dropTargets.get(i).equals(dropTargetController)){
@@ -320,7 +322,7 @@ public class ComponentController implements DragAndDropController.DragController
 	}
 	
 	/**
-	 * Responds to a decendent drop target having the currently dragged component dropped on it.
+	 * Responds to a descendant drop target having the currently dragged component dropped on it.
 	 * 
 	 * @param position The target where the component was dropped.
 	 */
@@ -472,7 +474,7 @@ public class ComponentController implements DragAndDropController.DragController
 		}
 	}
 
-	public void setTitle(String title) {
+	public void setName(String title) {
 		
 		assert(component.getLockedStatus()==false);
 

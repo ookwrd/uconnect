@@ -9,7 +9,7 @@ import org.u_compare.gui.model.Component.DescriptionChangeListener;
 import org.u_compare.gui.model.Component.SavedStatusChangeListener;
 
 /**
- * Holds the WorkflowPane and the ConsolePane .
+ * Panel holding everything related to a single workflow. Holds the WorkflowPane (above) and the ConsolePane (Below).
  * 
  * @author pontus
  * @author luke

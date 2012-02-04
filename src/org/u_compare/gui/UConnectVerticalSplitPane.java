@@ -9,7 +9,7 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 /**
- * GUI Component containing the WorkflowHorizontalSplitPane on the left and the Library on the right separated by a splitPane.
+ * GUI Component containing the WorkflowPane/WorkflowViewer on the left and the Library on the right separated by a splitPane.
  * 
  * @author 	luke
  * @author 	pontus
@@ -26,10 +26,15 @@ public class UConnectVerticalSplitPane extends JSplitPane {
 	private static final double DIVIDER_START_POSITION = 0.5D;
 	private static final int SPLIT_ORIENTATION = JSplitPane.HORIZONTAL_SPLIT;
 	
-	public UConnectVerticalSplitPane(JComponent workflowPane,
+	/**
+	 * 
+	 * @param workflow Either a workflowPane or WorkflowViewer depending on whether the current configuration allows multiple workflow tabs.
+	 * @param libraryPane
+	 */
+	public UConnectVerticalSplitPane(JComponent workflow,
 			JComponent libraryPane) {
 		
-		this.setLeftComponent(workflowPane);
+		this.setLeftComponent(workflow);
 		this.setRightComponent(libraryPane);
 		
 		this.setOneTouchExpandable(UConnectVerticalSplitPane.ONE_TOUCH_EXPANDABLE);

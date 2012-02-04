@@ -269,4 +269,10 @@ public interface Component{
 	public void setFlowControllerIdentifier(String identifier);
 	public String getFlowControllerIdentifier();
 	
+	public void registerFlowControlChangedListener(FlowControlChangeListener listener);
+	
+	public interface FlowControlChangeListener {
+		public void flowControlChanged(Component component);
+	}
+	
 }

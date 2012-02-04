@@ -110,6 +110,7 @@ public abstract class AbstractComponent implements Component {
 	private ArrayList<ParameterConfigurationChangeListener> parameterConfigurationChangeListeners = new ArrayList<Component.ParameterConfigurationChangeListener>();
 	private ArrayList<ParameterGroupsChangeListener> parameterGroupsChangeListeners = new ArrayList<Component.ParameterGroupsChangeListener>();
 	private ArrayList<ParametersChangedListener> parametersChangedListeners = new ArrayList<Component.ParametersChangedListener>();
+	private ArrayList<FlowControlChangeListener> flowControlChangeListeners = new ArrayList<Component.FlowControlChangeListener>();
 	
 	public AbstractComponent(){
 
@@ -469,7 +470,6 @@ public abstract class AbstractComponent implements Component {
 	
 	@Override
 	public void setParameterGroups(ArrayList<ParameterGroup> parameterGroups){
-		//TODO check input is different from current
 		this.parameterGroups = parameterGroups;
 		notifyParameterGroupsChangeListeners();
 	}
@@ -527,17 +527,19 @@ public abstract class AbstractComponent implements Component {
 	}
 	
 	@Override
-	public void setFlowControllerIdentifier(String identifier){
-		this.identifier = identifier;
-		//TODO does this need a listener?
-	}
-	
-	@Override
 	public String getFlowControllerIdentifier(){
 		return identifier;
 	}
 	
-	
+	@Override
+	public void setFlowControllerIdentifier(String identifier){
+		if(!this.identifier.equals(identifier)){
+			this.identifier = identifier;
+			notifyFlowControlChangeListeners();
+		}
+		
+	}
+
 	/**
 	 * Registers a new component to be notified if the general description of the
 	 * component is changed. See listener interface for list of parameters covered.
@@ -681,6 +683,20 @@ public abstract class AbstractComponent implements Component {
 		}
 		setComponentChanged();
 	}
+	
+	
+	@Override
+	public void registerFlowControlChangedListener(FlowControlChangeListener listener){
+		flowControlChangeListeners.add(listener);
+	}
+	
+	protected void notifyFlowControlChangeListeners(){
+		for(FlowControlChangeListener listener : flowControlChangeListeners){
+			listener.flowControlChanged(this);
+		}
+		setComponentChanged();
+	}
+	
 	
 	@Override
 	public ResourceSpecifier getResourceCreationSpecifier(){
@@ -1077,16 +1093,6 @@ public abstract class AbstractComponent implements Component {
 				System.out.println("URISpecifier");
 				URISpecifier spec = (URISpecifier)resourceSpecifier;
 				return new SOAPComponent(spec);
-				
-				/*System.out.println(spec.getSourceUrl());
-				
-				try {
-					UIMAFramework.produceAnalysisEngine(resourceSpecifier);
-				} catch (ResourceInitializationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return null;*/
 				
 			}  else if (resourceSpecifier instanceof CpeDescription){
 				

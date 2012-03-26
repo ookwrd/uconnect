@@ -795,7 +795,7 @@ public abstract class AbstractComponent implements Component {
 		declarations.setDefaultGroupName(getDefaultParameterGroup());
 		
 		//Basic Parameters
-		for(Parameter param : getConfigurationParameters()){//TODO factor this out into a helper method
+		for(Parameter param : getConfigurationParameters()){
 			ConfigurationParameter newParam = UIMAFramework.getResourceSpecifierFactory().createConfigurationParameter();
 			Object value = constructConfigurationParameter(param, newParam);
 			if(value != null){
@@ -1007,11 +1007,11 @@ public abstract class AbstractComponent implements Component {
 		
 		String pathname = include.get();
 
-		System.out.println("include" + include);
-		System.out.println("URL " + include.getSourceUrlString());
+		//System.out.println("include" + include);
+		//System.out.println("URL " + include.getSourceUrlString());
 		
 		pathname = pathname.replace('\\', '/');//TODO
-		System.out.println("finalComp" + pathBase+"../../" +pathname);
+		//System.out.println("finalComp" + pathBase+"../../" +pathname);
 		return AbstractComponent.constructComponentFromXML(pathBase+"../../" +pathname);
 		
 	}

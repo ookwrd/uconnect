@@ -23,7 +23,6 @@ public class ParameterGroup {
 	}
 	
 	public void setNames(String[] names){
-		//TODO check a change is actually being made
 		this.names = names;
 		notifyParameterGroupConfigurationChangedListeners();
 	}

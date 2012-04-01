@@ -44,40 +44,31 @@ public class TitleButtonPanel extends JPanel implements
 		IconFactory.loadIcons();
 
 		// set the buttons
-		ActionListener removeListener = new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				removeComponent();
-			}
-		};
-		
-		ActionListener lockListener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				toggleLock();
-			}
-		};
-		
-		ActionListener minListener = new ActionListener() {
+		minButton = new HighlightButton(getIcon(MIN_ICON));
+		minButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				toggleSize();
 			}
-		};
-		
-		minButton = new HighlightButton(getIcon(MIN_ICON));
-		minButton.setActionCommand("hide component");
-		minButton.addActionListener(minListener);
+		});
 		add(minButton);		
 				
 		lockButton = new HighlightButton(component.getLockedStatus() ? getIcon(LOCKED_ICON)
 				: getIcon(UNLOCKED_ICON));
-		lockButton.setActionCommand("show component");//needed <- olaf why?
-		lockButton.addActionListener(lockListener);
+		lockButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				toggleLock();
+			}
+		});
 		if (controller.allowEditing()) {
 			add(lockButton);
 		}
 		
 		removeButton = new ConfirmationButton(new HighlightButton(getIcon(CLOSE_ICON)), "Remove?");
-		removeButton.setActionCommand("remove component"); //needed <- olaf why?
-		removeButton.addActionListener(removeListener);
+		removeButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				removeComponent();
+			}
+		});
 		if(controller.allowEditing()){
 			add(removeButton);
 		}
@@ -123,9 +114,7 @@ public class TitleButtonPanel extends JPanel implements
 
 	@Override
 	public void minimizedStatusChanged(Component component) {
-
 		setMinimizedStatus();
-
 	}
 
 	@Override

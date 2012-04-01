@@ -28,6 +28,7 @@ public class ConfirmationButton extends JButton {
 		super();
 
 		setOpaque(false);
+		setContentAreaFilled(false);
 		
 		setBorder(new EmptyBorder(0,0,0,0));
 		
@@ -56,7 +57,6 @@ public class ConfirmationButton extends JButton {
 		confirmPanel.add(new JLabel(confirmation));
 
 		final HighlightButton confirm = new HighlightButton("Yes");
-		
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				ConfirmationButton.this.requestFocusInWindow();//SO focus is passed
@@ -114,31 +114,7 @@ public class ConfirmationButton extends JButton {
 		if(!enabled){
 			cancel();
 		}
-		
 		mainButton.setEnabled(enabled);
 	}
-	
-	/*private final static String ICON_CLOSE_PATH = "../gfx/icon_close1.png";
-	
-	private static boolean iconsLoaded = false;
-	
-	private static ImageIcon closeIcon;
-
-	
-	protected static synchronized void loadIcons() {
-		if (ConfirmButton.iconsLoaded == true) {
-			return;
-		}
-		
-		URL image_url;
-		
-		image_url = ButtonPanel.class.getResource(ICON_CLOSE_PATH);
-		assert image_url != null;
-		closeIcon = new ImageIcon(image_url, "Remove");
-
-		iconsLoaded = true;
-		return;
-
-	}*/
 	
 }

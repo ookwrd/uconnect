@@ -22,6 +22,7 @@ public class ButtonTabFlap extends JButton {
 		super(buttonText);
 
 		setOpaque(false);
+		setContentAreaFilled(false);
 		setBorder(new EmptyBorder(0,0,0,0));
 	}
 	

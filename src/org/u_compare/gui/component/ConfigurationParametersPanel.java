@@ -48,7 +48,7 @@ public class ConfigurationParametersPanel extends JPanel {
 		if(component.getCommonParameters().size() > 0){
 			JPanel target = new JPanel();
 			target.setLayout(new BoxLayout(target,BoxLayout.Y_AXIS));
-			target.setBorder(new TitledBorder("Common Parameters:"));
+			target.setBorder(new TitledBorder(new EtchedBorder(), "Common Parameters:"));
 			setupPanel(component.getCommonParameters(), target);
 			this.add(target);
 		}
@@ -58,7 +58,7 @@ public class ConfigurationParametersPanel extends JPanel {
 			String[] names = group.getNames();
 			JPanel target = new JPanel();
 			target.setLayout(new BoxLayout(target,BoxLayout.Y_AXIS));
-			target.setBorder(new TitledBorder(names[0]));
+			target.setBorder(new TitledBorder(new EtchedBorder(), names[0]));
 			setupPanel(group.getConfigurationParameters(), target);
 			this.add(target);
 		}

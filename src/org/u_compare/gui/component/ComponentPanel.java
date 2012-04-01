@@ -122,7 +122,7 @@ public class ComponentPanel extends JPanel implements
 			JPanel subComponentsBorder = new JPanel();
 			subComponentsBorder.setLayout(new GridLayout());
 			subComponentsBorder.setOpaque(false);
-			subComponentsBorder.setBorder(new TitledBorder("Subcomponents:"));
+			subComponentsBorder.setBorder(new TitledBorder(new EtchedBorder(), "Subcomponents:"));
 			setupSubComponentsPanel(subComponentsBorder);
 			card2.add(subComponentsBorder);
 			

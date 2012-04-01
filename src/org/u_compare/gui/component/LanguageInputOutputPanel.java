@@ -53,7 +53,7 @@ public class LanguageInputOutputPanel extends JPanel {
 		
 		languagePanel = new JPanel();
 		languagePanel.setOpaque(false);
-		languagePanel.setBorder(new TitledBorder("Languages:"));
+		languagePanel.setBorder(new TitledBorder(new EtchedBorder(), "Languages:"));
 		
 		languageController = new LanguageListPanelController(component);
 		LanguageListPanel languageListPanel = new LanguageListPanel(component, languageController);

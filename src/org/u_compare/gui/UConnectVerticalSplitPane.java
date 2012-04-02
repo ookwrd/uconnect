@@ -47,6 +47,7 @@ public class UConnectVerticalSplitPane extends JSplitPane {
 		        };
 		    }
 		});
+		setBorder(null);
 		
 		// Carry out all the divider configurations here
 		this.setDividerSize(5);

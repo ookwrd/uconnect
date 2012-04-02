@@ -39,6 +39,7 @@ public class UConnectVerticalSplitPane extends JSplitPane {
 		
 		this.setOneTouchExpandable(UConnectVerticalSplitPane.ONE_TOUCH_EXPANDABLE);
 		
+		// Override the paint method of the divider bar so that it doesn't paint.
 		this.setUI(new BasicSplitPaneUI() {
 		    public BasicSplitPaneDivider createDefaultDivider() {
 		        return new BasicSplitPaneDivider(this) {

@@ -20,7 +20,7 @@ import org.u_compare.gui.model.parameters.constraints.StringConstraint;
  * A factory class for constructing different example workflows useful for
  * testing/debugging.
  * 
- * @author Luke Mccrohon
+ * @author Luke McCrohon
  *
  */
 public class ExampleWorkflowFactory {

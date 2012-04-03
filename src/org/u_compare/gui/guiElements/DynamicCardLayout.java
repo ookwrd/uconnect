@@ -7,12 +7,20 @@ import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Extension of CardLayout which allows cards of varying sizes.
+ * 
+ * @author Luke McCrohon
+ */
 @SuppressWarnings("serial")
 public class DynamicCardLayout extends CardLayout {
 
 	private Map<Object, Component> cards = new HashMap<Object, Component>();
 	private String current;
 	
+	/**
+	 * Return preferredLayoutSize based on current card.
+	 */
 	@Override
 	public Dimension preferredLayoutSize(Container parent){
 		Component currentComponent = cards.get(current);
@@ -23,12 +31,18 @@ public class DynamicCardLayout extends CardLayout {
 		}
 	}
 	
+	/**
+	 * Store cards as they are added. Potential to lead to memory leak as removes are not currently tracked, override removeLayoutComponent if this is likely to be an issue.
+	 */
 	@Override
 	public void addLayoutComponent(Component comp, Object constraints) {
 		cards.put(constraints, comp);
 		super.addLayoutComponent(comp, constraints);
 	}
 	
+	/**
+	 * Track the currently displayed card.
+	 */
 	@Override
 	public void show(Container parent, String key){
 		current = key;

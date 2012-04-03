@@ -13,7 +13,7 @@ import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.uima.CPE;
 
 /**
- * TODO: XXX:
+ * Demonstration and testing class which loads a number of mock workflows into a workflow panel and displays it alongside a mock library panel.
  * 
  * @author 	luke
  * @author 	pontus
@@ -21,10 +21,10 @@ import org.u_compare.gui.model.uima.CPE;
  */
 
 public class GUITestingHarness {
-
 	
 	public static void main(String[] args){
-		//Workflow panel
+		
+		//Construct a set of workflows
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
 		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
 		//workflows.add(ExampleWorkflowFactory.aggregate());
@@ -39,19 +39,19 @@ public class GUITestingHarness {
 		workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		workflows.add(ExampleWorkflowFactory.cpeWorkflowParams());
 		
+		//Construct a WorkflowController
 		WorkflowViewerController workflowViewerController = new WorkflowViewerController();
 		WorkflowViewerController.defaultWorkflowFactory = CPE.emptyCPEFactory;
 		//WorkflowPaneController.SHOW_SAVE_PANEL = true;
 		WorkflowViewerController.SHOW_LOAD_TAB = true;
 		
-		
-		
+		//Add the workflows
 		JComponent tabbedPane = workflowViewerController.initialize(workflows);
 		
-		// Library panel
-		LibraryPane libraryPane = new LibraryPane();
+		//Create mock library panel
+		LibraryPane libraryPane = new LibraryPane();	
 		
-		// Combining
+		//Assemble panels
 		UConnectVerticalSplitPane uConnectSplit = new UConnectVerticalSplitPane(tabbedPane,
 				libraryPane);
 		UCompareWindow testWindow = new UCompareWindow("GUITestingHarness", uConnectSplit);

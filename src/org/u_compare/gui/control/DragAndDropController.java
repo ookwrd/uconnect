@@ -72,16 +72,16 @@ public class DragAndDropController {
         this.dragged = null;
     }
  
-    public ComponentController getDraggedComponent() throws ClassCastException{
+
+	public ComponentController getDraggedComponent() throws ClassCastException{
     	
     	if(dragged instanceof ComponentController){
     		return (ComponentController)dragged;
-    	} else if ( false /*dragged instance of Library Descriptor*/ ){
-    		
+    	} /*else if ( dragged instance of Library Descriptor ){
     		//TODO build the component from the descriptor
-    		return null;
+    		//return null;
     		
-    	} else{
+    	}*/ else{
     		throw new ClassCastException("DragAndDropController can't convert input to a ComponentController: " + dragged.getClass());
     	}
     }

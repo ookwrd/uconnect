@@ -9,23 +9,29 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
+/**
+ * Extended version of JTextField which changes appearance when not being edited.
+ * 
+ * See also EditableTextPanel
+ * 
+ * @author Luke McCrohon
+ */
 @SuppressWarnings("serial")
 public class EditableTextField extends JTextField {
 
-	private ArrayList<ActionListener> actionListeners = new ArrayList<ActionListener>();
-	
 	private boolean fixed;
 	
 	public EditableTextField(String text){
 		super(text, 500);
 		toFixedMode();
 		
+		//Double click component to enter edit mode
 		addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					if (isEnabled()) {
@@ -35,6 +41,7 @@ public class EditableTextField extends JTextField {
 			}
 		});
 		
+		//Selecting something else cancels edit mode
 		addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -42,6 +49,7 @@ public class EditableTextField extends JTextField {
 			}
 		});
 		
+		//Finishing editing ends editable mode. 
 		super.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -49,6 +57,7 @@ public class EditableTextField extends JTextField {
 			}
 		});
 		
+		//"ESC" to cancel editable mode.
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -61,6 +70,9 @@ public class EditableTextField extends JTextField {
 		});
 	}
 	
+	/**
+	 * Change to editable mode.
+	 */
 	protected void toEditMode(){
 		fixed = false;
 		setEditable(true);
@@ -72,6 +84,9 @@ public class EditableTextField extends JTextField {
 		getCaret().setVisible(true);
 	}
 	
+	/**
+	 * Change to non-editable mode.
+	 */
 	protected void toFixedMode(){
 		if(fixed){
 			return;
@@ -81,20 +96,10 @@ public class EditableTextField extends JTextField {
 		super.setBackground(null);
 		setBorder(null);
 		if(hasFocus()){
-			transferFocus();//TODO transfer the focus somewhere where it won't do anything.
+			transferFocus();
+			//TODO Not relevant to Uconnect, but the focus should probably be transfered to somewhere where it won't do anything.
 		}
-		notifyActionListeners();
-	}
-
-	@Override
-	public void addActionListener(ActionListener listener){
-		actionListeners.add(listener);
-	}
-	
-	protected void notifyActionListeners(){
-		for(ActionListener listener : actionListeners){
-			listener.actionPerformed(new ActionEvent(this, 1, getText()));//TODO what sprt of action event should I really be returning?
-		}
+		fireActionPerformed();
 	}
 	
 }

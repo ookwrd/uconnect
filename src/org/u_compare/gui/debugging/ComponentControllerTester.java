@@ -11,6 +11,12 @@ import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 
+/**
+ * JUnit Tests for various aspects of the controller infrastructure.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 @SuppressWarnings("unchecked")//Using PrivilegedAccessor
 public class ComponentControllerTester {
 

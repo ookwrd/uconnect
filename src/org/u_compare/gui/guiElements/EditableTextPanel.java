@@ -19,13 +19,15 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-
+/**
+ * Behaves similar to a JTextArea except displays differently when not being edited.
+ * 
+ * See also EditableTextField
+ * 
+ * @author Luke McCrohon
+ */
 @SuppressWarnings("serial")
 public class EditableTextPanel extends JPanel {
-	
-	/**
-	 * TODO can I make this extend JTextArea? While still having the button and everything?
-	 */
 	
 	private static final int PANEL_PADDING = 8;
 	public final Color defaultColor = getBackground();
@@ -33,12 +35,14 @@ public class EditableTextPanel extends JPanel {
 	private JTextArea content;
 	private JButton endEditingButton;
 
-	private ActionListener endEditingListener;
-
+	/**
+	 * Create a new EditableTextPanel with the string "text" as the initial contents.
+	 * 
+	 * @param text
+	 */
 	public EditableTextPanel(String text) {
 		
 		setLayout(new BorderLayout());
-
 		setOpaque(false);
 		setBorder(new EmptyBorder(new Insets(PANEL_PADDING, PANEL_PADDING, 0,
 				PANEL_PADDING)));
@@ -52,8 +56,6 @@ public class EditableTextPanel extends JPanel {
 		content.setDragEnabled(false);
 		
 		endEditingButton = new JButton("Done");
-		endEditingButton.setActionCommand("Finish editing");
-		endEditingButton.addActionListener(endEditingListener);
 		endEditingButton.setVisible(false);
 
 		add(content, BorderLayout.PAGE_START);
@@ -68,6 +70,7 @@ public class EditableTextPanel extends JPanel {
 		add(saveButtonPanel, BorderLayout.AFTER_LAST_LINE);
 		saveButtonInnerPanel.add(endEditingButton);
 
+		//Double click component to enter edit mode
 		content.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
@@ -78,6 +81,7 @@ public class EditableTextPanel extends JPanel {
 			}
 		});
 		
+		//"ESC" to cancel editable mode.
 		content.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -89,6 +93,7 @@ public class EditableTextPanel extends JPanel {
 			}
 		});
 
+		//Selecting something else cancels edit mode
 		content.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -97,6 +102,9 @@ public class EditableTextPanel extends JPanel {
 		});
 	}
 
+	/**
+	 * Switch to editable mode.
+	 */
 	protected void toEditMode(){
 		content.setEditable(true);
 		content.setBackground(Color.WHITE);
@@ -109,6 +117,9 @@ public class EditableTextPanel extends JPanel {
 		endEditingButton.setVisible(true);
 	}
 	
+	/**
+	 * Switch to non-editable mode.
+	 */
 	protected void toFixedMode(){
 		content.setEditable(false);
 		content.setBackground(defaultColor);
@@ -120,11 +131,11 @@ public class EditableTextPanel extends JPanel {
 		notifyActionListeners();
 	}
 
-	public void setDescription(String text) {
+	public void setContentText(String text) {
 		content.setText(text);
 	}
 
-	public String getDescription() {
+	public String getContentText() {
 		return content.getText();
 	}
 	
@@ -140,7 +151,7 @@ public class EditableTextPanel extends JPanel {
 	
 	protected void notifyActionListeners(){
 		for(ActionListener listener : actionListeners){
-			listener.actionPerformed(new ActionEvent(this, 1, getDescription()));
+			listener.actionPerformed(new ActionEvent(this, 1, getContentText()));
 		}
 	}
 }

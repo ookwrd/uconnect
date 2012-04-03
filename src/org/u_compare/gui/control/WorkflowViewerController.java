@@ -49,7 +49,6 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 	public static boolean SHOW_NEW_TAB = true;
 	public static boolean SHOW_LOAD_TAB = false;
 	public static boolean ALLOW_EDITING = true;
-//	private static final boolean allowReordering = true; //TODO
 	public static boolean ALLOW_TAB_CLOSE = true;
 
 	public static String LOAD_TAB_NAME = "Load";
@@ -66,7 +65,7 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 	public static WorkflowFactory defaultWorkflowFactory = new WorkflowFactory(){
 		@Override
 		public Workflow constructWorkflow() {
-			Workflow workflow = new Workflow();//TODO should be set with a CPE 
+			Workflow workflow = new Workflow();
 			workflow.setName("Untitled Workflow (Double-Click to edit)");
 			workflow.setDescription("This is not a real UIMA Workflow. Set WorkflowPaneController's defaultWorkflowFactory." +
 					"" +
@@ -104,7 +103,7 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 				File file = fc.getSelectedFile();
 				return Workflow.constructWorkflowFromXML(file.getAbsolutePath());
 			}
-			System.out.println("Failed to construct new workflow.");
+			//Cancel option selected.
 			return null;
 		}
 	};
@@ -113,7 +112,7 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 	public static JPanel emptyTabbedPanel = new JPanel(){
 		{
 			setName("      ");
-			add(new JLabel("This is the new JLabel."));
+			add(new JLabel("Create or Load a workflow to begin."));
 		}
 	};
 	

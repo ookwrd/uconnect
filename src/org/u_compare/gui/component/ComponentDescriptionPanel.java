@@ -36,7 +36,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 		textPanel.registerActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				textChangeRequest(textPanel.getDescription());
+				textChangeRequest(textPanel.getContentText());
 			}
 		});
 		
@@ -53,13 +53,13 @@ public class ComponentDescriptionPanel extends JPanel implements
 
 	protected void textChangeRequest(String descriptionText) {
 		descriptionText = descriptionText.trim();
-		textPanel.setDescription(component.getDescription());
+		textPanel.setContentText(component.getDescription());
 		this.controller.setDescription(descriptionText);
 	}
 
 	@Override
 	public void ComponentDescriptionChanged(Component component) {
-		textPanel.setDescription(component.getDescription());
+		textPanel.setContentText(component.getDescription());
 	}
 
 	@Override

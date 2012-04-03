@@ -5,6 +5,8 @@ package org.u_compare.gui.debugging;
 import java.lang.reflect.*;
 
 /**
+ * This class is for TESTING PURPOSES ONLY.
+ * 
  * a.k.a. The "ObjectMolester" <p>
  *
  * This class is used to access a method or field of an object no matter what

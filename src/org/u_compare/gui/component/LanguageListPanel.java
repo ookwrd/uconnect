@@ -31,7 +31,7 @@ public class LanguageListPanel extends JPanel implements LockedStatusChangeListe
 			}
 		});
 		
-		list.registerRemoveActionListener(new ActionListener() {
+		list.registerDeleteActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for(Object name : list.getSelectedValues()){

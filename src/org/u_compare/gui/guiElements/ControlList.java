@@ -15,6 +15,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+/**
+ * Wrapper for a JList that adds "Add" and "Delete" buttons when the list is selected.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 @SuppressWarnings("serial")
 public class ControlList extends JPanel {
 
@@ -28,6 +34,11 @@ public class ControlList extends JPanel {
 	private JList list;
 	private DefaultListModel listModel;
 	
+	/**
+	 * Create a new ControlList with the specified background color.
+	 * 
+	 * @param background
+	 */
 	public ControlList(Color background){
 		super();
 		listModel = new DefaultListModel();
@@ -37,20 +48,19 @@ public class ControlList extends JPanel {
 				BoxLayout.Y_AXIS));
 		
 		list.setBackground(background);
-		list.setFixedCellWidth(140);//TODO make this expand and contract
+		list.setFixedCellWidth(140);//TODO Would be nice to make this expand and contract as needed.
 		
 		buttons = new JPanel();
 		buttons.setOpaque(false);
 		buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
-
 		deleteButton = new HighlightButton(DELETE_MSG);
 		addButton = new HighlightButton(ADD_MSG);
 		
 		FocusListener listFocusListener = new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e){
-				buttons.setVisible(true);
+				toEditMode();
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -61,8 +71,7 @@ public class ControlList extends JPanel {
 						|| source.equals(deleteButton)){
 					return;
 				}
-				list.clearSelection();
-				buttons.setVisible(false);
+				toFixedMode();
 			}
 		};
 		list.addFocusListener(listFocusListener);
@@ -89,25 +98,45 @@ public class ControlList extends JPanel {
 		rebuildListContents(new ArrayList<String>());
 	}
 	
+	/**
+	 * Redirects to the wrapped JList's getSelectedValues().
+	 * 
+	 * @return
+	 */
 	public Object[] getSelectedValues(){
 		return list.getSelectedValues();
 	}
 	
+	/**
+	 * Add a listener to be called when the "add" button is clicked.
+	 * 
+	 * @param al
+	 */
 	public void registerAddActionListener(ActionListener al){
 		addButton.addActionListener(al);
 	}
 	
-	public void registerRemoveActionListener(ActionListener al){
+	/**
+	 * Add a listener to be called when the "delete" button is clicked.
+	 * 
+	 * @param al
+	 */
+	public void registerDeleteActionListener(ActionListener al){
 		deleteButton.addActionListener(al);
 	}
 	
+	/**
+	 * Rebuilds the wrapped JList with the specified set of values
+	 * 
+	 * @param values
+	 */
 	public void rebuildListContents(ArrayList<String> values){
 		assert(list!=null);
 		listModel.clear();	
 		
 		deleteButton.setEnabled(true);
 		
-		for(String str : values){
+		for(Object str : values){
 			listModel.addElement(str);
 		}
 
@@ -117,6 +146,9 @@ public class ControlList extends JPanel {
 		}
 	}
 	
+	/**
+	 * Redirects to the wrapped JLists setBorder(..) method.
+	 */
 	@Override
 	public void setBorder(Border bord){
 		if(list != null){
@@ -124,10 +156,32 @@ public class ControlList extends JPanel {
 		}
 	} 
 	
+	/**
+	 * Set a border around the entire component.
+	 * 
+	 * @param bord
+	 */
+	public void setExternalBorder(Border bord){
+		setBorder(bord);
+	}
+	
 	@Override
 	public void setEnabled(boolean enabled){
 		list.setEnabled(enabled);
-		//TODO Make sure the buttons are removed
-		//TODO Change the empty message to remove "click to edit"
+	}
+	
+	/**
+	 * Change to non-editable mode.
+	 */
+	protected void toFixedMode(){
+		list.clearSelection();
+		buttons.setVisible(false);
+	}
+	
+	/**
+	 * Change to editable mode.
+	 */
+	protected void toEditMode(){
+		buttons.setVisible(true);
 	}
 }

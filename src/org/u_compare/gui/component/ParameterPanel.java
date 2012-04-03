@@ -82,7 +82,7 @@ public class ParameterPanel implements
 			};
 			
 			list.registerAddActionListener(addListener);
-			list.registerRemoveActionListener(removeListener);
+			list.registerDeleteActionListener(removeListener);
 			
 			field = list;
 

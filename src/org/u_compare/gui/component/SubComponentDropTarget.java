@@ -32,8 +32,11 @@ public class SubComponentDropTarget extends JPanel {
 
 	private final static String intermediateDropTargetIconPath = "../gfx/intermediate_drop_target_icon.png";
 	
-	private JLabel solitaryLabel = new JLabel("(Drag and drop a component here)");
-
+	private final JLabel solitaryLabel = new JLabel("(Drag and drop a component here)");
+	{
+		solitaryLabel.setPreferredSize(new Dimension(solitaryLabel.getPreferredSize().width,200));
+	}
+	
 	public SubComponentDropTarget(DropTargetController controller) {
 		super();
 		SubComponentDropTarget.loadIcons();

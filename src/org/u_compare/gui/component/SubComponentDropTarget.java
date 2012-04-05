@@ -29,7 +29,6 @@ public class SubComponentDropTarget extends JPanel {
 
 	private static boolean iconsLoaded = false;
 	private static Icon intermediateDropTargetIcon;
-	private static String intermediateDropTargetIconCaption = "XXX"; // TODO:
 
 	private final static String intermediateDropTargetIconPath = "../gfx/intermediate_drop_target_icon.png";
 	
@@ -92,8 +91,6 @@ public class SubComponentDropTarget extends JPanel {
 		this.setPreferredSize(new Dimension(TARGET_BORDER * 3,
 				TARGET_BORDER * 3));
 		JLabel interImage = new JLabel(intermediateDropTargetIcon);
-		// interImage.setSize(intermediateDropTargetIcon.getIconHeight(),
-		// intermediateDropTargetIcon.getIconWidth());
 
 		this.add(interImage);
 	}
@@ -119,8 +116,7 @@ public class SubComponentDropTarget extends JPanel {
 				.getResource(SubComponentDropTarget.intermediateDropTargetIconPath);
 		
 		assert image_url != null;
-		SubComponentDropTarget.intermediateDropTargetIcon = new ImageIcon(image_url,
-				SubComponentDropTarget.intermediateDropTargetIconCaption);
+		SubComponentDropTarget.intermediateDropTargetIcon = new ImageIcon(image_url);
 
 		iconsLoaded = true;
 		return;

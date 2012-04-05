@@ -1,5 +1,4 @@
 package org.u_compare.gui.component;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;

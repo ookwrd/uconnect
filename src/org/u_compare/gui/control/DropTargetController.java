@@ -2,6 +2,11 @@ package org.u_compare.gui.control;
 
 import org.u_compare.gui.component.SubComponentDropTarget;
 
+/**
+ * Controller for a SubComponentDropTarget.
+ * 
+ * @author Luke McCrohon
+ */
 public class DropTargetController implements DragAndDropController.DropController {
 
 	private ComponentController parent;
@@ -34,47 +39,40 @@ public class DropTargetController implements DragAndDropController.DropControlle
 
 	@Override
 	public void somethingDroppedOnComponent() {
-
 		view.clearDragOverHighlighting();
 		parent.somethingDroppedOnChild(this);
-		
 	}
 
+	/**
+	 * Used to enable highlighting of the drop target based on whether it is a valid drop location or not.
+	 */
 	@Override
 	public void setDragEnter() {
-
 		if(parent.droppableOnChild(this)){
 			view.highlightMouseDroppable();
 		}else{
 			view.setDragOverHighlightingUndroppable();
 		}
-		
 	}
 
+	/**
+	 * Clears highlighting of the drop target.
+	 */
 	@Override
 	public void setDragExit() {
-
 		view.clearDragOverHighlighting();
-		
 	}
 
 	public void setIntermediate() {
-		
 		view.setIntermediate();
-		
 	}
 
 	public void setSolitaryDropTarget() {
-		
 		view.setSolitaryDropTarget();
-		
 	}
 	
 	public void clearSolitaryDropTarget(){
-
 		view.clearSolitaryDropTarget();
-		
 	}
-
 	
 }

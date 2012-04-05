@@ -34,7 +34,7 @@ public class SubComponentDropTarget extends JPanel {
 	
 	private final JLabel solitaryLabel = new JLabel("(Drag and drop a component here)");
 	{
-		solitaryLabel.setPreferredSize(new Dimension(solitaryLabel.getPreferredSize().width,200));
+		solitaryLabel.setPreferredSize(new Dimension(solitaryLabel.getPreferredSize().width,120));
 	}
 	
 	public SubComponentDropTarget(DropTargetController controller) {
@@ -63,16 +63,6 @@ public class SubComponentDropTarget extends JPanel {
 		setCursor(DragSource.DefaultMoveDrop);
 	}
 
-	public void highlightLocationsDroppable() {//TODO I don't think this is ever reached
-		setBackground(Color.CYAN);
-		setOpaque(true);
-		this.repaint();
-
-		// also change the cursor
-		Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
-		setCursor(cursor);
-	}
-
 	public void setDragOverHighlightingUndroppable() {
 		setBackground(Color.RED);
 		setOpaque(true);
@@ -87,7 +77,7 @@ public class SubComponentDropTarget extends JPanel {
 	}
 
 	/**
-	 * Special display property for drop target intermediate between two
+	 * Set special display property for drop target intermediate between two
 	 * components.
 	 */
 	public void setIntermediate() {
@@ -98,6 +88,9 @@ public class SubComponentDropTarget extends JPanel {
 		this.add(interImage);
 	}
 
+	/**
+	 * Set special display property for drop target that is isolated (i.e. the initial drop target).
+	 */
 	public void setSolitaryDropTarget() {
 		this.removeAll();
 		this.add(solitaryLabel);
@@ -105,7 +98,7 @@ public class SubComponentDropTarget extends JPanel {
 	}
 
 	public void clearSolitaryDropTarget() {
-		this.remove(solitaryLabel);
+		this.removeAll();
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
 	}
 

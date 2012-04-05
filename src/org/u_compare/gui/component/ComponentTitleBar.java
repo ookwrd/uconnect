@@ -12,16 +12,9 @@ import org.u_compare.gui.model.Component;
 @SuppressWarnings("serial")
 public class ComponentTitleBar extends JPanel {
 
-	private ComponentController controller;
-	private Component component;
-	private ComponentNamePanel titlePanel;
-	private TitleButtonPanel buttonPanel;
-
 	public ComponentTitleBar(ComponentController controller, Component component,
 			ComponentPanel innerPanel, boolean isWorkflow) {
 
-		this.controller = controller;
-		this.component = component;
 		setLayout(new BorderLayout());
 		setOpaque(false);
 
@@ -31,40 +24,23 @@ public class ComponentTitleBar extends JPanel {
 					ComponentPanel.BORDER_ROUNDING,
 					ComponentPanel.BORDER_WIDTH, true));
 
-			setupButtonPanel(this, innerPanel);
-			setupTitlePanel(this, false);
+			setupButtonPanel(this, innerPanel, controller, component);
+			setupTitlePanel(this, false, controller, component);
 		} else {//Workflow
 			setBorder(new EmptyBorder(5, 5, 0, 0));
-			setupTitlePanel(this, true);
+			setupTitlePanel(this, true, controller, component);
 		}
 
 	}
 
-	/**
-	 * Find the limit for the size of the title, using : topPanel.width minus
-	 * buttonPanel.width
-	 */
-	public int getTitleLimit() {
-
-		int topPanelWidth = this.getWidth();
-		int buttonPanelWidth = 0;
-		buttonPanelWidth = buttonPanel.getWidth();
-		System.out.println("limit = " + (topPanelWidth - buttonPanelWidth));
-		return topPanelWidth - buttonPanelWidth;
-	}
-
-	protected void setupTitlePanel(JPanel target, boolean isWorkflow) {
-
-		titlePanel = new ComponentNamePanel(controller, component, isWorkflow, this);
+	protected void setupTitlePanel(JPanel target, boolean isWorkflow, ComponentController controller, Component component) {
+		ComponentNamePanel titlePanel = new ComponentNamePanel(controller, component, isWorkflow, this);
 		target.add(titlePanel, BorderLayout.CENTER);
-
 	}
 
-	protected void setupButtonPanel(JPanel target, ComponentPanel minimizable) {
-
-		buttonPanel = new TitleButtonPanel(controller, component, minimizable);
+	protected void setupButtonPanel(JPanel target, ComponentPanel minimizable, ComponentController controller, Component component) {
+		TitleButtonPanel buttonPanel = new TitleButtonPanel(controller, component, minimizable);
 		target.add(buttonPanel, BorderLayout.EAST);
-
 	}
 
 }

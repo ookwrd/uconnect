@@ -15,7 +15,7 @@ import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
- * Workflow level panel allowing the workflow to be run/stopped/paused.
+ * View element included in the component panel allowing the workflow to be run/stopped/paused.
  * 
  * @author Luke McCrohon
  */
@@ -143,12 +143,13 @@ public class WorkflowControlPanel extends JPanel implements
 		case ERROR:
 		case FINISHED:
 			stopButton.setEnabled(false);
-			stopButton.setToolTipText(STOP_TOOLTIPTEXT);
+			stopButton.setToolTipText(null);
 			break;
 			
 		case PAUSED:
 		case RUNNING:
 			stopButton.setEnabled(true);
+			stopButton.setToolTipText(STOP_TOOLTIPTEXT);
 			break;
 		}
 		

@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import org.u_compare.gui.control.TypeListPanelController;
 import org.u_compare.gui.guiElements.ControlList;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
+import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.InputOutputChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
@@ -15,11 +16,11 @@ import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
 
 	public static enum LIST_TYPES {INPUTS, OUTPUTS};
-	private org.u_compare.gui.model.Component component;
+	private Component component;
 	private LIST_TYPES listType;
 	private ControlList list;
 	
-	public TypeListPanel(final org.u_compare.gui.model.Component component,
+	public TypeListPanel(final Component component,
 			LIST_TYPES listType, final TypeListPanelController controller){
 		
 		this.component = component;
@@ -89,13 +90,13 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 	}
 	
 	@Override
-	public void lockStatusChanged(org.u_compare.gui.model.Component component) {
+	public void lockStatusChanged(Component component) {
 		configureLockStatus();
 	}
 
 	@Override
 	public void inputOutputChanged(
-			org.u_compare.gui.model.Component component) {
+			Component component) {
 		rebuildListContents();
 	}
 	

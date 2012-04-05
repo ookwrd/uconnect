@@ -35,6 +35,12 @@ public class TitleButtonPanel extends JPanel implements
 	private HighlightButton lockButton;
 	private ConfirmationButton removeButton;
 
+	private static final String LOCK_TOOLTIP = "Lock editing";
+	private static final String UNLOCK_TOOLTIP = "Unlock editing";
+	private static final String REMOVE_TOOLTIP = "Remove component";
+	private static final String EXPAND_TOOLTIP = "Expand component view";
+	private static final String MINIMIZE_TOOLTIP = "Minimize component view";
+
 	public TitleButtonPanel(ComponentController controller,
 			Component component, ComponentPanel view) {
 		super();
@@ -59,26 +65,25 @@ public class TitleButtonPanel extends JPanel implements
 		});
 		add(minButton);
 
-		lockButton = new HighlightButton(
-				component.getLockedStatus() ? getIcon(LOCKED_ICON)
-						: getIcon(UNLOCKED_ICON));
-		lockButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				toggleLock();
-			}
-		});
 		if (controller.allowEditing()) {
+			lockButton = new HighlightButton(getIcon(UNLOCKED_ICON));
+			lockButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					toggleLock();
+				}
+			});
 			add(lockButton);
 		}
 
-		removeButton = new ConfirmationButton(new HighlightButton(
-				getIcon(CLOSE_ICON)), "Remove?");
-		removeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeComponent();
-			}
-		});
 		if (controller.allowEditing()) {
+			removeButton = new ConfirmationButton(new HighlightButton(
+					getIcon(CLOSE_ICON)), "Remove?");
+			removeButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					removeComponent();
+				}
+			});
+			removeButton.setToolTipText(REMOVE_TOOLTIP);
 			add(removeButton);
 		}
 
@@ -87,6 +92,7 @@ public class TitleButtonPanel extends JPanel implements
 		component.registerMinimizedStatusChangeListener(this);
 
 		setMinimizedStatus();
+		setLockedStatus();
 	}
 
 	protected void removeComponent() {
@@ -102,22 +108,36 @@ public class TitleButtonPanel extends JPanel implements
 	}
 
 	protected void setMinimizedStatus() {
-
 		switch (component.getMinimizedStatus()) {
 		case MINIMIZED:
 			this.minButton.setIcon(getIcon(EXP_ICON));
+			this.minButton.setToolTipText(EXPAND_TOOLTIP);
 			view.setMinimizeStatus(MinimizedStatusEnum.MINIMIZED);
 			break;
 
 		case PARTIAL:
 			this.minButton.setIcon(getIcon(MAX_ICON));
+			this.minButton.setToolTipText(EXPAND_TOOLTIP);
 			view.setMinimizeStatus(MinimizedStatusEnum.PARTIAL);
 			break;
 
 		case MAXIMIZED:
 			this.minButton.setIcon(getIcon(MIN_ICON));
+			this.minButton.setToolTipText(MINIMIZE_TOOLTIP);
 			view.setMinimizeStatus(MinimizedStatusEnum.MAXIMIZED);
 			break;
+		}
+	}
+	
+	protected void setLockedStatus() {
+		if(component.getLockedStatus()){
+			//Locked
+			this.lockButton.setIcon(getIcon(LOCKED_ICON));
+			this.lockButton.setToolTipText(UNLOCK_TOOLTIP);
+		}else{
+			//Unlocked
+			this.lockButton.setIcon(getIcon(UNLOCKED_ICON));
+			this.lockButton.setToolTipText(LOCK_TOOLTIP);
 		}
 	}
 
@@ -129,16 +149,14 @@ public class TitleButtonPanel extends JPanel implements
 	@Override
 	public void lockStatusChanged(Component component) {
 		if (component.equals(this.component)) {
-			if (component.getLockedStatus()) {
-				this.lockButton.setIcon(getIcon(LOCKED_ICON));
-			} else {
-				this.lockButton.setIcon(getIcon(UNLOCKED_ICON));
-			}
+			setLockedStatus();
 		} else {// Need to check it is the parent
 			if (component.getLockedStatus()) {
 				this.removeButton.setEnabled(false);
+				this.removeButton.setToolTipText(null);
 			} else {
 				this.removeButton.setEnabled(true);
+				this.removeButton.setToolTipText(REMOVE_TOOLTIP);
 			}
 		}
 	}

@@ -145,4 +145,8 @@ public class ConfirmationButton extends JButton {
 		mainButton.setEnabled(enabled);
 	}
 	
+	@Override
+	public void setToolTipText(String tooltip){
+		mainButton.setToolTipText(tooltip);
+	}
 }

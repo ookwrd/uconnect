@@ -1,6 +1,7 @@
 package org.u_compare.gui.guiElements;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,6 +49,7 @@ public class ControlList extends JPanel {
 				BoxLayout.Y_AXIS));
 		
 		list.setBackground(background);
+
 		list.setFixedCellWidth(140);//TODO Would be nice to make this expand and contract as needed.
 		
 		buttons = new JPanel();

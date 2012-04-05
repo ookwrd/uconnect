@@ -33,6 +33,7 @@ public class LanguageInputOutputPanel extends JPanel {
 		
 		inputPanel = new JPanel();
 		inputPanel.setOpaque(false);
+		inputPanel.setLayout(new GridLayout(1,1));
 		inputPanel.setBorder(new TitledBorder(new EtchedBorder(),
 		"Inputs:"));
 
@@ -43,6 +44,7 @@ public class LanguageInputOutputPanel extends JPanel {
 		
 		outputPanel = new JPanel();
 		outputPanel.setOpaque(false);
+		outputPanel.setLayout(new GridLayout(1,1));
 		outputPanel.setBorder(new TitledBorder(new EtchedBorder(),
 		"Outputs:"));
 		
@@ -53,6 +55,7 @@ public class LanguageInputOutputPanel extends JPanel {
 		
 		languagePanel = new JPanel();
 		languagePanel.setOpaque(false);
+		languagePanel.setLayout(new GridLayout(1,1));
 		languagePanel.setBorder(new TitledBorder(new EtchedBorder(), "Languages:"));
 		
 		languageController = new LanguageListPanelController(component);

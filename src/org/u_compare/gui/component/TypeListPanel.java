@@ -1,4 +1,5 @@
 package org.u_compare.gui.component;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -30,13 +31,13 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 		
 		list = new ControlList(getBackground());
  
-		ActionListener addListener = new ActionListener() {
+		list.registerAddActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.addAnnotation();
 			}
-		};
+		});		
 		
-		ActionListener removeListener = new ActionListener() {
+		list.registerDeleteActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				/*JList and DefaultListModel provide no way for accessing
@@ -49,10 +50,7 @@ public class TypeListPanel extends JPanel implements LockedStatusChangeListener,
 						.removeAnnotation((String)name);
 				}	
 			}
-		};
-		
-		list.registerAddActionListener(addListener);
-		list.registerDeleteActionListener(removeListener);
+		});
 		
 		rebuildListContents();
 		this.add(list);

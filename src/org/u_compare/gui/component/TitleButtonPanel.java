@@ -20,7 +20,7 @@ import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
 public class TitleButtonPanel extends JPanel implements
 		MinimizedStatusChangeListener, LockedStatusChangeListener {
 
-	private ComponentPanel minimizeTarget;
+	private ComponentPanel view;
 	private ComponentController controller;
 	private Component component;
 
@@ -29,10 +29,10 @@ public class TitleButtonPanel extends JPanel implements
 	private ConfirmationButton removeButton;
 
 	public TitleButtonPanel(ComponentController controller, Component component,
-			ComponentPanel minimizeTarget ) {
+			ComponentPanel view ) {
 		super();
 
-		this.minimizeTarget = minimizeTarget;
+		this.view = view;
 		this.controller = controller;
 		this.component = component;
 
@@ -41,7 +41,7 @@ public class TitleButtonPanel extends JPanel implements
 		FlowLayout buttonLayout = new FlowLayout(FlowLayout.TRAILING);
 		setLayout(buttonLayout);
 
-		IconFactory.loadIcons();
+		loadIcons();
 
 		// set the buttons
 		minButton = new HighlightButton(getIcon(MIN_ICON));
@@ -97,17 +97,17 @@ public class TitleButtonPanel extends JPanel implements
 		switch (component.getMinimizedStatus()) {
 		case MINIMIZED:
 			this.minButton.setIcon(getIcon(EXP_ICON));
-			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.MINIMIZED);
+			view.setMinimizeStatus(MinimizedStatusEnum.MINIMIZED);
 			break;
 			
 		case PARTIAL:
 			this.minButton.setIcon(getIcon(MAX_ICON));
-			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.PARTIAL);
+			view.setMinimizeStatus(MinimizedStatusEnum.PARTIAL);
 			break;
 
 		case MAXIMIZED:
 			this.minButton.setIcon(getIcon(MIN_ICON));
-			minimizeTarget.setMinimizeStatus(MinimizedStatusEnum.MAXIMIZED);
+			view.setMinimizeStatus(MinimizedStatusEnum.MAXIMIZED);
 			break;
 		}
 	}
@@ -125,7 +125,7 @@ public class TitleButtonPanel extends JPanel implements
 			} else {
 				this.lockButton.setIcon(getIcon(UNLOCKED_ICON));
 			}
-		}else{//Need to check its the parent
+		}else{//Need to check it is the parent
 			if (component.getLockedStatus()) {
 				this.removeButton.setEnabled(false);
 			} else {

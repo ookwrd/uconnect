@@ -4,16 +4,14 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.dnd.DragSource;
-import java.net.URL;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import static org.u_compare.gui.component.IconFactory.*;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.u_compare.gui.control.DragAndDropController;
 import org.u_compare.gui.control.DropTargetController;
-import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 
 /**
  * View component depicting the space on which dragged components can be dropped. 
@@ -27,11 +25,6 @@ public class SubComponentDropTarget extends JPanel {
 
 	public static final int TARGET_BORDER = 10;
 
-	private static boolean iconsLoaded = false;
-	private static Icon intermediateDropTargetIcon;
-
-	private final static String intermediateDropTargetIconPath = "../gfx/intermediate_drop_target_icon.png";
-	
 	private final JLabel solitaryLabel = new JLabel("(Drag and drop a component here)");
 	{
 		solitaryLabel.setPreferredSize(new Dimension(solitaryLabel.getPreferredSize().width,120));
@@ -39,7 +32,8 @@ public class SubComponentDropTarget extends JPanel {
 	
 	public SubComponentDropTarget(DropTargetController controller) {
 		super();
-		SubComponentDropTarget.loadIcons();
+		
+		loadIcons();
 		
 		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
@@ -83,7 +77,7 @@ public class SubComponentDropTarget extends JPanel {
 	public void setIntermediate() {
 		this.setPreferredSize(new Dimension(TARGET_BORDER * 3,
 				TARGET_BORDER * 3));
-		JLabel interImage = new JLabel(intermediateDropTargetIcon);
+		JLabel interImage = new JLabel(getIcon(DROP_TARGET_ICON));
 
 		this.add(interImage);
 	}
@@ -102,19 +96,4 @@ public class SubComponentDropTarget extends JPanel {
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
 	}
 
-	private static synchronized void loadIcons() {
-		if (SubComponentDropTarget.iconsLoaded == true) {
-			return;
-		}
-		URL image_url;
-
-		image_url = IconizedCloseableTabFlapComponent.class
-				.getResource(SubComponentDropTarget.intermediateDropTargetIconPath);
-		
-		assert image_url != null;
-		SubComponentDropTarget.intermediateDropTargetIcon = new ImageIcon(image_url);
-
-		iconsLoaded = true;
-		return;
-	}
 }

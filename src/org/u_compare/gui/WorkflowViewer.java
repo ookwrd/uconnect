@@ -101,15 +101,14 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		Component topComponent = splitPane.getWorkflowPane()
 				.getTopWorkflowComponent().getComponent();
 
-		int inserted_index = numberOfNonButtonTabs();
+		final int inserted_index = numberOfNonButtonTabs();
 
 		splitPane.setName(cleanTitle(topComponent.getName()));
 		this.add(splitPane, inserted_index);
 		// Why does the API force a fully specified tab when using insert
 		// rather than add?
-		String tooltip = "<html>" + wrap(topComponent.getName() + "\n" +topComponent.getDescription(),40,4);//Need <html> to allow multiline tooltip
-		this.setToolTipTextAt(inserted_index, tooltip);
 
+		
 		// Setup switching between tabs on component drag.
 		DropTargetListener dropListener = new DropTargetAdapter() {
 			@Override
@@ -125,10 +124,18 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 			}
 		};
 
-		IconizedCloseableTabFlapComponent tabFlapComponent = new IconizedCloseableTabFlapComponent(
+		final IconizedCloseableTabFlapComponent tabFlapComponent = new IconizedCloseableTabFlapComponent(
 				this, getIcon(STOPPED_ICON), dropListener,
 				WorkflowViewerController.ALLOW_TAB_CLOSE);
-		tabFlapComponent.setToolTipText(tooltip);
+		
+		
+		setTooltip(topComponent, inserted_index, tabFlapComponent);
+		topComponent.registerComponentDescriptionChangeListener(new Component.ListenerAdaptor(){//Update with changes
+			@Override
+			public void ComponentDescriptionChanged(Component component) {
+				setTooltip(component, inserted_index, tabFlapComponent);
+			}
+		});
 
 		splitPane.linkTabbedPane(this, tabFlapComponent);
 
@@ -137,6 +144,12 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		this.setSelectedIndex(inserted_index);
 	}
 
+	private void setTooltip(Component component, int index, IconizedCloseableTabFlapComponent tabFlapComponent){
+		String tooltip = "<html>" + wrap(component.getName() + "\n" +component.getDescription(),40,4);//Need <html> to allow multiline tooltip
+		setToolTipTextAt(index, tooltip);
+		tabFlapComponent.setToolTipText(tooltip);
+	}
+	
 	@Override
 	public void setIconAt(int index, Icon icon) {
 		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index))

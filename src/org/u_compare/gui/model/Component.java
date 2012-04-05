@@ -105,6 +105,7 @@ public interface Component{
 		public void ComponentDescriptionChanged(Component component);	
 	}
 	
+	
 	//TODO documentation
 	public String getVendor();
 	public void setVendor(String vendor);
@@ -275,4 +276,34 @@ public interface Component{
 		public void flowControlChanged(Component component);
 	}
 	
+	/**
+	 * Adaptor class to make implementation of listeners easier.
+	 * 
+	 * @author Luke McCrohon
+	 *
+	 */
+	public class ListenerAdaptor implements FlowControlChangeListener, ParameterGroupsChangeListener, ParameterConfigurationChangeListener, LockedStatusChangeListener, MinimizedStatusChangeListener, ParametersChangedListener, SavedStatusChangeListener, InputOutputChangeListener, LanguageChangeListener, DistributionInformationChangeListener, DescriptionChangeListener{
+		@Override
+		public void ComponentDescriptionChanged(Component component) {}
+		@Override
+		public void distributionInformationChanged(Component component) {}
+		@Override
+		public void languagesChanged(Component component) {}
+		@Override
+		public void inputOutputChanged(Component component) {}
+		@Override
+		public void savedStatusChanged(Component component) {}
+		@Override
+		public void parametersChanged(Component component) {}
+		@Override
+		public void minimizedStatusChanged(Component component) {}
+		@Override
+		public void lockStatusChanged(Component component) {}
+		@Override
+		public void parameterConfigurationChanged(Component component) {}
+		@Override
+		public void parameterGroupsChanged(Component component) {}
+		@Override
+		public void flowControlChanged(Component component) {}
+	}
 }

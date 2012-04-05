@@ -37,6 +37,12 @@ public class WorkflowViewer extends ButtonTabbedPane
 	// Configuration
 	private static final String TOOLTIP_TEXT =
 		"Your current workflow(s)";
+	
+	private static final String NEW_TAB_TOOLTIP =
+		"Construct a new workflow";
+	private static final String LOAD_TAB_TOOLTIP =
+		"Load a workflow";
+	
 	/* The maximum number of characters displayed for a tab name */
 	private static final int MAX_TITLE_LENGTH = 15;
 	
@@ -65,12 +71,14 @@ public class WorkflowViewer extends ButtonTabbedPane
 		if(WorkflowViewerController.SHOW_NEW_TAB){
 			ButtonTabFlap newWorkflowButton = addButtonTab(WorkflowViewerController.NEW_TAB_NAME, controller);
 			newWorkflowButton.setActionCommand(WorkflowViewerController.NEW_ACTION_COMMAND);
+			newWorkflowButton.setToolTipText(NEW_TAB_TOOLTIP);
 			newWorkflowButton.addActionListener(controller);	
 		}
 	
 		if(WorkflowViewerController.SHOW_LOAD_TAB){
 			ButtonTabFlap loadWorkflowButton = addButtonTab(WorkflowViewerController.LOAD_TAB_NAME, controller);
 			loadWorkflowButton.setActionCommand(WorkflowViewerController.LOAD_ACTION_COMMAND);
+			loadWorkflowButton.setToolTipText(LOAD_TAB_TOOLTIP);
 			loadWorkflowButton.addActionListener(controller);
 		}
 	}

@@ -5,6 +5,12 @@ import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 
+/**
+ * 
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class IconFactory {
 
 	//WorkflowViewer Icons
@@ -72,6 +78,11 @@ public class IconFactory {
 	private static final String UNLOCK_DESCRIPTION =
 		"Unlock Component";
 	
+	//SubComponentDropTarget Icons
+	public final static String DROP_TARGET_ICON = "../gfx/intermediate_drop_target_icon.png";
+	
+	private final static String DROP_TARGET_DESCRIPTION = "Drop Here";
+	
 	public static boolean iconsLoaded = false;
 	private static HashMap<String, ImageIcon> iconsHashMap = new HashMap<String, ImageIcon>();
 	
@@ -96,6 +107,8 @@ public class IconFactory {
 		loadIcon(UNLOCKED_ICON, UNLOCK_DESCRIPTION);
 		loadIcon(CLOSE_ICON, CLOSE_DESCRIPTION);
 
+		loadIcon(DROP_TARGET_ICON, DROP_TARGET_DESCRIPTION);
+		
 		iconsLoaded = true;
 	}
 	

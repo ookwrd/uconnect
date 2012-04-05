@@ -25,6 +25,8 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 
 /**
+ * Highest level view component representing an entire UIMA component. 
+ * 
  * @author pontus
  * @author olaf
  * @author luke

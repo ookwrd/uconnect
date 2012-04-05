@@ -16,7 +16,7 @@ import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 
 /**
- * TODO:
+ * View component depicting the space on which dragged components can be dropped. 
  * 
  * @author olaf
  * @author luke

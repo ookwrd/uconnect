@@ -16,8 +16,7 @@ import java.awt.dnd.DropTargetEvent;
 import java.io.IOException;
 
 /**
- * Singleton class for storing the most recently dragged Transferable object.
- * 
+ * Singleton class for storing the most recently dragged object and for handling the registration of drop sources and drop targets.
  */
 public class DragAndDropController {
 
@@ -64,15 +63,28 @@ public class DragAndDropController {
         return thereCanOnlyBeOne;
     }
     
+    /**
+     * Should be called when a component is dragged.
+     * 
+     * @param dragged
+     */
     public void setDragged(Object dragged){
         this.dragged = dragged;
     }
     
+    /**
+     * Should be called when drag is released.
+     */
     public void resetDragged(){
         this.dragged = null;
     }
  
-
+    /**
+     * Get the currently dragged component. This may either have been dragged from somewhere else in a workflow, or may have been constructed from the library.
+     * 
+     * @return The controller of the currently dragged component.
+     * @throws ClassCastException
+     */
 	public ComponentController getDraggedComponent() throws ClassCastException{
     	
     	if(dragged instanceof ComponentController){
@@ -86,7 +98,13 @@ public class DragAndDropController {
     	}
     }
 
-	public static void registerDragSource(final Component component, final DragAndDropController.DragController controller){
+	/**
+	 * Regsiters a component as something which is draggable.
+	 * 
+	 * @param component
+	 * @param controller
+	 */
+	public static void registerDragSource(final Component component, final DragController controller){
 		DragSource ds = DragSource.getDefaultDragSource();
 		ds.createDefaultDragGestureRecognizer(component, DnDConstants.ACTION_COPY,
 				new DragGestureListener(){
@@ -111,7 +129,13 @@ public class DragAndDropController {
 		});
 	}
 
-	public static void registerDropTarget(final Component target, final DragAndDropController.DropController controller){
+	/**
+	 * Registers a component as something which is capable of receiving drop events.
+	 * 
+	 * @param target
+	 * @param controller
+	 */
+	public static void registerDropTarget(final Component target, final DropController controller){
 		new DropTarget(target, new DropTargetAdapter(){		
 			@Override
 			public void drop(DropTargetDropEvent arg0) {

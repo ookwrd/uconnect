@@ -8,12 +8,16 @@ import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.model.Component;
 
+/**
+ * View component which displays a components list of subcomponents.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 @SuppressWarnings("serial")
 public class SubComponentsPanel extends JPanel {
 
 	private static final int AGGREGATE_PADDING = 2;
-	
-	//private JPanel contentsPane;
 	
 	public SubComponentsPanel(Component component, ComponentController controller){
 		super();
@@ -36,11 +40,6 @@ public class SubComponentsPanel extends JPanel {
 		for (Component subModel : component.getSubComponents()) {
 			ComponentController subController = new ComponentController(
 				subModel, controller.allowEditing());
-		
-			//Start everything except top level components as minimized
-			//if(MINIMIZE_SUBCOMPONENTS && !component.isWorkflow()){
-				//subController.setMinimized(true);
-			//}//TODO remove this, it overrides maximized things when dragging and dropping
 		
 			ComponentPanel subView = subController.getView();
 			add(subView);

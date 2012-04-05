@@ -20,7 +20,7 @@ import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
 public class TitleButtonPanel extends JPanel implements
 		MinimizedStatusChangeListener, LockedStatusChangeListener {
 
-	private Minimizable minimizeTarget;
+	private ComponentPanel minimizeTarget;
 	private ComponentController controller;
 	private Component component;
 
@@ -29,7 +29,7 @@ public class TitleButtonPanel extends JPanel implements
 	private ConfirmationButton removeButton;
 
 	public TitleButtonPanel(ComponentController controller, Component component,
-			Minimizable minimizeTarget ) {
+			ComponentPanel minimizeTarget ) {
 		super();
 
 		this.minimizeTarget = minimizeTarget;

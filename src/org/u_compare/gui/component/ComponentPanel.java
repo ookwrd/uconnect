@@ -34,7 +34,7 @@ import org.u_compare.gui.model.Workflow;
  */
 @SuppressWarnings("serial")
 public class ComponentPanel extends JPanel implements
-		SubComponentsChangedListener, Minimizable {
+		SubComponentsChangedListener {
 
 	public final static int PREFERRED_WIDTH = 300;
 	public static final int BORDER_ROUNDING = 5;
@@ -283,7 +283,6 @@ public class ComponentPanel extends JPanel implements
 		}
 	}
 	
-	@Override
 	public void setMinimizeStatus(MinimizedStatusEnum status){
 		CardLayout cl = (CardLayout)innerPanel.getLayout();
 		cl.show(innerPanel, status.name());

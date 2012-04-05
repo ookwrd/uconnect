@@ -10,9 +10,7 @@ import org.u_compare.gui.model.Component;
 
 /**
  * 
- *TODO this needs to be refactored inline with ComponentPanel
- * 
- * Controller responsible for handling userinput directed at a specific component/workflow.
+ * Controller responsible for handling user input directed at a specific component/workflow.
  * 
  * @author Luke McCrohon
  *
@@ -266,7 +264,7 @@ public class ComponentController implements DragAndDropController.DragController
 			}
 			
 		}else{
-			throw new InvalidSubComponentException("Cannot add component here\nAggregate:  " + component.isAggregate() + "etc...");//TODO
+			throw new InvalidSubComponentException("Cannot add component here\nAggregate:  " + component.isAggregate());
 		}	
 	//	System.out.println("End " + subControllers.size());
 	}
@@ -283,8 +281,6 @@ public class ComponentController implements DragAndDropController.DragController
 			if(parent != null){//If it has a parent already, remove it
 				parent.removeSubComponent(this);
 			}
-		}else{
-			//TODO some action
 		}
 	}
 	
@@ -294,8 +290,9 @@ public class ComponentController implements DragAndDropController.DragController
 	public void removeSubComponent(ComponentController toRemove){
 	
 		if(!subControllers.contains(toRemove)){
+			System.err.println("ERROR: trying to remove non existing component.");
+			Thread.dumpStack();
 			return;
-			//TODO add debugging info
 		}
 		
 		//Remove from controller
@@ -306,9 +303,6 @@ public class ComponentController implements DragAndDropController.DragController
 		((AggregateComponent)component).removeSubComponent(toRemove.component);
 	}
 	
-	
-	/* TODO Do I need this?
-	 */
 	public void dropTargetRemoved(DropTargetController dropTargetController){
 		
 		for(int i = 0; i < dropTargets.size(); i++){
@@ -351,14 +345,6 @@ public class ComponentController implements DragAndDropController.DragController
 	}
 	
 	/**
-	 * Responds to the currently dragged Component being dropped directly on this component.
-	 * 
-	 */
-	public void somethingDroppedOnComponent(){
-		setDragExit();
-	}
-	
-	/**
 	 * Is it possible to drop the currently dragged component at the specified position?
 	 * 
 	 * (Used for determining mouse over highlighting when dragging)
@@ -367,20 +353,7 @@ public class ComponentController implements DragAndDropController.DragController
 	 * @return True if currently dragged component can be dropped there.
 	 */
 	public boolean droppableOnChild(DropTargetController position) {
-		
 		return canAddSubComponent(getCurrentlyDragged(),dropTargetToPosition(position));
-	}
-	
-	/**
-	 * Is it possible to drop the currently dragged component directly on this component?
-	 * 
-	 * (Used for determining mouse over highlighting when dragging)
-	 * 
-	 * @return True if currently dragged component can be dropped here.
-	 */
-	public boolean droppableOnComponent(){
-		//Don't currently support direct drops on components.
-		return false;
 	}
 	
 	@Override
@@ -388,44 +361,7 @@ public class ComponentController implements DragAndDropController.DragController
 		componentView.requestFocusInWindow();
 		DragAndDropController.getController().setDragged(this);
 	}
-	
-	public void setDragEnter(){//TODO I don't think this is ever reached.
-		
-		System.out.println("In setDragEnter");
-		
-		if(droppableOnComponent()){
-			componentView.setDragOverHighlightingDroppableLight();
-		}else{
-			componentView.setDragOverHighlightingUndroppable();
-		}
-		
-		for(DropTargetController child : dropTargets){
-			
-			//TODO these show be a different kind of highlighting
-			if(droppableOnChild(child)){
-				child.view.highlightLocationsDroppable();
-			}else{
-				//TODO
-			}
-		}
-	}
-	
-	
-	
-	public void setDragExit(){
-		
-		componentView.clearDragOverHighlighting();
-		
-		for(DropTargetController child : dropTargets){
-			child.view.clearDragOverHighlighting();
-		}
-	}
 
-
-
-
-
-	
 	/**
 	 * Converts a drop target controller to its position index.
 	 * 
@@ -441,7 +377,6 @@ public class ComponentController implements DragAndDropController.DragController
 		}
 		
 		return -1;
-		
 	}
 	
 	/**

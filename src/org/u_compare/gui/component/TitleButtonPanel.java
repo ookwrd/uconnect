@@ -16,6 +16,13 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
 
+/**
+ * View element which includes the minimize, lock and close buttons in a
+ * components title bar.
+ * 
+ * @author Luke McCrohon
+ * 
+ */
 @SuppressWarnings("serial")
 public class TitleButtonPanel extends JPanel implements
 		MinimizedStatusChangeListener, LockedStatusChangeListener {
@@ -28,8 +35,8 @@ public class TitleButtonPanel extends JPanel implements
 	private HighlightButton lockButton;
 	private ConfirmationButton removeButton;
 
-	public TitleButtonPanel(ComponentController controller, Component component,
-			ComponentPanel view ) {
+	public TitleButtonPanel(ComponentController controller,
+			Component component, ComponentPanel view) {
 		super();
 
 		this.view = view;
@@ -50,10 +57,11 @@ public class TitleButtonPanel extends JPanel implements
 				toggleSize();
 			}
 		});
-		add(minButton);		
-				
-		lockButton = new HighlightButton(component.getLockedStatus() ? getIcon(LOCKED_ICON)
-				: getIcon(UNLOCKED_ICON));
+		add(minButton);
+
+		lockButton = new HighlightButton(
+				component.getLockedStatus() ? getIcon(LOCKED_ICON)
+						: getIcon(UNLOCKED_ICON));
 		lockButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				toggleLock();
@@ -62,17 +70,18 @@ public class TitleButtonPanel extends JPanel implements
 		if (controller.allowEditing()) {
 			add(lockButton);
 		}
-		
-		removeButton = new ConfirmationButton(new HighlightButton(getIcon(CLOSE_ICON)), "Remove?");
-		removeButton.addActionListener(new ActionListener(){
+
+		removeButton = new ConfirmationButton(new HighlightButton(
+				getIcon(CLOSE_ICON)), "Remove?");
+		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeComponent();
 			}
 		});
-		if(controller.allowEditing()){
+		if (controller.allowEditing()) {
 			add(removeButton);
 		}
-		
+
 		component.registerLockedStatusChangeListener(this);
 		component.registerParentLockedStatusChangeListener(this);
 		component.registerMinimizedStatusChangeListener(this);
@@ -99,7 +108,7 @@ public class TitleButtonPanel extends JPanel implements
 			this.minButton.setIcon(getIcon(EXP_ICON));
 			view.setMinimizeStatus(MinimizedStatusEnum.MINIMIZED);
 			break;
-			
+
 		case PARTIAL:
 			this.minButton.setIcon(getIcon(MAX_ICON));
 			view.setMinimizeStatus(MinimizedStatusEnum.PARTIAL);
@@ -119,13 +128,13 @@ public class TitleButtonPanel extends JPanel implements
 
 	@Override
 	public void lockStatusChanged(Component component) {
-		if(component.equals(this.component)){
+		if (component.equals(this.component)) {
 			if (component.getLockedStatus()) {
 				this.lockButton.setIcon(getIcon(LOCKED_ICON));
 			} else {
 				this.lockButton.setIcon(getIcon(UNLOCKED_ICON));
 			}
-		}else{//Need to check it is the parent
+		} else {// Need to check it is the parent
 			if (component.getLockedStatus()) {
 				this.removeButton.setEnabled(false);
 			} else {

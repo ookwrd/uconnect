@@ -1,18 +1,37 @@
 package org.u_compare.gui.component;
 
+import java.awt.Graphics;
 import java.net.URL;
 import java.util.HashMap;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- * 
+ * Centralized class for loading image resources needed by UConnect GUI.
  * 
  * @author Luke McCrohon
  *
  */
 public class IconFactory {
 
+	/**
+	 * 
+	 */
+	public static final Icon EMPTY_ICON = new Icon() {//An empty icon.
+		@Override
+		public void paintIcon(java.awt.Component c, Graphics g, int x, int y) {
+		}
+		@Override
+		public int getIconWidth() {
+			return 16;
+		}
+		@Override
+		public int getIconHeight() {
+			return 16;
+		}
+	};
+	
 	//WorkflowViewer Icons
 	public static final String STOPPED_ICON = 
 		"../gfx/workflow_stopped.png";

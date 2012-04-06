@@ -130,14 +130,27 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		
 		
 		setTooltip(topComponent, inserted_index, tabFlapComponent);
-		topComponent.registerComponentDescriptionChangeListener(new Component.ListenerAdaptor(){//Update with changes
+		//Update tooltips as title and description change
+		topComponent.registerComponentDescriptionChangeListener(new Component.ListenerAdaptor(){
 			@Override
 			public void ComponentDescriptionChanged(Component component) {
 				setTooltip(component, inserted_index, tabFlapComponent);
 			}
 		});
 
-		splitPane.linkTabbedPane(this, tabFlapComponent);
+		//Add a "*" to unsaved workflows.
+		topComponent.registerSavedStatusChangeListener(new Component.ListenerAdaptor(){
+			@Override
+			public void savedStatusChanged(Component component) {
+				if(component.checkUnsavedChanges()) {
+					setTitleAt(inserted_index, "*" + WorkflowViewer.cleanTitle(component.getName()));
+				} else {
+					setTitleAt(inserted_index, WorkflowViewer.cleanTitle(component.getName()));
+				}
+			}
+		});
+		
+		splitPane.linkTabbedPane(this, tabFlapComponent);//TODO can I get rid of this?
 
 		this.setTabComponentAt(inserted_index, tabFlapComponent);
 

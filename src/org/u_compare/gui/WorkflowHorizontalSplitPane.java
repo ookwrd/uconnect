@@ -6,7 +6,6 @@ import javax.swing.JTabbedPane;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
-import org.u_compare.gui.model.Component.SavedStatusChangeListener;
 
 /**
  * Panel holding everything related to a single workflow. Holds the WorkflowPane (above) and the ConsolePane (Below).
@@ -17,7 +16,7 @@ import org.u_compare.gui.model.Component.SavedStatusChangeListener;
  */
 @SuppressWarnings("serial")
 public class WorkflowHorizontalSplitPane extends JSplitPane
-	implements DescriptionChangeListener, SavedStatusChangeListener {
+	implements DescriptionChangeListener {
 	
 	private ConsolePane consolePane;
 	private WorkflowPane workflowPane;
@@ -39,8 +38,6 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 		
 		workflowPane.getTopWorkflowComponent().getComponent()
 				.registerComponentDescriptionChangeListener(this);
-		workflowPane.getTopWorkflowComponent().getComponent()
-				.registerSavedStatusChangeListener(this);
 		
 		this.setTopComponent(this.workflowPane);
 		this.setBottomComponent(this.consolePane);
@@ -76,22 +73,4 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 					+ WorkflowViewer.cleanTitle(component.getName()));
 		}
 	}
-
-	// I am not sure if this really belongs here, not in the tabbed pane /pontus
-	//TODO refactor to tabbed pane /luke
-	@Override
-	public void savedStatusChanged(Component component) {
-		System.out.println("Saved change listner notified");
-		if (tab != null) {
-			if(component.checkUnsavedChanges()) {
-				tabPane.setTitleAt(tabPane.indexOfComponent(this),
-						"*" +
-						WorkflowViewer.cleanTitle(component.getName()));
-			} else {
-				tabPane.setTitleAt(tabPane.indexOfComponent(this),
-						WorkflowViewer.cleanTitle(component.getName()));
-			}
-		}
-	}
-
 }

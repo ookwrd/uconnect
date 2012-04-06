@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 import org.u_compare.gui.model.parameters.constraints.FloatConstraint;
 
-//TODO
+/**
+ * Model representation of a Float Parameter.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class FloatParameter extends AbstractParameter<Float> {
 
 	public FloatParameter(String name, String description, boolean mandatory, Float parameter) {

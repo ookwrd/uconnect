@@ -14,7 +14,7 @@ import org.u_compare.gui.model.Component.DescriptionChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
 /**
- * Panel for displaying/editing a components description.
+ * Panel for displaying/editing a component/workflow's description.
  * 
  * @author Luke McCrohon
  */

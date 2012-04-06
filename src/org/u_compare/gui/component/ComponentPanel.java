@@ -25,7 +25,7 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 
 /**
- * Highest level view component representing an entire UIMA component. 
+ * View element representing an entire UIMA component. 
  * 
  * @author pontus
  * @author olaf
@@ -42,7 +42,6 @@ public class ComponentPanel extends JPanel implements
 	public static final Color BORDER_COLOR = Color.DARK_GRAY;
 	public static Color HEADER_COLOR = Color.WHITE;
 	public final static Color SELECTED_HEADER_COLOR = new Color(16448250);
-	public final Color BODY_COLOR = getBackground();
 	public static Color HIGHLIGHT_COLOR = new Color(16748574);
 	public static Color HIGHLIGHT_COLOR_2 = new Color(15631900);
 
@@ -91,7 +90,7 @@ public class ComponentPanel extends JPanel implements
 		initialConfiguration(component, controller);
 		
 		outerPanel = new JPanel();
-		outerPanel.setBorder(new RoundedBorder(null, BORDER_COLOR, BODY_COLOR,
+		outerPanel.setBorder(new RoundedBorder(null, BORDER_COLOR, getBackground(),
 				BORDER_ROUNDING, BORDER_WIDTH, false));
 		this.add(outerPanel);
 		
@@ -191,13 +190,10 @@ public class ComponentPanel extends JPanel implements
 	
 	protected void setupSubComponentsPanel(JPanel target) {
 		
-		//TODO make sure it is only setup in one location
-		
 		subComponentsContainer = target;
 		
 		// set up the aggregate panel if necessary
 		if (component.isAggregate()) {
-
 			if(subComponentsPanel != null){
 				target.remove(subComponentsPanel);
 				target.validate();
@@ -205,15 +201,12 @@ public class ComponentPanel extends JPanel implements
 			
 			subComponentsPanel = new SubComponentsPanel(component, controller);
 			target.add(subComponentsPanel);
-			
 		}
 	}
 	
 	private void resetSubComponents(){
-		
 		subComponentsContainer.remove(subComponentsPanel);
 		setupSubComponentsPanel(subComponentsContainer);
-		
 	}
 	
 	//TODO this shouldn't be here. move to SubComponentsPanel
@@ -231,20 +224,6 @@ public class ComponentPanel extends JPanel implements
 	
 	public ComponentController getComponentController(){
 		return this.controller;
-	}
-
-	public void setDragOverHighlightingDroppableLight() {
-		setBackground(Color.LIGHT_GRAY);
-
-	}
-
-	public void setDragOverHighlightingUndroppable() {
-		setBackground(Color.RED);
-
-	}
-
-	public void clearDragOverHighlighting() {
-		setBackground(BODY_COLOR);
 	}
 
 	/**

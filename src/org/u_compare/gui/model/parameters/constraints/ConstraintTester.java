@@ -7,6 +7,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
+/**
+ * JUnit tests for the parameter constraints framework.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class ConstraintTester {
 
 	@Before

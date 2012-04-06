@@ -14,6 +14,12 @@ import org.u_compare.gui.guiElements.EditableTextField;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
 
+/**
+ * View element for displaying a component/workflow's title.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 @SuppressWarnings("serial")
 public class ComponentNamePanel extends JPanel implements DescriptionChangeListener {
 
@@ -23,7 +29,7 @@ public class ComponentNamePanel extends JPanel implements DescriptionChangeListe
 	private final ComponentController controller;
 	private final Component component;
 
-	EditableTextField nameField;
+	private final EditableTextField nameField;
 
 	public ComponentNamePanel(ComponentController controller, Component component,
 			boolean isWorkflow, ComponentTitleBar topPanel) {
@@ -42,13 +48,10 @@ public class ComponentNamePanel extends JPanel implements DescriptionChangeListe
 			nameField.setFont(workflowFont);
 		} else {
 			nameField.setFont(font);
+			setBackground(Color.WHITE);
 		}
 
 		add(nameField, BorderLayout.CENTER);
-
-		if (!isWorkflow) {
-			setBackground(Color.WHITE);
-		}
 		
 		nameField.addActionListener(new ActionListener() {
 			@Override

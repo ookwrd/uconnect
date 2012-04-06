@@ -25,11 +25,12 @@ import org.u_compare.gui.component.WorkflowPanel;
 import org.u_compare.gui.model.Workflow;
 
 /**
- * Contains all workflow related components.
+ * View component which contains everything related to a workshop.
  * 
- * @author pontus
- * @author olaf
+ * @author Pontus
+ * @author Olaf
  * @author Luke 
+ * 
  * @version 2009-08-26
  */
 
@@ -72,7 +73,7 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 
 		getVerticalScrollBar().setUnitIncrement(8);
 
-		System.out.println(this.getAutoscrollInsets());
+		//System.out.println(this.getAutoscrollInsets());
 
 		/*new DropTarget(this, null);//TODO yeah this...
 		
@@ -89,12 +90,11 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
                             	 SwingUtilities.convertMouseEvent((Component)(ev.getSource()), ev,
                             			 WorkflowPane.this);
 
-                             System.out.println("Output " + out.getX() + " " + out.getY());
+                             //System.out.println("Output " + out.getX() + " " + out.getY());
                              if(!getBounds().contains(out.getPoint())){//TODO check this
                                      return;
                              }
                      }
-
              }
 		 }, AWTEvent.MOUSE_MOTION_EVENT_MASK);
 		
@@ -104,7 +104,6 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 		// Let the user scroll by dragging to outside the window.
 		this.setAutoscrolls(true); // enable synthetic drag events
 		addMouseMotionListener(this); // handle mouse drags
-
 	}
 
 	public ComponentPanel getTopWorkflowComponent() {

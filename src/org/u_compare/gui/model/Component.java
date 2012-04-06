@@ -14,7 +14,7 @@ import org.u_compare.gui.model.parameters.ParameterGroup;
  * 
  * See also AbstractUIMAComponent.
  * 
- * @author Luke Mccrohon
+ * @author Luke McCrohon
  */
 public interface Component{
 

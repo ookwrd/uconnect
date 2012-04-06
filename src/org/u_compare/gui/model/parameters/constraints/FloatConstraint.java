@@ -1,9 +1,13 @@
 package org.u_compare.gui.model.parameters.constraints;
 
+/**
+ * Constraint specifying that the input value is a float.
+ * 
+ * @author Luke McCrohon
+ */
 public class FloatConstraint extends AbstractWhitelistBlacklistConstraint<Float> {
 
 	public FloatConstraint(){
-		
 	}
 	
 	@Override

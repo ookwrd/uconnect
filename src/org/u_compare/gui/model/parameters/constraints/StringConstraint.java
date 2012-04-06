@@ -3,6 +3,12 @@ package org.u_compare.gui.model.parameters.constraints;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class implementing common types of constraints on String parameters.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class StringConstraint extends AbstractWhitelistBlacklistConstraint<String> {
 	
 		private int minlength = 0;
@@ -50,6 +56,7 @@ public class StringConstraint extends AbstractWhitelistBlacklistConstraint<Strin
 			this.regex = Pattern.compile(regex);
 		}	
 		
+		@Override
 		public void validate(String value) throws ConstraintFailedException{		
 			
 			if(value.length() < minlength){
@@ -88,7 +95,6 @@ public class StringConstraint extends AbstractWhitelistBlacklistConstraint<Strin
 				}
 			}
 		}
-
 	}
 
 

@@ -1,9 +1,10 @@
 package org.u_compare.gui.model;
 
 /**
- * Yes I know this is ugly, but it is needed to match the similar schizophrenic class in the UIMA framework.
+ * Model class representing either a AnnotiationType or Feature.
+ * This is ugly, but it is needed to match the similar schizophrenic class in the UIMA framework.
  * 
- * @author Luke Mccrohon
+ * @author Luke McCrohon
  *
  */
 public class AnnotationTypeOrFeature {
@@ -51,7 +52,6 @@ public class AnnotationTypeOrFeature {
 	/**
 	 * Type names function as unique identifiers. If two AnnotationTypes have the same
 	 * name, then they are equal.
-	 * 
 	 */
 	@Override
 	public boolean equals(Object x){

@@ -11,6 +11,12 @@ import org.u_compare.gui.control.DragAndDropController;
 import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
 
+/**
+ * Extension of ComponentPanel providing a view element which represents an entire Workflow.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 @SuppressWarnings("serial")
 public class WorkflowPanel extends ComponentPanel {
 	

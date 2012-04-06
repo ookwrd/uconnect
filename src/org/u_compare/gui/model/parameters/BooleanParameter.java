@@ -4,7 +4,12 @@ import java.util.ArrayList;
 
 import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
-
+/**
+ * Model representation of an Boolean Parameter.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class BooleanParameter extends
 		AbstractParameter<Boolean> {
 

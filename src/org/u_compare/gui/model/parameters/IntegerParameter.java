@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 
+/**
+ * Model representation of an Integer Parameter.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class IntegerParameter extends AbstractParameter<Integer>{
 	
 	public IntegerParameter(String name, String description, boolean mandatory, Integer parameter) {

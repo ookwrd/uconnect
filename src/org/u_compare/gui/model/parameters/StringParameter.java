@@ -2,7 +2,12 @@ package org.u_compare.gui.model.parameters;
 
 import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
-
+/**
+ * Model representation of a String Parameter.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class StringParameter extends AbstractParameter<String>{
 
 	public StringParameter(String name, String description, boolean mandatory, String parameter) {

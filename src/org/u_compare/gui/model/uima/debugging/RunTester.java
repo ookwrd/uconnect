@@ -30,7 +30,6 @@ public class RunTester {
 			System.out.println("Done " + UIMAComponentTester.flags[0] +  " " + UIMAComponentTester.flags[1]);
 			
 		} catch (AnalysisEngineProcessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -41,7 +40,6 @@ public class RunTester {
 		try {
 			new RunTester("src/org/u_compare/gui/model/uima/debugging/AggregateAEWithChildren.xml");
 		} catch (ResourceInitializationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

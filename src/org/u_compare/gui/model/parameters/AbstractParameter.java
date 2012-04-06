@@ -8,6 +8,13 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.constraints.Constraint;
 import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
+/**
+ * Base class for the implementation of various parameter types.
+ * 
+ * @author Luke McCrohon
+ *
+ * @param <T> The type of value to store.
+ */
 public abstract class AbstractParameter<T>
 		implements Parameter {
 

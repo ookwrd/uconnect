@@ -7,8 +7,7 @@ import org.u_compare.gui.model.AbstractAggregateComponent.InvalidPositionExcepti
 /**
  * Interface specifying common features of all aggregate components.
  * 
- * 
- * @author Luke Mccrohon
+ * @author Luke McCrohon
  *
  */
 public interface AggregateComponent extends Component {

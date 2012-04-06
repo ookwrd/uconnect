@@ -68,7 +68,7 @@ public class Workflow extends AbstractAggregateComponent  {
 	 * 
 	 */
 	public void runResumeWorkflow() {
-		assert(status == WorkflowStatus.READY || status == WorkflowStatus.FINISHED || status == WorkflowStatus.ERROR);//TODO
+		assert(status == WorkflowStatus.READY || status == WorkflowStatus.FINISHED || status == WorkflowStatus.ERROR);
 
 		setStatus(WorkflowStatus.INITIALIZING);
 	}
@@ -171,7 +171,6 @@ public class Workflow extends AbstractAggregateComponent  {
 		try {
 			return constructWorkflowFromXML(new XMLInputSource(location));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -186,16 +185,12 @@ public class Workflow extends AbstractAggregateComponent  {
 				return new CPE((CpeDescription)desc);
 			} else {
 				
-				System.out.println("Workflow.constructWorkflowFromXML(): Its in here TODO should be consructing AS Workflow" + desc.getClass());
+				System.err.println("Workflow.constructWorkflowFromXML(): Error encountered, should be constructing an AS Workflow, but this functionality has not been implemented." + desc.getClass());
 				//TODO error //TODO AS workflow
 				return null;
 			}
 			
-		} catch (InvalidXMLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (CpeDescriptorException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;

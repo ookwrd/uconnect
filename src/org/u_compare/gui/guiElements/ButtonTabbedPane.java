@@ -8,11 +8,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+/**
+ * Extension of JTabbedPane which allows the inclusion of ButtonTabs which can not be selected, but which act as JButtons.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 @SuppressWarnings("serial")
 public class ButtonTabbedPane extends JTabbedPane {
 
 	private final ArrayList<ButtonTabFlap> buttons = new ArrayList<ButtonTabFlap>();
 	
+	//
 	private JPanel placeholderPanel = new JPanel(){
 		{
 			add(new JLabel("There are no Tabbed panes to display."));

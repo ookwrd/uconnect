@@ -27,9 +27,9 @@ import org.u_compare.gui.model.Component.MinimizedStatusChangeListener;
 public class TitleButtonPanel extends JPanel implements
 		MinimizedStatusChangeListener, LockedStatusChangeListener {
 
-	private ComponentPanel view;
-	private ComponentController controller;
-	private Component component;
+	private final ComponentPanel view;
+	private final ComponentController controller;
+	private final Component component;
 
 	private HighlightButton minButton;
 	private HighlightButton lockButton;
@@ -41,12 +41,12 @@ public class TitleButtonPanel extends JPanel implements
 	private static final String EXPAND_TOOLTIP = "Expand component view";
 	private static final String MINIMIZE_TOOLTIP = "Minimize component view";
 
-	public TitleButtonPanel(ComponentController controller,
+	public TitleButtonPanel(ComponentController controller1,
 			Component component, ComponentPanel view) {
 		super();
 
 		this.view = view;
-		this.controller = controller;
+		this.controller = controller1;
 		this.component = component;
 
 		// add buttons to expand/collapse/remove the component
@@ -60,7 +60,7 @@ public class TitleButtonPanel extends JPanel implements
 		minButton = new HighlightButton(getIcon(MIN_ICON));
 		minButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				toggleSize();
+				controller.toggleMinimized();
 			}
 		});
 		add(minButton);
@@ -69,7 +69,7 @@ public class TitleButtonPanel extends JPanel implements
 			lockButton = new HighlightButton(getIcon(UNLOCKED_ICON));
 			lockButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					toggleLock();
+					controller.toggleLocked();
 				}
 			});
 			add(lockButton);
@@ -80,7 +80,7 @@ public class TitleButtonPanel extends JPanel implements
 					getIcon(CLOSE_ICON)), "Remove?");
 			removeButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					removeComponent();
+					controller.removeComponent();
 				}
 			});
 			removeButton.setToolTipText(REMOVE_TOOLTIP);
@@ -93,18 +93,6 @@ public class TitleButtonPanel extends JPanel implements
 
 		setMinimizedStatus();
 		setLockedStatus();
-	}
-
-	protected void removeComponent() {
-		this.controller.removeComponent();
-	}
-
-	protected void toggleSize() {
-		controller.toggleMinimized();
-	}
-
-	protected void toggleLock() {
-		controller.toggleLocked();
 	}
 
 	protected void setMinimizedStatus() {

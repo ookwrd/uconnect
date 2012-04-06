@@ -84,15 +84,6 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		}
 	}
 
-	// TODO should this really be public? and if so, should it be here? /luke
-	public static String cleanTitle(String title) {
-		if (title.length() < MAX_TITLE_LENGTH) {
-			return title;
-		} else {
-			return title.substring(0, MAX_TITLE_LENGTH - 3) + "...";
-		}
-	}
-
 	public void addWorkflow(WorkflowHorizontalSplitPane splitPane) {
 
 		Workflow workflow = splitPane.getWorkflowPane().getAssociatedWorkflow();
@@ -108,7 +99,6 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		// Why does the API force a fully specified tab when using insert
 		// rather than add?
 
-		
 		// Setup switching between tabs on component drag.
 		DropTargetListener dropListener = new DropTargetAdapter() {
 			@Override
@@ -127,40 +117,84 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		final IconizedCloseableTabFlapComponent tabFlapComponent = new IconizedCloseableTabFlapComponent(
 				this, getIcon(STOPPED_ICON), dropListener,
 				WorkflowViewerController.ALLOW_TAB_CLOSE);
-		
-		
-		setTooltip(topComponent, inserted_index, tabFlapComponent);
-		//Update tooltips as title and description change
-		topComponent.registerComponentDescriptionChangeListener(new Component.ListenerAdaptor(){
-			@Override
-			public void ComponentDescriptionChanged(Component component) {
-				setTooltip(component, inserted_index, tabFlapComponent);
-			}
-		});
 
-		//Add a "*" to unsaved workflows.
-		topComponent.registerSavedStatusChangeListener(new Component.ListenerAdaptor(){
-			@Override
-			public void savedStatusChanged(Component component) {
-				if(component.checkUnsavedChanges()) {
-					setTitleAt(inserted_index, "*" + WorkflowViewer.cleanTitle(component.getName()));
-				} else {
-					setTitleAt(inserted_index, WorkflowViewer.cleanTitle(component.getName()));
-				}
-			}
-		});
+		setTooltip(topComponent, inserted_index, tabFlapComponent);
+		// Update tooltips as title and description change
+		topComponent
+				.registerComponentDescriptionChangeListener(new Component.ListenerAdaptor() {
+					@Override
+					public void ComponentDescriptionChanged(Component component) {
+						setTooltip(component, inserted_index, tabFlapComponent);
+					}
+				});
+
+		// Add a "*" to unsaved workflows.
+		topComponent
+				.registerSavedStatusChangeListener(new Component.ListenerAdaptor() {
+					@Override
+					public void savedStatusChanged(Component component) {
+						if (component.checkUnsavedChanges()) {
+							setTitleAt(
+									inserted_index,
+									WorkflowViewer.cleanTitle("*"
+											+ component.getName()));
+						} else {
+							setTitleAt(inserted_index, WorkflowViewer
+									.cleanTitle(component.getName()));
+						}
+					}
+				});
 
 		this.setTabComponentAt(inserted_index, tabFlapComponent);
-
 		this.setSelectedIndex(inserted_index);
 	}
 
-	private void setTooltip(Component component, int index, IconizedCloseableTabFlapComponent tabFlapComponent){
-		String tooltip = "<html>" + wrap(component.getName() + "\n" +component.getDescription(),40,4);//Need <html> to allow multiline tooltip
+	private void setTooltip(Component component, int index,
+			IconizedCloseableTabFlapComponent tabFlapComponent) {
+		String tooltip = "<html>"
+				+ wrap(component.getName() + "\n" + component.getDescription(),
+						40, 4);// Need <html> to allow multiline tooltip
 		setToolTipTextAt(index, tooltip);
 		tabFlapComponent.setToolTipText(tooltip);
 	}
-	
+
+	/**
+	 * Word wrap algorithm for tooltips.
+	 * 
+	 * Based on http://ramblingsrobert.wordpress.com/2011/04/13/java-word-wrap-
+	 * algorithm/
+	 */
+	private String wrap(String in, int len, int lines) {
+		in = in.trim();
+
+		if (in.length() < len) {
+			return in;
+		} else if (lines <= 1) {
+			return in.substring(0, len - 3) + "...";
+		}
+
+		if (in.substring(0, len).contains("\n")) {
+			return in.substring(0, in.indexOf("\n")).trim() + "<br>"
+					+ wrap(in.substring(in.indexOf("\n") + 1), len, lines - 1);
+		}
+
+		int place = Math.max(
+				Math.max(in.lastIndexOf(" ", len), in.lastIndexOf("\t", len)),
+				in.lastIndexOf("-", len));
+
+		return in.substring(0, place).trim() + "<br>"
+				+ wrap(in.substring(place), len, lines - 1);
+	}
+
+	private static String cleanTitle(String title) {
+		title = title.trim();
+		if (title.length() < MAX_TITLE_LENGTH) {
+			return title;
+		} else {
+			return title.substring(0, MAX_TITLE_LENGTH - 3) + "...";
+		}
+	}
+
 	@Override
 	public void setIconAt(int index, Icon icon) {
 		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index))
@@ -260,30 +294,4 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		}
 	}
 
-	/**
-	 * Word wrap algorithm for tooltips. 
-	 * 
-	 * Based on http://ramblingsrobert.wordpress.com/2011/04/13/java-word-wrap-algorithm/
-	 */
-	public String wrap(String in, int len, int lines) {
-		in = in.trim();
-		
-		if (in.length() < len) {
-			return in;
-		}else if (lines <= 1){
-			return in.substring(0,len-3) + "...";
-		}
-		
-		if (in.substring(0, len).contains("\n")) {
-			return in.substring(0, in.indexOf("\n")).trim() + "<br>"
-					+ wrap(in.substring(in.indexOf("\n") + 1), len, lines-1);
-		}
-		
-		int place = Math.max(
-				Math.max(in.lastIndexOf(" ", len), in.lastIndexOf("\t", len)),
-				in.lastIndexOf("-", len));
-		
-		return in.substring(0, place).trim() + "<br>"
-				+ wrap(in.substring(place), len, lines-1);
-	}
 }

@@ -149,8 +149,6 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 				}
 			}
 		});
-		
-		splitPane.linkTabbedPane(this, tabFlapComponent);//TODO can I get rid of this?
 
 		this.setTabComponentAt(inserted_index, tabFlapComponent);
 

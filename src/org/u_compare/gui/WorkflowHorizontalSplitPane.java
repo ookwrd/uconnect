@@ -1,11 +1,6 @@
 package org.u_compare.gui;
 
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-
-import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
-import org.u_compare.gui.model.Component;
-import org.u_compare.gui.model.Component.DescriptionChangeListener;
 
 /**
  * Panel holding everything related to a single workflow. Holds the WorkflowPane (above) and the ConsolePane (Below).
@@ -15,8 +10,7 @@ import org.u_compare.gui.model.Component.DescriptionChangeListener;
  * @version 2009-08-28
  */
 @SuppressWarnings("serial")
-public class WorkflowHorizontalSplitPane extends JSplitPane
-	implements DescriptionChangeListener {
+public class WorkflowHorizontalSplitPane extends JSplitPane {
 	
 	private ConsolePane consolePane;
 	private WorkflowPane workflowPane;
@@ -28,16 +22,10 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 	private static final int SPLIT_ORIENTATION = JSplitPane.VERTICAL_SPLIT;
 	protected static final boolean DEBUG = false;
 	
-	private IconizedCloseableTabFlapComponent tab;
-	private JTabbedPane tabPane;
-	
 	public WorkflowHorizontalSplitPane(WorkflowPane workflowPane,
 			ConsolePane consolePane) {
 		this.workflowPane = workflowPane;
 		this.consolePane = consolePane;
-		
-		workflowPane.getTopWorkflowComponent().getComponent()
-				.registerComponentDescriptionChangeListener(this);
 		
 		this.setTopComponent(this.workflowPane);
 		this.setBottomComponent(this.consolePane);
@@ -56,21 +44,4 @@ public class WorkflowHorizontalSplitPane extends JSplitPane
 		return this.workflowPane;
 	}
 
-	//Should be called if we have been added to a tabbed pane.
-	public void linkTabbedPane(JTabbedPane tabPane,
-			IconizedCloseableTabFlapComponent tab) {
-		this.tab = tab;
-		this.tabPane = tabPane;
-	}
-	
-	// I am not sure if this really belongs here, not in the tabbed pane /pontus
-	//TODO refactor to tabbed pane /luke
-	@Override
-	public void ComponentDescriptionChanged(Component component) {
-		if(tab != null) {
-			tabPane.setTitleAt(tabPane.indexOfComponent(this),
-					(component.checkUnsavedChanges() ? "*" : "")
-					+ WorkflowViewer.cleanTitle(component.getName()));
-		}
-	}
 }

@@ -40,8 +40,7 @@ import org.xml.sax.SAXException;
  * @author Luke McCrohon
  * 
  */
-public class WorkflowViewerController implements
-		 ActionListener {
+public class WorkflowViewerController {
 
 	public interface WorkflowFactory {
 		public Workflow constructWorkflow();
@@ -54,9 +53,6 @@ public class WorkflowViewerController implements
 	public interface WorkflowSaveAdaptor {
 		public void saveWorkflow(MetaDataObject descriptor);
 	}
-
-	public static final String NEW_ACTION_COMMAND = "NEW";
-	public static final String LOAD_ACTION_COMMAND = "LOAD";
 
 	// Configuration parameters
 
@@ -416,16 +412,5 @@ public class WorkflowViewerController implements
 
 	private void saveWorkflow(Workflow workflow) {
 		saveAdaptor.saveWorkflow(workflow.getWorkflowDescription());
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getActionCommand().equals(NEW_ACTION_COMMAND)) {
-			requestNewWorkflow();
-		} else if (arg0.getActionCommand().equals(LOAD_ACTION_COMMAND)) {
-			requestLoadWorkflow();
-		} else {
-			System.out.println("Error");
-		}
 	}
 }

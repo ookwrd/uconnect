@@ -5,6 +5,8 @@ import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.Icon;
@@ -77,20 +79,26 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 							controller.requestNewWorkflowDragged();
 						}
 					});
-			newWorkflowButton
-					.setActionCommand(WorkflowViewerController.NEW_ACTION_COMMAND);
 			newWorkflowButton.setToolTipText(NEW_TAB_TOOLTIP);
-			newWorkflowButton.addActionListener(controller);
+			newWorkflowButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					controller.requestNewWorkflow();
+				}
+			});
 			newWorkflowButton.setMnemonic(KeyEvent.VK_N);
 		}
 
 		if (WorkflowViewerController.SHOW_LOAD_TAB) {
 			ButtonTabFlap loadWorkflowButton = addButtonTab(
 					WorkflowViewerController.LOAD_TAB_NAME, null);
-			loadWorkflowButton
-					.setActionCommand(WorkflowViewerController.LOAD_ACTION_COMMAND);
 			loadWorkflowButton.setToolTipText(LOAD_TAB_TOOLTIP);
-			loadWorkflowButton.addActionListener(controller);
+			loadWorkflowButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					controller.requestLoadWorkflow();
+				}
+			});
 			loadWorkflowButton.setMnemonic(KeyEvent.VK_L);
 		}
 	}

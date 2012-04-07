@@ -64,7 +64,9 @@ public class WorkflowPanel extends ComponentPanel {
 			this.add(lowerPanel, BorderLayout.SOUTH);
 		}	
 		
-		DragAndDropController.registerDragSource(this, controller);
+		if(controller.allowEditing()){
+			DragAndDropController.registerDragSource(this, controller);
+		}
 	}
 	
 	protected void setupBorderPanel(JPanel target, JPanel inner){

@@ -42,7 +42,9 @@ public class ComponentNamePanel extends JPanel implements DescriptionChangeListe
 		
 		nameField = new EditableTextField(component.getName());
 	
-		DragAndDropController.registerDragSource(nameField, controller);
+		if(controller.allowEditing()){
+			DragAndDropController.registerDragSource(nameField, controller);
+		}
 		
 		if (isWorkflow) {
 			nameField.setFont(workflowFont);

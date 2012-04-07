@@ -49,7 +49,9 @@ public class ComponentController implements DragAndDropController.DragController
 		this.component = component;
 		this.componentView = new ComponentPanel(component, this);
 		
-		DragAndDropController.registerDragSource(componentView, this);//TODO only if editable
+		if(allowEditing){
+			DragAndDropController.registerDragSource(componentView, this);
+		}
 	}
 	
 	private void setParent(ComponentController parent){

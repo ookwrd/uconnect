@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -21,7 +20,7 @@ import javax.swing.border.EtchedBorder;
  * @author Luke McCrohon
  */
 @SuppressWarnings("serial")
-public class EditableTextField extends JTextField {
+public class EditableTextField extends AutoscrollTextField {
 
 	private boolean fixed;
 	
@@ -101,5 +100,4 @@ public class EditableTextField extends JTextField {
 		}
 		fireActionPerformed();
 	}
-	
 }

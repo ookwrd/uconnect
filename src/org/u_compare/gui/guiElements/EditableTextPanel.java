@@ -47,7 +47,7 @@ public class EditableTextPanel extends JPanel {
 		setBorder(new EmptyBorder(new Insets(PANEL_PADDING, PANEL_PADDING, 0,
 				PANEL_PADDING)));
 
-		content = new JTextArea(text);
+		content = new AutoscrollTextArea(text);//Can be changed to a standard JTextArea if DND autoscroll support not required. 
 		content.setBackground(defaultColor);
 		content.setLineWrap(true);
 		content.setWrapStyleWord(true);

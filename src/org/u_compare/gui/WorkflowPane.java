@@ -1,16 +1,11 @@
 package org.u_compare.gui;
 
-import java.awt.AWTEvent;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.dnd.Autoscroll;
-import java.awt.event.AWTEventListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.dnd.DropTarget;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -18,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Scrollable;
-import javax.swing.SwingUtilities;
 
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.component.WorkflowPanel;
@@ -36,7 +30,7 @@ import org.u_compare.gui.model.Workflow;
 
 @SuppressWarnings("serial")
 public class WorkflowPane extends JScrollPane implements Autoscroll,
-		Scrollable, MouseMotionListener {
+		Scrollable {
 	private WorkflowPanel topComponent;
 
 	// Configuration
@@ -72,38 +66,18 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 		this.setViewportView(innerJPanel);
 
 		getVerticalScrollBar().setUnitIncrement(8);
-
-		//System.out.println(this.getAutoscrollInsets());
-
-		/*new DropTarget(this, null);//TODO yeah this...
 		
 		topComponent.setAutoscrolls(true);
 		innerJPanel.setAutoscrolls(true);
-		 */
 		
-		 Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
-             @Override
-             public void eventDispatched(AWTEvent event) {
-                     if(event instanceof MouseEvent){
-                             MouseEvent ev = (MouseEvent)event;
-                             MouseEvent out =
-                            	 SwingUtilities.convertMouseEvent((Component)(ev.getSource()), ev,
-                            			 WorkflowPane.this);
-
-                             //System.out.println("Output " + out.getX() + " " + out.getY());
-                             if(!getBounds().contains(out.getPoint())){//TODO check this
-                                     return;
-                             }
-                     }
-             }
-		 }, AWTEvent.MOUSE_MOTION_EVENT_MASK);
+		new DropTarget(this, null);//Needed for autoscroll.
 		
 		//Costs extra memory but dramatically improves scroll performance
 		this.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE); 
 		
 		// Let the user scroll by dragging to outside the window.
 		this.setAutoscrolls(true); // enable synthetic drag events
-		addMouseMotionListener(this); // handle mouse drags
+		innerJPanel.setAutoscrolls(true);
 	}
 
 	public ComponentPanel getTopWorkflowComponent() {
@@ -112,19 +86,19 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 
 	@Override
 	public Insets getAutoscrollInsets() {
-
 		return new Insets(100, 0, 100, 0);
 	}
 
 	@Override
 	public void autoscroll(Point cursorLocn) {
-
+		
 		Rectangle vis = topComponent.getVisibleRect();
 		
-		topComponent.scrollRectToVisible(new Rectangle(vis.x, vis.y-20, 1, 1));
-		
-		System.out.println(cursorLocn.x + "," + cursorLocn.y);
-		// TODO why is this here?
+		if(cursorLocn.getY() < 100){
+			topComponent.scrollRectToVisible(new Rectangle(vis.x, vis.y-20, 1, 1));
+		}else if(cursorLocn.getY() > getHeight() - 100) {
+			topComponent.scrollRectToVisible(new Rectangle(vis.x, vis.y+vis.height+1, 1, 20));
+		}
 	}
 
 	public Workflow getAssociatedWorkflow() {
@@ -135,14 +109,13 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 
 	@Override
 	public Dimension getPreferredScrollableViewportSize() {
-		//return super.getPreferredSize();
-        return new Dimension(250, 250);
+		  return new Dimension(250, 250);
 	}
 
 	@Override
 	public int getScrollableUnitIncrement(Rectangle visibleRect,
 			int orientation, int direction) {
-		return 10;
+		return 1;
 	}
 
 	@Override
@@ -159,22 +132,6 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 	@Override
 	public boolean getScrollableTracksViewportHeight() {
 		return false;
-	}
-
-	// methods implementing MouseMotionListener
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// the user is dragging us, so let's scroll !
-		Rectangle r = new Rectangle(e.getX(), e.getY(), 1, 1);
-		scrollRectToVisible(r);
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

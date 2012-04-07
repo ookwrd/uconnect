@@ -74,7 +74,6 @@ public interface Component{
 	 */
 	public void setName(String name);
 	
-	//TODO
 	public String getImplementationName();
 	public void setImplementationName(String implementationName);
 	
@@ -105,8 +104,6 @@ public interface Component{
 		public void ComponentDescriptionChanged(Component component);	
 	}
 	
-	
-	//TODO documentation
 	public String getVendor();
 	public void setVendor(String vendor);
 	

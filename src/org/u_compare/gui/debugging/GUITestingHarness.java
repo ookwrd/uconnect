@@ -42,9 +42,9 @@ public class GUITestingHarness {
 		//Construct a WorkflowController
 		WorkflowViewerController workflowViewerController = new WorkflowViewerController();
 		WorkflowViewerController.defaultWorkflowFactory = CPE.emptyCPEFactory;
-		//WorkflowPaneController.SHOW_SAVE_PANEL = true;
+		//WorkflowViewerController.SHOW_SAVE_PANEL = true;
 		WorkflowViewerController.SHOW_LOAD_TAB = true;
-		//WorkflowViewerController.ALLOW_EDITING = false;
+		WorkflowViewerController.ALLOW_EDITING = false;
 		
 		//Add the workflows
 		JComponent tabbedPane = workflowViewerController.initialize(workflows);

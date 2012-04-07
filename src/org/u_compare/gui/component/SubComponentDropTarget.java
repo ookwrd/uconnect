@@ -1,7 +1,6 @@
 package org.u_compare.gui.component;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -13,11 +12,10 @@ import static org.u_compare.gui.component.IconFactory.*;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
-import org.u_compare.gui.WorkflowPane;
 import org.u_compare.gui.control.DragAndDropController;
 import org.u_compare.gui.control.DropTargetController;
+import org.u_compare.gui.guiElements.AutoScrollSupport;
 
 /**
  * View component depicting the space on which dragged components can be dropped. 
@@ -35,6 +33,8 @@ public class SubComponentDropTarget extends JPanel implements Autoscroll {
 	{
 		solitaryLabel.setPreferredSize(new Dimension(solitaryLabel.getPreferredSize().width,120));
 	}
+
+	private AutoScrollSupport support = new AutoScrollSupport(this);
 	
 	public SubComponentDropTarget(DropTargetController controller) {
 		super();
@@ -104,24 +104,11 @@ public class SubComponentDropTarget extends JPanel implements Autoscroll {
 
 	@Override
 	public void autoscroll(Point point) {
-		//Get the workflowPane into which this droptarget is embedded
-		//This should be memoized, but care would need to be taken when drop targets are moved between workflows.
-		Container parent = getParent();
-		while(!(parent == null || parent instanceof WorkflowPane)){
-			parent = parent.getParent();
-		}
-		point = SwingUtilities.convertPoint(this, point, parent);
-		
-		if(parent instanceof WorkflowPane){
-		((WorkflowPane)parent).autoscroll(point);
-		
-		}
+		support.autoscroll(point);
 	}
 
-	
 	@Override
 	public Insets getAutoscrollInsets() {
-		//The entire DropTarget is included.
-		return new Insets(getHeight(), getWidth(), getHeight(), getWidth());
+		return support.getAutoscrollInsets();
 	}
 }

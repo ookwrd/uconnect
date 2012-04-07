@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import org.u_compare.gui.control.ParameterController;
+import org.u_compare.gui.guiElements.AutoscrollTextField;
 import org.u_compare.gui.guiElements.ControlList;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
@@ -42,7 +43,7 @@ public class ParameterPanel implements
 		
 		if(!param.isMultivalued()){
 			//Setup default field
-			JTextField textField = new JTextField(param.getParameterString());
+			JTextField textField = new AutoscrollTextField(param.getParameterString());
 			textField.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {

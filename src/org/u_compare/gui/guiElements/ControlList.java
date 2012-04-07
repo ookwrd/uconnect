@@ -42,7 +42,7 @@ public class ControlList extends JPanel {
 	public ControlList(Color background){
 		super();
 		listModel = new DefaultListModel();
-		list = new JList(listModel);
+		list = new AutoscrollList(listModel);
 		
 		setLayout(new BoxLayout(this,
 				BoxLayout.Y_AXIS));

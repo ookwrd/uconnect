@@ -209,7 +209,6 @@ public class ComponentPanel extends JPanel implements
 		setupSubComponentsPanel(subComponentsContainer);
 	}
 	
-	//TODO this shouldn't be here. move to SubComponentsPanel
 	@Override
 	public void subComponentsChanged() {
 		controller.resetSubComponents();

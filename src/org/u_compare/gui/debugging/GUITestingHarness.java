@@ -26,23 +26,24 @@ public class GUITestingHarness {
 		
 		//Construct a set of workflows
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
-		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
+		//workflows.add(ExampleWorkflowFactory.simpleWithParameters());
 		//workflows.add(ExampleWorkflowFactory.aggregate());
 		workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
 		//workflows.add(ExampleWorkflowFactory.deepAggregate(5,2));
-		workflows.add(ExampleWorkflowFactory.realComponents());
+		//workflows.add(ExampleWorkflowFactory.realComponents());
 		//workflows.add(ExampleWorkflowFactory.realComponents1());
 		//workflows.add(ExampleWorkflowFactory.realComponents2());
 		//workflows.add(ExampleWorkflowFactory.cpeWorkflow());
-		workflows.add(ExampleWorkflowFactory.cpeWorkflow());
+		//workflows.add(ExampleWorkflowFactory.cpeWorkflow());
 		//workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
-		workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
-		workflows.add(ExampleWorkflowFactory.cpeWorkflowParams());
+		//workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
+		//workflows.add(ExampleWorkflowFactory.cpeWorkflowParams());
 		
 		//Construct a WorkflowController
 		WorkflowViewerController workflowViewerController = new WorkflowViewerController();
 		WorkflowViewerController.defaultWorkflowFactory = CPE.emptyCPEFactory;
 		//WorkflowViewerController.SHOW_SAVE_PANEL = true;
+		WorkflowViewerController.ALLOW_TABS = false;
 		WorkflowViewerController.SHOW_LOAD_TAB = true;
 		//WorkflowViewerController.ALLOW_EDITING = false;
 		

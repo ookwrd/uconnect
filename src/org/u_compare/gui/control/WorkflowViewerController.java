@@ -24,28 +24,75 @@ import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Workflow;
 import org.xml.sax.SAXException;
 
-public class WorkflowViewerController extends DropTargetAdapter implements DropTargetListener, ActionListener {
+/**
+ * This class serves as the controller for the toplevel WorkflowViewer component
+ * and so serves as the main point of interaction for most people wishing to use
+ * the UConnect libraries.
+ * 
+ * After construction with the default constructor, WorkflowViewer behavior can
+ * be configured by setting the public static configuration parameters. These
+ * include more complex adaptor parameters such as the typeChooser and
+ * defaultWorkflowFactory which allow full configuration of many aspects of
+ * library behavior. The basic parameter settings should be sufficient in many
+ * cases.
+ * 
+ * Once configuration is complete, call one of the initialization methods to
+ * configure the WorkflowViewerController and produce its associated view
+ * component.
+ * 
+ * @author Luke McCrohon
+ * 
+ */
+public class WorkflowViewerController extends DropTargetAdapter implements
+		DropTargetListener, ActionListener {
 
 	public interface WorkflowFactory {
 		public Workflow constructWorkflow();
 	}
-	
+
 	public interface AnnotationTypeChooser {
-		public AnnotationTypeOrFeature getNewAnnotation();	
+		public AnnotationTypeOrFeature getNewAnnotation();
 	}
-	
+
 	public interface WorkflowSaveAdaptor {
 		public void saveWorkflow(MetaDataObject descriptor);
 	}
-	
+
 	public static final String NEW_ACTION_COMMAND = "NEW";
 	public static final String LOAD_ACTION_COMMAND = "LOAD";
-	
+
+	// Configuration parameters
+
+	/**
+	 * Determines whether the console should be shown for workflows. Defaults to
+	 * true.
+	 */
 	public static boolean SHOW_CONSOLE = true;
+
+	/**
+	 * Determines whether workflow controls (Stop/Play) should be shown for the
+	 * workflow. Defaults to true.
+	 */
 	public static boolean SHOW_WORKFLOW_CONTROL = true;
+
+	/**
+	 * Determines whether the title and description of the workflow are
+	 * displayed in the workflowPanel. CPE workflows do not store this data, so
+	 * may wish to hide it. Deafults to true.
+	 */
 	public static boolean SHOW_WORKFLOW_DETAILS = true;
+	
+	/**
+	 * Determines whether a panel with a save workflow button is included at the end of the workflow. Defaults to false.
+	 */
 	public static boolean SHOW_SAVE_PANEL = false;
+	
+	/**
+	 * Determines whether to allow multiple workflows to be displayed in tabs. Defaults to true.
+	 */
 	public static boolean ALLOW_TABS = true;
+	
+	
 	public static boolean SHOW_NEW_TAB = true;
 	public static boolean SHOW_LOAD_TAB = false;
 	public static boolean ALLOW_EDITING = true;
@@ -53,34 +100,36 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 
 	public static String LOAD_TAB_NAME = "Load";
 	public static String NEW_TAB_NAME = "New";
-	
-	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser(){
+
+	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser() {
 		@Override
 		public AnnotationTypeOrFeature getNewAnnotation() {
-			String typeName = JOptionPane.showInputDialog("Please enter the type name to add:");
+			String typeName = JOptionPane
+					.showInputDialog("Please enter the type name to add:");
 			return new AnnotationTypeOrFeature(typeName);
 		}
 	};
-	
-	public static WorkflowFactory defaultWorkflowFactory = new WorkflowFactory(){
+
+	public static WorkflowFactory defaultWorkflowFactory = new WorkflowFactory() {
 		@Override
 		public Workflow constructWorkflow() {
 			Workflow workflow = new Workflow();
 			workflow.setName("Untitled Workflow (Double-Click to edit)");
-			workflow.setDescription("This is not a real UIMA Workflow. Set WorkflowPaneController's defaultWorkflowFactory." +
-					"" +
-					" Double-Click here to edit its description. Duis quis arcu id enim elementum gravida quis sit amet justo. Cras non enim nec velit aliquet luctus sed faucibus arcu. Phasellus dolor quam, dapibus a consequat eget, fringilla vitae ipsum. Donec tristique elementum turpis, in pellentesque nulla viverra vitae. Curabitur eget turpis non quam auctor ornare. Aliquam tempus quam vitae lectus consectetur fringilla. Vivamus posuere pharetra elit ac interdum. Aenean vestibulum mattis justo et malesuada. Ut ultrices, nisl sit amet tempor porttitor, nulla ipsum feugiat purus, porta tincidunt sem sapien nec leo. Phasellus rhoncus elit sit amet lectus adipiscing vulputate. ");
+			workflow.setDescription("This is not a real UIMA Workflow. Set WorkflowPaneController's defaultWorkflowFactory."
+					+ ""
+					+ " Double-Click here to edit its description. Duis quis arcu id enim elementum gravida quis sit amet justo. Cras non enim nec velit aliquet luctus sed faucibus arcu. Phasellus dolor quam, dapibus a consequat eget, fringilla vitae ipsum. Donec tristique elementum turpis, in pellentesque nulla viverra vitae. Curabitur eget turpis non quam auctor ornare. Aliquam tempus quam vitae lectus consectetur fringilla. Vivamus posuere pharetra elit ac interdum. Aenean vestibulum mattis justo et malesuada. Ut ultrices, nisl sit amet tempor porttitor, nulla ipsum feugiat purus, porta tincidunt sem sapien nec leo. Phasellus rhoncus elit sit amet lectus adipiscing vulputate. ");
 			return workflow;
 		}
 	};
-	
+
 	public static WorkflowSaveAdaptor saveAdaptor = new WorkflowSaveAdaptor() {
 		private final JFileChooser fc = new JFileChooser();
+
 		@Override
 		public void saveWorkflow(MetaDataObject descriptor) {
 			try {
 				int result = fc.showSaveDialog(null);
-				if(result == JFileChooser.APPROVE_OPTION){
+				if (result == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					FileWriter writer = new FileWriter(file.getAbsolutePath());
 					descriptor.toXML(writer);
@@ -93,175 +142,193 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 			}
 		}
 	};
-	
+
 	public static WorkflowFactory loadAdaptor = new WorkflowFactory() {
 		private final JFileChooser fc = new JFileChooser();
+
 		@Override
 		public Workflow constructWorkflow() {
 			int result = fc.showOpenDialog(null);
-			if(result == JFileChooser.APPROVE_OPTION){
+			if (result == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				return Workflow.constructWorkflowFromXML(file.getAbsolutePath());
+				return Workflow
+						.constructWorkflowFromXML(file.getAbsolutePath());
 			}
-			//Cancel option selected.
+			// Cancel option selected.
 			return null;
 		}
 	};
-	
+
 	@SuppressWarnings("serial")
-	public static JPanel emptyTabbedPanel = new JPanel(){
+	public static JPanel emptyTabbedPanel = new JPanel() {
 		{
 			setName("      ");
 			add(new JLabel("Create or Load a workflow to begin."));
 		}
 	};
-	
+
 	private WorkflowViewer tabbedPane;
-	
-	private JComponent init(ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes){
-		
-		if(workflowSplitPanes.size() == 0){
+
+	private JComponent init(
+			ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes) {
+
+		if (workflowSplitPanes.size() == 0) {
 			workflowSplitPanes.add(constructDefaultWorkflow());
 		}
-		
-		if(ALLOW_TABS){
+
+		if (ALLOW_TABS) {
 			tabbedPane = new WorkflowViewer(this);
 			tabbedPane.setEmptyTab(emptyTabbedPanel);
-			
-			for(WorkflowHorizontalSplitPane workflowSplitPane : workflowSplitPanes){
+
+			for (WorkflowHorizontalSplitPane workflowSplitPane : workflowSplitPanes) {
 				tabbedPane.addWorkflow(workflowSplitPane);
 			}
-			
+
 			return tabbedPane;
-			
-		}else{
-			assert(workflowSplitPanes.size() == 1);
+
+		} else {
+			assert (workflowSplitPanes.size() == 1);
 			return workflowSplitPanes.get(0);
 		}
-		
+
 	}
-	
-	public JComponent initialize(){
+
+	public JComponent initialize() {
 		ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes = new ArrayList<WorkflowHorizontalSplitPane>();
 		return init(workflowSplitPanes);
 	}
-	
-	public JComponent initialize(Workflow workflow){
+
+	public JComponent initialize(Workflow workflow) {
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
 		workflows.add(workflow);
 		return initialize(workflows);
 	}
-	
-	public JComponent initialize(ArrayList<Workflow> workflows){
-		assert(!(workflows.size() > 1) || ALLOW_TABS);
-		
+
+	public JComponent initialize(ArrayList<Workflow> workflows) {
+		assert (!(workflows.size() > 1) || ALLOW_TABS);
+
 		ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes = new ArrayList<WorkflowHorizontalSplitPane>();
-		
-		for(Workflow workflow : workflows) {
+
+		for (Workflow workflow : workflows) {
 			workflowSplitPanes.add(constructWorkflow(workflow));
 		}
-		
+
 		return init(workflowSplitPanes);
 	}
-	
-	private WorkflowHorizontalSplitPane constructWorkflow(Workflow workflow){
-		workflow.setComponentSaved();//TODO should this be moved to workflow constructor?
-		
-		if(!ALLOW_EDITING){
+
+	private WorkflowHorizontalSplitPane constructWorkflow(Workflow workflow) {
+		workflow.setComponentSaved();// TODO should this be moved to workflow
+										// constructor?
+
+		if (!ALLOW_EDITING) {
 			workflow.setLocked();
 		}
-		
-		WorkflowController workflowController = new WorkflowController(workflow, SHOW_WORKFLOW_CONTROL, SHOW_WORKFLOW_DETAILS, SHOW_SAVE_PANEL, ALLOW_EDITING);
-		
+
+		WorkflowController workflowController = new WorkflowController(
+				workflow, SHOW_WORKFLOW_CONTROL, SHOW_WORKFLOW_DETAILS,
+				SHOW_SAVE_PANEL, ALLOW_EDITING);
+
 		// Construct the view
-		WorkflowPane workflowPane = new WorkflowPane(workflowController.getView());
-		
+		WorkflowPane workflowPane = new WorkflowPane(
+				workflowController.getView());
+
 		ConsolePane consolePane = null;
-		
-		if(SHOW_CONSOLE){
+
+		if (SHOW_CONSOLE) {
 			consolePane = new ConsolePane(workflow);
 			consolePane.addConsoleMessage("Workflow Loaded.");
 		}
-		
+
 		return new WorkflowHorizontalSplitPane(workflowPane, consolePane);
 	}
-	
-	private WorkflowHorizontalSplitPane constructDefaultWorkflow(){
+
+	private WorkflowHorizontalSplitPane constructDefaultWorkflow() {
 		return constructWorkflow(defaultWorkflowFactory.constructWorkflow());
 	}
-	
-	private WorkflowHorizontalSplitPane constructDraggedWorkflow(){
+
+	private WorkflowHorizontalSplitPane constructDraggedWorkflow() {
 		return constructWorkflow(WorkflowViewerController.draggedWorkflow());
 	}
-	
-	public static void setTypeChooser(AnnotationTypeChooser typeChooser){
+
+	public static void setTypeChooser(AnnotationTypeChooser typeChooser) {
 		WorkflowViewerController.typeChooser = typeChooser;
 	}
-	
+
 	private static Workflow draggedWorkflow() {
-		
+
 		Workflow workflow = defaultWorkflowFactory.constructWorkflow();
-		
-		ComponentController controllerDragged = DragAndDropController.getController().getDraggedComponent();
+
+		ComponentController controllerDragged = DragAndDropController
+				.getController().getDraggedComponent();
 		workflow.addSubComponent(controllerDragged.component);
 		controllerDragged.removeComponent();
-		
+
 		return workflow;
 	}
-	
+
 	public void requestNewWorkflow() {
-		assert(ALLOW_TABS);
+		assert (ALLOW_TABS);
 		tabbedPane.addWorkflow(constructDefaultWorkflow());
 	}
-	
-	public void requestLoadWorkflow(){
-		assert(ALLOW_TABS);
+
+	public void requestLoadWorkflow() {
+		assert (ALLOW_TABS);
 		Workflow workflow = loadAdaptor.constructWorkflow();
-		if(workflow != null){
+		if (workflow != null) {
 			tabbedPane.addWorkflow(constructWorkflow(workflow));
 		}
 	}
-	
+
 	/**
 	 * Create a new workflow based on what is currently being dragged.
 	 */
-	public void requestNewWorkflowDragged(){
-		assert(ALLOW_TABS);
+	public void requestNewWorkflowDragged() {
+		assert (ALLOW_TABS);
 		tabbedPane.addWorkflow(constructDraggedWorkflow());
 	}
-	
 
-	public void requestWorkflowClose(Workflow workflow){
-		assert(ALLOW_TABS);
-		
-		if(workflow.checkUnsavedChanges()){
-		
-			int reply = JOptionPane.showOptionDialog(null, "Unsaved changes exist to this workflow.\n\nDo you wish to save them before closing?", "Unsaved Changes Exist!", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Save before Closing","Close without Saving","Cancel"}, 2);
-			
-			if(reply == 0) {//Save and close
+	public void requestWorkflowClose(Workflow workflow) {
+		assert (ALLOW_TABS);
+
+		if (workflow.checkUnsavedChanges()) {
+
+			int reply = JOptionPane
+					.showOptionDialog(
+							null,
+							"Unsaved changes exist to this workflow.\n\nDo you wish to save them before closing?",
+							"Unsaved Changes Exist!",
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, new String[] {
+									"Save before Closing",
+									"Close without Saving", "Cancel" }, 2);
+
+			if (reply == 0) {// Save and close
 				saveWorkflow(workflow);
 				closeWorkflow(workflow);
-			}else if (reply == 1) {//Close without Saving
+			} else if (reply == 1) {// Close without Saving
 				closeWorkflow(workflow);
 			}
-			
-		}else{
-			
-			int reply = JOptionPane.showOptionDialog(null, "Do you want to close this workflow?", "Close Workflow?", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Close","Cancel"}, 1);
-		     
-			if(reply == 0){//Close
+
+		} else {
+
+			int reply = JOptionPane.showOptionDialog(null,
+					"Do you want to close this workflow?", "Close Workflow?",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+					null, new String[] { "Close", "Cancel" }, 1);
+
+			if (reply == 0) {// Close
 				closeWorkflow(workflow);
 			}
-			
+
 		}
-		
+
 	}
-	
-	private void closeWorkflow(Workflow workflow){
+
+	private void closeWorkflow(Workflow workflow) {
 		tabbedPane.confirmedRemoveWorkflow(workflow);
 	}
-	
-	private void saveWorkflow(Workflow workflow){
+
+	private void saveWorkflow(Workflow workflow) {
 		saveAdaptor.saveWorkflow(workflow.getWorkflowDescription());
 	}
 
@@ -272,9 +339,9 @@ public class WorkflowViewerController extends DropTargetAdapter implements DropT
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getActionCommand().equals(NEW_ACTION_COMMAND)){
+		if (arg0.getActionCommand().equals(NEW_ACTION_COMMAND)) {
 			requestNewWorkflow();
-		} else if (arg0.getActionCommand().equals(LOAD_ACTION_COMMAND)){
+		} else if (arg0.getActionCommand().equals(LOAD_ACTION_COMMAND)) {
 			requestLoadWorkflow();
 		} else {
 			System.out.println("Error");

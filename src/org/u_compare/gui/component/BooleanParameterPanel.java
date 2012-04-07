@@ -14,49 +14,52 @@ import org.u_compare.gui.model.parameters.Parameter.ParameterValueChangedListene
  * Panel for setting a Boolean Parameter
  * 
  * @author Luke McCrohon
- *
+ * 
  */
 
-public class BooleanParameterPanel extends ParameterPanel implements ActionListener, LockedStatusChangeListener, ParameterValueChangedListener {
+public class BooleanParameterPanel extends ParameterPanel implements
+		ActionListener, LockedStatusChangeListener,
+		ParameterValueChangedListener {
 
 	private JCheckBox checkBox;
 	private ParameterController controller;
 	private BooleanParameter param;
-	
-	public BooleanParameterPanel(
-			Parameter parameter, ParameterController controller, Component component) {
-			super(parameter, controller, component);
-			assert(parameter instanceof BooleanParameter);
-			
-			this.controller = controller;
-			this.param = (BooleanParameter)parameter;
-			
-			if(!param.isMultivalued()){
-				checkBox = new JCheckBox();
-				if(param.getParameter()!=null){//Needed because multivalued may be null
-					checkBox.setSelected(param.getParameter());
-				}
-				checkBox.addActionListener(this);
-				
-				param.registerParameterValueChangedListener(this);
-				
-				field = checkBox;
+
+	public BooleanParameterPanel(Parameter parameter,
+			ParameterController controller, Component component) {
+		super(parameter, controller, component);
+		assert (parameter instanceof BooleanParameter);
+
+		this.controller = controller;
+		this.param = (BooleanParameter) parameter;
+
+		if (!param.isMultivalued()) {
+			checkBox = new JCheckBox();
+			if (param.getParameter() != null) {// Needed because multivalued may
+												// be null
+				checkBox.setSelected(param.getParameter());
 			}
-			
-			updateLockedStatus(component);
+			checkBox.addActionListener(this);
+
+			param.registerParameterValueChangedListener(this);
+
+			field = checkBox;
+		}
+
+		updateLockedStatus(component);
 	}
-	
+
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
-		if(field instanceof JCheckBox){
+		if (field instanceof JCheckBox) {
 			checkBox.setSelected(this.param.getParameter());
-		}else{
+		} else {
 			super.parameterSettingsChanged(param);
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.setValue(checkBox.isSelected()?"true":"false");
+		controller.setValue(checkBox.isSelected() ? "true" : "false");
 	}
 }

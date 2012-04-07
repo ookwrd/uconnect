@@ -25,7 +25,7 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 
 /**
- * View element representing an entire UIMA component. 
+ * View element representing an entire UIMA component.
  * 
  * @author pontus
  * @author olaf
@@ -47,21 +47,20 @@ public class ComponentPanel extends JPanel implements
 
 	protected ComponentTitleBar topPanel;
 	protected JPanel outerPanel; // contains innerPanel et topPanel
-	
+
 	protected Component component;
 	protected ComponentController controller;
-	
+
 	private SubComponentsPanel subComponentsPanel;
 	private JPanel subComponentsContainer;
-	
+
 	JPanel innerPanel;
-	
-	protected ComponentPanel(){
+
+	protected ComponentPanel() {
 	}
-	
-	public ComponentPanel(Component component,
-			ComponentController controller) {
-		
+
+	public ComponentPanel(Component component, ComponentController controller) {
+
 		// let the component have focus
 		this.setFocusable(true);
 		addFocusListener(new FocusListener() {
@@ -69,92 +68,94 @@ public class ComponentPanel extends JPanel implements
 			public void focusGained(FocusEvent e) {
 				setBorderColored(true);
 			}
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				setBorderColored(false);
 			}
 		});
-		
+
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				requestFocusInWindow();
 			}
 		});
-		
+
 		if (component.isAggregate()) {
 			((AggregateComponent) component)
 					.registerSubComponentsChangedListener(this);
 		}
-		
+
 		initialConfiguration(component, controller);
-		
+
 		outerPanel = new JPanel();
-		outerPanel.setBorder(new RoundedBorder(null, BORDER_COLOR, getBackground(),
-				BORDER_ROUNDING, BORDER_WIDTH, false));
+		outerPanel.setBorder(new RoundedBorder(null, BORDER_COLOR,
+				getBackground(), BORDER_ROUNDING, BORDER_WIDTH, false));
 		this.add(outerPanel);
-		
+
 		outerPanel.setOpaque(false);
 		outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.Y_AXIS));
-		
+
 		innerPanel = new JPanel();
 		innerPanel.setLayout(new DynamicCardLayout());
 		innerPanel.setOpaque(false);
-		
-		outerPanel.add(getTitlePanel(false),BorderLayout.NORTH);
-		
+
+		outerPanel.add(getTitlePanel(false), BorderLayout.NORTH);
+
 		JPanel card0 = setupCardPanel();
-		innerPanel.add(card0,MinimizedStatusEnum.MINIMIZED.name());
+		innerPanel.add(card0, MinimizedStatusEnum.MINIMIZED.name());
 		JPanel card1 = setupCardPanel();
-		innerPanel.add(card1,MinimizedStatusEnum.PARTIAL.name());
+		innerPanel.add(card1, MinimizedStatusEnum.PARTIAL.name());
 		JPanel card2 = setupCardPanel();
-		innerPanel.add(card2,MinimizedStatusEnum.MAXIMIZED.name());
-		
+		innerPanel.add(card2, MinimizedStatusEnum.MAXIMIZED.name());
+
 		card0.setVisible(false);
 		card0.setBorder(new EmptyBorder(0, 0, 0, 0));
-		
+
 		card1.add(getDescriptionPanel());
 		card1.add(getInputOutputPanel());
-		
+
 		card2.add(getDescriptionPanel());
 		card2.add(getInputOutputPanel());
-				
-		if(component.isAggregate()){
+
+		if (component.isAggregate()) {
 			JPanel subComponentsBorder = new JPanel();
 			subComponentsBorder.setLayout(new GridLayout());
 			subComponentsBorder.setOpaque(false);
-			subComponentsBorder.setBorder(new TitledBorder(new EtchedBorder(), "Subcomponents:"));
+			subComponentsBorder.setBorder(new TitledBorder(new EtchedBorder(),
+					"Subcomponents:"));
 			setupSubComponentsPanel(subComponentsBorder);
 			card2.add(subComponentsBorder);
-			
+
 		}
 
 		card2.add(getParametersPanel());
-		
+
 		outerPanel.add(innerPanel);
 		this.add(outerPanel);
-		
+
 		setMinimizeStatus(component.getMinimizedStatus());
 	}
-	
+
 	protected void initialConfiguration(Component component,
-			ComponentController controller){
-		
+			ComponentController controller) {
+
 		this.controller = controller;
 		this.component = component;
-		
-		//Set display properties
+
+		// Set display properties
 		this.setOpaque(false);
-		
+
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layout);
-		
-		if(!component.isWorkflow()){
+
+		if (!component.isWorkflow()) {
 			this.setBorderColored(false);
 		}
 	}
 
-	protected JPanel setupCardPanel(){
+	protected JPanel setupCardPanel() {
 		JPanel card = new JPanel();
 		card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
 		card.setOpaque(false);
@@ -162,53 +163,53 @@ public class ComponentPanel extends JPanel implements
 				BORDER_WIDTH, BORDER_WIDTH));
 		return card;
 	}
-	
+
 	public void setBorderColored(boolean colored) {
-		if(colored) {
+		if (colored) {
 			this.setBorder(new EtchedBorder(HIGHLIGHT_COLOR, HIGHLIGHT_COLOR_2));
+		} else {
+			this.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH,
+					BORDER_WIDTH, BORDER_WIDTH));
 		}
-		else {
-			this.setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH));
-		}				
 	}
-	
-	protected JPanel getTitlePanel(boolean isWorkflow){		
+
+	protected JPanel getTitlePanel(boolean isWorkflow) {
 		return new ComponentTitleBar(controller, component, this, isWorkflow);
 	}
-	
-	protected JPanel getDescriptionPanel(){	
+
+	protected JPanel getDescriptionPanel() {
 		return new ComponentDescriptionPanel(controller, component);
 	}
 
-	protected JPanel getInputOutputPanel(){
+	protected JPanel getInputOutputPanel() {
 		return new LanguageInputOutputPanel(component, controller);
 	}
-	
-	protected JPanel getParametersPanel(){
+
+	protected JPanel getParametersPanel() {
 		return new ConfigurationParametersPanel(component, controller);
 	}
-	
+
 	protected void setupSubComponentsPanel(JPanel target) {
-		
+
 		subComponentsContainer = target;
-		
+
 		// set up the aggregate panel if necessary
 		if (component.isAggregate()) {
-			if(subComponentsPanel != null){
+			if (subComponentsPanel != null) {
 				target.remove(subComponentsPanel);
 				target.validate();
 			}
-			
+
 			subComponentsPanel = new SubComponentsPanel(component, controller);
 			target.add(subComponentsPanel);
 		}
 	}
-	
-	private void resetSubComponents(){
+
+	private void resetSubComponents() {
 		subComponentsContainer.remove(subComponentsPanel);
 		setupSubComponentsPanel(subComponentsContainer);
 	}
-	
+
 	@Override
 	public void subComponentsChanged() {
 		controller.resetSubComponents();
@@ -219,8 +220,8 @@ public class ComponentPanel extends JPanel implements
 	public Component getComponent() {
 		return this.component;
 	}
-	
-	public ComponentController getComponentController(){
+
+	public ComponentController getComponentController() {
 		return this.controller;
 	}
 
@@ -248,20 +249,18 @@ public class ComponentPanel extends JPanel implements
 		ret.width = max != null ? max.width : 2000;
 		return ret;
 	}
-	
+
 	public Workflow getWorkflow() {
 		if (this.component.isWorkflow() == false) {
-			throw new UnsupportedOperationException(
-					"Can't get the workflow "
+			throw new UnsupportedOperationException("Can't get the workflow "
 					+ "from a non-workflow ComponentPanel");
-		}
-		else {
+		} else {
 			return (Workflow) this.component;
 		}
 	}
-	
-	public void setMinimizeStatus(MinimizedStatusEnum status){
-		CardLayout cl = (CardLayout)innerPanel.getLayout();
+
+	public void setMinimizeStatus(MinimizedStatusEnum status) {
+		CardLayout cl = (CardLayout) innerPanel.getLayout();
 		cl.show(innerPanel, status.name());
 	}
 }

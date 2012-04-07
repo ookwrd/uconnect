@@ -8,21 +8,22 @@ import org.u_compare.gui.model.AbstractComponent;
 
 public class CasConsumer extends AbstractComponent {
 
-	public CasConsumer(CasConsumerDescription desc){
+	public CasConsumer(CasConsumerDescription desc) {
 		ProcessingResourceMetaData metaData = desc.getCasConsumerMetaData();
 		extractFromProcessingResouceMetaData(metaData);
-		
+
 		extractFromSpecifier(desc);
 	}
-	
+
 	@Override
-	public ResourceCreationSpecifier getResourceCreationSpecifier(){
-		CasConsumerDescription description = UIMAFramework.getResourceSpecifierFactory().createCasConsumerDescription();
-	
+	public ResourceCreationSpecifier getResourceCreationSpecifier() {
+		CasConsumerDescription description = UIMAFramework
+				.getResourceSpecifierFactory().createCasConsumerDescription();
+
 		setupProcessingResourceMetaData(description.getCasConsumerMetaData());
 		setupResourceCreationSpecifier(description);
-		
+
 		return description;
 	}
-	
+
 }

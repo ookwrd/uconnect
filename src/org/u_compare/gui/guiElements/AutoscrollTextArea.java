@@ -17,21 +17,19 @@ import javax.swing.JTextArea;
 public class AutoscrollTextArea extends JTextArea implements Autoscroll {
 
 	private AutoScrollSupport support = new AutoScrollSupport(this);
-	
-	public AutoscrollTextArea(String text){
+
+	public AutoscrollTextArea(String text) {
 		super(text);
 	}
 
 	@Override
 	public void autoscroll(Point cursorLocn) {
-		support.autoscroll(cursorLocn);		
+		support.autoscroll(cursorLocn);
 	}
 
 	@Override
 	public Insets getAutoscrollInsets() {
 		return support.getAutoscrollInsets();
 	}
-	
-
 
 }

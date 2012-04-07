@@ -11,231 +11,235 @@ import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFaile
  * JUnit tests for the parameter constraints framework.
  * 
  * @author Luke McCrohon
- *
+ * 
  */
 public class ConstraintTester {
 
 	@Before
-	public void setUp(){
+	public void setUp() {
 	}
 
 	@After
-	public void tearDown(){
+	public void tearDown() {
 	}
 
 	@Test
-	public void intergerRangeTest() throws ConstraintFailedException{
-		
+	public void intergerRangeTest() throws ConstraintFailedException {
+
 		IntegerConstraint constraint = new IntegerConstraint();
 		constraint.validate("6");
 		constraint.validate("7");
 		constraint.validate("9");
 	}
-	
+
 	@Test
-	public void intergerRangeTest0() throws ConstraintFailedException{
-		
+	public void intergerRangeTest0() throws ConstraintFailedException {
+
 		IntegerConstraint constraint = new IntegerConstraint(6, 9);
 		constraint.validate("6");
 		constraint.validate("7");
 		constraint.validate("9");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void intergerRangeTest1() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void intergerRangeTest1() throws ConstraintFailedException {
 
 		IntegerConstraint constraint = new IntegerConstraint(6, 9);
 		constraint.validate("5");
-		
+
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void intergerRangeTest2() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void intergerRangeTest2() throws ConstraintFailedException {
 
 		IntegerConstraint constraint = new IntegerConstraint(6, 9);
 		constraint.validate("10");
-		
+
 	}
-	
+
 	@Test
-	public void integerWhiteListTest() throws ConstraintFailedException{
-		
+	public void integerWhiteListTest() throws ConstraintFailedException {
+
 		IntegerConstraint constraint = new IntegerConstraint();
-		constraint.setWhiteList(new ArrayList<Integer>(Arrays.asList(1,2,3)));
+		constraint.setWhiteList(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
 		constraint.validate("1");
 		constraint.validate("3");
-		
+
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-		public void integerWhiteListTest1() throws ConstraintFailedException{
-		
+
+	@Test(expected = ConstraintFailedException.class)
+	public void integerWhiteListTest1() throws ConstraintFailedException {
+
 		IntegerConstraint constraint = new IntegerConstraint();
-		constraint.setWhiteList(new ArrayList<Integer>(Arrays.asList(1,2,3)));
+		constraint.setWhiteList(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
 		constraint.validate("5");
-		
+
 	}
-	
+
 	@Test
-	public void integerBlackListTest() throws ConstraintFailedException{
+	public void integerBlackListTest() throws ConstraintFailedException {
 		IntegerConstraint constraint = new IntegerConstraint();
-		constraint.setBlackList(new ArrayList<Integer>(Arrays.asList(1,2,3)));
+		constraint.setBlackList(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
 		constraint.validate("0");
 		constraint.validate("5");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void integerBlackListTest1() throws ConstraintFailedException{	
+
+	@Test(expected = ConstraintFailedException.class)
+	public void integerBlackListTest1() throws ConstraintFailedException {
 		IntegerConstraint constraint = new IntegerConstraint();
-		constraint.setBlackList(new ArrayList<Integer>(Arrays.asList(1,2,3)));
-		constraint.validate("2");	
+		constraint.setBlackList(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
+		constraint.validate("2");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void floatTest() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void floatTest() throws ConstraintFailedException {
 		FloatConstraint constraint = new FloatConstraint();
 		constraint.validate("asdf");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void floatBlackListTest() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void floatBlackListTest() throws ConstraintFailedException {
 		FloatConstraint constraint = new FloatConstraint();
-		constraint.setBlackList(new ArrayList<Float>(Arrays.asList(new Float(0.1),new Float(0.2))));
+		constraint.setBlackList(new ArrayList<Float>(Arrays.asList(new Float(
+				0.1), new Float(0.2))));
 		constraint.validate(new Float(0.2));
 	}
-	
+
 	@Test
-	public void floatBlackListTest1() throws ConstraintFailedException{
+	public void floatBlackListTest1() throws ConstraintFailedException {
 		FloatConstraint constraint = new FloatConstraint();
-		constraint.setBlackList(new ArrayList<Float>(Arrays.asList(new Float(0.1),new Float(0.2))));
+		constraint.setBlackList(new ArrayList<Float>(Arrays.asList(new Float(
+				0.1), new Float(0.2))));
 		constraint.validate(new Float(0.3));
 	}
-	
+
 	@Test
-	public void floatWhiteListTest() throws ConstraintFailedException{
+	public void floatWhiteListTest() throws ConstraintFailedException {
 		FloatConstraint constraint = new FloatConstraint();
-		constraint.setWhiteList(new ArrayList<Float>(Arrays.asList(new Float(0.1),new Float(0.2))));
+		constraint.setWhiteList(new ArrayList<Float>(Arrays.asList(new Float(
+				0.1), new Float(0.2))));
 		constraint.validate(new Float(0.2));
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void floatWhiteListTest1() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void floatWhiteListTest1() throws ConstraintFailedException {
 		FloatConstraint constraint = new FloatConstraint();
-		constraint.setWhiteList(new ArrayList<Float>(Arrays.asList(new Float(0.1),new Float(0.2))));
+		constraint.setWhiteList(new ArrayList<Float>(Arrays.asList(new Float(
+				0.1), new Float(0.2))));
 		constraint.validate(new Float(0.3));
 	}
-	
-	@Test 
-	public void string() throws ConstraintFailedException{	
+
+	@Test
+	public void string() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.validate("Hi, I am a string");
 	}
 
 	@Test
-	public void stringLengthRange1() throws ConstraintFailedException{
-		StringConstraint constraint = new StringConstraint(2,4);
+	public void stringLengthRange1() throws ConstraintFailedException {
+		StringConstraint constraint = new StringConstraint(2, 4);
 		constraint.validate("aa");
 		constraint.validate("bbbb");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringLengthRange2() throws ConstraintFailedException{
-		StringConstraint constraint = new StringConstraint(2,4);
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringLengthRange2() throws ConstraintFailedException {
+		StringConstraint constraint = new StringConstraint(2, 4);
 		constraint.validate("a");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringLengthRange3() throws ConstraintFailedException{
-		StringConstraint constraint = new StringConstraint(2,4);
-		constraint.validate("ccccc");	
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringLengthRange3() throws ConstraintFailedException {
+		StringConstraint constraint = new StringConstraint(2, 4);
+		constraint.validate("ccccc");
 	}
-	
+
 	@Test
-	public void stringWhiteList() throws ConstraintFailedException{
+	public void stringWhiteList() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
-		constraint.setWhiteList(
-				new ArrayList<String>(Arrays.asList("a","b","cc")));
+		constraint.setWhiteList(new ArrayList<String>(Arrays.asList("a", "b",
+				"cc")));
 		constraint.validate("cc");
 		constraint.validate("a");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringWhiteList1() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringWhiteList1() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
-		constraint.setWhiteList(
-				new ArrayList<String>(Arrays.asList("a","b","cc")));
+		constraint.setWhiteList(new ArrayList<String>(Arrays.asList("a", "b",
+				"cc")));
 		constraint.validate("d");
 	}
-	
+
 	@Test
-	public void stringBlackList() throws ConstraintFailedException{
+	public void stringBlackList() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
-		constraint.setBlackList(
-				new ArrayList<String>(Arrays.asList("a","b","cc")));
+		constraint.setBlackList(new ArrayList<String>(Arrays.asList("a", "b",
+				"cc")));
 		constraint.validate("d");
 		constraint.validate("a1");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringBlackList1() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringBlackList1() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
-		constraint.setBlackList(
-				new ArrayList<String>(Arrays.asList("a","b","cc")));
+		constraint.setBlackList(new ArrayList<String>(Arrays.asList("a", "b",
+				"cc")));
 		constraint.validate("b");
 	}
-	
+
 	@Test
-	public void stringCharacterSet() throws ConstraintFailedException{
+	public void stringCharacterSet() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setCharacterSet("abcA");
 		constraint.validate("Aabc");
 		constraint.validate("");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringCharacterSet1() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringCharacterSet1() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setCharacterSet("abcA");
 		constraint.validate("Aabcd");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringCharacterSet2() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringCharacterSet2() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setCharacterSet("abcA");
 		constraint.validate("AB");
 	}
-	
+
 	@Test
-	public void stringCharacterSet3() throws ConstraintFailedException{
+	public void stringCharacterSet3() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setCharacterSet("$~^[]{}]}_?*+|{a-h");
 		constraint.validate("$~]}[^?{_*|++_-");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringCharacterSet4() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringCharacterSet4() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setCharacterSet("abc/\\.$*+|{}");
 		constraint.validate("\\//..$~]}[^?{_*|++_");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringCharacterSet5() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringCharacterSet5() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setCharacterSet("a-z");
 		constraint.validate("h");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringCharacterSet6() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringCharacterSet6() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setCharacterSet("abc/\\.$*+|{}");
 		constraint.validate("h");
 	}
-	
+
 	@Test
-	public void stringRegex() throws ConstraintFailedException{
+	public void stringRegex() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setRegex("a*b*");
 		constraint.validate("aaabb");
@@ -245,15 +249,15 @@ public class ConstraintTester {
 		constraint.validate("b");
 	}
 
-	@Test(expected=ConstraintFailedException.class)
-	public void stringRegex1() throws ConstraintFailedException{
+	@Test(expected = ConstraintFailedException.class)
+	public void stringRegex1() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setRegex("a*b*");
 		constraint.validate("aaabba");
 	}
-	
-	@Test(expected=ConstraintFailedException.class)
-	public void stringRegex2() throws ConstraintFailedException{
+
+	@Test(expected = ConstraintFailedException.class)
+	public void stringRegex2() throws ConstraintFailedException {
 		StringConstraint constraint = new StringConstraint();
 		constraint.setRegex("[ab]");
 		constraint.validate("aa");

@@ -37,7 +37,8 @@ import javax.swing.plaf.basic.BasicButtonUI;
 @SuppressWarnings("serial")
 public class IconizedCloseableTabFlapComponent extends JPanel {
 
-	private static final Icon EMPTY_ICON = new Icon() {// An empty place holder icon.
+	private static final Icon EMPTY_ICON = new Icon() {// An empty place holder
+														// icon.
 		@Override
 		public void paintIcon(java.awt.Component c, Graphics g, int x, int y) {
 		}
@@ -251,7 +252,7 @@ public class IconizedCloseableTabFlapComponent extends JPanel {
 		if (IconizedCloseableTabFlapComponent.iconsLoaded == true) {
 			return;
 		}
-		
+
 		URL image_url;
 
 		image_url = IconizedCloseableTabFlapComponent.class

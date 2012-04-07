@@ -13,43 +13,44 @@ public class SOAPComponent extends AbstractComponent {
 	private String resourceType;
 	private Integer timeoutInteger;
 	private String uriString;
-	
-	public SOAPComponent(URISpecifier spec){
-		
+
+	public SOAPComponent(URISpecifier spec) {
+
 		this.params = spec.getParameters();
 		this.protocol = spec.getProtocol();
 		this.resourceType = spec.getResourceType();
 		this.timeoutInteger = spec.getTimeout();
 		this.uriString = spec.getUri();
-		
+
 	}
-	
+
 	@Override
-	public MinimizedStatusEnum getMinimizedStatus(){
+	public MinimizedStatusEnum getMinimizedStatus() {
 		return MinimizedStatusEnum.MINIMIZED;
 	}
-	
+
 	@Override
-	public boolean getLockedStatus(){
+	public boolean getLockedStatus() {
 		return true;
 	}
-	
+
 	@Override
-	public String getName(){
+	public String getName() {
 		return uriString;
 	}
-	
+
 	@Override
-	public ResourceSpecifier getResourceCreationSpecifier(){
-		URISpecifier retVal = UIMAFramework.getResourceSpecifierFactory().createURISpecifier();
-		
+	public ResourceSpecifier getResourceCreationSpecifier() {
+		URISpecifier retVal = UIMAFramework.getResourceSpecifierFactory()
+				.createURISpecifier();
+
 		retVal.setParameters(params);
 		retVal.setProtocol(protocol);
 		retVal.setResourceType(resourceType);
 		retVal.setTimeout(timeoutInteger);
 		retVal.setUri(uriString);
-		
+
 		return retVal;
 	}
-	
+
 }

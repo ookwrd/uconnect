@@ -15,7 +15,8 @@ import org.u_compare.gui.model.Workflow.WorkflowStatus;
 import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
- * View element included in the component panel allowing the workflow to be run/stopped/paused.
+ * View element included in the component panel allowing the workflow to be
+ * run/stopped/paused.
  * 
  * @author Luke McCrohon
  */
@@ -30,14 +31,14 @@ public class WorkflowControlPanel extends JPanel implements
 	private static final String PAUSED_TOOLTIPTEXT = "Resume Processing";
 	private static final String PAUSE_TOOLTIPTEXT = "Pause Processing";
 	private static final String STOP_TOOLTIPTEXT = "Stop workflow";
-	
+
 	private WorkflowController controller;
 
 	private JLabel statusLabel;
 
 	private HighlightButton runButton;
 	private HighlightButton stopButton;
-	
+
 	private boolean pauseMode = false;
 
 	public WorkflowControlPanel(Workflow component,
@@ -62,9 +63,10 @@ public class WorkflowControlPanel extends JPanel implements
 
 		statusLabel = new JLabel(STATUS_PREFIX
 				+ ((Workflow) component).getStatus());
-		//Adjust preferredSize so Label doesn't resize when messaged changed.
+		// Adjust preferredSize so Label doesn't resize when messaged changed.
 		Dimension labelSize = statusLabel.getPreferredSize();
-		statusLabel.setPreferredSize(new Dimension(labelSize.width+40,labelSize.height));
+		statusLabel.setPreferredSize(new Dimension(labelSize.width + 40,
+				labelSize.height));
 		this.add(statusLabel);
 
 		IconFactory.loadIcons();
@@ -73,34 +75,32 @@ public class WorkflowControlPanel extends JPanel implements
 		runButton = new HighlightButton(getIcon(RUN_ICON));
 		runButton.addActionListener(playListener);
 		this.add(runButton);
-		
+
 		// stop button
 		stopButton = new HighlightButton(getIcon(STOP_ICON));
 		stopButton.addActionListener(stopListener);
 		this.add(stopButton);
 
-		//To configure initial status
+		// To configure initial status
 		workflowStatusChanged(component);
-		
+
 		component.registerWorkflowStatusListener(this);
 	}
-	
-
 
 	private void stopButtonClicked() {
 		controller.workflowStopRequest();
 	}
 
 	private void playButtonClicked() {
-		if(pauseMode){
+		if (pauseMode) {
 			controller.workflowPauseRequest();
-		}else{
+		} else {
 			controller.workflowPlayRequest();
 		}
 	}
 
 	private void setPlayButton(WorkflowStatus status) {
-		
+
 		switch (status) {
 		case READY:
 		case ERROR:
@@ -110,14 +110,14 @@ public class WorkflowControlPanel extends JPanel implements
 			runButton.setIcon(getIcon(RUN_ICON));
 			runButton.setToolTipText(RUN_TOOLTIPTEXT);
 			break;
-			
+
 		case PAUSED:
 			pauseMode = false;
 			runButton.setEnabled(true);
 			runButton.setIcon(getIcon(RUN_ICON));
 			runButton.setToolTipText(PAUSED_TOOLTIPTEXT);
 			break;
-			
+
 		case LOADING:
 		case INITIALIZING:
 			pauseMode = false;
@@ -131,11 +131,11 @@ public class WorkflowControlPanel extends JPanel implements
 			runButton.setToolTipText(PAUSE_TOOLTIPTEXT);
 			break;
 		}
-		
+
 	}
-	
-	private void setStopButton(WorkflowStatus status){
-		
+
+	private void setStopButton(WorkflowStatus status) {
+
 		switch (status) {
 		case READY:
 		case LOADING:
@@ -145,14 +145,14 @@ public class WorkflowControlPanel extends JPanel implements
 			stopButton.setEnabled(false);
 			stopButton.setToolTipText(null);
 			break;
-			
+
 		case PAUSED:
 		case RUNNING:
 			stopButton.setEnabled(true);
 			stopButton.setToolTipText(STOP_TOOLTIPTEXT);
 			break;
 		}
-		
+
 	}
 
 	@Override

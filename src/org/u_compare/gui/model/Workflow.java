@@ -18,137 +18,142 @@ import org.xml.sax.SAXException;
  * special UIMAAggregateComponent.
  * 
  * @author Luke McCrohon
- *
+ * 
  */
-public class Workflow extends AbstractAggregateComponent  {
-	
-	public enum WorkflowStatus {READY, LOADING, INITIALIZING, RUNNING, ERROR,
-		PAUSED, FINISHED};
-	
+public class Workflow extends AbstractAggregateComponent {
+
+	public enum WorkflowStatus {
+		READY, LOADING, INITIALIZING, RUNNING, ERROR, PAUSED, FINISHED
+	};
+
 	public interface WorkflowStatusListener {
-		public void workflowStatusChanged(Workflow workflow);	
-	}	
-	
-	public interface WorkflowMessageListener{
+		public void workflowStatusChanged(Workflow workflow);
+	}
+
+	public interface WorkflowMessageListener {
 		public void workflowMessageSent(Workflow workflow, String message);
 	}
-	
+
 	private WorkflowStatus status = WorkflowStatus.READY;
 	private ArrayList<WorkflowStatusListener> workflowStatusListeners = new ArrayList<WorkflowStatusListener>();
 	private ArrayList<WorkflowMessageListener> workflowMessageListeners = new ArrayList<WorkflowMessageListener>();
-	
+
 	/**
 	 * Creates an empty workflow.
 	 */
-	public Workflow(){
+	public Workflow() {
 		super();
 	}
-	
+
 	/**
 	 * Creates a workflow from the specified list of components.
 	 * 
 	 * @param components
 	 */
-	public Workflow(ArrayList<Component> components){
+	public Workflow(ArrayList<Component> components) {
 		super();
 		setSubComponents(components);
 	}
-	
+
 	/**
 	 * This class is by definition a workflow.
 	 */
-	public boolean isWorkflow(){
+	public boolean isWorkflow() {
 		return true;
 	}
-	
+
 	/**
 	 * Should be used to start workflow processing.
 	 * 
 	 */
 	public void runResumeWorkflow() {
-		assert(status == WorkflowStatus.READY || status == WorkflowStatus.FINISHED || status == WorkflowStatus.ERROR);
+		assert (status == WorkflowStatus.READY
+				|| status == WorkflowStatus.FINISHED || status == WorkflowStatus.ERROR);
 
 		setStatus(WorkflowStatus.INITIALIZING);
 	}
-	
+
 	/**
 	 * used to pause the workflow processing
 	 * 
 	 * @throws InvalidStatusException
 	 */
-	public void pauseWorkflow(){
-		assert(status == WorkflowStatus.RUNNING);
+	public void pauseWorkflow() {
+		assert (status == WorkflowStatus.RUNNING);
 		setStatus(WorkflowStatus.PAUSED);
 	}
-	
-	public void resumeWorkflow(){
-		assert(status == WorkflowStatus.PAUSED);
+
+	public void resumeWorkflow() {
+		assert (status == WorkflowStatus.PAUSED);
 		setStatus(WorkflowStatus.RUNNING);
 	}
-	
+
 	/**
 	 * should be used to stop workflow processing
 	 */
 	public void stopWorkflow() {
-		assert(status == WorkflowStatus.RUNNING || status == WorkflowStatus.PAUSED);
+		assert (status == WorkflowStatus.RUNNING || status == WorkflowStatus.PAUSED);
 		setStatus(WorkflowStatus.FINISHED);
 	}
-	
+
 	/**
 	 * Returns the current status of this workflow.
 	 * 
 	 * @return
 	 */
-	public WorkflowStatus getStatus(){
+	public WorkflowStatus getStatus() {
 		return status;
 	}
-	
+
 	/**
 	 * Status should always be changed via this method.
 	 * 
 	 * @param newStatus
 	 */
-	protected void setStatus(WorkflowStatus newStatus){
-		if(status == newStatus){return;}
-		
+	protected void setStatus(WorkflowStatus newStatus) {
+		if (status == newStatus) {
+			return;
+		}
+
 		status = newStatus;
 		notifyWorkflowStatusListeners();
 	}
-	
+
 	/**
 	 * Registers a new class to listen to workflowStatusListener changes.
 	 * 
 	 * @param listener
 	 */
-	public void registerWorkflowStatusListener(WorkflowStatusListener listener){
+	public void registerWorkflowStatusListener(WorkflowStatusListener listener) {
 		this.workflowStatusListeners.add(listener);
 	}
-	
+
 	/**
 	 * Should be called whenever the status of workflow processing is changed.
 	 */
-	protected void notifyWorkflowStatusListeners(){
-		for(WorkflowStatusListener listener : workflowStatusListeners){
+	protected void notifyWorkflowStatusListeners() {
+		for (WorkflowStatusListener listener : workflowStatusListeners) {
 			listener.workflowStatusChanged(this);
 		}
 	}
-	
-	public void registerWorkflowMessageListener(WorkflowMessageListener listener){
+
+	public void registerWorkflowMessageListener(WorkflowMessageListener listener) {
 		this.workflowMessageListeners.add(listener);
 	}
-	
-	protected void notifyWorkflowMessageListeners(String message){
-		for(WorkflowMessageListener listener : workflowMessageListeners){
+
+	protected void notifyWorkflowMessageListeners(String message) {
+		for (WorkflowMessageListener listener : workflowMessageListeners) {
 			listener.workflowMessageSent(this, message);
 		}
 	}
-	
-	public MetaDataObject getWorkflowDescription(){
-		System.out.println("Abstract Workflow unable to produce description object.");
+
+	public MetaDataObject getWorkflowDescription() {
+		System.out
+				.println("Abstract Workflow unable to produce description object.");
 		return null;
 	}
-	
-	protected String toFile(XMLizable xml){
+
+	protected String toFile(XMLizable xml) {
 		try {
 			final File file = File.createTempFile("UConnect-temp", ".xml");
 			file.deleteOnExit();
@@ -161,11 +166,11 @@ public class Workflow extends AbstractAggregateComponent  {
 		} catch (SAXException e) {
 			e.printStackTrace();
 		}
-		assert(false);
+		assert (false);
 		return null;
 	}
-	
-	public static Workflow constructWorkflowFromXML(String location){
+
+	public static Workflow constructWorkflowFromXML(String location) {
 		try {
 			return constructWorkflowFromXML(new XMLInputSource(location));
 		} catch (IOException e) {
@@ -173,21 +178,23 @@ public class Workflow extends AbstractAggregateComponent  {
 			return null;
 		}
 	}
-	
-	public static Workflow constructWorkflowFromXML(XMLInputSource inputSource){
-		
+
+	public static Workflow constructWorkflowFromXML(XMLInputSource inputSource) {
+
 		try {
 			XMLizable desc = UIMAFramework.getXMLParser().parse(inputSource);
-		
-			if(desc instanceof CpeDescription){
-				return new CPE((CpeDescription)desc);
+
+			if (desc instanceof CpeDescription) {
+				return new CPE((CpeDescription) desc);
 			} else {
-				
-				System.err.println("Workflow.constructWorkflowFromXML(): Error encountered, should be constructing an AS Workflow, but this functionality has not been implemented." + desc.getClass());
-				//TODO error //TODO AS workflow
+
+				System.err
+						.println("Workflow.constructWorkflowFromXML(): Error encountered, should be constructing an AS Workflow, but this functionality has not been implemented."
+								+ desc.getClass());
+				// TODO error //TODO AS workflow
 				return null;
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -195,4 +202,3 @@ public class Workflow extends AbstractAggregateComponent  {
 		}
 	}
 }
-

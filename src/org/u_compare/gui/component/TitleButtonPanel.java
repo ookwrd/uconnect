@@ -116,18 +116,18 @@ public class TitleButtonPanel extends JPanel implements
 			break;
 		}
 	}
-	
+
 	protected void setLockedStatus() {
-		if(lockButton == null){
-			return;//In case that ALLOW_EDITING = false
+		if (lockButton == null) {
+			return;// In case that ALLOW_EDITING = false
 		}
-		
-		if(component.getLockedStatus()){
-			//Locked
+
+		if (component.getLockedStatus()) {
+			// Locked
 			this.lockButton.setIcon(getIcon(LOCKED_ICON));
 			this.lockButton.setToolTipText(UNLOCK_TOOLTIP);
-		}else{
-			//Unlocked
+		} else {
+			// Unlocked
 			this.lockButton.setIcon(getIcon(UNLOCKED_ICON));
 			this.lockButton.setToolTipText(LOCK_TOOLTIP);
 		}

@@ -19,34 +19,36 @@ import org.u_compare.gui.model.Component.LockedStatusChangeListener;
  * View element for displaying a component/workflow's title.
  * 
  * @author Luke McCrohon
- *
+ * 
  */
 @SuppressWarnings("serial")
-public class ComponentNamePanel extends JPanel implements DescriptionChangeListener, LockedStatusChangeListener {
+public class ComponentNamePanel extends JPanel implements
+		DescriptionChangeListener, LockedStatusChangeListener {
 
 	private static final Font font = new Font("sansserif", Font.BOLD, 12);
-	private static final Font workflowFont = new Font("sansserif", Font.BOLD, 20);
+	private static final Font workflowFont = new Font("sansserif", Font.BOLD,
+			20);
 
 	private final ComponentController controller;
 	private final Component component;
 
 	private final EditableTextField nameField;
 
-	public ComponentNamePanel(ComponentController controller, Component component,
-			boolean isWorkflow, ComponentTitleBar topPanel) {
+	public ComponentNamePanel(ComponentController controller,
+			Component component, boolean isWorkflow, ComponentTitleBar topPanel) {
 		super();
 
 		this.controller = controller;
 		this.component = component;
 
 		setLayout(new BorderLayout());
-		
+
 		nameField = new EditableTextField(component.getName());
-	
-		if(controller.allowEditing()){
+
+		if (controller.allowEditing()) {
 			DragAndDropController.registerDragSource(nameField, controller);
 		}
-		
+
 		if (isWorkflow) {
 			nameField.setFont(workflowFont);
 		} else {
@@ -55,14 +57,14 @@ public class ComponentNamePanel extends JPanel implements DescriptionChangeListe
 		}
 
 		add(nameField, BorderLayout.CENTER);
-		
+
 		nameField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				nameChangeRequest(nameField.getText());
 			}
 		});
-		
+
 		component.registerComponentDescriptionChangeListener(this);
 		component.registerLockedStatusChangeListener(this);
 	}

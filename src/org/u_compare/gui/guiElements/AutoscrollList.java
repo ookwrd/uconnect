@@ -8,8 +8,8 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 
 /**
- * Extended JList that does not catch Autoscroll events, but instead passes
- * them up to higher level Autoscroll components.
+ * Extended JList that does not catch Autoscroll events, but instead passes them
+ * up to higher level Autoscroll components.
  * 
  * @author Luke McCrohon
  * 
@@ -18,11 +18,11 @@ import javax.swing.ListModel;
 public class AutoscrollList extends JList implements Autoscroll {
 
 	private AutoScrollSupport support = new AutoScrollSupport(this);
-	
-	public AutoscrollList(ListModel model){
+
+	public AutoscrollList(ListModel model) {
 		super(model);
 	}
-	
+
 	@Override
 	public void autoscroll(Point cursorLocn) {
 		support.autoscroll(cursorLocn);

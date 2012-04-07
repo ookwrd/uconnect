@@ -5,6 +5,7 @@ import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.Icon;
 import javax.swing.event.ChangeEvent;
@@ -23,7 +24,7 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
  * View component which handles the display of multiple workflows in separate
- * tabs.
+ * tabs. 
  * 
  * @author pontus
  * @author luke
@@ -31,7 +32,6 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
  */
 
 @SuppressWarnings("serial")
-// TODO: Should have mnemonics
 public class WorkflowViewer extends ButtonTabbedPane implements
 		WorkflowStatusListener, ChangeListener {
 
@@ -42,8 +42,6 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 
 	/* The maximum number of characters displayed for a tab name */
 	private static final int MAX_TITLE_LENGTH = 15;
-
-	// XXX: We will conflict with the "Change tab" key shortcuts, override!
 
 	private WorkflowViewerController controller;
 
@@ -63,6 +61,12 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		this.addChangeListener(this);
 	}
 
+	/**
+	 * Check to see if tab buttons need to be added. The two possible buttons
+	 * are a new workflow button, and a load workflow button. Their presence can
+	 * be controlled by setting the WorkflowViewerController.SHOW_NEW_TAB and
+	 * WorkflowViewerController.SHOW_LOAD_TAB parameters.
+	 */
 	private void initializeTabButtons() {
 
 		if (WorkflowViewerController.SHOW_NEW_TAB) {
@@ -72,6 +76,7 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 					.setActionCommand(WorkflowViewerController.NEW_ACTION_COMMAND);
 			newWorkflowButton.setToolTipText(NEW_TAB_TOOLTIP);
 			newWorkflowButton.addActionListener(controller);
+			newWorkflowButton.setMnemonic(KeyEvent.VK_N);
 		}
 
 		if (WorkflowViewerController.SHOW_LOAD_TAB) {
@@ -81,9 +86,15 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 					.setActionCommand(WorkflowViewerController.LOAD_ACTION_COMMAND);
 			loadWorkflowButton.setToolTipText(LOAD_TAB_TOOLTIP);
 			loadWorkflowButton.addActionListener(controller);
+			loadWorkflowButton.setMnemonic(KeyEvent.VK_L);
 		}
 	}
 
+	/**
+	 * Add a new workflow to be displayed by the WorkflowViewer.
+	 * 
+	 * @param splitPane
+	 */
 	public void addWorkflow(WorkflowHorizontalSplitPane splitPane) {
 
 		Workflow workflow = splitPane.getWorkflowPane().getAssociatedWorkflow();
@@ -99,7 +110,7 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		// Why does the API force a fully specified tab when using insert
 		// rather than add?
 
-		// Setup switching between tabs on component drag.
+		// Setup switching between tabs on component drag over the tab.
 		DropTargetListener dropListener = new DropTargetAdapter() {
 			@Override
 			public void drop(DropTargetDropEvent dtde) {
@@ -119,7 +130,8 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 				WorkflowViewerController.ALLOW_TAB_CLOSE);
 
 		setTooltip(topComponent, inserted_index, tabFlapComponent);
-		// Update tooltips as title and description change
+		// Update tooltips as title and description (on which they are based)
+		// change
 		topComponent
 				.registerComponentDescriptionChangeListener(new Component.ListenerAdaptor() {
 					@Override
@@ -128,17 +140,17 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 					}
 				});
 
-		// Add a "*" to unsaved workflows.
+		// Add a "*" to workflows when they become "unsaved".
 		topComponent
 				.registerSavedStatusChangeListener(new Component.ListenerAdaptor() {
 					@Override
 					public void savedStatusChanged(Component component) {
-						if (component.checkUnsavedChanges()) {
+						if (component.checkUnsavedChanges()) {// Unsaved
 							setTitleAt(
 									inserted_index,
 									WorkflowViewer.cleanTitle("*"
 											+ component.getName()));
-						} else {
+						} else {// Saved
 							setTitleAt(inserted_index, WorkflowViewer
 									.cleanTitle(component.getName()));
 						}
@@ -149,6 +161,13 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		this.setSelectedIndex(inserted_index);
 	}
 
+	/**
+	 * Helper method for adding a tooltip to a tab.
+	 * 
+	 * @param component
+	 * @param index
+	 * @param tabFlapComponent
+	 */
 	private void setTooltip(Component component, int index,
 			IconizedCloseableTabFlapComponent tabFlapComponent) {
 		String tooltip = "<html>"
@@ -159,7 +178,8 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 	}
 
 	/**
-	 * Word wrap algorithm for tooltips.
+	 * Word wrap algorithm to insert line returns at word breaks. Used to create
+	 * multiline tooltips.
 	 * 
 	 * Based on http://ramblingsrobert.wordpress.com/2011/04/13/java-word-wrap-
 	 * algorithm/
@@ -186,6 +206,12 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 				+ wrap(in.substring(place), len, lines - 1);
 	}
 
+	/**
+	 * Process a string to a length suitable for inclusion as a tab title.
+	 * 
+	 * @param title
+	 * @return
+	 */
 	private static String cleanTitle(String title) {
 		title = title.trim();
 		if (title.length() < MAX_TITLE_LENGTH) {
@@ -195,6 +221,9 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		}
 	}
 
+	/**
+	 * Use this method to set an icon on a tab.
+	 */
 	@Override
 	public void setIconAt(int index, Icon icon) {
 		((IconizedCloseableTabFlapComponent) this.getTabComponentAt(index))
@@ -202,8 +231,9 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 	}
 
 	/**
-	 * Use this version if it is an icon that should be cleared when the tab is
-	 * visited.
+	 * Use this method to set an icon on a tab that should be cleared when the
+	 * tab is visited by the user. If the icon should remain even when visited,
+	 * use the alternative setIconAt method.
 	 * 
 	 * @param index
 	 * @param icon
@@ -244,6 +274,10 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 				.getComponentAt(i)).getWorkflowPane().getAssociatedWorkflow());
 	}
 
+	/**
+	 * Listen for changes in the status of workflows being displayed, and change
+	 * the icon displayed on their tabs as appropriate.
+	 */
 	@Override
 	public void workflowStatusChanged(Workflow workflow) {
 		for (int i = 0; i < numberOfNonButtonTabs(); i++) {

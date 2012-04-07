@@ -17,7 +17,7 @@ import org.u_compare.gui.component.WorkflowPanel;
 import org.u_compare.gui.model.Workflow;
 
 /**
- * View component which contains everything related to a single workshop in a scrollpane.
+ * View component which contains a single workshop in a scrollpane.
  * 
  * @author Pontus
  * @author Olaf

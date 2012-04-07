@@ -27,7 +27,6 @@ public class UConnectVerticalSplitPane extends JSplitPane {
 	private static final int SPLIT_ORIENTATION = JSplitPane.HORIZONTAL_SPLIT;
 	
 	/**
-	 * 
 	 * @param workflow Either a workflowPane or WorkflowViewer depending on whether the current configuration allows multiple workflow tabs.
 	 * @param libraryPane
 	 */

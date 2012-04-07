@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.collection.metadata.CpeDescription;
-import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.resource.metadata.MetaDataObject;
-import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 import org.apache.uima.util.XMLizable;
 import org.u_compare.gui.model.uima.CPE;

@@ -1,6 +1,5 @@
 package org.u_compare.gui;
 
-import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -12,14 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.Scrollable;
 
 import org.u_compare.gui.component.ComponentPanel;
 import org.u_compare.gui.component.WorkflowPanel;
 import org.u_compare.gui.model.Workflow;
 
 /**
- * View component which contains everything related to a workshop.
+ * View component which contains everything related to a single workshop in a scrollpane.
  * 
  * @author Pontus
  * @author Olaf
@@ -29,8 +27,10 @@ import org.u_compare.gui.model.Workflow;
  */
 
 @SuppressWarnings("serial")
-public class WorkflowPane extends JScrollPane implements Autoscroll,
-		Scrollable {
+public class WorkflowPane extends JScrollPane implements Autoscroll {
+	
+	private static final int AUTOSCROLL_HEIGHT = 100;
+	
 	private WorkflowPanel topComponent;
 
 	// Configuration
@@ -40,10 +40,6 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 		ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 	private static final String TOOLTIP_TEXT =
 		"Drag components from the component library here";
-
-	// TODO: WorkflowTransferManager
-	// For dragging, observe the mouse and keep states for it here.
-	// Then observe the events and draw accordingly.
 
 	public WorkflowPane(WorkflowPanel topComponent) {
 		this.topComponent = topComponent;
@@ -84,54 +80,31 @@ public class WorkflowPane extends JScrollPane implements Autoscroll,
 		return this.topComponent;
 	}
 
+	/**
+	 * Define area in which to autoscroll while dragging.
+	 */
 	@Override
 	public Insets getAutoscrollInsets() {
-		return new Insets(100, 0, 100, 0);
+		return new Insets(AUTOSCROLL_HEIGHT, 0, AUTOSCROLL_HEIGHT, 0);
 	}
 
+	/**
+	 * Cause autoscroll to occur when within the defined area.
+	 */
 	@Override
 	public void autoscroll(Point cursorLocn) {
 		
 		Rectangle vis = topComponent.getVisibleRect();
 		
-		if(cursorLocn.getY() < 100){
+		if(cursorLocn.getY() < AUTOSCROLL_HEIGHT){//Scroll up
 			topComponent.scrollRectToVisible(new Rectangle(vis.x, vis.y-20, 1, 1));
-		}else if(cursorLocn.getY() > getHeight() - 100) {
+		}else if(cursorLocn.getY() > getHeight() - AUTOSCROLL_HEIGHT) {//Scroll down
 			topComponent.scrollRectToVisible(new Rectangle(vis.x, vis.y+vis.height+1, 1, 20));
 		}
 	}
 
 	public Workflow getAssociatedWorkflow() {
 		return this.topComponent.getWorkflow();
-	}
-
-	// methods implementing Scrollable
-
-	@Override
-	public Dimension getPreferredScrollableViewportSize() {
-		  return new Dimension(250, 250);
-	}
-
-	@Override
-	public int getScrollableUnitIncrement(Rectangle visibleRect,
-			int orientation, int direction) {
-		return 1;
-	}
-
-	@Override
-	public int getScrollableBlockIncrement(Rectangle visibleRect,
-			int orientation, int direction) {
-		return 100;
-	}
-
-	@Override
-	public boolean getScrollableTracksViewportWidth() {
-		return false;
-	}
-
-	@Override
-	public boolean getScrollableTracksViewportHeight() {
-		return false;
 	}
 
 }

@@ -15,6 +15,11 @@ import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.StringParameter;
 import org.u_compare.gui.model.parameters.constraints.Constraint.ConstraintFailedException;
 
+/**
+ * Controller for a parameter associated with either a BooleanParameterPanel or a ParameterPanel depending on type.
+ * 
+ * @author Luke McCrohon
+ */
 public class ParameterController {
 
 	protected Parameter param;

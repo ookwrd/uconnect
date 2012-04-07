@@ -25,7 +25,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
  * Component to be used as a tab flap that can display an icon as a status
- * indicator and is close-able using a button.
+ * indicator and is close-able using an included close button.
  * 
  * //TODO extract close button tab to its own class.
  * 

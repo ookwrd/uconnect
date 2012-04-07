@@ -14,6 +14,12 @@ import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.control.WorkflowViewerController.WorkflowFactory;
 import org.u_compare.gui.model.Workflow;
 
+/**
+ * Class for testing and demonstration purposes which implements a workflow viewer using the Uconnect library.
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class UIMA_Tester {
 
 	private static final JFileChooser fc = new JFileChooser();

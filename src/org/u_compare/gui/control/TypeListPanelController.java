@@ -5,6 +5,12 @@ import org.u_compare.gui.component.TypeListPanel.LIST_TYPES;
 import org.u_compare.gui.model.AnnotationTypeOrFeature;
 import org.u_compare.gui.model.Component;
 
+/**
+ * Controller for a TypelistPanel (which represents either an Input or Output list of annotation types).
+ * 
+ * @author Luke McCrohon
+ *
+ */
 public class TypeListPanelController {
 	
 	private Component component;

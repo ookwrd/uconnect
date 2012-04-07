@@ -35,7 +35,9 @@ public class ButtonTabFlap extends JButton {
 	 */
 	public ButtonTabFlap(String buttonText, DropTargetListener dropListener) {
 		this(buttonText);
-		new DropTarget(this, dropListener);
+		if(dropListener != null){
+			new DropTarget(this, dropListener);
+		}
 	}
 
 }

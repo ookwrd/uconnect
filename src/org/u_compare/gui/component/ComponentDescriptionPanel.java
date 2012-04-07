@@ -26,7 +26,8 @@ public class ComponentDescriptionPanel extends JPanel implements
 	private final Component component;
 	private final EditableTextPanel textPanel;
 
-	public ComponentDescriptionPanel(ComponentController controller, Component component) {
+	public ComponentDescriptionPanel(ComponentController controller,
+			Component component) {
 		super();
 
 		this.controller = controller;
@@ -39,11 +40,12 @@ public class ComponentDescriptionPanel extends JPanel implements
 				textChangeRequest(textPanel.getContentText());
 			}
 		});
-		
-		if(controller.allowEditing()){
-			DragAndDropController.registerDragSource(textPanel.getContent(),controller);
+
+		if (controller.allowEditing()) {
+			DragAndDropController.registerDragSource(textPanel.getContent(),
+					controller);
 		}
-		
+
 		setLayout(new BorderLayout());
 		setOpaque(false);
 		this.add(textPanel);

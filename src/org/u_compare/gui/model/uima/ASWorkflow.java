@@ -5,38 +5,40 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.EntityProcessStatus;
 import org.u_compare.gui.model.Workflow;
 
-public class ASWorkflow extends Workflow implements UimaASStatusCallbackListener {
+public class ASWorkflow extends Workflow implements
+		UimaASStatusCallbackListener {
 
-	public ASWorkflow(){
-		
+	public ASWorkflow() {
+
 	}
-	
-	public void run(){
-		
-		//BaseUIMAAsynchronousEngine_impl uimaAsEngine = new BaseUIMAAsynchronousEngine_impl();
-		//uimaAsEngine.addStatusCallbackListener(this);
-		
+
+	public void run() {
+
+		// BaseUIMAAsynchronousEngine_impl uimaAsEngine = new
+		// BaseUIMAAsynchronousEngine_impl();
+		// uimaAsEngine.addStatusCallbackListener(this);
+
 	}
 
 	@Override
 	public void collectionProcessComplete(EntityProcessStatus arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void entityProcessComplete(CAS arg0, EntityProcessStatus arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void initializationComplete(EntityProcessStatus arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 	}
 }

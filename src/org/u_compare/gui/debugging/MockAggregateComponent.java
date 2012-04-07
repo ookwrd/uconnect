@@ -7,7 +7,6 @@ import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.parameters.Parameter;
 
-
 /**
  * 
  * This class is for TESTING PURPOSES ONLY.
@@ -15,11 +14,12 @@ import org.u_compare.gui.model.parameters.Parameter;
  * A stub class for use when testing the model.
  * 
  * @author Luke McCrohon
- *
+ * 
  */
-public class MockAggregateComponent extends AbstractAggregateComponent implements Component, AggregateComponent {
+public class MockAggregateComponent extends AbstractAggregateComponent
+		implements Component, AggregateComponent {
 
-	public MockAggregateComponent(){
+	public MockAggregateComponent() {
 		super();
 	}
 

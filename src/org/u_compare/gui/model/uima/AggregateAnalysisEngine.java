@@ -11,22 +11,22 @@ import org.u_compare.gui.model.Component;
 
 public class AggregateAnalysisEngine extends AbstractAggregateComponent {
 
-	public AggregateAnalysisEngine(AnalysisEngineDescription desc){
-		extractFromProcessingResouceMetaData(
-				desc.getAnalysisEngineMetaData());
+	public AggregateAnalysisEngine(AnalysisEngineDescription desc) {
+		extractFromProcessingResouceMetaData(desc.getAnalysisEngineMetaData());
 
 		setImplementationName(desc.getImplementationName());
 		flowController = desc.getFlowControllerDeclaration();
 
-		Map<String,MetaDataObject> map = desc.getDelegateAnalysisEngineSpecifiersWithImports();
+		Map<String, MetaDataObject> map = desc
+				.getDelegateAnalysisEngineSpecifiersWithImports();
 		for (String key : map.keySet()) {
 			Import imp = (Import) map.get(key);
-			Component subComponent = AbstractComponent.constructComponentFromXML(imp);
+			Component subComponent = AbstractComponent
+					.constructComponentFromXML(imp);
 			subComponent.setFlowControllerIdentifier(key);
 			addSubComponent(subComponent);
 		}
 
-		resourceManagerConfiguration =
-			desc.getResourceManagerConfiguration();
+		resourceManagerConfiguration = desc.getResourceManagerConfiguration();
 	}
 }

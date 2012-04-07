@@ -261,12 +261,13 @@ public class WorkflowViewerController {
 	}
 
 	/**
-	 * Initialize the WorkflowViewerComponent with a set of initial workflows and
-	 * produce its view component. The view will be either a WorkflowViewer or
-	 * WorkflowHorizontalSplitPane depending on the ALLOW_TABS configuration
+	 * Initialize the WorkflowViewerComponent with a set of initial workflows
+	 * and produce its view component. The view will be either a WorkflowViewer
+	 * or WorkflowHorizontalSplitPane depending on the ALLOW_TABS configuration
 	 * parameter.
 	 * 
-	 * If multiple workflows are provided, the ALLOW_TABS parameter must be set to true.
+	 * If multiple workflows are provided, the ALLOW_TABS parameter must be set
+	 * to true.
 	 * 
 	 * @return view
 	 */
@@ -326,7 +327,7 @@ public class WorkflowViewerController {
 	 * @return
 	 */
 	private static Workflow draggedWorkflow() {
-		
+
 		Workflow workflow = defaultWorkflowFactory.constructWorkflow();
 
 		ComponentController controllerDragged = DragAndDropController
@@ -367,7 +368,8 @@ public class WorkflowViewerController {
 	/**
 	 * Process a user request to close a specific workflow.
 	 * 
-	 * @param workflow Workflow to close.
+	 * @param workflow
+	 *            Workflow to close.
 	 */
 	public void requestWorkflowClose(Workflow workflow) {
 		assert (ALLOW_TABS);

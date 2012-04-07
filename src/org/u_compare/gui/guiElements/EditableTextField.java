@@ -13,7 +13,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.EtchedBorder;
 
 /**
- * Extended version of JTextField which changes appearance when not being edited.
+ * Extended version of JTextField which changes appearance when not being
+ * edited.
  * 
  * See also EditableTextPanel
  * 
@@ -23,12 +24,12 @@ import javax.swing.border.EtchedBorder;
 public class EditableTextField extends AutoscrollTextField {
 
 	private boolean fixed;
-	
-	public EditableTextField(String text){
+
+	public EditableTextField(String text) {
 		super(text, 500);
 		toFixedMode();
-		
-		//Double click component to enter edit mode
+
+		// Double click component to enter edit mode
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -39,64 +40,66 @@ public class EditableTextField extends AutoscrollTextField {
 				}
 			}
 		});
-		
-		//Selecting something else cancels edit mode
+
+		// Selecting something else cancels edit mode
 		addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				toFixedMode();
 			}
 		});
-		
-		//Finishing editing ends editable mode. 
-		super.addActionListener(new ActionListener() {	
+
+		// Finishing editing ends editable mode.
+		super.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				toFixedMode();
 			}
 		});
-		
-		//"ESC" to cancel editable mode.
+
+		// "ESC" to cancel editable mode.
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				int code = e.getKeyCode(); 
-				if(code == KeyEvent.VK_ESCAPE) { 
+				int code = e.getKeyCode();
+				if (code == KeyEvent.VK_ESCAPE) {
 					e.consume();
 					toFixedMode();
-				} 
+				}
 			}
 		});
 	}
-	
+
 	/**
 	 * Change to editable mode.
 	 */
-	protected void toEditMode(){
+	protected void toEditMode() {
 		fixed = false;
 		setEditable(true);
 		super.setBackground(Color.WHITE);
 		setBorder(new EtchedBorder());
-		
-		//Fix java bug where Caret becomes invisible if JTextArea.setEditable(false);
+
+		// Fix java bug where Caret becomes invisible if
+		// JTextArea.setEditable(false);
 		setCaretPosition(getText().length());
 		getCaret().setVisible(true);
 	}
-	
+
 	/**
 	 * Change to non-editable mode.
 	 */
-	protected void toFixedMode(){
-		if(fixed){
+	protected void toFixedMode() {
+		if (fixed) {
 			return;
 		}
 		fixed = true;
 		setEditable(false);
 		super.setBackground(null);
 		setBorder(null);
-		if(hasFocus()){
+		if (hasFocus()) {
 			transferFocus();
-			//TODO Not relevant to Uconnect, but the focus should probably be transfered to somewhere where it won't do anything.
+			// TODO Not relevant to Uconnect, but the focus should probably be
+			// transfered to somewhere where it won't do anything.
 		}
 		fireActionPerformed();
 	}

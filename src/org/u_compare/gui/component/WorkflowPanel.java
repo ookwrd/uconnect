@@ -12,74 +12,75 @@ import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
 
 /**
- * Extension of ComponentPanel providing a view element which represents an entire Workflow.
+ * Extension of ComponentPanel providing a view element which represents an
+ * entire Workflow.
  * 
  * @author Luke McCrohon
- *
+ * 
  */
 @SuppressWarnings("serial")
 public class WorkflowPanel extends ComponentPanel {
-	
-	public WorkflowPanel(Workflow component,
-			ComponentController controller, boolean showWorkflowControlPanel,
-				boolean showWorkflowDetails, boolean showSavePanel){
-	
+
+	public WorkflowPanel(Workflow component, ComponentController controller,
+			boolean showWorkflowControlPanel, boolean showWorkflowDetails,
+			boolean showSavePanel) {
+
 		setOpaque(true);
 		setLayout(new BorderLayout());
-		
+
 		initialConfiguration(component, controller);
-		
+
 		component.registerSubComponentsChangedListener(this);
-		
+
 		JPanel upperPanel = new JPanel();
 		upperPanel.setBorder(new EtchedBorder());
 		upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.Y_AXIS));
-		
+
 		JPanel lowerPanel = new JPanel();
 		lowerPanel.setBorder(new EtchedBorder());
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
-		
+
 		innerPanel = setupCardPanel();
-		
+
 		setupSubComponentsPanel(innerPanel);
-		
-		if(showWorkflowDetails){
-			upperPanel.add(getTitlePanel(true),BorderLayout.NORTH);
+
+		if (showWorkflowDetails) {
+			upperPanel.add(getTitlePanel(true), BorderLayout.NORTH);
 			upperPanel.add(getDescriptionPanel());
 		}
-		 		
-		if(showWorkflowControlPanel){
-			setupBorderPanel(upperPanel,new WorkflowControlPanel((Workflow)component,
-					(WorkflowController)controller));
-		}
-		
 
-		if(showWorkflowDetails || showWorkflowControlPanel){
-			this.add(upperPanel,BorderLayout.NORTH);
+		if (showWorkflowControlPanel) {
+			setupBorderPanel(upperPanel, new WorkflowControlPanel(
+					(Workflow) component, (WorkflowController) controller));
+		}
+
+		if (showWorkflowDetails || showWorkflowControlPanel) {
+			this.add(upperPanel, BorderLayout.NORTH);
 		}
 		this.add(innerPanel, BorderLayout.CENTER);
-		
-		if(showSavePanel){
-			setupBorderPanel(lowerPanel, new WorkflowSavePanel((Workflow)component));
+
+		if (showSavePanel) {
+			setupBorderPanel(lowerPanel, new WorkflowSavePanel(
+					(Workflow) component));
 			this.add(lowerPanel, BorderLayout.SOUTH);
-		}	
-		
-		if(controller.allowEditing()){
+		}
+
+		if (controller.allowEditing()) {
 			DragAndDropController.registerDragSource(this, controller);
 		}
 	}
-	
-	protected void setupBorderPanel(JPanel target, JPanel inner){
-		//Necessary due to ComponentPanels LayoutManager 
+
+	protected void setupBorderPanel(JPanel target, JPanel inner) {
+		// Necessary due to ComponentPanels LayoutManager
 		JPanel spacer = new JPanel();
-		
+
 		JPanel etchedBorder = new JPanel();
 		etchedBorder.setLayout(new BorderLayout());
 		etchedBorder.setBorder(new EtchedBorder());
-		
+
 		etchedBorder.add(inner);
 		spacer.add(etchedBorder);
-		
+
 		target.add(spacer);
 	}
 }

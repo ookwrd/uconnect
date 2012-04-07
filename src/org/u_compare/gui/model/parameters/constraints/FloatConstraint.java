@@ -5,22 +5,23 @@ package org.u_compare.gui.model.parameters.constraints;
  * 
  * @author Luke McCrohon
  */
-public class FloatConstraint extends AbstractWhitelistBlacklistConstraint<Float> {
+public class FloatConstraint extends
+		AbstractWhitelistBlacklistConstraint<Float> {
 
-	public FloatConstraint(){
+	public FloatConstraint() {
 	}
-	
+
 	@Override
 	public void validate(String in) throws ConstraintFailedException {
 		Float value;
-		try{
+		try {
 			value = Float.parseFloat(in);
-		}catch(NumberFormatException ex){
+		} catch (NumberFormatException ex) {
 			throw new ConstraintFailedException("Input not a float.", ex);
 		}
 		validate(value);
 	}
-	
+
 	@Override
 	public void validate(Float value) throws ConstraintFailedException {
 		super.validateBlacklistWhitelistConstraints(value);

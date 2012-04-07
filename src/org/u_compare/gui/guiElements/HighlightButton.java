@@ -13,80 +13,87 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.CompoundBorder;
 
 /**
- * An extension of the Standard JButton Class that allows mouseover highlighting.
+ * An extension of the Standard JButton Class that allows mouseover
+ * highlighting.
  * 
- * TODO check whether this can  be replaced with close_button.setRolloverEnabled(true/false);
+ * TODO check whether this can be replaced with
+ * close_button.setRolloverEnabled(true/false);
  * 
  * @author Luke McCrohon
- *
+ * 
  */
 @SuppressWarnings("serial")
 public class HighlightButton extends JButton {
 
 	private Border highlighted;
 	private Border unhighlighted;
-	
+
 	private boolean highlightingEnabled = true;
 	private boolean textButton = false;
-	
-	public HighlightButton(Icon icon){
+
+	public HighlightButton(Icon icon) {
 		super(icon);
 		configure();
 	}
-	
-	public HighlightButton(String string){
+
+	public HighlightButton(String string) {
 		super(string);
 		textButton = true;
 		configure();
 	}
-	
-	public HighlightButton(String string, Icon icon){
+
+	public HighlightButton(String string, Icon icon) {
 		super(string, icon);
 		textButton = true;
 		configure();
 	}
-	
-	public void enableHighlighting(){
+
+	public void enableHighlighting() {
 		enableHighlighting(true);
 	}
-	
-	public void disableHighlighting(){
+
+	public void disableHighlighting() {
 		enableHighlighting(false);
 	}
-	
-	public void enableHighlighting(boolean enabled){
+
+	public void enableHighlighting(boolean enabled) {
 		highlightingEnabled = enabled;
 	}
-	
+
 	@Override
-	public void setEnabled(boolean enabled){
+	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
 		enableHighlighting(enabled);
-		if(!enabled){//Clear any existing highlighting
+		if (!enabled) {// Clear any existing highlighting
 			setBorder(unhighlighted);
 		}
 	}
-	
-	private void configure(){
+
+	private void configure() {
 
 		setOpaque(false);
-		setFocusPainted(false);// This may be needed for a mac specific behaviour
-		
-		//Add mouse over highlighting
-		if(textButton){//Add a few pixels of horizontal space so the border isn't too tight
-			highlighted = new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY,
-					Color.DARK_GRAY), new EmptyBorder(0,2,0,2));
-			unhighlighted = new CompoundBorder(new LineBorder(Color.LIGHT_GRAY,1), new EmptyBorder(1,3,1,3));
-		}else{
-			highlighted = new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY,
-					Color.DARK_GRAY);
-			unhighlighted = new CompoundBorder(new LineBorder(Color.LIGHT_GRAY,1), new EmptyBorder(1,1,1,1));
+		setFocusPainted(false);// This may be needed for a mac specific
+								// behaviour
+
+		// Add mouse over highlighting
+		if (textButton) {// Add a few pixels of horizontal space so the border
+							// isn't too tight
+			highlighted = new CompoundBorder(new BevelBorder(
+					BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY),
+					new EmptyBorder(0, 2, 0, 2));
+			unhighlighted = new CompoundBorder(new LineBorder(Color.LIGHT_GRAY,
+					1), new EmptyBorder(1, 3, 1, 3));
+		} else {
+			highlighted = new BevelBorder(BevelBorder.LOWERED,
+					Color.LIGHT_GRAY, Color.DARK_GRAY);
+			unhighlighted = new CompoundBorder(new LineBorder(Color.LIGHT_GRAY,
+					1), new EmptyBorder(1, 1, 1, 1));
 		}
 		setBorder(unhighlighted);
-		
+
 		addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				if(highlightingEnabled){
+				if (highlightingEnabled) {
 					setBorder(highlighted);
 				}
 			}
@@ -95,6 +102,6 @@ public class HighlightButton extends JButton {
 				setBorder(unhighlighted);
 			}
 		});
-		
+
 	}
 }

@@ -25,7 +25,7 @@ public class ComponentTitleBar extends JPanel {
 		setLayout(new BorderLayout());
 		setOpaque(false);
 
-		if (!isWorkflow) {//Standard component
+		if (!isWorkflow) {// Standard component
 			setBorder(new RoundedBorder(null, ComponentPanel.BORDER_COLOR,
 					ComponentPanel.HEADER_COLOR,
 					ComponentPanel.BORDER_ROUNDING,
@@ -33,11 +33,11 @@ public class ComponentTitleBar extends JPanel {
 
 			setupButtonPanel(this, innerPanel, controller, component);
 			setupTitlePanel(this, false, controller, component);
-		} else {//Workflow
-			//Workflows do not have a visible border
+		} else {// Workflow
+			// Workflows do not have a visible border
 			setBorder(new EmptyBorder(5, 5, 0, 0));
-			
-			//Also no button panel
+
+			// Also no button panel
 			setupTitlePanel(this, true, controller, component);
 		}
 

@@ -26,7 +26,7 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 
 /**
  * View component which handles the display of multiple workflows in separate
- * tabs. 
+ * tabs.
  * 
  * @author pontus
  * @author luke
@@ -73,7 +73,8 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 
 		if (WorkflowViewerController.SHOW_NEW_TAB) {
 			ButtonTabFlap newWorkflowButton = addButtonTab(
-					WorkflowViewerController.NEW_TAB_NAME, new DropTargetAdapter() {
+					WorkflowViewerController.NEW_TAB_NAME,
+					new DropTargetAdapter() {
 						@Override
 						public void drop(DropTargetDropEvent dtde) {
 							controller.requestNewWorkflowDragged();

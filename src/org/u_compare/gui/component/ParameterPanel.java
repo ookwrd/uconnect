@@ -26,24 +26,26 @@ import org.u_compare.gui.model.parameters.Parameter.ParameterValueChangedListene
  * View element for displaying/editing a parameter setting.
  * 
  * @author Luke McCrohon
- *
+ * 
  */
-public class ParameterPanel implements
-		LockedStatusChangeListener, ParameterValueChangedListener {
+public class ParameterPanel implements LockedStatusChangeListener,
+		ParameterValueChangedListener {
 
 	private static final int DESCRIPTION_LENGTH = 43;
-	
+
 	protected JComponent field;
 	protected Parameter param;
 	protected ParameterController controller;
-	
-	public ParameterPanel(Parameter param, final ParameterController controller, Component component){
+
+	public ParameterPanel(Parameter param,
+			final ParameterController controller, Component component) {
 		this.param = param;
 		this.controller = controller;
-		
-		if(!param.isMultivalued()){
-			//Setup default field
-			JTextField textField = new AutoscrollTextField(param.getParameterString());
+
+		if (!param.isMultivalued()) {
+			// Setup default field
+			JTextField textField = new AutoscrollTextField(
+					param.getParameterString());
 			textField.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -53,107 +55,111 @@ public class ParameterPanel implements
 			textField.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(FocusEvent e) {
-					textFieldChanged();		
+					textFieldChanged();
 				}
 			});
 			field = textField;
-		}else{
+		} else {
 			final ControlList list = new ControlList(Color.white);
 			list.setBorder(new EtchedBorder());
-			
+
 			ActionListener addListener = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					controller.addValue();
 				}
 			};
-			
+
 			ActionListener removeListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*JList and DefaultListModel provide no way for accessing
+					/*
+					 * JList and DefaultListModel provide no way for accessing
 					 * contents as anything other than an Object[]. Hence having
-					 * to go through the array element by element and casting each
-					 * selected name individually.
+					 * to go through the array element by element and casting
+					 * each selected name individually.
 					 */
-					for(Object name : list.getSelectedValues()){
-						controller
-							.removeValue((String)name);
-					}	
+					for (Object name : list.getSelectedValues()) {
+						controller.removeValue((String) name);
+					}
 				}
 			};
-			
+
 			list.registerAddActionListener(addListener);
 			list.registerDeleteActionListener(removeListener);
-			
+
 			field = list;
 
 			rebuildListContents();
 		}
-		
+
 		component.registerLockedStatusChangeListener(this);
 		param.registerParameterValueChangedListener(this);
-		
+
 		updateLockedStatus(component);
 	}
-	
+
 	public JLabel getLabel() {
 		String description = param.getDescription();
-		if(description == null || description.length() == 0){
+		if (description == null || description.length() == 0) {
 			description = param.getName();
 		}
-		if(description.length() > DESCRIPTION_LENGTH){
-			description = description.substring(0,DESCRIPTION_LENGTH-3) + "...";
+		if (description.length() > DESCRIPTION_LENGTH) {
+			description = description.substring(0, DESCRIPTION_LENGTH - 3)
+					+ "...";
 		}
 		description += ":";
 		JLabel descriptionLabel = new JLabel(description);
-		descriptionLabel.setToolTipText(param.getDescription());//Unabridged description
+		descriptionLabel.setToolTipText(param.getDescription());// Unabridged
+																// description
 		descriptionLabel.setHorizontalAlignment(JLabel.TRAILING);
-		
+
 		return descriptionLabel;
 	}
-	
-	public JLabel getMandatoryLabel(){
+
+	public JLabel getMandatoryLabel() {
 		JLabel mandatory;
-		if(param.isMandatory()){
+		if (param.isMandatory()) {
 			mandatory = new JLabel("*");
 			mandatory.setToolTipText("Mandatory Parameter");
-		}else{
+		} else {
 			mandatory = new JLabel(" ");
 		}
 		return mandatory;
 	}
-	
+
 	public JComponent getField() {
 		return field;
 	}
-	
+
 	@Override
 	public void lockStatusChanged(Component component) {
 		updateLockedStatus(component);
 	}
-	
-	protected void updateLockedStatus(Component component){
+
+	protected void updateLockedStatus(Component component) {
 		field.setEnabled(!component.getLockedStatus());
 	}
-	
+
 	@Override
 	public void parameterSettingsChanged(Parameter param) {
-		if(field instanceof JTextField){
-			((JTextField)field).setText(param.getParameterString());
-		}else if(field instanceof ControlList){
+		if (field instanceof JTextField) {
+			((JTextField) field).setText(param.getParameterString());
+		} else if (field instanceof ControlList) {
 			rebuildListContents();
-		}else{
-			System.err.println("If a class overriding parameter panel, changes the 'field' it also needs to override the parameterSettingsChanged method");
+		} else {
+			System.err
+					.println("If a class overriding parameter panel, changes the 'field' it also needs to override the parameterSettingsChanged method");
 		}
 	}
-	
-	protected void textFieldChanged(){
-		String value = ((JTextField)field).getText();
-		((JTextField)field).setText(param.getParameterString());
+
+	protected void textFieldChanged() {
+		String value = ((JTextField) field).getText();
+		((JTextField) field).setText(param.getParameterString());
 		controller.setValue(value);
 	}
-	
-	private void rebuildListContents(){
-		((ControlList)field).rebuildListContents(new ArrayList<String>(Arrays.asList(param.getParameterStrings())));
+
+	private void rebuildListContents() {
+		((ControlList) field).rebuildListContents(new ArrayList<String>(Arrays
+				.asList(param.getParameterStrings())));
 	}
 }

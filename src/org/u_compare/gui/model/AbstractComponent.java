@@ -442,7 +442,6 @@ public abstract class AbstractComponent implements Component {
 		}
 	}
 	
-	
 	@Override
 	public ArrayList<Parameter> getConfigurationParameters(){
 		return basicParameters.getConfigurationParameters();

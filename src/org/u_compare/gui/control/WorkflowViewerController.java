@@ -1,8 +1,5 @@
 package org.u_compare.gui.control;
 
-import java.awt.dnd.DropTargetAdapter;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -43,8 +40,8 @@ import org.xml.sax.SAXException;
  * @author Luke McCrohon
  * 
  */
-public class WorkflowViewerController extends DropTargetAdapter implements
-		DropTargetListener, ActionListener {
+public class WorkflowViewerController implements
+		 ActionListener {
 
 	public interface WorkflowFactory {
 		public Workflow constructWorkflow();
@@ -81,26 +78,56 @@ public class WorkflowViewerController extends DropTargetAdapter implements
 	 * may wish to hide it. Deafults to true.
 	 */
 	public static boolean SHOW_WORKFLOW_DETAILS = true;
-	
+
 	/**
-	 * Determines whether a panel with a save workflow button is included at the end of the workflow. Defaults to false.
+	 * Determines whether a panel with a "save workflow" button is included at
+	 * the end of the workflow. Defaults to false.
 	 */
 	public static boolean SHOW_SAVE_PANEL = false;
-	
+
 	/**
-	 * Determines whether to allow multiple workflows to be displayed in tabs. Defaults to true.
+	 * Determines whether to allow multiple workflows to be displayed in tabs.
+	 * Defaults to true.
 	 */
 	public static boolean ALLOW_TABS = true;
-	
-	
-	public static boolean SHOW_NEW_TAB = true;
-	public static boolean SHOW_LOAD_TAB = false;
-	public static boolean ALLOW_EDITING = true;
-	public static boolean ALLOW_TAB_CLOSE = true;
 
-	public static String LOAD_TAB_NAME = "Load";
+	/**
+	 * Determines whether to show a "new tab" button. Requires ALLOW_TABS to be
+	 * set to true. Defaults to true.
+	 */
+	public static boolean SHOW_NEW_TAB = true;
+
+	/**
+	 * Specifies the text of the "new tab" button enabled by SHOW_NEW_TAB.
+	 * Defaults to "New".
+	 */
 	public static String NEW_TAB_NAME = "New";
 
+	/**
+	 * Determines whether to show a "load tab" button. Requires ALLOW_TABS to be
+	 * set to true. Defaults to false.
+	 */
+	public static boolean SHOW_LOAD_TAB = false;
+
+	/**
+	 * Specifies the text of the "load tab" button enabled by SHOW_LOAD_TAB.
+	 * Defaults to "Load".
+	 */
+	public static String LOAD_TAB_NAME = "Load";
+
+	/**
+	 * Determines whether components are editable. Defaults to true.
+	 */
+	public static boolean ALLOW_EDITING = true;
+
+	/**
+	 * Determines whether tabs can be closed. Defaults to true.
+	 */
+	public static boolean ALLOW_TAB_CLOSE = true;
+
+	/**
+	 * Specifies how to choose types when required.
+	 */
 	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser() {
 		@Override
 		public AnnotationTypeOrFeature getNewAnnotation() {
@@ -110,6 +137,11 @@ public class WorkflowViewerController extends DropTargetAdapter implements
 		}
 	};
 
+	/**
+	 * Specifies how new blank workflows are constructed (i.e. via the "New tab"
+	 * button enabled by SHOW_NEW_TAB). Defaults to creating an empty
+	 * gui.model.Workflow workflow. Most systems will want to override this.
+	 */
 	public static WorkflowFactory defaultWorkflowFactory = new WorkflowFactory() {
 		@Override
 		public Workflow constructWorkflow() {
@@ -122,6 +154,11 @@ public class WorkflowViewerController extends DropTargetAdapter implements
 		}
 	};
 
+	/**
+	 * Specifies how to handle workflow save events (i.e. from the save prompt
+	 * on closing a modified workflow). Defaults to a filechooser prompting the
+	 * user to select the location to save the workflow descriptor to disk.
+	 */
 	public static WorkflowSaveAdaptor saveAdaptor = new WorkflowSaveAdaptor() {
 		private final JFileChooser fc = new JFileChooser();
 
@@ -143,6 +180,10 @@ public class WorkflowViewerController extends DropTargetAdapter implements
 		}
 	};
 
+	/**
+	 * Specifies how to handle user generated load events. Defaults to a
+	 * filechoosing to select a UIMA xml descriptor.
+	 */
 	public static WorkflowFactory loadAdaptor = new WorkflowFactory() {
 		private final JFileChooser fc = new JFileChooser();
 
@@ -159,6 +200,9 @@ public class WorkflowViewerController extends DropTargetAdapter implements
 		}
 	};
 
+	/**
+	 * Specifies the panel to be shown when no workflow tabs exist.
+	 */
 	@SuppressWarnings("serial")
 	public static JPanel emptyTabbedPanel = new JPanel() {
 		{
@@ -193,17 +237,43 @@ public class WorkflowViewerController extends DropTargetAdapter implements
 
 	}
 
+	/**
+	 * Initialize the WorkflowViewerComponent with no initial workflow and
+	 * produce its view component. The view will be either a WorkflowViewer or
+	 * WorkflowHorizontalSplitPane depending on the ALLOW_TABS configuration
+	 * parameter.
+	 * 
+	 * @return view
+	 */
 	public JComponent initialize() {
 		ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes = new ArrayList<WorkflowHorizontalSplitPane>();
 		return init(workflowSplitPanes);
 	}
 
+	/**
+	 * Initialize the WorkflowViewerComponent with a single initial workflow and
+	 * produce its view component. The view will be either a WorkflowViewer or
+	 * WorkflowHorizontalSplitPane depending on the ALLOW_TABS configuration
+	 * parameter.
+	 * 
+	 * @return view
+	 */
 	public JComponent initialize(Workflow workflow) {
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
 		workflows.add(workflow);
 		return initialize(workflows);
 	}
 
+	/**
+	 * Initialize the WorkflowViewerComponent with a set of initial workflows and
+	 * produce its view component. The view will be either a WorkflowViewer or
+	 * WorkflowHorizontalSplitPane depending on the ALLOW_TABS configuration
+	 * parameter.
+	 * 
+	 * If multiple workflows are provided, the ALLOW_TABS parameter must be set to true.
+	 * 
+	 * @return view
+	 */
 	public JComponent initialize(ArrayList<Workflow> workflows) {
 		assert (!(workflows.size() > 1) || ALLOW_TABS);
 
@@ -330,11 +400,6 @@ public class WorkflowViewerController extends DropTargetAdapter implements
 
 	private void saveWorkflow(Workflow workflow) {
 		saveAdaptor.saveWorkflow(workflow.getWorkflowDescription());
-	}
-
-	@Override
-	public void drop(DropTargetDropEvent arg0) {
-		requestNewWorkflowDragged();
 	}
 
 	@Override

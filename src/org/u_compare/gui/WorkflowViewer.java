@@ -71,7 +71,12 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 
 		if (WorkflowViewerController.SHOW_NEW_TAB) {
 			ButtonTabFlap newWorkflowButton = addButtonTab(
-					WorkflowViewerController.NEW_TAB_NAME, controller);
+					WorkflowViewerController.NEW_TAB_NAME, new DropTargetAdapter() {
+						@Override
+						public void drop(DropTargetDropEvent dtde) {
+							controller.requestNewWorkflow();
+						}
+					});
 			newWorkflowButton
 					.setActionCommand(WorkflowViewerController.NEW_ACTION_COMMAND);
 			newWorkflowButton.setToolTipText(NEW_TAB_TOOLTIP);
@@ -81,7 +86,7 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 
 		if (WorkflowViewerController.SHOW_LOAD_TAB) {
 			ButtonTabFlap loadWorkflowButton = addButtonTab(
-					WorkflowViewerController.LOAD_TAB_NAME, controller);
+					WorkflowViewerController.LOAD_TAB_NAME, null);
 			loadWorkflowButton
 					.setActionCommand(WorkflowViewerController.LOAD_ACTION_COMMAND);
 			loadWorkflowButton.setToolTipText(LOAD_TAB_TOOLTIP);

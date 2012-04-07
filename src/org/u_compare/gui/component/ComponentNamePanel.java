@@ -13,6 +13,7 @@ import org.u_compare.gui.control.DragAndDropController;
 import org.u_compare.gui.guiElements.EditableTextField;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
+import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
 /**
  * View element for displaying a component/workflow's title.
@@ -21,7 +22,7 @@ import org.u_compare.gui.model.Component.DescriptionChangeListener;
  *
  */
 @SuppressWarnings("serial")
-public class ComponentNamePanel extends JPanel implements DescriptionChangeListener {
+public class ComponentNamePanel extends JPanel implements DescriptionChangeListener, LockedStatusChangeListener {
 
 	private static final Font font = new Font("sansserif", Font.BOLD, 12);
 	private static final Font workflowFont = new Font("sansserif", Font.BOLD, 20);
@@ -63,6 +64,7 @@ public class ComponentNamePanel extends JPanel implements DescriptionChangeListe
 		});
 		
 		component.registerComponentDescriptionChangeListener(this);
+		component.registerLockedStatusChangeListener(this);
 	}
 
 	protected void nameChangeRequest(String name) {
@@ -75,4 +77,8 @@ public class ComponentNamePanel extends JPanel implements DescriptionChangeListe
 		nameField.setText(component.getName());
 	}
 
+	@Override
+	public void lockStatusChanged(Component component) {
+		nameField.setEnabled(!component.getLockedStatus());
+	}
 }

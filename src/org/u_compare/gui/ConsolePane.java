@@ -32,20 +32,6 @@ import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
 public class ConsolePane extends JScrollPane
 	implements WorkflowStatusListener, WorkflowMessageListener {
 	
-	/**
-	 * TODO:
-	 * Add setter for show timestamp, and default value
-	 * Listener for the messages arraylist instead of calling it implicitly?
-	 * Should follow the output downwards, add set and default.
-	 *     Fix bug further down.
-	 */
-	
-	private final String WORKFLOW_STATUS_MSG_BASE =
-		"Workflow status change to: ";
-	
-	private JTextPane console;
-	private ArrayList<ConsoleMessage> messages = new ArrayList<ConsoleMessage>();
-	
 	// Configuration
 	private static final int HORIZONTAL_SCROLLBAR_POLICY =
 		ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
@@ -60,6 +46,18 @@ public class ConsolePane extends JScrollPane
 	private static final Color CONSOLE_ERROR_COLOUR = Color.red;
 	private static final Color CONSOLE_DEFAULT_TEXT_COLOUR = Color.black;
 	private static final Color CONSOLE_BACKGROUND_COLOR = Color.white;
+	
+	/**
+	 * Change this value to disable the inclusion of a timestamp in messages.
+	 */
+	public boolean SHOW_TIMESTAMP = true;
+	
+	private final String WORKFLOW_STATUS_MSG_BASE =
+		"Workflow status change to: ";
+	
+	private JTextPane console;
+	private ArrayList<ConsoleMessage> messages = new ArrayList<ConsoleMessage>();
+	private StyleContext sc;
 	
 	public ConsolePane(Workflow workflow) {
 		workflow.registerWorkflowStatusListener(this);
@@ -80,6 +78,8 @@ public class ConsolePane extends JScrollPane
 				ConsolePane.VERTICAL_SCROLLBAR_POLICY);
 		this.setToolTipText(
 				ConsolePane.TOOLTIP_TEXT);
+		
+		sc = StyleContext.getDefaultStyleContext();
 	
 		this.setOpaque(false);
 	}
@@ -102,7 +102,6 @@ public class ConsolePane extends JScrollPane
 		
 		console.setCaretPosition(console.getDocument().getLength());
 		
-		StyleContext sc = StyleContext.getDefaultStyleContext();//TODO move to constructor
 		AttributeSet aset = console.getCharacterAttributes();
 		if(isError){
 			aset = sc.addAttribute(aset,StyleConstants.Foreground,ConsolePane.CONSOLE_ERROR_COLOUR);
@@ -111,12 +110,14 @@ public class ConsolePane extends JScrollPane
 		}
 		AttributeSet asetBold = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Bold, true);
 		
-		console.setCharacterAttributes(aset, true);
-		console.replaceSelection(ConsolePane.CONSOLE_DATEFORMAT.format(
+		if(SHOW_TIMESTAMP){
+			console.setCharacterAttributes(aset, true);
+			console.replaceSelection(ConsolePane.CONSOLE_DATEFORMAT.format(
 				message.timestamp));
-		
-		console.setCharacterAttributes(asetBold, false);
-		console.replaceSelection(": ");
+			
+			console.setCharacterAttributes(asetBold, false);
+			console.replaceSelection(": ");
+		}
 		
 		console.setCharacterAttributes(aset, true);
 		console.replaceSelection(messageIn+"\n");

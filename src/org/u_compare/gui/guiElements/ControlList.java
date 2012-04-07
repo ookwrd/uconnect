@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -40,9 +41,23 @@ public class ControlList extends JPanel {
 	 * @param background
 	 */
 	public ControlList(Color background){
+		this(background, true);
+	}
+	
+	/**
+	 * Create a new ControlList with the specified background color and item centering. 
+	 * 
+	 * @param background Background color
+	 * @param centering Should items be centered
+	 */
+	public ControlList(Color background, boolean centering){
 		super();
 		listModel = new DefaultListModel();
 		list = new AutoscrollList(listModel);
+		
+		if(centering){
+			((JLabel)(list.getCellRenderer())).setHorizontalAlignment(JLabel.CENTER);
+		}
 		
 		setLayout(new BoxLayout(this,
 				BoxLayout.Y_AXIS));

@@ -40,7 +40,9 @@ public class ComponentDescriptionPanel extends JPanel implements
 			}
 		});
 		
-		DragAndDropController.registerDragSource(textPanel.getContent(),controller);
+		if(controller.allowEditing()){
+			DragAndDropController.registerDragSource(textPanel.getContent(),controller);
+		}
 		
 		setLayout(new BorderLayout());
 		setOpaque(false);

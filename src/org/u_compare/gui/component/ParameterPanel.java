@@ -23,7 +23,7 @@ import org.u_compare.gui.model.parameters.Parameter.ParameterValueChangedListene
 
 /**
  * 
- * Abstract base class for common functionality of all ParameterPanel types.
+ * View element for displaying/editing a parameter setting.
  * 
  * @author Luke McCrohon
  *

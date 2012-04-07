@@ -9,7 +9,7 @@ import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.model.Component;
 
 /**
- * View component which displays a components list of subcomponents.
+ * View component which displays a component's list of subcomponents.
  * 
  * @author Luke McCrohon
  *

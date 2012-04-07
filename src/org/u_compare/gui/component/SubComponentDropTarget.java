@@ -18,7 +18,8 @@ import org.u_compare.gui.control.DropTargetController;
 import org.u_compare.gui.guiElements.AutoScrollSupport;
 
 /**
- * View component depicting the space on which dragged components can be dropped. 
+ * View component depicting the space between components on which dragged
+ * components can be dropped.
  * 
  * @author olaf
  * @author luke
@@ -29,31 +30,34 @@ public class SubComponentDropTarget extends JPanel implements Autoscroll {
 
 	public static final int TARGET_BORDER = 10;
 
-	private final JLabel solitaryLabel = new JLabel("(Drag and drop a component here)");
+	private final JLabel solitaryLabel = new JLabel(
+			"(Drag and drop a component here)");
 	{
-		solitaryLabel.setPreferredSize(new Dimension(solitaryLabel.getPreferredSize().width,120));
+		solitaryLabel.setPreferredSize(new Dimension(solitaryLabel
+				.getPreferredSize().width, 120));
 	}
 
 	private AutoScrollSupport support = new AutoScrollSupport(this);
-	
+
 	public SubComponentDropTarget(DropTargetController controller) {
 		super();
-		
+
 		loadIcons();
-		
+
 		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(TARGET_BORDER, TARGET_BORDER));
-		
-		DragAndDropController.registerDropTarget(this,controller);
+
+		DragAndDropController.registerDropTarget(this, controller);
 	}
 
-	public SubComponentDropTarget(DropTargetController controller, boolean setSolitary) {
+	public SubComponentDropTarget(DropTargetController controller,
+			boolean setSolitary) {
 		this(controller);
 		if (setSolitary) {
 			setSolitaryDropTarget();
 		}
-		
-		DragAndDropController.registerDropTarget(this,controller);
+
+		DragAndDropController.registerDropTarget(this, controller);
 	}
 
 	public void highlightMouseDroppable() {
@@ -89,7 +93,8 @@ public class SubComponentDropTarget extends JPanel implements Autoscroll {
 	}
 
 	/**
-	 * Set special display property for drop target that is isolated (i.e. the initial drop target).
+	 * Set special display property for drop target that is isolated (i.e. the
+	 * initial drop target).
 	 */
 	public void setSolitaryDropTarget() {
 		this.removeAll();

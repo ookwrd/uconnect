@@ -118,6 +118,10 @@ public class TitleButtonPanel extends JPanel implements
 	}
 	
 	protected void setLockedStatus() {
+		if(lockButton == null){
+			return;//In case that ALLOW_EDITING = false
+		}
+		
 		if(component.getLockedStatus()){
 			//Locked
 			this.lockButton.setIcon(getIcon(LOCKED_ICON));

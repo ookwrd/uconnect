@@ -12,6 +12,11 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.InputOutputChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
+/**
+ * View element which alternatively displays the Inputs or the Outputs of a component.
+ * 
+ * @author Luke McCrohon
+ */
 @SuppressWarnings("serial")
 public class TypeListPanel extends JPanel implements LockedStatusChangeListener, InputOutputChangeListener {
 

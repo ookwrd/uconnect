@@ -11,6 +11,11 @@ import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LanguageChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 
+/**
+ * View element which displays the languages supported by a component.
+ * 
+ * @author Luke McCrohon
+ */
 @SuppressWarnings("serial")
 public class LanguageListPanel extends JPanel implements LockedStatusChangeListener, LanguageChangeListener {
 

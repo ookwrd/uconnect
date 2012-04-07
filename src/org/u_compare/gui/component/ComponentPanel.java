@@ -214,8 +214,7 @@ public class ComponentPanel extends JPanel implements
 	public void subComponentsChanged() {
 		controller.resetSubComponents();
 		resetSubComponents();
-		controller.validateWorkflow();// TODO this needs to validate at a higher
-										// level
+		controller.validateWorkflow();
 	}
 
 	public Component getComponent() {

@@ -324,8 +324,13 @@ public class WorkflowViewerController implements
 		WorkflowViewerController.typeChooser = typeChooser;
 	}
 
+	/**
+	 * Create a new workflow based on the currently dragged component.
+	 * 
+	 * @return
+	 */
 	private static Workflow draggedWorkflow() {
-
+		
 		Workflow workflow = defaultWorkflowFactory.constructWorkflow();
 
 		ComponentController controllerDragged = DragAndDropController
@@ -336,11 +341,17 @@ public class WorkflowViewerController implements
 		return workflow;
 	}
 
+	/**
+	 * Process a user request to create a new workflow.
+	 */
 	public void requestNewWorkflow() {
 		assert (ALLOW_TABS);
 		tabbedPane.addWorkflow(constructDefaultWorkflow());
 	}
 
+	/**
+	 * Process a user request to load a workflow.
+	 */
 	public void requestLoadWorkflow() {
 		assert (ALLOW_TABS);
 		Workflow workflow = loadAdaptor.constructWorkflow();
@@ -357,6 +368,11 @@ public class WorkflowViewerController implements
 		tabbedPane.addWorkflow(constructDraggedWorkflow());
 	}
 
+	/**
+	 * Process a user request to close a specific workflow.
+	 * 
+	 * @param workflow Workflow to close.
+	 */
 	public void requestWorkflowClose(Workflow workflow) {
 		assert (ALLOW_TABS);
 

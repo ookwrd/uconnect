@@ -74,7 +74,7 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 					WorkflowViewerController.NEW_TAB_NAME, new DropTargetAdapter() {
 						@Override
 						public void drop(DropTargetDropEvent dtde) {
-							controller.requestNewWorkflow();
+							controller.requestNewWorkflowDragged();
 						}
 					});
 			newWorkflowButton

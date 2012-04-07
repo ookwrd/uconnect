@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Extension of CardLayout which allows cards of varying sizes.
+ * Extension of CardLayout which allows cards of different sizes.
  * 
  * @author Luke McCrohon
  */

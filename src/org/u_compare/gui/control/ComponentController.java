@@ -345,7 +345,6 @@ public class ComponentController implements
 	public void somethingDroppedOnChild(DropTargetController position) {
 
 		if (!droppableOnChild(position)) {// Ignore drop
-			System.out.println("Ignoring drop on invalid target");
 			return;
 		}
 
@@ -353,7 +352,6 @@ public class ComponentController implements
 
 		try {
 			addSubComponent(getCurrentlyDragged(), index);
-			System.out.println("just added Subcomponent");
 		} catch (InvalidSubComponentException e) {
 			System.out.println("Invalid Sub Component Exception");
 			e.printStackTrace();

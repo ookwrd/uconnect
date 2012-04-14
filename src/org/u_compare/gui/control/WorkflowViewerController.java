@@ -1,7 +1,5 @@
 package org.u_compare.gui.control;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

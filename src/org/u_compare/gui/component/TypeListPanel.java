@@ -90,10 +90,6 @@ public class TypeListPanel extends JPanel implements
 					+ listType);
 		}
 
-		/*ArrayList<String> strings = new ArrayList<String>();
-		for (AnnotationTypeOrFeature toF : inList) {
-			strings.add(toF.getDisplayName());
-		}*/
 		list.rebuildListContents(inList);
 	}
 

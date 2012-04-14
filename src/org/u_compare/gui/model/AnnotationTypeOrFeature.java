@@ -22,6 +22,11 @@ public class AnnotationTypeOrFeature {
 		this.typeName = typeName;
 	}
 
+	@Override 
+	public String toString(){
+		return getDisplayName();
+	}
+	
 	public String getDisplayName() {
 		if (typeName.contains(".")) {
 			return typeName.substring(typeName.lastIndexOf('.') + 1);

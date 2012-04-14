@@ -47,13 +47,12 @@ public class TypeListPanelController {
 
 	}
 
-	public void removeAnnotation(String selected) {
-		AnnotationTypeOrFeature type = new AnnotationTypeOrFeature(selected);
-
+	public void removeAnnotation(AnnotationTypeOrFeature selected) {
+		
 		if (listType == TypeListPanel.LIST_TYPES.INPUTS) {
-			component.removeInputType(type);
+			component.removeInputType(selected);
 		} else if (listType == TypeListPanel.LIST_TYPES.OUTPUTS) {
-			component.removeOutputType(type);
+			component.removeOutputType(selected);
 		} else {
 			assert (false);
 			// this state shouldnt occur

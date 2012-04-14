@@ -116,7 +116,7 @@ public class ControlList extends JPanel {
 		add(list);
 		add(buttons);
 
-		rebuildListContents(new ArrayList<String>());
+		rebuildListContents(new ArrayList<Object>());
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class ControlList extends JPanel {
 	 * 
 	 * @param values
 	 */
-	public void rebuildListContents(ArrayList<String> values) {
+	public void rebuildListContents(@SuppressWarnings("rawtypes") ArrayList values) {
 		assert (list != null);
 		listModel.clear();
 

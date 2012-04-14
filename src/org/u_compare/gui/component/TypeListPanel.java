@@ -56,8 +56,8 @@ public class TypeListPanel extends JPanel implements
 				 * go through the array element by element and casting each
 				 * selected name individually.
 				 */
-				for (Object name : list.getSelectedValues()) {
-					controller.removeAnnotation((String) name);
+				for (Object annotation : list.getSelectedValues()) {
+					controller.removeAnnotation((AnnotationTypeOrFeature)annotation);
 				}
 			}
 		});
@@ -90,11 +90,11 @@ public class TypeListPanel extends JPanel implements
 					+ listType);
 		}
 
-		ArrayList<String> strings = new ArrayList<String>();
+		/*ArrayList<String> strings = new ArrayList<String>();
 		for (AnnotationTypeOrFeature toF : inList) {
 			strings.add(toF.getDisplayName());
-		}
-		list.rebuildListContents(strings);
+		}*/
+		list.rebuildListContents(inList);
 	}
 
 	@Override

@@ -1,0 +1,39 @@
+Adding GUI Fields.
+
+The current workflow GUI only includes support for visualizing/setting commonly used fields of UIMA descriptor files. Developers may wish to add support for fields that are currently not covered, and this file provides a brief outline of how best to go about doing this.
+
+First, it is important to understand a bit about the structure of the UConnect library. It is implemented via the MVC pattern. The view communicates attempted changes with the control. The control then checks whether these changes are possible, and updates the model if they are. Once changes are made to the model these are communicated back to the view (and where necessary, the control) via listeners. 
+
+Generally there exists a one-to-one mapping between view components and their controllers. The model of each component is however somewhat flatter, and most operations to change a components settings are made directly on the top level model class for that component.
+
+A key property of the model when it comes to extending the functionality of UConnect is it's hybrid structure. The information displayed and editable in the view is stored in the Component class (or the extended AbstractComponent or AbstractAggregateComponent implementations). This information is read in from the UIMA descriptor when the component is loaded, modified as changes are made in the GUI, and then written back to the descriptor when the component is saved.
+
+Information which is not displayed/editable is never read in from the descriptor and remains in memory as a standard UIMA Component. In addition to adding fields to the view to modify fields, it is therefore also necessary to add support for storing the relevant information in the Component, as well as for reading it in and writing it out to the UIMA descriptor file.
+
+It is reasonably simple to add support for basic fields (i.e. those that aren't nested/polymorphic). The following list outlines the key steps.
+
+ 
+1) Add to the Component interface methods for setting and modifying
+values of the desired parameter. Also, if the parameter is sufficiently different from existing ones, include the definition of a changeListener and a method to register listeners of that type with the component. 
+
+If the parameter being added is only relevant for aggregate components (or workflows) it will likely be better to modify the AggregateComponent interface instead. 
+
+
+2) Implement these methods in AbstractComponent (or AbstractAggregateComponent) making sure to call the relevant notifyXXXListeners when changes are made. 
+
+Generally, it is good practice for set methods to check that that changes are in fact being made by a particular call before the notify call is made as this can be an expensive operation. AbstractComponent.removeOutputType(…) for example provides an example of how to do this.
+
+
+3) Find out how to read in the desired field from the UIMA descriptor and add code to do this to one of the  AbstractComponent.extractFromXXX methods. This should update the component being constructed via the methods defined in steps 1 and 2.
+
+
+4) Implement a ViewPanel and PanelController. LanguageListPanel and LanguageListPanelController provide fairly typical examples of how this can me done.
+
+
+5) Construct and add the ViewPanel to the appropriate part of the view. For example LanguageListPanel was added under LangaugeInputOutputPanel in the constructor of LangaugeInputOutputPanel.
+
+
+6) Add support for saving the information contained in the model back to the UIMA descriptor in one of the AbstractComponent.setupXXX(…) methods. For example Language information is added in the AbstractComponent.setupProcessingResourceMetaData(…) method.
+
+
+The above steps should be sufficient to add a simple parameter, for more complicated nested parameters such as ExternalResourceDependencies things are slightly more complicated and likely need a nested view/control/model. 

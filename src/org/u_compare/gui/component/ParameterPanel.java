@@ -23,7 +23,9 @@ import org.u_compare.gui.model.parameters.Parameter.ParameterValueChangedListene
 
 /**
  * 
- * View element for displaying/editing a parameter setting.
+ * View element for displaying/editing a parameter setting of a String, Integer
+ * or Float parameter. For Boolean Parameter, a special BooleanParameterPanel is
+ * used.
  * 
  * @author Luke McCrohon
  * 
@@ -42,7 +44,8 @@ public class ParameterPanel implements LockedStatusChangeListener,
 		this.param = param;
 		this.controller = controller;
 
-		if (!param.isMultivalued()) {
+		if (!param.isMultivalued()) {//Single valued parameter
+			
 			// Setup default field
 			JTextField textField = new AutoscrollTextField(
 					param.getParameterString());
@@ -59,7 +62,8 @@ public class ParameterPanel implements LockedStatusChangeListener,
 				}
 			});
 			field = textField;
-		} else {
+			
+		} else { //Multivalued parameter
 			final ControlList list = new ControlList(Color.white);
 			list.setBorder(new EtchedBorder());
 

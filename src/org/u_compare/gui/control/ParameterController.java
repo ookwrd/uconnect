@@ -29,11 +29,12 @@ public class ParameterController {
 	public ParameterController(ComponentController control, Parameter param,
 			Component component) {
 
-		if (param instanceof BooleanParameter) {
+		//Choose which kind of ParameterPanel to use.
+		if (param instanceof BooleanParameter) {//Special BooleanParameterPanel
 			this.view = new BooleanParameterPanel(param, this, component);
 		} else if (param instanceof StringParameter
 				|| param instanceof IntegerParameter
-				|| param instanceof FloatParameter) {
+				|| param instanceof FloatParameter) {//Standard ParameterPanel
 			this.view = new ParameterPanel(param, this, component);
 		} else {
 			assert (false);

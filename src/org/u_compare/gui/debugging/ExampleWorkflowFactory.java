@@ -8,6 +8,7 @@ import org.u_compare.gui.model.AggregateComponent;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.parameters.BooleanParameter;
+import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.StringParameter;
@@ -175,22 +176,21 @@ public class ExampleWorkflowFactory {
 		Workflow workflow = new Workflow();
 
 		ArrayList<Parameter> workflowParams = new ArrayList<Parameter>();
-		workflowParams.add(new BooleanParameter("trueParam", "A true boolean",
-				false, true));
 		workflowParams.add(new BooleanParameter("falseParam",
-				"A false boolean", false, false));
+				"Report errors", false, false));
+		workflowParams.add(new StringParameter("Settings Directory", "Error log location", true, "/home/"));
 
 		ArrayList<Parameter> workflowParams1 = new ArrayList<Parameter>();
-		workflowParams1.add(new BooleanParameter("trueParam", "A true boolean",
+		workflowParams1.add(new BooleanParameter("trueParam", "Generate POS annotations",
 				false, true));
-		workflowParams1.add(new BooleanParameter("falseParam",
-				"A false boolean", false, false));
+		workflowParams1.add(new IntegerParameter("falseParam",
+				"Timeout (ms)", false, 100));
 
 		ArrayList<Parameter> workflowParams2 = new ArrayList<Parameter>();
-		workflowParams2.add(new BooleanParameter("trueParam", "A true boolean",
-				false, true));
-		workflowParams2.add(new BooleanParameter("falseParam",
-				"A false boolean", false, false));
+		workflowParams2.add(new FloatParameter("trueParam", "Acceptance threshold",
+				false, new Float(0.4)));
+		workflowParams2.add(new StringParameter("falseParam",
+				"Description prefix", false, "+"));
 
 		ArrayList<Parameter> workflowParams3 = new ArrayList<Parameter>();
 		workflowParams3.add(new BooleanParameter("trueParam", "A true boolean",
@@ -202,21 +202,20 @@ public class ExampleWorkflowFactory {
 		Component simpleb = new MockComponent(workflowParams2);
 		Component simplec = new MockComponent(workflowParams3);
 
-		simplea.setName("Simple Component a");
-		simplea.setDescription("This is a component. For some reason it is called a");
+		simplea.setName("First Subcomponent");
+		simplea.setDescription("This component performs some basic task.");
 
-		simpleb.setName("Simple Component b");
-		simpleb.setDescription("This is a component. For some reason it is called b");
+		simpleb.setName("Second Subcomponent");
+		simpleb.setDescription("This component also performs some basic task, and is run on a document once the execution of the first subcomponent is complete.");
 
 		simplec.setName("Simple Component c");
 		simplec.setDescription("This is a component. For some reason it is called c");
 
 		AggregateComponent aggregate = new MockAggregateComponent(
 				workflowParams);
-
-		aggregate.setName("The nasty nasty Aggregate Component");
-		aggregate.setDescription("Not afraid of aggregate components? "
-				+ "Well what a silly little boy you are then.");
+		
+		aggregate.setName("An Example Aggregate Component");
+		aggregate.setDescription("This is a serial aggregate component. It has two subcomponents, \"First Subcomponent\" and \"Second Subcomponent\". These are executed in sequence.");
 
 		aggregate.addSubComponent(simplea);
 		aggregate.addSubComponent(simpleb);

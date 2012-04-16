@@ -30,7 +30,9 @@ Generally, it is good practice for set methods to check that that changes are in
 4) Implement a ViewPanel and PanelController. LanguageListPanel and LanguageListPanelController provide fairly typical examples of how this can me done.
 
 
-5) Construct and add the ViewPanel to the appropriate part of the view. For example LanguageListPanel was added under LangaugeInputOutputPanel in the constructor of LangaugeInputOutputPanel.
+5) Construct and add the ViewPanel to the appropriate part of the view. For example LanguageListPanel was added under LangaugeInputOutputPanel in the constructor of LangaugeInputOutputPanel. 
+
+If you are adding directly to the ComponentPanel, depending on which minimized views you want the setting to appear in, you need to choose the appropriate cards to add the ViewPanel to. Card1 corresponds to the minimized options, Card2 to the maximized (or "Advanced") options. You may have to add two copies of the ViewPanel to add to separate cards, as components can not be shared.
 
 
 6) Add support for saving the information contained in the model back to the UIMA descriptor in one of the AbstractComponent.setupXXX(…) methods. For example Language information is added in the AbstractComponent.setupProcessingResourceMetaData(…) method.

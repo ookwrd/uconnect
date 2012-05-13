@@ -1,5 +1,6 @@
 package org.u_compare.gui;
 
+import java.awt.Cursor;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
@@ -21,6 +22,7 @@ import org.u_compare.gui.guiElements.ButtonTabFlap;
 import org.u_compare.gui.guiElements.ButtonTabbedPane;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
 import org.u_compare.gui.guiElements.TooltipTools;
+import org.u_compare.gui.guiElements.WorkflowTabFlap;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
@@ -125,23 +127,8 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 		// Why does the API force a fully specified tab when using insert
 		// rather than add?
 
-		// Setup switching between tabs on component drag over the tab.
-		DropTargetListener dropListener = new DropTargetAdapter() {
-			@Override
-			public void drop(DropTargetDropEvent dtde) {
-				// Do Nothing
-			}
-
-			@Override
-			public void dragEnter(DropTargetDragEvent dtde) {
-				// Get entered tabs index and set that tab selected.
-				setSelectedIndex(indexOfTabComponent(((DropTarget) dtde
-						.getSource()).getComponent()));
-			}
-		};
-
-		final IconizedCloseableTabFlapComponent tabFlapComponent = new IconizedCloseableTabFlapComponent(
-				this, getIcon(STOPPED_ICON), dropListener,
+		final IconizedCloseableTabFlapComponent tabFlapComponent = new WorkflowTabFlap(
+				this, getIcon(STOPPED_ICON),
 				WorkflowViewerController.ALLOW_TAB_CLOSE);
 
 		setTooltip(topComponent, inserted_index, tabFlapComponent);

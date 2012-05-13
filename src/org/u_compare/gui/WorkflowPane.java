@@ -1,10 +1,14 @@
 package org.u_compare.gui;
 
+import java.awt.Cursor;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.dnd.Autoscroll;
 import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -61,7 +65,18 @@ public class WorkflowPane extends JScrollPane implements Autoscroll {
 		topComponent.setAutoscrolls(true);
 		innerJPanel.setAutoscrolls(true);
 
-		new DropTarget(this, null);// Needed for autoscroll.
+		//new DropTarget(this, null);/*
+		new DropTarget(this, new DropTargetAdapter() {// Needed for autoscroll.
+			@Override
+			public void drop(DropTargetDropEvent dtde) {
+				//Do nothing
+			}
+
+			@Override
+			public void dragEnter(DropTargetDragEvent dtde) {
+				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+		});
 
 		// Costs extra memory but dramatically improves scroll performance
 		this.getViewport().setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE);

@@ -20,6 +20,7 @@ import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.guiElements.ButtonTabFlap;
 import org.u_compare.gui.guiElements.ButtonTabbedPane;
 import org.u_compare.gui.guiElements.IconizedCloseableTabFlapComponent;
+import org.u_compare.gui.guiElements.TooltipTools;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Workflow;
 import org.u_compare.gui.model.Workflow.WorkflowStatusListener;
@@ -151,23 +152,18 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 					@Override
 					public void ComponentDescriptionChanged(Component component) {
 						setTooltip(component, inserted_index, tabFlapComponent);
+						setTitleAt(inserted_index, getTabTitle(component));
+						updateUI();
 					}
 				});
 
-		// Add a "*" to workflows when they become "unsaved".
+		// Add/Remove a "*" to workflows when they become "unsaved".
 		topComponent
 				.registerSavedStatusChangeListener(new Component.ListenerAdaptor() {
 					@Override
 					public void savedStatusChanged(Component component) {
-						if (component.checkUnsavedChanges()) {// Unsaved
-							setTitleAt(
-									inserted_index,
-									WorkflowViewer.cleanTitle("*"
-											+ component.getName()));
-						} else {// Saved
-							setTitleAt(inserted_index, WorkflowViewer
-									.cleanTitle(component.getName()));
-						}
+						setTitleAt(inserted_index, getTabTitle(component));
+						updateUI();
 					}
 				});
 
@@ -176,7 +172,7 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 	}
 
 	/**
-	 * Helper method for adding a tooltip to a tab.
+	 * Helper method for adding/updating a tooltip to a tab.
 	 * 
 	 * @param component
 	 * @param index
@@ -184,40 +180,24 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 	 */
 	private void setTooltip(Component component, int index,
 			IconizedCloseableTabFlapComponent tabFlapComponent) {
-		String tooltip = "<html>"
-				+ wrap(component.getName() + "\n" + component.getDescription(),
-						40, 4);// Need <html> to allow multiline tooltip
+		String tooltip = TooltipTools.formatTooltip("<b>" + component.getName() + "</b>\n"
+				+ component.getDescription());
 		setToolTipTextAt(index, tooltip);
 		tabFlapComponent.setToolTipText(tooltip);
 	}
-
+	
 	/**
-	 * Word wrap algorithm to insert line returns at word breaks. Used to create
-	 * multiline tooltips.
+	 * Generate the tab title text for a component
 	 * 
-	 * Based on http://ramblingsrobert.wordpress.com/2011/04/13/java-word-wrap-
-	 * algorithm/
+	 * @param component
+	 * @return The title of the tab
 	 */
-	private String wrap(String in, int len, int lines) {
-		in = in.trim();
-
-		if (in.length() < len) {
-			return in;
-		} else if (lines <= 1) {
-			return in.substring(0, len - 3) + "...";
+	private static String getTabTitle(Component component){
+		if (component.checkUnsavedChanges()) {// Unsaved
+			return cleanTitle("*" + component.getName());
+		} else {// Saved
+			return cleanTitle(component.getName());
 		}
-
-		if (in.substring(0, len).contains("\n")) {
-			return in.substring(0, in.indexOf("\n")).trim() + "<br>"
-					+ wrap(in.substring(in.indexOf("\n") + 1), len, lines - 1);
-		}
-
-		int place = Math.max(
-				Math.max(in.lastIndexOf(" ", len), in.lastIndexOf("\t", len)),
-				in.lastIndexOf("-", len));
-
-		return in.substring(0, place).trim() + "<br>"
-				+ wrap(in.substring(place), len, lines - 1);
 	}
 
 	/**

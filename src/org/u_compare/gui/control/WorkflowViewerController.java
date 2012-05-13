@@ -52,6 +52,10 @@ public class WorkflowViewerController {
 		public void saveWorkflow(MetaDataObject descriptor);
 	}
 
+	public interface FileNameChooser {
+		public String chooseFileName(String location);
+	}
+
 	// Configuration parameters
 
 	/**
@@ -120,6 +124,12 @@ public class WorkflowViewerController {
 	public static boolean ALLOW_TAB_CLOSE = true;
 
 	/**
+	 * Determines whether parameters ending in "file" should be settable via a
+	 * FileNameChooser.
+	 */
+	public static boolean USE_FILE_CHOOSER = true;
+
+	/**
 	 * Specifies how to choose types when required.
 	 */
 	public static AnnotationTypeChooser typeChooser = new AnnotationTypeChooser() {
@@ -145,6 +155,24 @@ public class WorkflowViewerController {
 					+ ""
 					+ " Double-Click here to edit its description. Duis quis arcu id enim elementum gravida quis sit amet justo. Cras non enim nec velit aliquet luctus sed faucibus arcu. Phasellus dolor quam, dapibus a consequat eget, fringilla vitae ipsum. Donec tristique elementum turpis, in pellentesque nulla viverra vitae. Curabitur eget turpis non quam auctor ornare. Aliquam tempus quam vitae lectus consectetur fringilla. Vivamus posuere pharetra elit ac interdum. Aenean vestibulum mattis justo et malesuada. Ut ultrices, nisl sit amet tempor porttitor, nulla ipsum feugiat purus, porta tincidunt sem sapien nec leo. Phasellus rhoncus elit sit amet lectus adipiscing vulputate. ");
 			return workflow;
+		}
+	};
+
+	/**
+	 * Specified the component used to choose files when USE_FILE_CHOOSER is set
+	 * true.
+	 */
+	public static FileNameChooser fileNameChooser = new FileNameChooser() {
+		@Override
+		public String chooseFileName(String location) {
+			JFileChooser chooser = new JFileChooser(location);
+			int returnVal = chooser.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				return chooser.getSelectedFile().getAbsolutePath();
+			} else {
+				System.err.println("Failed to choose a file");
+				return location;
+			}
 		}
 	};
 

@@ -1,5 +1,6 @@
 package org.u_compare.gui.component;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,14 +9,18 @@ import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import org.u_compare.gui.control.ParameterController;
+import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.guiElements.AutoscrollTextField;
 import org.u_compare.gui.guiElements.ControlList;
+import org.u_compare.gui.guiElements.TooltipTools;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
 import org.u_compare.gui.model.parameters.Parameter;
@@ -47,21 +52,27 @@ public class ParameterPanel implements LockedStatusChangeListener,
 		if (!param.isMultivalued()) {//Single valued parameter
 			
 			// Setup default field
-			JTextField textField = new AutoscrollTextField(
+			final JTextField textField = new AutoscrollTextField(
 					param.getParameterString());
 			textField.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					textFieldChanged();
+					textFieldChanged(textField);
 				}
 			});
 			textField.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(FocusEvent e) {
-					textFieldChanged();
+					textFieldChanged(textField);
 				}
 			});
-			field = textField;
+			
+			//Use
+			if(!(WorkflowViewerController.USE_FILE_CHOOSER && (param.getName().endsWith("File") || param.getName().endsWith("file")))){
+				field = textField;
+			}else{
+				field = new FileChooserPanel(textField);
+			}
 			
 		} else { //Multivalued parameter
 			final ControlList list = new ControlList(Color.white);
@@ -113,7 +124,7 @@ public class ParameterPanel implements LockedStatusChangeListener,
 		}
 		description += ":";
 		JLabel descriptionLabel = new JLabel(description);
-		descriptionLabel.setToolTipText(param.getDescription());// Unabridged
+		descriptionLabel.setToolTipText(TooltipTools.formatTooltip("<b>" + param.getName() + "</b>\n" + param.getDescription()));// Unabridged
 																// description
 		descriptionLabel.setHorizontalAlignment(JLabel.TRAILING);
 
@@ -150,14 +161,16 @@ public class ParameterPanel implements LockedStatusChangeListener,
 			((JTextField) field).setText(param.getParameterString());
 		} else if (field instanceof ControlList) {
 			rebuildListContents();
+		}else if (field instanceof FileChooserPanel){ //FileChooser
+			((FileChooserPanel) field).update(param);
 		} else {
 			System.err
 					.println("If a class overriding parameter panel, changes the 'field' it also needs to override the parameterSettingsChanged method");
 		}
 	}
 
-	protected void textFieldChanged() {
-		String value = ((JTextField) field).getText();
+	protected void textFieldChanged(JTextField field) {
+		String value = field.getText();
 		((JTextField) field).setText(param.getParameterString());
 		controller.setValue(value);
 	}
@@ -165,5 +178,29 @@ public class ParameterPanel implements LockedStatusChangeListener,
 	private void rebuildListContents() {
 		((ControlList) field).rebuildListContents(new ArrayList<String>(Arrays
 				.asList(param.getParameterStrings())));
+	}
+	
+	@SuppressWarnings("serial")
+	private class FileChooserPanel extends JPanel {
+		private JTextField field;
+		FileChooserPanel(JTextField textField){
+			field = textField;
+			setLayout(new BorderLayout());
+			add(textField, BorderLayout.CENTER);
+			
+			JButton addButton = new JButton("Set");
+			addButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					String fileName = WorkflowViewerController.fileNameChooser.chooseFileName(field.getText());
+					controller.setValue(fileName);
+				}
+			});
+			add(addButton, BorderLayout.EAST);
+		}
+		
+		private void update(Parameter param){
+			field.setText(param.getParameterString());
+		}
 	}
 }

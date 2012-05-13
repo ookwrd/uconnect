@@ -27,7 +27,7 @@ public class GUITestingHarness {
 
 		// Construct a set of workflows
 		ArrayList<Workflow> workflows = new ArrayList<Workflow>();
-		// workflows.add(ExampleWorkflowFactory.simpleWithParameters());
+		workflows.add(ExampleWorkflowFactory.simpleWithParameters());
 		workflows.add(ExampleWorkflowFactory.aggregate());
 		//workflows.add(ExampleWorkflowFactory.deepAggregate(3, 2));
 		// workflows.add(ExampleWorkflowFactory.deepAggregate(5,2));
@@ -38,7 +38,7 @@ public class GUITestingHarness {
 		//workflows.add(ExampleWorkflowFactory.cpeWorkflow());
 		// workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		//workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
-		//workflows.add(ExampleWorkflowFactory.cpeWorkflowParams());
+		workflows.add(ExampleWorkflowFactory.cpeWorkflowParams());
 
 		// Construct a WorkflowController
 		WorkflowViewerController workflowViewerController = new WorkflowViewerController();

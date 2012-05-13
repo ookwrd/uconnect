@@ -112,6 +112,8 @@ public class ExampleWorkflowFactory {
 		ArrayList<Parameter> c2params = new ArrayList<Parameter>();
 		c2params.add(new StringParameter("String1", "A String to configure",
 				false, "default value"));
+		c2params.add(new StringParameter("String_file", "A String to configure",
+				false, "/Users"));
 		c2params.add(new IntegerParameter("Integer1",
 				"An Integer to configure", true, 5));
 

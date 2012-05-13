@@ -3,8 +3,6 @@ package org.u_compare.gui.guiElements;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -69,14 +67,6 @@ public class IconizedCloseableTabFlapComponent extends JPanel {
 	private final static String CLOSE_BUTTON_ICON_CAPTION = "Icon indicating closing a tab";
 
 	private boolean iconIsNotification = false;
-
-	public IconizedCloseableTabFlapComponent(final JTabbedPane parentPane,
-			Icon statusIcon, DropTargetListener dropListener,
-			boolean showCloseIcon) {
-		this(parentPane, statusIcon, showCloseIcon);
-
-		new DropTarget(this, dropListener);
-	}
 
 	public IconizedCloseableTabFlapComponent(final JTabbedPane parentPane,
 			Icon statusIcon, boolean showCloseIcon) {

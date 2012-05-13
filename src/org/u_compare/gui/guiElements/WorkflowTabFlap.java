@@ -1,5 +1,6 @@
 package org.u_compare.gui.guiElements;
 
+import java.awt.Cursor;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDragEvent;
@@ -36,6 +37,7 @@ public class WorkflowTabFlap extends IconizedCloseableTabFlapComponent {
 																// tab
 				tabbedPane.setSelectedIndex(tabbedPane
 						.indexOfTabComponent(WorkflowTabFlap.this));
+				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 	}

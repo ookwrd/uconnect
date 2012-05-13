@@ -45,7 +45,7 @@ public class ComponentNamePanel extends JPanel implements
 
 		nameField = new EditableTextField(component.getName());
 
-		if (controller.allowEditing()) {
+		if (controller.allowEditing() && !component.isWorkflow()) {
 			DragAndDropController.registerDragSource(nameField, controller);
 		}
 

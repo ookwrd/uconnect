@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 import org.u_compare.gui.control.ComponentController;
-import org.u_compare.gui.control.DragAndDropController;
 import org.u_compare.gui.control.WorkflowController;
 import org.u_compare.gui.model.Workflow;
 
@@ -63,10 +62,6 @@ public class WorkflowPanel extends ComponentPanel {
 			setupBorderPanel(lowerPanel, new WorkflowSavePanel(
 					(Workflow) component));
 			this.add(lowerPanel, BorderLayout.SOUTH);
-		}
-
-		if (controller.allowEditing()) {
-			DragAndDropController.registerDragSource(this, controller);
 		}
 	}
 

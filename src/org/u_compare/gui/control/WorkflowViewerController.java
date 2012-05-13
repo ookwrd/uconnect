@@ -49,7 +49,7 @@ public class WorkflowViewerController {
 	}
 
 	public interface WorkflowSaveAdaptor {
-		public void saveWorkflow(MetaDataObject descriptor);
+		public boolean saveWorkflow(MetaDataObject descriptor);
 	}
 
 	public interface FileNameChooser {
@@ -180,12 +180,14 @@ public class WorkflowViewerController {
 	 * Specifies how to handle workflow save events (i.e. from the save prompt
 	 * on closing a modified workflow). Defaults to a filechooser prompting the
 	 * user to select the location to save the workflow descriptor to disk.
+	 * 
+	 * Return value specifies if the operation was successful.
 	 */
 	public static WorkflowSaveAdaptor saveAdaptor = new WorkflowSaveAdaptor() {
 		private final JFileChooser fc = new JFileChooser();
 
 		@Override
-		public void saveWorkflow(MetaDataObject descriptor) {
+		public boolean saveWorkflow(MetaDataObject descriptor) {
 			try {
 				int result = fc.showSaveDialog(null);
 				if (result == JFileChooser.APPROVE_OPTION) {
@@ -193,12 +195,16 @@ public class WorkflowViewerController {
 					FileWriter writer = new FileWriter(file.getAbsolutePath());
 					descriptor.toXML(writer);
 					writer.close();
+					return true;
+				}else{
+					return false;
 				}
 			} catch (SAXException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			return false;
 		}
 	};
 
@@ -413,8 +419,9 @@ public class WorkflowViewerController {
 									"Close without Saving", "Cancel" }, 2);
 
 			if (reply == 0) {// Save and close
-				saveWorkflow(workflow);
-				closeWorkflow(workflow);
+				if(saveWorkflow(workflow)){//Only close on successful save
+					closeWorkflow(workflow);
+				}
 			} else if (reply == 1) {// Close without Saving
 				closeWorkflow(workflow);
 			}
@@ -438,7 +445,7 @@ public class WorkflowViewerController {
 		tabbedPane.confirmedRemoveWorkflow(workflow);
 	}
 
-	private void saveWorkflow(Workflow workflow) {
-		saveAdaptor.saveWorkflow(workflow.getWorkflowDescription());
+	private boolean saveWorkflow(Workflow workflow) {
+		return saveAdaptor.saveWorkflow(workflow.getWorkflowDescription());
 	}
 }

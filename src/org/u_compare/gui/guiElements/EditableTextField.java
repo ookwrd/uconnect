@@ -30,16 +30,7 @@ public class EditableTextField extends AutoscrollTextField {
 		toFixedMode();
 
 		// Double click component to enter edit mode
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					if (isEnabled()) {
-						toEditMode();
-					}
-				}
-			}
-		});
+		addDoubleClick();
 
 		// Selecting something else cancels edit mode
 		addFocusListener(new FocusAdapter() {
@@ -70,6 +61,20 @@ public class EditableTextField extends AutoscrollTextField {
 		});
 	}
 
+	private void addDoubleClick(){
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					if (isEnabled()) {
+						toEditMode();
+						removeMouseListener(this);
+					}
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Change to editable mode.
 	 */
@@ -101,6 +106,7 @@ public class EditableTextField extends AutoscrollTextField {
 			// TODO Not relevant to Uconnect, but the focus should probably be
 			// transfered to somewhere where it won't do anything.
 		}
+		addDoubleClick();
 		fireActionPerformed();
 	}
 }

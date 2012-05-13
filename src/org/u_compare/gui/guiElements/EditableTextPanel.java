@@ -75,15 +75,7 @@ public class EditableTextPanel extends JPanel {
 		saveButtonInnerPanel.add(endEditingButton);
 
 		// Double click component to enter edit mode
-		content.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					if (isEnabled()) {
-						toEditMode();
-					}
-				}
-			}
-		});
+		addDoubleClick();
 
 		// "ESC" to cancel editable mode.
 		content.addKeyListener(new KeyAdapter() {
@@ -133,7 +125,23 @@ public class EditableTextPanel extends JPanel {
 		if (content.hasFocus()) {
 			requestFocusInWindow();
 		}
+		
+		addDoubleClick();
+		
 		notifyActionListeners();
+	}
+	
+	private void addDoubleClick(){
+		content.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					if (isEnabled()) {
+						toEditMode();
+						content.removeMouseListener(this);//To reenable normal double click
+					}
+				}
+			}
+		});
 	}
 
 	public void setContentText(String text) {

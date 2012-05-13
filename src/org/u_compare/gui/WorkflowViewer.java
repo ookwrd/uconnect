@@ -1,11 +1,7 @@
 package org.u_compare.gui;
 
-import java.awt.Cursor;
-import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
-import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;

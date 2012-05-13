@@ -41,7 +41,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 			}
 		});
 
-		if (controller.allowEditing()) {
+		if (controller.allowEditing() && !component.isWorkflow()) {
 			DragAndDropController.registerDragSource(textPanel.getContent(),
 					controller);
 		}

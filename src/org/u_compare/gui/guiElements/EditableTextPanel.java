@@ -3,6 +3,7 @@ package org.u_compare.gui.guiElements;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Insets;
+import java.awt.dnd.DragGestureRecognizer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -36,6 +37,8 @@ public class EditableTextPanel extends JPanel {
 	private JTextArea content;
 	private JButton endEditingButton;
 
+	private DragGestureRecognizer recognizer;
+	
 	/**
 	 * Create a new EditableTextPanel with the string "text" as the initial
 	 * contents.
@@ -128,6 +131,10 @@ public class EditableTextPanel extends JPanel {
 		
 		addDoubleClick();
 		
+		if(recognizer != null){
+			recognizer.setComponent(content);
+		}
+		
 		notifyActionListeners();
 	}
 	
@@ -138,6 +145,11 @@ public class EditableTextPanel extends JPanel {
 					if (isEnabled()) {
 						toEditMode();
 						content.removeMouseListener(this);//To reenable normal double click
+						
+						//No longer behave as a drag source
+						if(recognizer != null){
+							recognizer.setComponent(null);
+						}
 					}
 				}
 			}
@@ -166,5 +178,9 @@ public class EditableTextPanel extends JPanel {
 		for (ActionListener listener : actionListeners) {
 			listener.actionPerformed(new ActionEvent(this, 1, getContentText()));
 		}
+	}
+	
+	public void setDragGestureRecognizer(DragGestureRecognizer recognizer){
+		this.recognizer = recognizer;
 	}
 }

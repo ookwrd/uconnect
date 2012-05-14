@@ -7,6 +7,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
+import java.awt.dnd.DragGestureRecognizer;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
@@ -108,15 +109,16 @@ public class DragAndDropController {
 	}
 
 	/**
-	 * Regsiters a component as something which is draggable.
+	 * Registers a component as something which is draggable.
 	 * 
 	 * @param component
 	 * @param controller
 	 */
-	public static void registerDragSource(final Component component,
+	public static DragGestureRecognizer registerDragSource(final Component component,
 			final DragController controller) {
 		DragSource ds = DragSource.getDefaultDragSource();
-		ds.createDefaultDragGestureRecognizer(component,
+		
+		return ds.createDefaultDragGestureRecognizer(component,
 				DnDConstants.ACTION_COPY, new DragGestureListener() {
 					@Override
 					public void dragGestureRecognized(DragGestureEvent dge) {

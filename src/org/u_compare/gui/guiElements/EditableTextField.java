@@ -1,6 +1,7 @@
 package org.u_compare.gui.guiElements;
 
 import java.awt.Color;
+import java.awt.dnd.DragGestureRecognizer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -24,6 +25,7 @@ import javax.swing.border.EtchedBorder;
 public class EditableTextField extends AutoscrollTextField {
 
 	private boolean fixed;
+	private DragGestureRecognizer recognizer;
 
 	public EditableTextField(String text) {
 		super(text, 500);
@@ -69,6 +71,10 @@ public class EditableTextField extends AutoscrollTextField {
 					if (isEnabled()) {
 						toEditMode();
 						removeMouseListener(this);
+						
+						if(recognizer != null){
+							recognizer.setComponent(null);
+						}
 					}
 				}
 			}
@@ -107,6 +113,15 @@ public class EditableTextField extends AutoscrollTextField {
 			// transfered to somewhere where it won't do anything.
 		}
 		addDoubleClick();
+		
+		if(recognizer != null){
+			recognizer.setComponent(this);
+		}
+		
 		fireActionPerformed();
+	}
+	
+	public void setDragGestureRecognizer(DragGestureRecognizer recognizer){
+		this.recognizer = recognizer;
 	}
 }

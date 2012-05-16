@@ -128,6 +128,8 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 				WorkflowViewerController.ALLOW_TAB_CLOSE);
 
 		setTooltip(topComponent, inserted_index, tabFlapComponent);
+		setTitleAt(inserted_index, getTabTitle(workflow));
+		
 		// Update tooltips as title and description (on which they are based)
 		// change
 		topComponent
@@ -137,6 +139,7 @@ public class WorkflowViewer extends ButtonTabbedPane implements
 						setTooltip(component, inserted_index, tabFlapComponent);
 						setTitleAt(inserted_index, getTabTitle(component));
 						updateUI();
+
 					}
 				});
 

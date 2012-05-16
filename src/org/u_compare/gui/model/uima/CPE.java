@@ -160,7 +160,7 @@ public class CPE extends Workflow implements StatusCallbackListener {
 		try {
 			retVal.setAllCollectionCollectionReaders(collectionReaders);
 
-			if (getSubComponents().get(0) instanceof CollectionReader) {
+			if (getSubComponents().size() != 0 && getSubComponents().get(0) instanceof CollectionReader) {
 				CollectionReader comp = (CollectionReader) getSubComponents()
 						.get(0);
 				retVal.setAllCollectionCollectionReaders(new CpeCollectionReader[] { constructCpeCollectionReader(comp) });

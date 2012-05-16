@@ -154,6 +154,7 @@ public class WorkflowViewerController {
 			workflow.setDescription("This is not a real UIMA Workflow. Set WorkflowPaneController's defaultWorkflowFactory."
 					+ ""
 					+ " Double-Click here to edit its description. Duis quis arcu id enim elementum gravida quis sit amet justo. Cras non enim nec velit aliquet luctus sed faucibus arcu. Phasellus dolor quam, dapibus a consequat eget, fringilla vitae ipsum. Donec tristique elementum turpis, in pellentesque nulla viverra vitae. Curabitur eget turpis non quam auctor ornare. Aliquam tempus quam vitae lectus consectetur fringilla. Vivamus posuere pharetra elit ac interdum. Aenean vestibulum mattis justo et malesuada. Ut ultrices, nisl sit amet tempor porttitor, nulla ipsum feugiat purus, porta tincidunt sem sapien nec leo. Phasellus rhoncus elit sit amet lectus adipiscing vulputate. ");
+			workflow.setComponentSaved();
 			return workflow;
 		}
 	};
@@ -309,6 +310,7 @@ public class WorkflowViewerController {
 		ArrayList<WorkflowHorizontalSplitPane> workflowSplitPanes = new ArrayList<WorkflowHorizontalSplitPane>();
 
 		for (Workflow workflow : workflows) {
+			workflow.setComponentSaved();
 			workflowSplitPanes.add(constructWorkflow(workflow));
 		}
 
@@ -316,8 +318,6 @@ public class WorkflowViewerController {
 	}
 
 	private WorkflowHorizontalSplitPane constructWorkflow(Workflow workflow) {
-		workflow.setComponentSaved();// TODO should this be moved to workflow
-										// constructor?
 
 		if (!ALLOW_EDITING) {
 			workflow.setLocked();
@@ -364,9 +364,10 @@ public class WorkflowViewerController {
 
 		ComponentController controllerDragged = DragAndDropController
 				.getController().getDraggedComponent();
+		
+		controllerDragged.removeComponent();//Must proceed addition step.
 		workflow.addSubComponent(controllerDragged.component);
-		controllerDragged.removeComponent();
-
+		
 		return workflow;
 	}
 
@@ -385,6 +386,7 @@ public class WorkflowViewerController {
 		assert (ALLOW_TABS);
 		Workflow workflow = loadAdaptor.constructWorkflow();
 		if (workflow != null) {
+			workflow.setComponentSaved();
 			tabbedPane.addWorkflow(constructWorkflow(workflow));
 		}
 	}

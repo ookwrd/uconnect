@@ -139,7 +139,7 @@ public class ExampleWorkflowFactory {
 		cons1.setMax(500);
 		constrainedParameter1.addConstraint(cons1);
 		c1params.add(constrainedParameter1);
-
+		
 		Component component1 = new MockComponent(c1params);
 		Component component2 = new MockComponent(c2params);
 		Component component3 = new MockComponent(c3params);

@@ -171,8 +171,11 @@ public class ParameterPanel implements LockedStatusChangeListener,
 
 	protected void textFieldChanged(JTextField field) {
 		String value = field.getText();
-		((JTextField) field).setText(param.getParameterString());
-		controller.setValue(value);
+		String originalValue = param.getParameterString();
+		if(!value.equals(originalValue)){
+			((JTextField) field).setText(originalValue);
+			controller.setValue(value);
+		}
 	}
 
 	private void rebuildListContents() {

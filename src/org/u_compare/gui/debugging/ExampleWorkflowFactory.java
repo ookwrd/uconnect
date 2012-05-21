@@ -12,6 +12,7 @@ import org.u_compare.gui.model.parameters.FloatParameter;
 import org.u_compare.gui.model.parameters.Parameter;
 import org.u_compare.gui.model.parameters.IntegerParameter;
 import org.u_compare.gui.model.parameters.StringParameter;
+import org.u_compare.gui.model.parameters.constraints.FloatConstraint;
 import org.u_compare.gui.model.parameters.constraints.IntegerConstraint;
 import org.u_compare.gui.model.parameters.constraints.StringConstraint;
 
@@ -112,8 +113,8 @@ public class ExampleWorkflowFactory {
 		ArrayList<Parameter> c2params = new ArrayList<Parameter>();
 		c2params.add(new StringParameter("String1", "A String to configure",
 				false, "default value"));
-		c2params.add(new StringParameter("String_file", "A String to configure",
-				false, "/Users"));
+		c2params.add(new StringParameter("String_file",
+				"A String to configure", false, "/Users"));
 		c2params.add(new IntegerParameter("Integer1",
 				"An Integer to configure", true, 5));
 
@@ -139,7 +140,18 @@ public class ExampleWorkflowFactory {
 		cons1.setMax(500);
 		constrainedParameter1.addConstraint(cons1);
 		c1params.add(constrainedParameter1);
+
+		FloatParameter floatParameter = new FloatParameter("Float 0 - 10",
+				"Float between 0 and 10", false, (float) 4);
+		FloatConstraint consF = new FloatConstraint(0, 10);
+		floatParameter.addConstraint(consF);
+		c1params.add(floatParameter);
 		
+		FloatParameter floatParameter1 = new FloatParameter("Float Unconstrained",
+				"Float anything", false, (float) 4);
+		floatParameter.addConstraint(consF);
+		c1params.add(floatParameter1);
+
 		Component component1 = new MockComponent(c1params);
 		Component component2 = new MockComponent(c2params);
 		Component component3 = new MockComponent(c3params);
@@ -178,19 +190,20 @@ public class ExampleWorkflowFactory {
 		Workflow workflow = new Workflow();
 
 		ArrayList<Parameter> workflowParams = new ArrayList<Parameter>();
-		workflowParams.add(new BooleanParameter("falseParam",
-				"Report errors", false, false));
-		workflowParams.add(new StringParameter("Settings Directory", "Error log location", true, "/home/"));
+		workflowParams.add(new BooleanParameter("falseParam", "Report errors",
+				false, false));
+		workflowParams.add(new StringParameter("Settings Directory",
+				"Error log location", true, "/home/"));
 
 		ArrayList<Parameter> workflowParams1 = new ArrayList<Parameter>();
-		workflowParams1.add(new BooleanParameter("trueParam", "Generate POS annotations",
-				false, true));
-		workflowParams1.add(new IntegerParameter("falseParam",
-				"Timeout (ms)", false, 100));
+		workflowParams1.add(new BooleanParameter("trueParam",
+				"Generate POS annotations", false, true));
+		workflowParams1.add(new IntegerParameter("falseParam", "Timeout (ms)",
+				false, 100));
 
 		ArrayList<Parameter> workflowParams2 = new ArrayList<Parameter>();
-		workflowParams2.add(new FloatParameter("trueParam", "Acceptance threshold",
-				false, new Float(0.4)));
+		workflowParams2.add(new FloatParameter("trueParam",
+				"Acceptance threshold", false, new Float(0.4)));
 		workflowParams2.add(new StringParameter("falseParam",
 				"Description prefix", false, "+"));
 
@@ -215,9 +228,10 @@ public class ExampleWorkflowFactory {
 
 		AggregateComponent aggregate = new MockAggregateComponent(
 				workflowParams);
-		
+
 		aggregate.setName("An Example Aggregate Component");
-		aggregate.setDescription("This is a serial aggregate component. It has two subcomponents, \"First Subcomponent\" and \"Second Subcomponent\". These are executed in sequence.");
+		aggregate
+				.setDescription("This is a serial aggregate component. It has two subcomponents, \"First Subcomponent\" and \"Second Subcomponent\". These are executed in sequence.");
 
 		aggregate.addSubComponent(simplea);
 		aggregate.addSubComponent(simpleb);

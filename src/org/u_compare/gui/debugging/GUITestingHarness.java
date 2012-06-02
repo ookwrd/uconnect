@@ -34,8 +34,8 @@ public class GUITestingHarness {
 		// workflows.add(ExampleWorkflowFactory.realComponents());
 		//workflows.add(ExampleWorkflowFactory.realComponents1());
 		//workflows.add(ExampleWorkflowFactory.realComponents2());
-		workflows.add(ExampleWorkflowFactory.cpeWorkflow());
-		workflows.add(ExampleWorkflowFactory.cpeWorkflow());
+		//workflows.add(ExampleWorkflowFactory.cpeWorkflow());
+		//workflows.add(ExampleWorkflowFactory.cpeWorkflow());
 		// workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		//workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		workflows.add(ExampleWorkflowFactory.cpeWorkflowParams());

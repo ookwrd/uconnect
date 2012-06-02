@@ -124,7 +124,7 @@ public class WorkflowViewerController {
 	public static boolean ALLOW_TAB_CLOSE = true;
 
 	/**
-	 * Determines whether parameters ending in "file" should be settable via a
+	 * Determines whether parameters ending in "file"/"directory" should be settable via a
 	 * FileNameChooser.
 	 */
 	public static boolean USE_FILE_CHOOSER = true;

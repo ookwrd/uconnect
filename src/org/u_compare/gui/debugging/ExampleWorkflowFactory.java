@@ -192,7 +192,7 @@ public class ExampleWorkflowFactory {
 		ArrayList<Parameter> workflowParams = new ArrayList<Parameter>();
 		workflowParams.add(new BooleanParameter("falseParam", "Report errors",
 				false, false));
-		workflowParams.add(new StringParameter("Settings Directory",
+		workflowParams.add(new StringParameter("Settings File",
 				"Error log location", true, "/home/"));
 
 		ArrayList<Parameter> workflowParams1 = new ArrayList<Parameter>();

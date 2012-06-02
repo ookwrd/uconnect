@@ -49,8 +49,8 @@ public class ParameterPanel implements LockedStatusChangeListener,
 		this.param = param;
 		this.controller = controller;
 
-		if (!param.isMultivalued()) {//Single valued parameter
-			
+		if (!param.isMultivalued()) {// Single valued parameter
+
 			// Setup default field
 			final JTextField textField = new AutoscrollTextField(
 					param.getParameterString());
@@ -66,15 +66,17 @@ public class ParameterPanel implements LockedStatusChangeListener,
 					textFieldChanged(textField);
 				}
 			});
-			
-			//Use
-			if(!(WorkflowViewerController.USE_FILE_CHOOSER && (param.getName().endsWith("File") || param.getName().endsWith("file")))){
-				field = textField;
-			}else{
+
+			// Use file chooser?
+			if (WorkflowViewerController.USE_FILE_CHOOSER && (
+					param.getName().toLowerCase().endsWith("file") || 
+					param.getName().toLowerCase().endsWith("directory"))) {
 				field = new FileChooserPanel(textField);
+			} else {
+				field = textField;
 			}
-			
-		} else { //Multivalued parameter
+
+		} else { // Multivalued parameter
 			final ControlList list = new ControlList(Color.white);
 			list.setBorder(new EtchedBorder());
 
@@ -124,8 +126,9 @@ public class ParameterPanel implements LockedStatusChangeListener,
 		}
 		description += ":";
 		JLabel descriptionLabel = new JLabel(description);
-		descriptionLabel.setToolTipText(TooltipTools.formatTooltip("<b>" + param.getName() + "</b>\n" + param.getDescription()));// Unabridged
-																// description
+		descriptionLabel.setToolTipText(TooltipTools.formatTooltip("<b>"
+				+ param.getName() + "</b>\n" + param.getDescription()));// Unabridged
+		// description
 		descriptionLabel.setHorizontalAlignment(JLabel.TRAILING);
 
 		return descriptionLabel;
@@ -161,7 +164,7 @@ public class ParameterPanel implements LockedStatusChangeListener,
 			((JTextField) field).setText(param.getParameterString());
 		} else if (field instanceof ControlList) {
 			rebuildListContents();
-		}else if (field instanceof FileChooserPanel){ //FileChooser
+		} else if (field instanceof FileChooserPanel) { // FileChooser
 			((FileChooserPanel) field).update(param);
 		} else {
 			System.err
@@ -172,7 +175,7 @@ public class ParameterPanel implements LockedStatusChangeListener,
 	protected void textFieldChanged(JTextField field) {
 		String value = field.getText();
 		String originalValue = param.getParameterString();
-		if(!value.equals(originalValue)){
+		if (!value.equals(originalValue)) {
 			((JTextField) field).setText(originalValue);
 			controller.setValue(value);
 		}
@@ -182,27 +185,29 @@ public class ParameterPanel implements LockedStatusChangeListener,
 		((ControlList) field).rebuildListContents(new ArrayList<String>(Arrays
 				.asList(param.getParameterStrings())));
 	}
-	
+
 	@SuppressWarnings("serial")
 	private class FileChooserPanel extends JPanel {
 		private JTextField field;
-		FileChooserPanel(JTextField textField){
+
+		FileChooserPanel(JTextField textField) {
 			field = textField;
 			setLayout(new BorderLayout());
 			add(textField, BorderLayout.CENTER);
-			
+
 			JButton addButton = new JButton("Set");
 			addButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					String fileName = WorkflowViewerController.fileNameChooser.chooseFileName(field.getText());
+					String fileName = WorkflowViewerController.fileNameChooser
+							.chooseFileName(field.getText());
 					controller.setValue(fileName);
 				}
 			});
 			add(addButton, BorderLayout.EAST);
 		}
-		
-		private void update(Parameter param){
+
+		private void update(Parameter param) {
 			field.setText(param.getParameterString());
 		}
 	}

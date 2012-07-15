@@ -39,6 +39,8 @@ public class ParameterPanel implements LockedStatusChangeListener,
 		ParameterValueChangedListener {
 
 	private static final int DESCRIPTION_LENGTH = 43;
+	
+	private static final String MANDATORY_STRING = "*";
 
 	protected JComponent field;
 	protected Parameter param;
@@ -137,7 +139,7 @@ public class ParameterPanel implements LockedStatusChangeListener,
 	public JLabel getMandatoryLabel() {
 		JLabel mandatory;
 		if (param.isMandatory()) {
-			mandatory = new JLabel("*");
+			mandatory = new JLabel(MANDATORY_STRING);
 			mandatory.setToolTipText("Mandatory Parameter");
 		} else {
 			mandatory = new JLabel(" ");

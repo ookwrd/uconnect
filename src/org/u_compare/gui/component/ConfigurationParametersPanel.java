@@ -66,7 +66,7 @@ public class ConfigurationParametersPanel extends JPanel {
 
 	private void setupPanel(ArrayList<Parameter> params, JPanel target) {
 
-		// Collect the descendent parameter panels.
+		// Collect the descendant parameter panels.
 		ArrayList<ParameterPanel> paramPanels = new ArrayList<ParameterPanel>();
 		for (Parameter param : params) {
 			ParameterController paramController = new ParameterController(

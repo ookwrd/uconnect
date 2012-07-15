@@ -39,7 +39,8 @@ public class GUITestingHarness {
 		// workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		//workflows.add(ExampleWorkflowFactory.cpeWorkflowRecursive());
 		workflows.add(ExampleWorkflowFactory.cpeWorkflowParams());
-
+		workflows.add(ExampleWorkflowFactory.cpeWorkflowParams());
+		
 		// Construct a WorkflowController
 		WorkflowViewerController workflowViewerController = new WorkflowViewerController();
 		WorkflowViewerController.defaultWorkflowFactory = CPE.emptyCPEFactory;

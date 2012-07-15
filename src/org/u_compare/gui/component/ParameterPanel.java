@@ -116,16 +116,16 @@ public class ParameterPanel implements LockedStatusChangeListener,
 	}
 
 	public JLabel getLabel() {
-		String description = param.getDescription();
-		if (description == null || description.length() == 0) {
-			description = param.getName();
+		String title = param.getName();
+		if (title == null || title.length() == 0) {
+			title = param.getDescription();
 		}
-		if (description.length() > DESCRIPTION_LENGTH) {
-			description = description.substring(0, DESCRIPTION_LENGTH - 3)
+		if (title.length() > DESCRIPTION_LENGTH) {
+			title = title.substring(0, DESCRIPTION_LENGTH - 3)
 					+ "...";
 		}
-		description += ":";
-		JLabel descriptionLabel = new JLabel(description);
+		title += ":";
+		JLabel descriptionLabel = new JLabel(title);
 		descriptionLabel.setToolTipText(TooltipTools.formatTooltip("<b>"
 				+ param.getName() + "</b>\n" + param.getDescription()));// Unabridged
 		// description

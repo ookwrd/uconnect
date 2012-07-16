@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -35,6 +37,8 @@ public class ControlList extends JPanel {
 	private HighlightButton addButton;
 	private JList list;
 	private DefaultListModel listModel;
+	
+	private Map<Object, String> tooltips;
 
 	/**
 	 * Create a new ControlList with the specified background color.
@@ -57,7 +61,12 @@ public class ControlList extends JPanel {
 	public ControlList(Color background, boolean centering) {
 		super();
 		listModel = new DefaultListModel();
-		list = new AutoscrollList(listModel);
+		list = new AutoscrollList(listModel){
+			@Override
+			public String getToolTipText(MouseEvent evt){
+				return lookupToolTipText(evt);
+			}
+		};
 
 		if (centering) {
 			((JLabel) (list.getCellRenderer()))
@@ -205,4 +214,25 @@ public class ControlList extends JPanel {
 	protected void toEditMode() {
 		buttons.setVisible(true);
 	}
+	
+	/**
+	 * Register a map of object-string associations to specifying tooltips for items in the lists underlying list model.
+	 */
+	public void registerTooltips(Map<Object, String> tooltips){
+		this.tooltips = tooltips;
+	}
+	
+	private String lookupToolTipText(MouseEvent evt) {
+		
+		if(tooltips != null){//Tooltips have been registered
+	        // Get item index
+	        int index = list.locationToIndex(evt.getPoint());
+	        // Get item
+	        Object item = listModel.getElementAt(index);
+	        // Lookup the tool tip text
+	        return tooltips.get(item);
+		}else{
+			return null;
+		}
+    }
 }

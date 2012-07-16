@@ -3,6 +3,8 @@ package org.u_compare.gui.component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -91,6 +93,25 @@ public class TypeListPanel extends JPanel implements
 		}
 
 		list.rebuildListContents(inList);
+
+		Map<Object, String> tooltips = getTooltips(inList);
+		list.registerTooltips(tooltips);
+	}
+	
+	/**
+	 * Helper method for constructing tooltips association map.
+	 * 
+	 * @param objects
+	 * @return
+	 */
+	private Map<Object, String> getTooltips(ArrayList<AnnotationTypeOrFeature> objects){
+		
+		Map<Object, String> retVal = new HashMap<Object, String>();
+		for(AnnotationTypeOrFeature feature : objects){
+			retVal.put(feature, feature.getTypeName());
+		}
+		
+		return retVal;
 	}
 
 	@Override

@@ -31,10 +31,14 @@ public class ControlList extends JPanel {
 	private static final String EMPTY_LIST_MESSAGE = "(Empty. Click to edit)";
 	private static final String DELETE_MSG = "Delete";
 	private static final String ADD_MSG = "Add";
+	private static final String UP_MSG = "Up";
+	private static final String DOWN_MSG = "Down";
 
 	private JPanel buttons;
 	private HighlightButton deleteButton;
 	private HighlightButton addButton;
+	private HighlightButton upButton;
+	private HighlightButton downButton;
 	private JList list;
 	private DefaultListModel listModel;
 	
@@ -46,7 +50,7 @@ public class ControlList extends JPanel {
 	 * @param background
 	 */
 	public ControlList(Color background) {
-		this(background, true);
+		this(background, true, true);
 	}
 
 	/**
@@ -58,7 +62,7 @@ public class ControlList extends JPanel {
 	 * @param centering
 	 *            Should items be centered
 	 */
-	public ControlList(Color background, boolean centering) {
+	public ControlList(Color background, boolean centering, boolean allowReordering) {
 		super();
 		listModel = new DefaultListModel();
 		list = new AutoscrollList(listModel){
@@ -83,10 +87,7 @@ public class ControlList extends JPanel {
 		buttons = new JPanel();
 		buttons.setOpaque(false);
 		buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-		deleteButton = new HighlightButton(DELETE_MSG);
-		addButton = new HighlightButton(ADD_MSG);
-
+		
 		FocusListener listFocusListener = new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -98,28 +99,52 @@ public class ControlList extends JPanel {
 				Object source = e.getOppositeComponent();
 				if (source == null || source.equals(this)
 						|| source.equals(addButton)
-						|| source.equals(deleteButton)) {
+						|| source.equals(deleteButton)
+						|| source.equals(upButton)
+						|| source.equals(downButton)) {
 					return;
 				}
 				toFixedMode();
 			}
 		};
 		list.addFocusListener(listFocusListener);
-		deleteButton.addFocusListener(listFocusListener);
-		addButton.addFocusListener(listFocusListener);
-
+		
 		ActionListener reactive = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				list.requestFocusInWindow(); // To reopen the button panel.
 			}
 		};
-		addButton.addActionListener(reactive);
+		
+		deleteButton = new HighlightButton(DELETE_MSG);
+		addButton = new HighlightButton(ADD_MSG);
+
+		deleteButton.addFocusListener(listFocusListener);
+		addButton.addFocusListener(listFocusListener);
+		
 		// Makes reselection possible in a single click.
 		deleteButton.addActionListener(reactive);
+		addButton.addActionListener(reactive);
+		
+		if(allowReordering){
+			upButton = new HighlightButton(UP_MSG);
+			downButton = new HighlightButton(DOWN_MSG);
+			
+			upButton.addFocusListener(listFocusListener);
+			downButton.addFocusListener(listFocusListener);
 
+			upButton.addActionListener(reactive);
+			downButton.addActionListener(reactive);
+		}
+		
 		buttons.add(deleteButton);
 		buttons.add(addButton);
+		
+		if(allowReordering){
+			buttons.add(upButton);
+			buttons.add(downButton);
+		}
+		
 		buttons.setVisible(false);
 
 		add(list);
@@ -165,6 +190,8 @@ public class ControlList extends JPanel {
 		listModel.clear();
 
 		deleteButton.setEnabled(true);
+		upButton.setEnabled(true);
+		downButton.setEnabled(true);
 
 		for (Object str : values) {
 			listModel.addElement(str);
@@ -173,6 +200,11 @@ public class ControlList extends JPanel {
 		if (listModel.isEmpty()) {
 			listModel.addElement(EMPTY_LIST_MESSAGE);
 			deleteButton.setEnabled(false);
+		}
+		
+		if (listModel.size() < 2){
+			upButton.setEnabled(false);
+			downButton.setEnabled(false);
 		}
 	}
 

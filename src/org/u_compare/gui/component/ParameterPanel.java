@@ -197,7 +197,7 @@ public class ParameterPanel implements LockedStatusChangeListener,
 			setLayout(new BorderLayout());
 			add(textField, BorderLayout.CENTER);
 
-			JButton addButton = new JButton("Set");
+			JButton addButton = new JButton("Browse");
 			addButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {

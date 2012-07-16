@@ -39,6 +39,9 @@ public class EditableTextField extends AutoscrollTextField {
 			@Override
 			public void focusLost(FocusEvent e) {
 				toFixedMode();
+				
+				//Display from left if string is overlong
+				setCaretPosition(0);
 			}
 		});
 
@@ -103,6 +106,7 @@ public class EditableTextField extends AutoscrollTextField {
 		if (fixed) {
 			return;
 		}
+		
 		fixed = true;
 		setEditable(false);
 		super.setBackground(null);

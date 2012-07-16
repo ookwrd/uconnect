@@ -41,6 +41,7 @@ public class ControlList extends JPanel {
 	private HighlightButton downButton;
 	private JList list;
 	private DefaultListModel listModel;
+	private boolean allowReordering;
 	
 	private Map<Object, String> tooltips;
 
@@ -50,7 +51,7 @@ public class ControlList extends JPanel {
 	 * @param background
 	 */
 	public ControlList(Color background) {
-		this(background, true, true);
+		this(background, true, false);
 	}
 
 	/**
@@ -64,6 +65,8 @@ public class ControlList extends JPanel {
 	 */
 	public ControlList(Color background, boolean centering, boolean allowReordering) {
 		super();
+		this.allowReordering = allowReordering;
+		
 		listModel = new DefaultListModel();
 		list = new AutoscrollList(listModel){
 			@Override
@@ -190,9 +193,11 @@ public class ControlList extends JPanel {
 		listModel.clear();
 
 		deleteButton.setEnabled(true);
-		upButton.setEnabled(true);
-		downButton.setEnabled(true);
-
+		if(allowReordering){
+			upButton.setEnabled(true);
+			downButton.setEnabled(true);
+		}
+		
 		for (Object str : values) {
 			listModel.addElement(str);
 		}
@@ -202,7 +207,7 @@ public class ControlList extends JPanel {
 			deleteButton.setEnabled(false);
 		}
 		
-		if (listModel.size() < 2){
+		if (allowReordering && listModel.size() < 2){
 			upButton.setEnabled(false);
 			downButton.setEnabled(false);
 		}

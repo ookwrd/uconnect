@@ -79,7 +79,7 @@ public class ParameterPanel implements LockedStatusChangeListener,
 			}
 
 		} else { // Multivalued parameter
-			final ControlList list = new ControlList(Color.white);
+			final ControlList list = new ControlList(Color.white, true, true);
 			list.setBorder(new EtchedBorder());
 
 			ActionListener addListener = new ActionListener() {

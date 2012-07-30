@@ -4,10 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import org.u_compare.gui.control.ComponentController;
 import org.u_compare.gui.control.DragAndDropController;
+import org.u_compare.gui.control.WorkflowViewerController;
 import org.u_compare.gui.guiElements.EditableTextPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
@@ -48,8 +52,21 @@ public class ComponentDescriptionPanel extends JPanel implements
 
 		setLayout(new BorderLayout());
 		setOpaque(false);
-		this.add(textPanel);
-
+		
+		if (WorkflowViewerController.SHOW_FLOWCONTROLLER_ICON = true && component.isAggregate() && !component.isWorkflow()) {
+			
+			JPanel flowControllerPanel = new JPanel();
+			flowControllerPanel.setBorder(new TitledBorder(new EtchedBorder(),
+					"Flow Controller:"));
+			
+			//TODO This is where you should add the handling for whatever icons you want.
+			flowControllerPanel.add(new JLabel(component.getFlowControllerIdentifier()==null?"Undefined":component.getFlowControllerIdentifier()));
+			
+			this.add(flowControllerPanel, BorderLayout.WEST);
+		}
+		
+		this.add(textPanel, BorderLayout.CENTER);
+		
 		// Register Listeners
 		component.registerComponentDescriptionChangeListener(this);
 		component.registerLockedStatusChangeListener(this);

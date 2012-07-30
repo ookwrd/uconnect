@@ -73,10 +73,16 @@ public class WorkflowViewerController {
 	/**
 	 * Determines whether the title and description of the workflow are
 	 * displayed in the workflowPanel. CPE workflows do not store this data, so
-	 * may wish to hide it. Deafults to true.
+	 * may wish to hide it. Defaults to true.
 	 */
 	public static boolean SHOW_WORKFLOW_DETAILS = true;
 
+	/**
+	 * Determines whether an icon depicting an aggregate components flowcontroller
+	 * is displayed in the component view. Defaults to false.
+	 */
+	public static boolean SHOW_FLOWCONTROLLER_ICON = false;
+	
 	/**
 	 * Determines whether a panel with a "save workflow" button is included at
 	 * the end of the workflow. Defaults to false.

@@ -16,6 +16,7 @@ import org.u_compare.gui.guiElements.EditableTextPanel;
 import org.u_compare.gui.model.Component;
 import org.u_compare.gui.model.Component.DescriptionChangeListener;
 import org.u_compare.gui.model.Component.LockedStatusChangeListener;
+import org.u_compare.gui.model.Component.FlowControlChangeListener;;
 
 /**
  * Panel for displaying/editing a component/workflow's description.
@@ -30,8 +31,8 @@ public class ComponentDescriptionPanel extends JPanel implements
 	private final Component component;
 	private final EditableTextPanel textPanel;
 
-	public ComponentDescriptionPanel(ComponentController controller,
-			Component component) {
+	public ComponentDescriptionPanel(final ComponentController controller,
+			final Component component) {
 		super();
 
 		this.controller = controller;
@@ -60,7 +61,17 @@ public class ComponentDescriptionPanel extends JPanel implements
 					"Flow Controller:"));
 			
 			//TODO This is where you should add the handling for whatever icons you want.
-			flowControllerPanel.add(new JLabel(component.getFlowControllerIdentifier()==null?"Undefined":component.getFlowControllerIdentifier()));
+			final JLabel flowIcon = new JLabel(component.getFlowControllerIdentifier()==null?"Undefined":component.getFlowControllerIdentifier());
+			flowControllerPanel.add(flowIcon);
+			
+			//Make the icon responsive to changes in the flow controller
+			component.registerFlowControlChangedListener(new FlowControlChangeListener() {	
+				@Override
+				public void flowControlChanged(Component component) {
+					//TODO You will want to change here as well.
+					flowIcon.setText(component.getFlowControllerIdentifier()==null?"Undefined":component.getFlowControllerIdentifier());
+				}
+			});
 			
 			this.add(flowControllerPanel, BorderLayout.WEST);
 		}

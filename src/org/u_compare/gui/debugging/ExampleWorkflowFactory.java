@@ -233,6 +233,8 @@ public class ExampleWorkflowFactory {
 		aggregate
 				.setDescription("This is a serial aggregate component. It has two subcomponents, \"First Subcomponent\" and \"Second Subcomponent\". These are executed in sequence.");
 
+		aggregate.setFlowControllerIdentifier("Fixed Flow");
+		
 		aggregate.addSubComponent(simplea);
 		aggregate.addSubComponent(simpleb);
 

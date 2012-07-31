@@ -102,9 +102,27 @@ public class ParameterPanel implements LockedStatusChangeListener,
 					}
 				}
 			};
+			
+			ActionListener upListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					//TODO
+					System.out.println("Up");
+				}
+			};
+			
+			ActionListener downListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO
+					System.out.println("Down");
+				}
+			};
 
 			list.registerAddActionListener(addListener);
 			list.registerDeleteActionListener(removeListener);
+			list.registerUpActionListener(upListener);
+			list.registerDownActionListener(downListener);
 
 			field = list;
 

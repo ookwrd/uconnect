@@ -59,8 +59,8 @@ public class IconizedCloseableTabFlapComponent extends JPanel {
 
 	private static Icon closeTabIcon;
 	private static Icon closeTabMouseOverIcon;
-	private final static String closeTabIconPath = "../gfx/close_icon.png";
-	private final static String closeTabMouseOverIconPath = "../gfx/close_icon_mouseover.png";
+	private final static String closeTabIconPath = "/org/u_compare/gui/gfx/close_icon.png";
+	private final static String closeTabMouseOverIconPath = "/org/u_compare/gui/gfx/close_icon_mouseover.png";
 	private static boolean iconsLoaded = false;
 
 	private final static String CLOSE_BUTTON_TOOLTIP = "Close this workflow";

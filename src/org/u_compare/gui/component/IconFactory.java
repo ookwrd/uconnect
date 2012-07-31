@@ -33,13 +33,15 @@ public class IconFactory {
 			return 16;
 		}
 	};
+	
+	public static final String IMAGE_RESOURCE_ROOT = "/org/u_compare/gui/gfx/";
 
 	// WorkflowViewer Icons
-	public static final String STOPPED_ICON = "../gfx/workflow_stopped.png";
-	public static final String RUNNING_ICON = "../gfx/workflow_running.gif";
-	public static final String FINISHED_ICON = "../gfx/workflow_finished.png";
-	public static final String PAUSED_ICON = "../gfx/workflow_paused.png";
-	public static final String ERROR_ICON = "../gfx/workflow_error.png";
+	public static final String STOPPED_ICON = IMAGE_RESOURCE_ROOT + "workflow_stopped.png";
+	public static final String RUNNING_ICON = IMAGE_RESOURCE_ROOT + "workflow_running.gif";
+	public static final String FINISHED_ICON = IMAGE_RESOURCE_ROOT + "workflow_finished.png";
+	public static final String PAUSED_ICON = IMAGE_RESOURCE_ROOT + "workflow_paused.png";
+	public static final String ERROR_ICON = IMAGE_RESOURCE_ROOT + "workflow_error.png";
 
 	private static final String STOPPED_DESCRIPTION = "The workflow is currently stopped";
 	private static final String RUNNING_DESCRIPTION = "The workflow is currently running";
@@ -48,21 +50,21 @@ public class IconFactory {
 	private static final String ERROR_DESCRIPTION = "An error has occured with this workflow";
 
 	// WorkflowControlPanel Icons
-	public static final String RUN_ICON = "../gfx/icon_start.png";
-	public static final String STOP_ICON = "../gfx/icon_stop.png";
-	public static final String PAUSE_ICON = "../gfx/icon_pause.png";
+	public static final String RUN_ICON = IMAGE_RESOURCE_ROOT + "icon_start.png";
+	public static final String STOP_ICON = IMAGE_RESOURCE_ROOT + "icon_stop.png";
+	public static final String PAUSE_ICON = IMAGE_RESOURCE_ROOT + "icon_pause.png";
 
 	private static final String RUN_DESCRIPTION = "Run the workflow";
 	private static final String STOP_DESCRIPTION = "Stop the workflow";
 	private static final String PAUSE_DESCRIPTION = "Pause the workflow";
 
 	// TitleButtonPanel Icons
-	public final static String CLOSE_ICON = "../gfx/close_icon_big.png";
-	public final static String MAX_ICON = "../gfx/icon_plus.gif";
-	public final static String EXP_ICON = "../gfx/icon_maximize1.png";
-	public final static String MIN_ICON = "../gfx/icon_minimize1.png";
-	public final static String LOCKED_ICON = "../gfx/icon_locked.png";
-	public final static String UNLOCKED_ICON = "../gfx/icon_unlocked.png";
+	public final static String CLOSE_ICON = IMAGE_RESOURCE_ROOT + "close_icon_big.png";
+	public final static String MAX_ICON = IMAGE_RESOURCE_ROOT + "icon_plus.gif";
+	public final static String EXP_ICON = IMAGE_RESOURCE_ROOT + "icon_maximize1.png";
+	public final static String MIN_ICON = IMAGE_RESOURCE_ROOT + "icon_minimize1.png";
+	public final static String LOCKED_ICON = IMAGE_RESOURCE_ROOT + "icon_locked.png";
+	public final static String UNLOCKED_ICON = IMAGE_RESOURCE_ROOT + "icon_unlocked.png";
 
 	private static final String CLOSE_DESCRIPTION = "Remove";
 	private static final String MAX_DESCRIPTION = "Maximize";
@@ -72,7 +74,7 @@ public class IconFactory {
 	private static final String UNLOCK_DESCRIPTION = "Unlock Component";
 
 	// SubComponentDropTarget Icons
-	public final static String DROP_TARGET_ICON = "../gfx/intermediate_drop_target_icon.png";
+	public final static String DROP_TARGET_ICON = IMAGE_RESOURCE_ROOT + "intermediate_drop_target_icon.png";
 
 	private final static String DROP_TARGET_DESCRIPTION = "Drop Here";
 
@@ -107,6 +109,7 @@ public class IconFactory {
 
 	private static void loadIcon(String path, String description) {
 		URL image_url = IconFactory.class.getResource(path);
+		
 		assert image_url != null;
 		ImageIcon icon = new ImageIcon(image_url, description);
 		iconsHashMap.put(path, icon);

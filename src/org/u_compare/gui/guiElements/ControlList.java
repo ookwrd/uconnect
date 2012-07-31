@@ -27,7 +27,7 @@ import javax.swing.border.Border;
  */
 @SuppressWarnings("serial")
 public class ControlList extends JPanel {
-
+	
 	private static final String EMPTY_LIST_MESSAGE = "(Empty. Click to edit)";
 	private static final String DELETE_MSG = "Delete";
 	private static final String ADD_MSG = "Add";
@@ -129,10 +129,10 @@ public class ControlList extends JPanel {
 		deleteButton.addActionListener(reactive);
 		addButton.addActionListener(reactive);
 		
+		upButton = new HighlightButton(UP_MSG);
+		downButton = new HighlightButton(DOWN_MSG);
+		
 		if(allowReordering){
-			upButton = new HighlightButton(UP_MSG);
-			downButton = new HighlightButton(DOWN_MSG);
-			
 			upButton.addFocusListener(listFocusListener);
 			downButton.addFocusListener(listFocusListener);
 
@@ -181,6 +181,26 @@ public class ControlList extends JPanel {
 	 */
 	public void registerDeleteActionListener(ActionListener al) {
 		deleteButton.addActionListener(al);
+	}
+	
+	/**
+	 * Add a listener to be called when the "up" button is clicked.
+	 * 
+	 * @param al
+	 */
+	public void registerUpActionListener(ActionListener al){
+		assert(upButton != null);
+		upButton.addActionListener(al);
+	}
+	
+	/**
+	 * Add a listener to be called when the "down" button is clicked.
+	 * 
+	 * @param al
+	 */
+	public void registerDownActionListener(ActionListener al){
+		assert(downButton != null);
+		downButton.addActionListener(al);
 	}
 
 	/**

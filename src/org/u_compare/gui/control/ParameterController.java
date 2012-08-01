@@ -115,13 +115,38 @@ public class ParameterController {
 		ArrayList<String> strings = new ArrayList<String>(Arrays.asList(param
 				.getParameterStrings()));
 		
-		if(direction == Direction.UP){
-			
-		}else if (direction == Direction.DOWN){
-			
+		ArrayList<String> adjustedStrings = new ArrayList<String>();
+		if(direction == Direction.UP){//Moving item up
+			for(int i = 0; i < strings.size(); i++){
+				if(i + 1 == index){
+					//Move top item up automatically handled
+					adjustedStrings.add(strings.get(i+1));
+					adjustedStrings.add(strings.get(i));
+					i++;
+					continue;
+				}
+				adjustedStrings.add(strings.get(i));
+			}
+		}else if (direction == Direction.DOWN){//Move item down
+			for(int i = 0; i < strings.size(); i++){
+				if(i == index){
+					if(strings.get(i+1) != null){//move final item down
+						adjustedStrings.add(strings.get(i+1));
+					}
+					adjustedStrings.add(strings.get(i));
+					i++;
+					continue;
+				}
+				adjustedStrings.add(strings.get(i));
+			}
 		}else{
 			assert(false);
 		}
 		
+		try {
+			param.setValues(adjustedStrings.toArray(new String[adjustedStrings.size()]));
+		} catch (ConstraintFailedException e) {
+			processConstraintFailure(e);
+		}
 	}
 }

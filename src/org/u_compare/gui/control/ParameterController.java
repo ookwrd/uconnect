@@ -86,15 +86,42 @@ public class ParameterController {
 
 	}
 
-	public void removeValue(String value) {
+	public void removeValues(int[] indexs) {
 		ArrayList<String> strings = new ArrayList<String>(Arrays.asList(param
 				.getParameterStrings()));
-		strings.remove(value);
+		
+		ArrayList<String> adjustedStrings = new ArrayList<String>();
+		constructionLoop:
+		for(int i = 0; i < strings.size(); i++){
+			for(int index : indexs){
+				if(i == index){//Don't add one of the values to remove
+					continue constructionLoop;
+				}
+			}
+			adjustedStrings.add(strings.get(i));
+		}
 
 		try {
-			param.setValues(strings.toArray(new String[strings.size()]));
+			param.setValues(adjustedStrings.toArray(new String[adjustedStrings.size()]));
 		} catch (ConstraintFailedException e) {
 			processConstraintFailure(e);
 		}
+	}
+	
+	public enum Direction {UP, DOWN};
+	
+	public void reorderValue(int index, Direction direction){
+		
+		ArrayList<String> strings = new ArrayList<String>(Arrays.asList(param
+				.getParameterStrings()));
+		
+		if(direction == Direction.UP){
+			
+		}else if (direction == Direction.DOWN){
+			
+		}else{
+			assert(false);
+		}
+		
 	}
 }

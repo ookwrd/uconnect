@@ -98,16 +98,28 @@ public class ParameterPanel implements LockedStatusChangeListener,
 			ActionListener upListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//TODO
-					System.out.println("Up");
+					int[] selected = list.getSelectedIndicies();
+					
+					assert(selected.length < 2);
+					if(selected.length == 0){
+						return;
+					}
+					
+					controller.reorderValue(selected[0], ParameterController.Direction.UP);
 				}
 			};
 			
 			ActionListener downListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO
-					System.out.println("Down");
+					int[] selected = list.getSelectedIndicies();
+					
+					assert(selected.length < 2);
+					if(selected.length == 0){
+						return;
+					}
+					
+					controller.reorderValue(selected[0], ParameterController.Direction.DOWN);
 				}
 			};
 

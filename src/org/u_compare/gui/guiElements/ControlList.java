@@ -164,6 +164,15 @@ public class ControlList extends JPanel {
 	public Object[] getSelectedValues() {
 		return list.getSelectedValues();
 	}
+	
+	/**
+	 * Redirects to the wrapped JList's getSelectedIndicies().
+	 * 
+	 * @return
+	 */
+	public int[] getSelectedIndicies(){
+		return list.getSelectedIndices();
+	}
 
 	/**
 	 * Add a listener to be called when the "add" button is clicked.

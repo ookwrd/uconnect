@@ -91,15 +91,7 @@ public class ParameterPanel implements LockedStatusChangeListener,
 			ActionListener removeListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*
-					 * JList and DefaultListModel provide no way for accessing
-					 * contents as anything other than an Object[]. Hence having
-					 * to go through the array element by element and casting
-					 * each selected name individually.
-					 */
-					for (Object name : list.getSelectedValues()) {
-						controller.removeValue((String) name);
-					}
+					controller.removeValues(list.getSelectedIndicies());
 				}
 			};
 			

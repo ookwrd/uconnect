@@ -54,7 +54,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 		setLayout(new BorderLayout());
 		setOpaque(false);
 		
-		if (WorkflowViewerController.SHOW_FLOWCONTROLLER_ICON = true && component.isAggregate() && !component.isWorkflow()) {
+		if (WorkflowViewerController.SHOW_FLOWCONTROLLER_ICON == true && component.isAggregate() && !component.isWorkflow()) {
 			
 			JPanel flowControllerPanel = new JPanel();
 			flowControllerPanel.setBorder(new TitledBorder(new EtchedBorder(),

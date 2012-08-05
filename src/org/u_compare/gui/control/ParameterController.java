@@ -130,7 +130,7 @@ public class ParameterController {
 		}else if (direction == Direction.DOWN){//Move item down
 			for(int i = 0; i < strings.size(); i++){
 				if(i == index){
-					if(strings.get(i+1) != null){//move final item down
+					if(i+1 < strings.size() && strings.get(i+1) != null){//move final item down
 						adjustedStrings.add(strings.get(i+1));
 					}
 					adjustedStrings.add(strings.get(i));

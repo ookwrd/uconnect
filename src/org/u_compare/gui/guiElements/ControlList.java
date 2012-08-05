@@ -45,6 +45,10 @@ public class ControlList extends JPanel {
 	
 	private Map<Object, String> tooltips;
 
+	//To maintain focus during reorder operations
+	private int selected = -1;
+	private int[] selection = {};
+	
 	/**
 	 * Create a new ControlList with the specified background color.
 	 * 
@@ -154,6 +158,23 @@ public class ControlList extends JPanel {
 		add(buttons);
 
 		rebuildListContents(new ArrayList<Object>());
+		
+		registerUpActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(selected-1 >= 0){
+					list.setSelectedIndex(selected-1);
+				}
+			}
+		});
+		registerDownActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(selected+1 < listModel.getSize()){
+					list.setSelectedIndex(selected+1);
+				}
+			}
+		});
 	}
 
 	/**
@@ -219,6 +240,9 @@ public class ControlList extends JPanel {
 	 */
 	public void rebuildListContents(@SuppressWarnings("rawtypes") ArrayList values) {
 		assert (list != null);
+		
+		selected = list.getSelectedIndex();	
+		
 		listModel.clear();
 
 		deleteButton.setEnabled(true);
@@ -270,6 +294,7 @@ public class ControlList extends JPanel {
 	 * Change to non-editable mode.
 	 */
 	protected void toFixedMode() {
+		selection = list.getSelectedIndices();
 		list.clearSelection();
 		buttons.setVisible(false);
 	}
@@ -278,6 +303,10 @@ public class ControlList extends JPanel {
 	 * Change to editable mode.
 	 */
 	protected void toEditMode() {
+		if(selection != null){
+			list.setSelectedIndices(selection);
+			selection = null;
+		}
 		buttons.setVisible(true);
 	}
 	

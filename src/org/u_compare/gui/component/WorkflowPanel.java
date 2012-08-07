@@ -78,4 +78,5 @@ public class WorkflowPanel extends ComponentPanel {
 
 		target.add(spacer);
 	}
+
 }

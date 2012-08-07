@@ -117,7 +117,6 @@ public class ComponentController implements
 	}
 
 	public void resetSubComponents() {
-
 		dropTargets = new ArrayList<DropTargetController>();
 		subControllers = new ArrayList<ComponentController>();
 
@@ -278,7 +277,7 @@ public class ComponentController implements
 			} catch (InvalidPositionException e) {
 				// TODO this should never happen
 			}
-
+			
 		} else {
 			throw new InvalidSubComponentException(
 					"Cannot add component here\nAggregate:  "
@@ -424,11 +423,11 @@ public class ComponentController implements
 			Container parent = componentView.getParent();
 			if (parent != null) {
 				parent.validate();
+				
 			} else {
 				System.out
 						.println("Component Controller: Validate changes failed as view's parent is null. Should not occur in full system, but may occur during unittests.");
 			}
-
 		}
 	}
 

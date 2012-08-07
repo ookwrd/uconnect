@@ -31,6 +31,9 @@ public class EditableTextField extends AutoscrollTextField {
 		super(text, 500);
 		toFixedMode();
 
+		//Ensure left-alignment of overlong text on drop.
+		setCaretPosition(0);
+		
 		// Double click component to enter edit mode
 		addDoubleClick();
 
@@ -44,6 +47,7 @@ public class EditableTextField extends AutoscrollTextField {
 				setCaretPosition(0);
 			}
 		});
+		
 
 		// Finishing editing ends editable mode.
 		super.addActionListener(new ActionListener() {

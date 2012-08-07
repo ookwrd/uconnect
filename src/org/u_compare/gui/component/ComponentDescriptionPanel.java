@@ -58,7 +58,7 @@ public class ComponentDescriptionPanel extends JPanel implements
 			
 			JPanel flowControllerPanel = new JPanel();
 			flowControllerPanel.setBorder(new TitledBorder(new EtchedBorder(),
-					"Flow Controller:"));
+					"Flow:"));
 			
 			//TODO This is where you should add the handling for whatever icons you want.
 			final JLabel flowIcon = new JLabel(component.getFlowControllerIdentifier()==null?"Undefined":component.getFlowControllerIdentifier());

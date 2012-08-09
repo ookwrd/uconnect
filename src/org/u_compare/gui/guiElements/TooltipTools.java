@@ -35,7 +35,7 @@ public final class TooltipTools {
 
 		int place = Math.max(
 				Math.max(in.lastIndexOf(" ", len), in.lastIndexOf("\t", len)),
-				in.lastIndexOf("-", len));
+				Math.max(in.lastIndexOf("-", len), 0));
 
 		return in.substring(0, place).trim() + "<br>"
 				+ wrap(in.substring(place), len, lines - 1);
